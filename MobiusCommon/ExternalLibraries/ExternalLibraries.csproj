@@ -55,46 +55,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MDL.Draw.Clipboard, Version=17.2.100.23, Culture=neutral, PublicKeyToken=e922e3fd683b3777, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\MDL.Draw.Clipboard.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="MDL.Draw.Editor, Version=17.2.100.23, Culture=neutral, PublicKeyToken=e922e3fd683b3777, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\MDL.Draw.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="MDL.Draw.Editor.XmlSerializers, Version=17.2.100.23, Culture=neutral, PublicKeyToken=e922e3fd683b3777, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\MDL.Draw.Editor.XmlSerializers.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="MDL.Draw.Foundation, Version=17.2.100.23, Culture=neutral, PublicKeyToken=e922e3fd683b3777, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\MDL.Draw.Foundation.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="MDL.Draw.Foundation.PPChemAPIIO, Version=17.2.100.23, Culture=neutral, PublicKeyToken=e922e3fd683b3777, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\MDL.Draw.Foundation.PPChemAPIIO.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="MDL.Draw.Renderer, Version=17.2.100.23, Culture=neutral, PublicKeyToken=e922e3fd683b3777, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\MDL.Draw.Renderer.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="MDL.Draw.Renderer.XmlSerializers, Version=17.2.100.23, Culture=neutral, PublicKeyToken=e922e3fd683b3777, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\MDL.Draw.Renderer.XmlSerializers.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="MDL.Draw.TextServicesWrapper, Version=17.2.100.23, Culture=neutral, PublicKeyToken=e922e3fd683b3777, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\MDL.Draw.TextServicesWrapper.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -219,30 +179,6 @@
     <Content Include="LumenWorks.Framework.IO.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MDL.Draw.Clipboard.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MDL.Draw.Editor.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MDL.Draw.Editor.XmlSerializers.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MDL.Draw.Foundation.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MDL.Draw.Foundation.PPChemAPIIO.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MDL.Draw.Renderer.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MDL.Draw.Renderer.XmlSerializers.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MDL.Draw.TextServicesWrapper.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Microsoft.Office.Interop.Excel.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -292,9 +228,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="ppChemFS.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ppChemMDL.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="ppchemnema.dll">
