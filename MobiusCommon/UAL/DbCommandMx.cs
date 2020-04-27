@@ -741,14 +741,13 @@ namespace Mobius.UAL
 					for (int pi = 0; pi < parmArray.Length; pi++)
 					{
 						p = new MySqlParameter();
-						p.ParameterName = pi.ToString();
+						p.ParameterName = "p" + pi;
 
 						string parmToken = ":" + pi; // token in sql
-						if (sql.Contains(parmToken)) // replace with proper format parameter
+						if (sql.Contains(parmToken)) // replace existing parm token with proper format parameter
 						{
 							string newParmToken = "@p" + pi;
 							sql = sql.Replace(parmToken, newParmToken);
-							p.ParameterName = "p" + pi;
 						}
 
 						else p = p; // may have already been converted to MySQL form previously 

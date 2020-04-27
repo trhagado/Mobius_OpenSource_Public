@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Diagnostics;
+using System.Data.Common;
+
 using Oracle.DataAccess.Client;
 using Oracle.DataAccess.Types;
 
@@ -739,30 +741,25 @@ namespace Mobius.UAL
 			DbCommandMx drd)
 		{
 			UserObject uo;
-			OracleDataReader dr = drd.OracleRdr;
 
 			while (true)
 			{
 				if (!drd.Read()) return null;
 
 				uo = new UserObject();
-				if (!dr.IsDBNull(0)) uo.Id = (int)dr.GetOracleDecimal(0);
-				if (!dr.IsDBNull(1)) uo.Type = (UserObjectType)(int)dr.GetOracleDecimal(1);
-				if (!dr.IsDBNull(2)) uo.Owner = dr.GetString(2);
-				if (!dr.IsDBNull(3)) uo.Name = dr.GetString(3);
-				if (!dr.IsDBNull(4)) uo.Description = dr.GetString(4);
-				if (!dr.IsDBNull(5)) uo.ParentFolderType = (FolderTypeEnum)(int)dr.GetOracleDecimal(5);
-				if (!dr.IsDBNull(6)) uo.ParentFolder = dr.GetString(6);
-				if (!dr.IsDBNull(7)) uo.AccessLevel = (UserObjectAccess)(int)dr.GetOracleDecimal(7);
-				if (!dr.IsDBNull(8)) uo.Count = (int)dr.GetOracleDecimal(8);
-				if (!dr.IsDBNull(9))
-				{
-					OracleClob ol = dr.GetOracleClob(9);
-					uo.Content = ol.Value;
-				}
-				if (!dr.IsDBNull(10)) uo.CreationDateTime = dr.GetDateTime(10);
-				if (!dr.IsDBNull(11)) uo.UpdateDateTime = dr.GetDateTime(11);
-				if (!dr.IsDBNull(12)) uo.ACL = dr.GetString(12);
+				if (!drd.IsNull(0)) uo.Id = drd.GetInt(0);
+				if (!drd.IsNull(1)) uo.Type = (UserObjectType)drd.GetInt(1);
+				if (!drd.IsNull(2)) uo.Owner = drd.GetString(2);
+				if (!drd.IsNull(3)) uo.Name = drd.GetString(3);
+				if (!drd.IsNull(4)) uo.Description = drd.GetString(4);
+				if (!drd.IsNull(5)) uo.ParentFolderType = (FolderTypeEnum)drd.GetInt(5);
+				if (!drd.IsNull(6)) uo.ParentFolder = drd.GetString(6);
+				if (!drd.IsNull(7)) uo.AccessLevel = (UserObjectAccess)drd.GetInt(7);
+				if (!drd.IsNull(8)) uo.Count = drd.GetInt(8);
+				if (!drd.IsNull(9)) uo.Content = drd.GetClob(9);
+				if (!drd.IsNull(10)) uo.CreationDateTime = drd.GetDateTime(10);
+				if (!drd.IsNull(11)) uo.UpdateDateTime = drd.GetDateTime(11);
+				if (!drd.IsNull(12)) uo.ACL = drd.GetString(12);
 
 				if (Lex.IsNullOrEmpty(uo.Content) || // ok for all if no content
 				 Permissions.UserHasReadAccess(Security.UserName, uo) || // ok if user has read access
