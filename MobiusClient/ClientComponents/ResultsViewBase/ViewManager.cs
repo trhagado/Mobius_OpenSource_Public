@@ -538,7 +538,7 @@ namespace Mobius.ClientComponents
 			//s.Items.Add(i);
 
 			//i = new ToolTipItem();
-			//Image img = Bitmap.FromFile(@"C:\Mobius\Mobius-3.0\ClientComponents\Resources\Mobius76x76DkBlueBack.bmp");
+			//Image img = Bitmap.FromFile(@"C:\Mobius_OpenSource\Mobius-3.0\ClientComponents\Resources\Mobius76x76DkBlueBack.bmp");
 			//i.Image = img;
 			//s.Items.Add(i);
 

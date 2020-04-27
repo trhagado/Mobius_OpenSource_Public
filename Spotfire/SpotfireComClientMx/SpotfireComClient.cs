@@ -21,7 +21,7 @@ namespace Mobius.SpotfireClient.ComAutomation
 
 		public static int CallId = 0;
 
-		public static string SpotfireComServerDllFolder = @"C:\Mobius\Spotfire\SpotfireApiServerMx\bin\Debug"; // folder containing Com server
+		public static string SpotfireComServerDllFolder = @"C:\Mobius_OpenSource\Spotfire\SpotfireApiServerMx\bin\Debug"; // folder containing Com server
 		public static string SpotfireComServerDllName = @"SpotfireComServerMx.dll"; // file name of ComServer dll that gets loaded into the Spotfire App instance
 
 		public SpotfireComClient()

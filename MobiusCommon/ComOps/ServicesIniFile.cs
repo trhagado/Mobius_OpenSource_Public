@@ -40,7 +40,7 @@ namespace Mobius.ComOps
 				IniFilePath = System.Environment.CurrentDirectory + @"\MobiusServices.ini";
 
 			if (!FileUtil.Exists(IniFilePath) && ClientState.IsDeveloper) // dev/debug
-				IniFilePath = @"C:\Mobius\MobiusClient\ServiceFacade\MobiusServicesDev.ini";
+				IniFilePath = @"C:\Mobius_OpenSource\MobiusClient\ServiceFacade\MobiusServicesDev.ini";
 
 			if (!FileUtil.Exists(IniFilePath)) // just return if not found
 			{

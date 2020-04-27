@@ -1139,7 +1139,7 @@ namespace Mobius.ClientComponents
 			xl = new Microsoft.Office.Interop.Excel.Application();
 			xl.Visible = true;
 			wbs = xl.Workbooks;
-			//			wb = wbs.Open(@"c:\Mobius\opentest.xls",Missing.Value,Missing.Value,Missing.Value,Missing.Value,Missing.Value,Missing.Value,Missing.Value,Missing.Value,Missing.Value,Missing.Value,Missing.Value,Missing.Value);
+			//			wb = wbs.Open(@"C:\Mobius_OpenSource\opentest.xls",Missing.Value,Missing.Value,Missing.Value,Missing.Value,Missing.Value,Missing.Value,Missing.Value,Missing.Value,Missing.Value,Missing.Value,Missing.Value,Missing.Value);
 			wb = wbs.Add(Missing.Value);
 			//			wb = (Microsoft.Office.Interop.Excel._Workbook)(xl.Workbooks.Add( Missing.Value ));
 
@@ -1162,7 +1162,7 @@ namespace Mobius.ClientComponents
 			}
 #endif
 
-			//			wb.SaveAs(@"c:\Mobius\savetest.xls",Excel.XlFileFormat.xlWorkbookNormal,
+			//			wb.SaveAs(@"C:\Mobius_OpenSource\savetest.xls",Excel.XlFileFormat.xlWorkbookNormal,
 			//				null,null,false,false,Excel.XlSaveAsAccessMode.xlShared,
 			//				null,null,null,null);
 

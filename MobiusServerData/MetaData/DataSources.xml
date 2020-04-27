@@ -4,27 +4,27 @@
 
 <DataSources>
 
-	<Connection DbType="MySQL" name="MySql_Mobius" userName="root" password="tree1357"
+	<Connection name="MySql_Mobius" dbType="MySQL" userName="root" password="tree1357"
 	  connectionString="Server=localhost;Port=3306;UserId=root;Password=tree1357;" />
 
 		<SchemaToConnection schema="mbs_owner"           connection="MySql_Mobius"    label="Mobius System Data" />
 		<SchemaToConnection schema="ucdb_owner"          connection="MySql_Mobius"    label="User Cmpnd. Db" />
 		<SchemaToConnection schema="CHEMBL_owner"        connection="MySql_Mobius"    label="ChEMBL data" />
 	  
-	<Connection DbType="Oracle" name="xxx857"   oracleName="xxx857"  userName="xxx"            password="xxx" keyDataSource="true" />
+	<Connection name="xxx857" dbType="Oracle"  oracleName="xxx857"  userName="xxx"            password="xxx" keyDataSource="true" />
 		<SchemaToConnection schema="CHEMBL_owner" connection="xxx857" label="Alias Example" />	
 	
-	<Connection DbType="Oracle" name="xxx361"   oracleName="xxx361"  userName="xxx"         password="xxx" />
+	<Connection name="xxx361" dbType="Oracle"  oracleName="xxx361"  userName="xxx"         password="xxx" />
 
-	<Connection DbType="ODBC" name="AWS_Redshift_XXX" userName="xxx" password="xxx"
+	<Connection name="AWS_Redshift_XXX" dbType="ODBC" userName="xxx" password="xxx"
 	  connectionString="ODBC:Driver={Amazon Redshift (x86)};servername=xxx;port=5439;database=rsinf;username=xxx;password=xxx;" />
 
-  	<Connection DbType="ODBC" name="AWS_Postgres_XXX" userName="xxx" password="xxx"
+  	<Connection name="AWS_Postgres_XXX" dbType="ODBC"  userName="xxx" password="xxx"
 	  connectionString="ODBC:Driver={PostgreSQL Unicode};servername=xxx;port=5432;database=xxx;username=xxx;password=xxx;" />
 	
 
   <!-- Connection to null database that allows any sql but always returns no rows (for dev/test) -->        
-    	<Connection DbType="ODBC" name="NullDb" userName="xxx" password="XXXXXX" 
+    	<Connection name="NullDb" dbType="ODBC"  userName="xxx" password="XXXXXX" 
 	  connectionString="ODBC:Driver={Microsoft Text Driver (*.txt; *.csv)};Dbq=C:\;Extensions=asc,csv,tab,txt" /> 
 
 </DataSources>

@@ -72,12 +72,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Chembl.xml" />
-    <Content Include="DataSources.xml" />
-    <Content Include="Dictionaries.xml" />
-    <Content Include="MetaTableRoot.xml" />
-    <Content Include="Root.xml" />
-    <Content Include="RootTables.xml" />
     <Content Include="SpotfireWebPlayerTemplate.htm" />
     <Content Include="TestQueryScript.txt" />
   </ItemGroup>

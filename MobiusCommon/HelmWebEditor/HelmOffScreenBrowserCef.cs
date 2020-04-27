@@ -424,7 +424,7 @@ namespace Mobius.Helm
 
 			if (Debug && String.IsNullOrWhiteSpace(DebugLog.LogFileName))
 			{
-				DebugLog.LogFileName = @"c:\Mobius\DebugHelm.log";
+				DebugLog.LogFileName = @"C:\Mobius_OpenSource\DebugHelm.log";
 				DebugLog.ResetFile();
 			}
 

@@ -1035,7 +1035,7 @@ namespace Mobius.ClientComponents
 			// Example:
 			//  Name of the item to resolve: ClientComponents.resources, Version=5.0.7200.22115, Culture=en-US, PublicKeyToken=null
 			//  at Mobius.ClientComponents.SessionManager.AssemblyResolveEventHandler(Object sender, ResolveEventArgs args) 
-			//  in C:\Mobius\MobiusClient\ClientComponents\SessionManager\SessionManager.cs:line 1023
+			//  in C:\Mobius_OpenSource\MobiusClient\ClientComponents\SessionManager\SessionManager.cs:line 1023
 
 			if (!LogStartupDetails) return null;
 

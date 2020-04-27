@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!-- **************************************************** -->
-<!-- Root for Mobius metatable definitions -->
-<!-- **************************************************** -->
-<metatables>
-  <include filename="chembl.xml"/>
-</metatables>

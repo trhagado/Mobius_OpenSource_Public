@@ -119,378 +119,378 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="KeyResult" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\KeyResult.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\KeyResult.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Next" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Next.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Next.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Excel2007" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Excel2007.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Excel2007.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SortAscending" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortAscending.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortAscending.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Paste" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Paste.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Paste.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Delete.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Delete.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CRC" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\CRC.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\CRC.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Email" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Email.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Email.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CondFormatEdit" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\CondFormatEdit.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\CondFormatEdit.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Save" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Save.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Save.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LineChart" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\LineChart.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\LineChart.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Height" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Height.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Height.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="List2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\List2.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\List2.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SortDescending01" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortDescending01.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortDescending01.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="MouseTranslate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\MouseTranslate.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\MouseTranslate.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DropDownBlue5x5" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\DropDownBlue5x5.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\DropDownBlue5x5.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Spotfire" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Spotfire.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Spotfire.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TextEdit" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\TextEdit.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\TextEdit.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Redo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Redo.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Redo.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TablePreviewSingle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\TablePreviewSingle.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\TablePreviewSingle.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SurfaceChart" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\SurfaceChart.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\SurfaceChart.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AddToFavorites" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\AddToFavorites.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\AddToFavorites.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TableSingle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\TableSingle.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\TableSingle.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Table" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Table.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Table.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CondFormat" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\CondFormat.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\CondFormat.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Excel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Excel.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Excel.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AnnotationTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\AnnotationTable.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\AnnotationTable.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Permissions1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Permissions.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Permissions.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BasicAndListFilters" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\BasicAndListFilters.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\BasicAndListFilters.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="VideoRecorder" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\VideoRecorder.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\VideoRecorder.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Exit" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Exit.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Exit.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TrackBar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\TrackBar.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\TrackBar.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="NumberFormat" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\NumberFormat.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\NumberFormat.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="HeatMap" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\HeatMap.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\HeatMap.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="apply_16x16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\apply_16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\apply_16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Books" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Books.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Books.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SortDescending03" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortDescending03.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortDescending03.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CheckOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\CheckOn.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\CheckOn.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="cancel_16x16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\cancel_16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\cancel_16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Project" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Project.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Project.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ColumnWidth" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\ColumnWidth.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\ColumnWidth.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DeleteRow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\DeleteRow.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\DeleteRow.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SortedDescending" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortedDescending.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortedDescending.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="People" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\People.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\People.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SortedAscending" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortedAscending.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortedAscending.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Width" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Width.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Width.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Import" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Import.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Import.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TargetFamily" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\TargetFamily.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\TargetFamily.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Properties" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Properties.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Properties.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Person" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Person.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Person.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SortDescending" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortDescending.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortDescending.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TableStruct" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\TableStruct.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\TableStruct.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TechSupport" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\TechSupport.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\TechSupport.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="FillColor" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\FillColor.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\FillColor.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="FolderNew" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\FolderNew.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\FolderNew.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BarChart" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\BarChart.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\BarChart.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="MouseRotate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\MouseRotate.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\MouseRotate.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DeleteColumn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\DeleteColumn.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\DeleteColumn.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SortDescending02" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortDescending02.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortDescending02.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Design" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Design1.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Design1.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Help" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Help.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Help.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="MouseSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\MouseSelect.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\MouseSelect.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PrintPreview" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\PrintPreview.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\PrintPreview.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CheckOff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\CheckOff.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\CheckOff.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="FileClose" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Fileclose.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Fileclose.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="NewDoc" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\NewDoc.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\NewDoc.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Previous" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Previous.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Previous.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RangeTrackBar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\RangeTrackBar.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\RangeTrackBar.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SortedDescending1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortedDescending1.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortedDescending1.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Target" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Target.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Target.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SortedDescending3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortedDescending3.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortedDescending3.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Copy" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Copy.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Copy.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ListLogic" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\ListLogic.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\ListLogic.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AddColumns" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\AddColumns.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\AddColumns.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Undo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Undo.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Undo.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="FullScreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\FullScreen.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\FullScreen.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Tools" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Tools.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Tools.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ListSearch" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\ListSearch.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\ListSearch.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Struct" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Struct.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Struct.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Word2007" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Word2007.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Word2007.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Filter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Filter.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Filter.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Permissions" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Permissions.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Permissions.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SortedAscending1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortedAscending1.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortedAscending1.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="StructSearch" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\StructSearch.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\StructSearch.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="FileOpen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\FileOpen.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\FileOpen.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Graph" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Graph.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Graph.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Folder" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Folder.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Folder.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TableDataMultiple" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\TableDataMultiple.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\TableDataMultiple.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Export" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Export.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Export.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Gear" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Gear.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Gear.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Previous2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Previous2.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Previous2.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Word2010" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Word2010.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Word2010.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Summary" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Summary.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Summary.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Subtract" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Subtract.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Subtract.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="MouseZoom" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\MouseZoom.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\MouseZoom.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EditHyperlink" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\EditHyperlink.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\EditHyperlink.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CalcField" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\CalcField.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\CalcField.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SortAscending01" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortAscending01.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortAscending01.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SortAscending03" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortAscending03.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortAscending03.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TargetPlus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\TargetPlus.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\TargetPlus.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Print" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Print.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Print.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SortedAscending2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortedAscending2.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortedAscending2.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="List" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\List.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\List.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Word" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Word.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Word.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SortAscending02" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortAscending02.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortAscending02.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Find" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Find.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Find.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Add" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Add.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Add.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RunQuery" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\RunQuery.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\RunQuery.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="WorldSearch" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\WorldSearch.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\WorldSearch.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AddRows" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\AddRows.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\AddRows.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Edit.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Edit.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="NumberList" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\NumberList.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\NumberList.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AddSummary" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\AddSummary.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\AddSummary.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AreaChart" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\AreaChart.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\AreaChart.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PieChart" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\PieChart.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\PieChart.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SortedDescending2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortedDescending2.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortedDescending2.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="FilterQuick" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\FilterQuick.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\FilterQuick.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="OpenHyperlink" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\OpenHyperlink.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\OpenHyperlink.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Excel2010" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Excel2010.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Excel2010.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Cut" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\Cut.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\Cut.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SortedAscending3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortedAscending3.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\SortedAscending3.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SarTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\SarTable.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\SarTable.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="apply_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\apply_32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\apply_32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="cancel_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\cancel_32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\cancel_32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="index_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Mobius\MobiusCommon\Data\Bitmaps\MiscBitmaps\index_32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>C:\Mobius_OpenSource\MobiusCommon\Data\Bitmaps\MiscBitmaps\index_32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
