@@ -568,12 +568,12 @@ namespace Mobius.MolLib1
 		{
 			get	
 			{
-				throw new NotImplementedException();
+				return ""; // throw new NotImplementedException();
 			}
 
 			set 
 			{
-				throw new NotImplementedException();
+				return; // throw new NotImplementedException();
 			}
 		}
 
@@ -639,7 +639,7 @@ namespace Mobius.MolLib1
 
 		public static void SetStandardDisplayPreferences(MoleculeControl molCtl)
 		{
-			throw new NotImplementedException();
+			return; // throw new NotImplementedException();
 		}
 
 	}

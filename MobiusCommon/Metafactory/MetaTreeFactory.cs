@@ -221,6 +221,7 @@ namespace Mobius.MetaFactoryNamespace
 						//DebugLog.Message(stackTrace.ToString());
 					}
 
+					BuildFromSources(quickBuild, treeRootPath); //pass true to ensure that cached version of tree includes "hidden" collaboration data
 					BuildComplete = true;
 
 					if (attemptToBuildFromCache) // write new cache if building from it is enabled
