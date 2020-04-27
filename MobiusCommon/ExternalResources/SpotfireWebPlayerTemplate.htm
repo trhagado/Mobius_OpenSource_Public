@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+    <head>
+      <title>Mobius template to open a Dxp analysis with a specific data file</title>
+      <script type="text/javascript" src="[SpotfireServer]/SpotfireWeb/GetJavaScriptApi.ashx?Version=3.1"></script>
+    </head>
+
+// Script that opens the Web Player, the .Dxp file and sets the file name parameter
+
+<script type="text/javascript">
+
+var webPlayer; // the player instance
+
+// Create the WebPlayer instance & open the analysis
+
+var openWebPlayer = function()
+{
+    var webPlayerCustomization = new spotfire.webPlayer.Customization();
+    webPlayer = new spotfire.webPlayer.Application("[SpotfireServer]/SpotfireWeb/", webPlayerCustomization);
+
+    // Show a simple alert dialog if something goes wrong.
+    var onError = function(errorCode, description)
+    {
+        alert(errorCode + ": " + description);
+    };
+
+		webPlayer.onOpened(RunUponOpen);
+    webPlayer.onError(onError);
+		webPlayer.open("[AnalysisName]", "webPlayerDiv", "");
+};
+
+// This function is called once the analysis is opened to set the file name
+
+var RunUponOpen = function()
+{
+	webPlayer.analysisDocument.setDocumentProperty("fileName", [DataFileName]);
+};
+
+// Handle onload event by opening the web player
+
+window.onload = openWebPlayer;
+
+</script>
+
+<body>
+		<div id="webPlayerDiv" style="position: absolute; width: 100%; height: 100%"></div>
+</body>
+</html>

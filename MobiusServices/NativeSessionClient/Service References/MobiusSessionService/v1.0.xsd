@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://server/MobiusServices/v1.0" elementFormDefault="qualified" targetNamespace="http://server/MobiusServices/v1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:element name="GetCurrentVersionNumber">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCurrentVersionNumberResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetCurrentVersionNumberResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCurrentUserId">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCurrentUserIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetCurrentUserIdResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCurrentSessionUserId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="session" nillable="true" type="tns:Session" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="Session">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CreationDT" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ExpirationDT" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SessionParameters" nillable="true" type="q1:ArrayOfKeyValueOfSessionParameterNamestringwAZUszP_P" />
+      <xs:element minOccurs="0" name="UserId" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Session" nillable="true" type="tns:Session" />
+  <xs:simpleType name="SessionParameterName">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="UserNameToImpersonate" />
+      <xs:enumeration value="IsNativeSession" />
+      <xs:enumeration value="NativeSessionLine" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SessionParameterName" nillable="true" type="tns:SessionParameterName" />
+  <xs:element name="GetCurrentSessionUserIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetCurrentSessionUserIdResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateSession">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateSessionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CreateSessionResult" nillable="true" type="tns:Session" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateNativeSession">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateNativeSessionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CreateNativeSessionResult" nillable="true" type="tns:Session" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FreshenSession">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="session" nillable="true" type="tns:Session" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FreshenSessionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FreshenSessionResult" nillable="true" type="tns:Session" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsSessionValid">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="session" nillable="true" type="tns:Session" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsSessionValidResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="IsSessionValidResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSessionInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="session" nillable="true" type="tns:Session" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSessionInfoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetSessionInfoResult" nillable="true" type="tns:ArrayOfSessionInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfSessionInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SessionInfo" nillable="true" type="tns:SessionInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSessionInfo" nillable="true" type="tns:ArrayOfSessionInfo" />
+  <xs:complexType name="SessionInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ServiceEndpointUri" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ServiceName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SessionData" nillable="true" type="tns:ArrayOfSessionInfoDataElement" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SessionInfo" nillable="true" type="tns:SessionInfo" />
+  <xs:complexType name="ArrayOfSessionInfoDataElement">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SessionInfoDataElement" nillable="true" type="tns:SessionInfoDataElement" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSessionInfoDataElement" nillable="true" type="tns:ArrayOfSessionInfoDataElement" />
+  <xs:complexType name="SessionInfoDataElement">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ValueType" type="tns:SessionInfoDataElementType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SessionInfoDataElement" nillable="true" type="tns:SessionInfoDataElement" />
+  <xs:simpleType name="SessionInfoDataElementType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="String" />
+      <xs:enumeration value="Integer" />
+      <xs:enumeration value="Double" />
+      <xs:enumeration value="Date" />
+      <xs:enumeration value="DateTime" />
+      <xs:enumeration value="TimeSpan" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SessionInfoDataElementType" nillable="true" type="tns:SessionInfoDataElementType" />
+  <xs:element name="GetCurrentSessionCount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="session" nillable="true" type="tns:Session" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCurrentSessionCountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetCurrentSessionCountResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSessionInfoForAllSessions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="session" nillable="true" type="tns:Session" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSessionInfoForAllSessionsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetSessionInfoForAllSessionsResult" nillable="true" type="q2:ArrayOfKeyValueOfSessionArrayOfSessionInfo0Ju4W8jp" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetSessionParameter">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="session" nillable="true" type="tns:Session" />
+        <xs:element minOccurs="0" name="parmName" type="tns:SessionParameterName" />
+        <xs:element minOccurs="0" name="value" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetSessionParameterResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SetSessionParameterResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DisposeSession">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="session" nillable="true" type="tns:Session" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DisposeSessionResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DisposeSessionById">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="session" nillable="true" type="tns:Session" />
+        <xs:element minOccurs="0" name="sessionIdToDispose" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DisposeSessionByIdResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

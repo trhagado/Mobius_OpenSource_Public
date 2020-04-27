@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4FAF4247-8B42-409D-924C-DBF62A316516}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mobius.Services.Native</RootNamespace>
+    <AssemblyName>MobiusNativeServices</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>2</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Oracle.DataAccess, Version=4.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Mobius\MobiusCommon\ExternalLibraries\Oracle.DataAccess.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="NativeSessionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NativeSessionForm.Designer.cs">
+      <DependentUpon>NativeSessionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NativeSessionHost.cs" />
+    <Compile Include="NativeSessionInitializer.cs" />
+    <Compile Include="OpInvokers\IInvokeServiceOps.cs" />
+    <Compile Include="OpInvokers\MobiusAnnotationServiceOpInvoker.cs" />
+    <Compile Include="OpInvokers\MobiusCidListServiceOpInvoker.cs" />
+    <Compile Include="OpInvokers\MobiusCompoundUtilServiceOpInvoker.cs" />
+    <Compile Include="OpInvokers\MobiusDataConnectionAdminServiceOpInvoker.cs" />
+    <Compile Include="OpInvokers\MobiusDictionaryServiceOpInvoker.cs" />
+    <Compile Include="OpInvokers\MobiusFileServiceOpInvoker.cs" />
+    <Compile Include="OpInvokers\MobiusMetaDataServiceOpInvoker.cs" />
+    <Compile Include="OpInvokers\MobiusMetaTableServiceOpInvoker.cs" />
+    <Compile Include="OpInvokers\MobiusQueryEngineServiceOpInvoker.cs" />
+    <Compile Include="OpInvokers\MobiusSecurityServiceOpInvoker.cs" />
+    <Compile Include="OpInvokers\MobiusServerLogFileServiceOpInvoker.cs" />
+    <Compile Include="OpInvokers\MobiusTargetAssayServiceOpInvoker.cs" />
+    <Compile Include="OpInvokers\MobiusTargetMapServiceOpInvoker.cs" />
+    <Compile Include="OpInvokers\MobiusTargetResultsViewerServiceOpInvoker.cs" />
+    <Compile Include="OpInvokers\MobiusTaskSchedulerServiceOpInvoker.cs" />
+    <Compile Include="OpInvokers\MobiusUalUtilServiceOpInvoker.cs" />
+    <Compile Include="OpInvokers\MobiusUsageServiceOpInvoker.cs" />
+    <Compile Include="OpInvokers\MobiusUserCmpndDbServiceOpInvoker.cs" />
+    <Compile Include="OpInvokers\MobiusUserObjectServiceOpInvoker.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="NativeSessionForm.resx">
+      <DependentUpon>NativeSessionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MobiusClient\ClientComponents\ClientComponents.csproj">
+      <Project>{6e5faa19-0fe1-4075-b6d2-147de76830cc}</Project>
+      <Name>ClientComponents</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusClient\ServiceFacade\ServiceFacade.csproj">
+      <Project>{4921b4b1-fbea-4c6b-87a6-e9481e3bebd1}</Project>
+      <Name>ServiceFacade</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\CdkMx\CdkMx.csproj">
+      <Project>{203d17b0-f97c-4c9b-b406-cae30dad3241}</Project>
+      <Name>CdkMx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\CdkSimSearchMx\CdkSimSearchMx.csproj">
+      <Project>{47ef0025-d6a9-4aa8-9fae-e99ed47d5f85}</Project>
+      <Name>CdkSimSearchMx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\ComOps\ComOps.csproj">
+      <Project>{6e5dcba5-7804-42e2-b7ae-ec0f718621c9}</Project>
+      <Name>ComOps</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\Data\Data.csproj">
+      <Project>{d4397193-c9db-4a7f-a047-98d40ac12647}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\ExternalLibraries\ExternalLibraries.csproj">
+      <Project>{f8fba54e-48e4-4803-8379-ee8159661126}</Project>
+      <Name>ExternalLibraries</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\MetaFactory\MetaFactory.csproj">
+      <Project>{11b976d5-a936-4456-bcaa-93c179b21e9f}</Project>
+      <Name>MetaFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\MolLib1Mx\MolLib1Mx.csproj">
+      <Project>{a80b808b-5cee-4be9-9725-ecc8953e9c51}</Project>
+      <Name>MolLib1Mx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\MolLib2Mx\MolLib2Mx.csproj">
+      <Project>{e9e3b546-1b9f-44e0-8d75-f9dc31b51c43}</Project>
+      <Name>MolLib2Mx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\QueryEngine\QueryEngine.csproj">
+      <Project>{6720570f-53fe-4a28-a496-e04b2dc0c335}</Project>
+      <Name>QueryEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\ToolServices\ToolServices.csproj">
+      <Project>{a2f5acd0-2417-48b1-9192-627eeb3c10f6}</Project>
+      <Name>ToolServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\UAL\UAL.csproj">
+      <Project>{32870ff5-86fc-43e0-b62c-eb2eb6fb689a}</Project>
+      <Name>UAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusServices\NativeSessionClient\NativeSessionClient.csproj">
+      <Project>{ec0203fd-d464-4ba0-a088-b87c31139f47}</Project>
+      <Name>NativeSessionClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusServices\NativeSessionTypeLib\NativeSessionTypeLib.csproj">
+      <Project>{2EA7B7AA-B74F-462A-BA86-65A6569648C1}</Project>
+      <Name>NativeSessionTypeLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusServices\ServicesInternalTypeLib\ServicesInternalTypeLib.csproj">
+      <Project>{A8EBD84D-E153-400D-9430-A056F432A8DB}</Project>
+      <Name>ServicesInternalTypeLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusServices\ServicesTypeLib\ServicesTypeLib.csproj">
+      <Project>{A67635BA-89F2-4C7C-A864-F72CD85B43A2}</Project>
+      <Name>ServicesTypeLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusServices\ServiceUtil\ServiceUtil.csproj">
+      <Project>{7A78E6DD-7372-465F-AFE2-AEA5A9F35EA1}</Project>
+      <Name>ServiceUtil</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusServices\TypeConversionUtil\TypeConversionUtil.csproj">
+      <Project>{D3396EA4-E535-45AA-82C3-618DEA7E3DCD}</Project>
+      <Name>TypeConversionUtil</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Spotfire\SpotfireApiClient\SpotfireApiClient.csproj">
+      <Project>{7d73be3e-411f-48cc-9f1e-f6c0dc3094d9}</Project>
+      <Name>SpotfireApiClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Spotfire\SpotfireDocumentClasses\SpotfireDocumentClasses.csproj">
+      <Project>{ec900570-2e1d-44ff-94a0-630aadb30cde}</Project>
+      <Name>SpotfireDocumentClasses</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Spotfire\SpotfireUI\SpotfireUI.csproj">
+      <Project>{5be4e505-6f53-4495-8633-5c7f70d35282}</Project>
+      <Name>SpotfireUI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy C:\Mobius\MobiusCommon\ExternalLibraries\*.dll $(TargetDir) /d/c/r/y</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

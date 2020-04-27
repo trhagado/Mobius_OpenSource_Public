@@ -1,0 +1,99 @@
+###########################################################################
+# MobiusSpotfireApi - Interface IronPython script to MobiusSpotfireApiServer.dll
+# Called when the MobiusSpotfireApiCall doc property is set with a call method and args
+# It downloads MobiusSpotfireServerApiServer.dll if necessary
+# It then loads the dll and calls the CallMethod method to execute the Api call
+# Finally, the MobiusSpotfireAPiResponse doc property is set with the call response value
+###########################################################################
+
+import clr
+import sys
+import datetime
+
+from System.Net import WebClient, CredentialCache
+from System.IO import StreamWriter, Directory, File, Path, SearchOption
+from System import Environment, EnvironmentVariableTarget, DateTime
+
+from Spotfire.Dxp.Data import *
+
+try:
+	#bogus = 1 / 0 # debug - force exception
+	userName = Environment.UserName
+
+	# If Dev/Debug then load the dll file directly from the Visual Studio build area
+
+	if userName == '<devUser>' :
+		dllFileName = "<localFolderPath>\\MobiusSpotfireApiServer.dll"
+
+	# If production then download dll file and store in temp area
+	# Works for both Pro Client and Web Player environments
+
+	else :
+		txt = ""
+		downloadDllViaWebClient = True
+		copyDllFromSpotfireDataShare = False
+
+
+		tempFolder = Path.GetTempPath()
+		dllFileName = Path.GetTempFileName()
+		
+		if downloadDllViaWebClient : # Download file from MobiusQueryExecutorApp web site
+
+			url = 'http://<server>/MobiusQueryExecutorApp/' 
+			url = url + 'MobiusSpotfireApiServer.dll'
+			wc = WebClient()
+			wc.Credentials = CredentialCache.DefaultNetworkCredentials
+			wc.DownloadFile(url, dllFileName)
+
+		else : # Copy from Spotfire data share
+
+			srcDllFileName = "\\\\<folderPath>\\MobiusSpotfireApiServer.dll"
+			txt = txt + "Source: " + srcDllFileName  + ", Exists: " + str(File.Exists(srcDllFileName)) + '\n'
+
+			File.Copy(srcDllFileName, dllFileName, True) # 9/26/18 appears can't access <folderPath> files any longer from script running on Spotfire server
+
+# Should have the Dll now, verify
+
+		txt = txt + "Dest: " + dllFileName  + ", Exists: " + str(File.Exists(dllFileName)) + '\n'
+		#print txt
+
+		Environment.SetEnvironmentVariable("MobiusDllName", dllFileName) # save name to indicate we've downloaded it
+
+
+	# Load the dll (must do each time)
+
+	#print  "Loading DLL: " + dllFileName + "\nUser: " + userName + "\n"
+
+	clr.AddReferenceToFileAndPath(dllFileName) # load the dll so we can use it
+
+	from Mobius.SpotfireServer import MobiusSpotfireApiServer # import the main class
+
+	#####################################################################################
+	# Call method and paramteters specified in the CallMobiusSpotfireApi document property.
+	# Result of call is stored in CallMobiusSpotfireApi where it can be picked up and 
+	# returned to the caller.
+	#####################################################################################
+
+	api = MobiusSpotfireApiServer(Application) # Create SpotfireApiServer reference
+
+	args = Document.Properties["MobiusSpotfireApiCall"]
+	result = api.CallMethod(args)
+	#print result 
+
+	#Document.Properties["MobiusSpotfireApiResponse"] = result # (don't set response here, done in C# api.CallMethod)
+	#Document.Properties["MobiusSpotfireErrorMsg"] = "" # clear error
+
+except:
+	exc_type, exc_value, exc_traceback = sys.exc_info() 
+	em = "Exception: Python line: " + str(exc_traceback.tb_lineno)
+	#m = em + '\n fi#ename: ' + str(exc_traceback.tb_frame.f_code.co_filename) # just displays: <string>
+	#em = em + '\n name: ' + str(exc_traceback.tb_frame.f_code.co_name) # just displays: <module>
+	em = em + '\n type: ' + str(exc_type.__name__)
+	em = em + '\n message: ' + str(exc_value.message)
+
+	errorMsg = em
+	print errorMsg
+ 
+	#errorMsg = "Unexpected error:" + str(sys.exc_info()[0])
+	Document.Properties["MobiusSpotfireErrorMsg"] = errorMsg
+	Document.Properties["MobiusSpotfireApiResponse"] = errorMsg # also to result for now

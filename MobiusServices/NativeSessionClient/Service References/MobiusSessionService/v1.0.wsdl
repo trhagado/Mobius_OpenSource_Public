@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://server/MobiusServices/v1.0" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:i0="http://tempuri.org/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MobiusSessionService" targetNamespace="http://server/MobiusServices/v1.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:import namespace="http://tempuri.org/" location="" />
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://server/MobiusServices/v1.0/Imports">
+      <xsd:import namespace="http://server/MobiusServices/v1.0" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IMobiusSessionService_GetCurrentVersionNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentVersionNumber" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_GetCurrentVersionNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentVersionNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_GetCurrentUserId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentUserId" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_GetCurrentUserId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentUserIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_GetCurrentSessionUserId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentSessionUserId" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_GetCurrentSessionUserId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentSessionUserIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_CreateSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateSession" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_CreateSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateSessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_CreateNativeSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateNativeSession" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_CreateNativeSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateNativeSessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_FreshenSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:FreshenSession" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_FreshenSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FreshenSessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_IsSessionValid_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsSessionValid" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_IsSessionValid_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsSessionValidResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_GetSessionInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSessionInfo" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_GetSessionInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSessionInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_GetCurrentSessionCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentSessionCount" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_GetCurrentSessionCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentSessionCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_GetSessionInfoForAllSessions_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSessionInfoForAllSessions" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_GetSessionInfoForAllSessions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSessionInfoForAllSessionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_SetSessionParameter_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetSessionParameter" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_SetSessionParameter_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetSessionParameterResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_DisposeSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:DisposeSession" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_DisposeSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DisposeSessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_DisposeSessionById_InputMessage">
+    <wsdl:part name="parameters" element="tns:DisposeSessionById" />
+  </wsdl:message>
+  <wsdl:message name="IMobiusSessionService_DisposeSessionById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DisposeSessionByIdResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IMobiusSessionService">
+    <wsdl:operation name="GetCurrentVersionNumber">
+      <wsdl:input wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/GetCurrentVersionNumber" message="tns:IMobiusSessionService_GetCurrentVersionNumber_InputMessage" />
+      <wsdl:output wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/GetCurrentVersionNumberResponse" message="tns:IMobiusSessionService_GetCurrentVersionNumber_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentUserId">
+      <wsdl:input wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/GetCurrentUserId" message="tns:IMobiusSessionService_GetCurrentUserId_InputMessage" />
+      <wsdl:output wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/GetCurrentUserIdResponse" message="tns:IMobiusSessionService_GetCurrentUserId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentSessionUserId">
+      <wsdl:input wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/GetCurrentSessionUserId" message="tns:IMobiusSessionService_GetCurrentSessionUserId_InputMessage" />
+      <wsdl:output wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/GetCurrentSessionUserIdResponse" message="tns:IMobiusSessionService_GetCurrentSessionUserId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateSession">
+      <wsdl:input wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/CreateSession" message="tns:IMobiusSessionService_CreateSession_InputMessage" />
+      <wsdl:output wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/CreateSessionResponse" message="tns:IMobiusSessionService_CreateSession_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateNativeSession">
+      <wsdl:input wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/CreateNativeSession" message="tns:IMobiusSessionService_CreateNativeSession_InputMessage" />
+      <wsdl:output wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/CreateNativeSessionResponse" message="tns:IMobiusSessionService_CreateNativeSession_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FreshenSession">
+      <wsdl:input wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/FreshenSession" message="tns:IMobiusSessionService_FreshenSession_InputMessage" />
+      <wsdl:output wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/FreshenSessionResponse" message="tns:IMobiusSessionService_FreshenSession_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsSessionValid">
+      <wsdl:input wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/IsSessionValid" message="tns:IMobiusSessionService_IsSessionValid_InputMessage" />
+      <wsdl:output wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/IsSessionValidResponse" message="tns:IMobiusSessionService_IsSessionValid_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSessionInfo">
+      <wsdl:input wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/GetSessionInfo" message="tns:IMobiusSessionService_GetSessionInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/GetSessionInfoResponse" message="tns:IMobiusSessionService_GetSessionInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentSessionCount">
+      <wsdl:input wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/GetCurrentSessionCount" message="tns:IMobiusSessionService_GetCurrentSessionCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/GetCurrentSessionCountResponse" message="tns:IMobiusSessionService_GetCurrentSessionCount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSessionInfoForAllSessions">
+      <wsdl:input wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/GetSessionInfoForAllSessions" message="tns:IMobiusSessionService_GetSessionInfoForAllSessions_InputMessage" />
+      <wsdl:output wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/GetSessionInfoForAllSessionsResponse" message="tns:IMobiusSessionService_GetSessionInfoForAllSessions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetSessionParameter">
+      <wsdl:input wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/SetSessionParameter" message="tns:IMobiusSessionService_SetSessionParameter_InputMessage" />
+      <wsdl:output wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/SetSessionParameterResponse" message="tns:IMobiusSessionService_SetSessionParameter_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DisposeSession">
+      <wsdl:input wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/DisposeSession" message="tns:IMobiusSessionService_DisposeSession_InputMessage" />
+      <wsdl:output wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/DisposeSessionResponse" message="tns:IMobiusSessionService_DisposeSession_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DisposeSessionById">
+      <wsdl:input wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/DisposeSessionById" message="tns:IMobiusSessionService_DisposeSessionById_InputMessage" />
+      <wsdl:output wsaw:Action="http://server/MobiusServices/v1.0/IMobiusSessionService/DisposeSessionByIdResponse" message="tns:IMobiusSessionService_DisposeSessionById_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:service name="MobiusSessionService">
+    <wsdl:port name="HTTPEndpoint" binding="i0:HTTPEndpoint">
+      <soap12:address location="http://[server].[server]:7700/MobiusServices/MobiusSessionService" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>http://[server].[server]:7700/MobiusServices/MobiusSessionService</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>mobius@[server]</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="TCPEndpoint" binding="i0:TCPEndpoint">
+      <soap12:address location="net.tcp://[server].[server]:7701/MobiusServices/MobiusSessionService" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://[server].[server]:7701/MobiusServices/MobiusSessionService</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>mobius@[server]</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="MobiusInternalSessionService_IPCEndpoint" binding="i0:MobiusInternalSessionService_IPCEndpoint">
+      <soap12:address location="net.pipe://[server]/MobiusServices/IMobiusInternalSessionService_1740" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.pipe://[server]/MobiusServices/IMobiusInternalSessionService_1740</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>mobius@[server]</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

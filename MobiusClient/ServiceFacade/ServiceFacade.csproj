@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4921B4B1-FBEA-4C6B-87A6-E9481E3BEBD1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mobius.ServiceFacade</RootNamespace>
+    <AssemblyName>ServiceFacade</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Client\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>2</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>2</WarningLevel>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>..\Client\bin\Debug\ServiceFacade.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\ServiceFacade.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MetaFactory\MetaTableFactory.cs" />
+    <Compile Include="MetaFactory\OracleMetaFactory.cs" />
+    <Compile Include="MetaFactory\DictionaryFactory.cs" />
+    <Compile Include="MetaFactory\MetaTreeFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryEngine\MoleculeUtil.cs" />
+    <Compile Include="QueryEngine\CompoundIdUtil.cs" />
+    <Compile Include="QueryEngine\QueryEngine.cs" />
+    <Compile Include="QueryEngine\MultiDbAssayMetaBroker.cs" />
+    <Compile Include="QueryEngine\UnpivotedAssayMetaBroker.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServiceFacade.cs" />
+    <Compile Include="ToolServices\TargetResultsViewerService.cs" />
+    <Compile Include="UAL\AnnotationDao.cs" />
+    <Compile Include="UAL\CidListDao.cs" />
+    <Compile Include="UAL\CommandDao.cs" />
+    <Compile Include="QueryEngine\QueryReader.cs" />
+    <Compile Include="UAL\ServerFile.cs" />
+    <Compile Include="UAL\ServerLogFile.cs" />
+    <Compile Include="UAL\TargetMapDao.cs" />
+    <Compile Include="UAL\UsageDao.cs" />
+    <Compile Include="UAL\Security.cs" />
+    <Compile Include="UAL\UalUtil.cs" />
+    <Compile Include="UAL\UserObjectDao.cs" />
+    <Compile Include="UAL\XlConnection.cs" />
+    <Compile Include="UAL\UserCmpndDbDao.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MobiusCommon\ComOps\ComOps.csproj">
+      <Project>{6e5dcba5-7804-42e2-b7ae-ec0f718621c9}</Project>
+      <Name>ComOps</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\Data\Data.csproj">
+      <Project>{d4397193-c9db-4a7f-a047-98d40ac12647}</Project>
+      <Name>Data</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\MetaFactory\MetaFactory.csproj">
+      <Project>{11b976d5-a936-4456-bcaa-93c179b21e9f}</Project>
+      <Name>MetaFactory</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\QueryEngine\QueryEngine.csproj">
+      <Project>{6720570f-53fe-4a28-a496-e04b2dc0c335}</Project>
+      <Name>QueryEngine</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\ToolServices\ToolServices.csproj">
+      <Project>{1c16d1fe-96e4-4f37-b462-995fafaa2b9d}</Project>
+      <Name>ToolServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\UAL\UAL.csproj">
+      <Project>{32870ff5-86fc-43e0-b62c-eb2eb6fb689a}</Project>
+      <Name>UAL</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusServices\NativeSessionClient\NativeSessionClient.csproj">
+      <Project>{ec0203fd-d464-4ba0-a088-b87c31139f47}</Project>
+      <Name>NativeSessionClient</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusServices\NativeSessionTypeLib\NativeSessionTypeLib.csproj">
+      <Project>{2ea7b7aa-b74f-462a-ba86-65a6569648c1}</Project>
+      <Name>NativeSessionTypeLib</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusServices\ServicesTypeLib\ServicesTypeLib.csproj">
+      <Project>{A67635BA-89F2-4C7C-A864-F72CD85B43A2}</Project>
+      <Name>ServicesTypeLib</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusServices\TypeConversionUtil\TypeConversionUtil.csproj">
+      <Project>{D3396EA4-E535-45AA-82C3-618DEA7E3DCD}</Project>
+      <Name>TypeConversionUtil</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Spotfire\SpotfireDocumentClasses\SpotfireDocumentClasses.csproj">
+      <Project>{ec900570-2e1d-44ff-94a0-630aadb30cde}</Project>
+      <Name>SpotfireDocumentClasses</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\Mobius.Services.Types.Bitmap.datasource" />
+    <None Include="Properties\DataSources\Mobius.Services.Types.DictionaryMx.datasource" />
+    <None Include="Properties\DataSources\Mobius.Services.Types.MetaTable.datasource" />
+    <None Include="Properties\DataSources\Mobius.Services.Types.Query.datasource" />
+    <None Include="Properties\DataSources\Mobius.Services.Types.Session.datasource" />
+    <None Include="Properties\DataSources\Mobius.Services.Types.UserObjectNode.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\Mobius.Services.Types.FindQueryByNameSubstringResult.datasource" />
+    <None Include="Properties\DataSources\Mobius.Services.Types.Graph.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\Mobius.Services.Types.DataRow.datasource" />
+    <None Include="Properties\DataSources\Mobius.Services.Types.Node.datasource" />
+    <None Include="Properties\DataSources\Mobius.Services.Types.NodeRelationshipQuad.datasource" />
+    <None Include="Properties\DataSources\Mobius.Services.Types.SessionInfo.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\Mobius.Services.Types.UserInfo.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\Mobius.Services.Types.UcdbCompound.datasource" />
+    <None Include="Properties\DataSources\Mobius.Services.Types.UcdbDatabase.datasource" />
+    <None Include="Properties\DataSources\Mobius.Services.Types.UcdbModel.datasource" />
+    <None Include="Properties\DataSources\Mobius.Services.Types.UcdbTestModelServiceResult.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\Mobius.Services.Types.AnnotationVo.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\Mobius.Services.Types.ChemicalStructure.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\Mobius.Services.Types.CidList.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\Mobius.Services.Types.TargetMap.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\Mobius.Services.Types.TypedBlob.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\Mobius.Services.Types.DictionaryEx.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\Mobius.Services.Types.MetaTableDescription.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\Mobius.Services.Types.NameValuePair.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

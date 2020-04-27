@@ -1,0 +1,42 @@
+﻿<!--
+//////////////////////////////////////////////////////////////////////////////////
+// MobiusHelmEditor.htm
+//////////////////////////////////////////////////////////////////////////////////
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>Mobius HELM Editor</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script type='text/javascript' src='//[server]/regmol/tools/dojo/dojo/dojo.js'></script>
+    <script type='text/javascript' src='//[server]/regmol/jsdraw/Scilligence.JSDraw2.Pro.js'></script>
+    <script type='text/javascript' src='//[server]/regmol/jsdraw/Service.aspx'></script>
+    <script type='text/javascript' src='//[server]/regmol/jsdraw/Service.aspx?cmd=helm.monomer.downloadjson&url-username=<userName>@[server]&url-password=<password>'></script>
+  </head>
+  
+      <body style="font-family:Arial; margin: 0">
+
+        <div id="toolbar"></div>
+		
+        <div id="div1" style="margin: 5px; margin-top: 15px"></div>
+		
+		<script type="text/javascript">
+			var app = null; // global app variable we can reference in later injected JavaScript
+			
+			scil.ready(function () {
+			  app = new scil.helm.App("div1", { mexmonomerstab: true, mexfontsize: "90%", mexrnapinontab: true, mexfavoritefirst: true, mexfilter: true,
+               sequenceviewonly: false, showabout: false, topmargin: 20 });
+			});
+			
+			function getHelmString() {
+			  return app.canvas.getHelm();
+			}
+			
+			function getSvgString() { 
+			  return app.canvas.getSvg(); 
+			};
+
+    </script>
+  </body>
+</html>

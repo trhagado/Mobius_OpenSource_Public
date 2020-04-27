@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="c8ff5fbd-312c-4b95-8724-51421a4a1e50" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://[server]:7700/MobiusServices/MobiusSessionService/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="v1.0.wsdl" MetadataType="Wsdl" ID="52e3cb0c-1b4b-4477-b731-6fa432a333ab" SourceId="1" SourceUrl="http://[server]:7700/MobiusServices/MobiusSessionService/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="af372c3f-7e4e-4260-b8d0-2b8bb1b88b6e" SourceId="1" SourceUrl="http://[server]:7700/MobiusServices/MobiusSessionService/mex" />
+    <MetadataFile FileName="Mobius.Services.Types.Internal.wsdl" MetadataType="Wsdl" ID="ac258134-4546-49fa-8854-e27aa0efb597" SourceId="1" SourceUrl="http://[server]:7700/MobiusServices/MobiusSessionService/mex" />
+    <MetadataFile FileName="v1.0.xsd" MetadataType="Schema" ID="b1b8b49f-a556-40a4-a5a6-098d84a6c50d" SourceId="1" SourceUrl="http://[server]:7700/MobiusServices/MobiusSessionService/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="569d7e6c-cb24-4782-b4ef-e42a41b518b4" SourceId="1" SourceUrl="http://[server]:7700/MobiusServices/MobiusSessionService/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="75b08cb6-0fe9-48a7-9b4b-7e194df59851" SourceId="1" SourceUrl="http://[server]:7700/MobiusServices/MobiusSessionService/mex" />
+    <MetadataFile FileName="Mobius.Services.Types.Internal.xsd" MetadataType="Schema" ID="144e4f25-52fe-470e-b815-f21473497115" SourceId="1" SourceUrl="http://[server]:7700/MobiusServices/MobiusSessionService/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

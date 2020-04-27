@@ -1,0 +1,211 @@
+﻿<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>MobiusSpotfireWebPlayerControlPage.htm</title>
+
+    <script type="text/javascript" src="https://[server]/spotfire/wp/GetJavaScriptApi.ashx?Version=7.5">
+    </script>
+
+    <script type="text/javascript">
+  var serverUrl = "https://[server]/spotfire/wp/";
+  var analysisPath = "";
+
+  var spotfireAvailable = false;
+  var onDocumentPropertyChangedSet = false;
+  var app;
+  var doc;
+
+  var inWbc = true; // Script is running in WebBrowser control. Note: set to false if using IE browser app rather then WebBrowser control
+  //var inWbc = (window.external != null); // Note: set to false if page is in browser app rather than WebBrowser control
+  //    alert("window.external not null: " + (typeof(window.external) != 'undefined' && window.external != null)); // true even if not in webbrowser ctl
+
+  window.onload = function()
+  {
+    spotfireAvailable = (typeof(spotfire) != 'undefined' && spotfire != null);
+
+    if (inWbc)
+    {
+      window.external.LogJavaScriptMessage("window.onload called, SpotfireAvailable = " + spotfireAvailable);
+      window.external.WindowOnloadCallback(spotfireAvailable); // secondary callback notification that that page is loaded
+      if (!spotfireAvailable) return; // just return if Spotfire not available
+      analysisPath = window.external.GetAnalysisPath(); // get the path of the analysis to opsn
+      window.external.LogJavaScriptMessage("Received Analysis path: " + analysisPath);
+    }
+
+    else
+    {
+      alert("spotfireAvailable: " + spotfireAvailable);
+      if (!spotfireAvailable) return; // just return if Spotfire not available
+      analysisPath = "/Mobius/Visualizations/MobiusSpotfireTestAnalysis.ScatterPlot";
+    }
+
+    openSpotfireAnalysis(analysisPath); // start the open of the analysis
+    return;
+  };
+
+// Create the WebPlayer app object and start the open of the analysis.
+// The onOpenened event is called when the open is complete
+
+  var openSpotfireAnalysis = function (
+    analysisPathArg)
+  {
+    analysisPath = analysisPathArg;
+
+    var customization = new spotfire.webPlayer.Customization();
+    customization.showCustomizableHeader = true;
+    customization.showTopHeader = true;
+    customization.showClose = true;
+    customization.showAnalysisInfo = true;
+    customization.showToolBar = true;
+    customization.showExportFile = true;
+    customization.showExportVisualization = true;
+    customization.showUndoRedo = true;
+    customization.showDodPanel = true;
+    customization.showFilterPanel = true;
+    customization.showPageNavigation = true;
+    customization.showStatusBar = true;
+    customization.showReloadAnalysis = true;
+
+    var parameters = ""; // parameters, if used in analysis
+    var reloadInstances = false; // JavaScript API will try to reuse server-side instances of loaded documents if true (false doesn't seem to work)
+
+    app = new spotfire.webPlayer.Application(serverUrl, customization, analysisPath, parameters, true);
+
+    if (inWbc) window.external.LogJavaScriptMessage("Opening analysis: " + analysisPath + " on server: " + serverUrl);
+
+    // Analysis opened callback
+
+    var onOpened = function(analysisDocument)
+    {
+      if (inWbc)
+      {
+        window.external.LogJavaScriptMessage("Analysis opened callback: " + analysisPath);
+        window.external.AnalysisOpenedCallback(); // notify caller tht doc is now open
+      }
+
+      doc = analysisDocument; // remember document just opened
+
+      resize();
+    };
+
+// Error callback for Spotfire Application
+
+    var onError = function(errorCode, description)
+    {
+      if (inWbc) window.external.LogJavaScriptMessage("Error: " + errorCode + ", " + description);
+    };
+
+    app.onOpened(onOpened);
+    app.onError(onError);
+
+    doc = app.openDocument("appDiv"); // display the view of the analysis in the app div area and assign the view to doc var
+  };
+
+// Resize event handler
+
+  window.onresize = function()
+  {
+    resize();
+  };
+
+
+// Resize the WebPlayer div to fill available area
+
+  var resize = function()
+  {
+    var width = document.documentElement.clientWidth - 0
+    var height = document.documentElement.clientHeight - 0;
+
+    var appDiv = document.getElementById("appDiv");
+    if (appDiv != null)
+    {
+        appDiv.style.left = "0px";
+        appDiv.style.top = "0px";
+        appDiv.style.width = width + "px";
+        appDiv.style.height = height + "px";
+    }
+  };
+
+// Return status of the availability of the Spotfire Webplayer API. Called by C# api code
+
+  var isSpotfireApiAvailable = function()
+  {
+    var available = !(spotfire == null);
+    available = "Dude";
+    return available;
+  };
+
+// Initiate a call to a MobiusSpotfireApiServer method
+// The method and parameters of the api function call are stored in the MobiusSpotfireApiCall
+// document property. This triggers the MobiusSpotfireApi script to run. The script gets the property value
+// and calls the C# api code to perform the action.
+// The result is stored in the MobiusSpotfireApiResponse property.
+// This function the initiates a getDocumentProperty call to get the value.
+// When it has been retrieved a callback into the MobiusSpotfireApiCallback function
+// in the initial calling code is made to return the function value.
+
+  var CallMobiusSpotfireApi = function(methodAndParms)
+  {
+    if (inWbc) window.external.LogJavaScriptMessage("CallMobiusSpotfireApi initiated: " + methodAndParms);
+
+    doc.setDocumentProperty("MobiusSpotfireApiCall", methodAndParms); // set MobiusSpotfireApiCall doc prop with methods and parms which triggers Python script
+
+    if (!onDocumentPropertyChangedSet) // response callback set yet?
+    {
+      doc.onDocumentPropertyChanged("MobiusSpotfireApiResponse", MobiusSpotfireApiResponseChanged); // setup callback for changes to "MobiusSpotfireApiResponse" property
+      onDocumentPropertyChangedSet = true;
+    }
+
+    return;
+  };
+
+// Function called when MobiusSpotfireApiResponse property has changed
+// Get the prop and notify containing C# code of result
+
+   var MobiusSpotfireApiResponseChanged = function(property)
+   {
+      if (inWbc)
+      {
+        window.external.LogJavaScriptMessage("Response prop changed:" + property.name + " = " + property.value);
+        window.external.MobiusSpotfireApiCallback(property.value); // tell WebBrowser owner that prop has changed
+      }
+   };
+
+// setDocumentProperty
+// Set a document property in the analysisDocument
+// (e.g. propName - MobiusSpotfireApi, propValue (mobiusApiMethodName,arg1,arg2...)
+//  which triggers a call to the MobiusSpotfireApi script
+
+  var setDocumentProperty = function(propName, propValue)
+  {
+    doc.setDocumentProperty(propName, propValue);
+  };
+
+// getDocumentProperty
+// Initiates a call to get document property and returns
+// When the property is eventually retrieved the
+// GetDocumentPropertyCallback method in the containing C# if called
+// with the property name and value.
+
+  var getDocumentProperty = function(propName)
+  {
+    if (inWbc) window.external.LogJavaScriptMessage("Initiating doc property retrieval: " + propName);
+
+    doc.getDocumentProperty(propName, // initiate get prop and then return
+      function(property) // callback for when prop is retrieved
+      {
+        if (inWbc)
+        {
+          window.external.LogJavaScriptMessage("Property retrieved: " + property);
+          window.external.GetDocumentPropertyCallback(property.name, property.value);
+        }
+      }
+    );
+  };
+
+    </script>
+</head>
+<body style="margin:0; padding:0" oncontextmenu="return false;">
+    <div id="appDiv"></div>
+</body>
+</html>

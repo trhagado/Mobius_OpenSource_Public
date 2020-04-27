@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="Mobius.Services.Types.Internal" elementFormDefault="qualified" targetNamespace="Mobius.Services.Types.Internal" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://server/MobiusServices/v1.0" />
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:element name="RegisterSessionalServiceIpcEndpointAddress">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ipcEndpointAddress" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegisterSessionalServiceIpcEndpointAddressResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RegisterSessionalServiceIpcEndpointAddressResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ValidateSession">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://server/MobiusServices/v1.0" minOccurs="0" name="session" nillable="true" type="q1:Session" />
+        <xs:element minOccurs="0" name="callerIPAddress" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ValidateSessionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ValidateSessionResult" nillable="true" type="tns:Session" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="Session">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CallerIPAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreationDT" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ExpirationDT" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="IsNativeSession" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LastFreshenDT" type="xs:dateTime" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SessionParameters" nillable="true" type="q2:ArrayOfKeyValueOfSessionParameterNamestringwAZUszP_P" />
+      <xs:element minOccurs="0" name="UserId" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Session" nillable="true" type="tns:Session" />
+</xs:schema>

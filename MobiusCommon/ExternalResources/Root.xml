@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- **************************************************** -->
+<!-- Mobius Metadata Tree -->
+<!-- **************************************************** -->
+<metatree>
+  <!-- **************************************************************************************************** -->
+  <!-- Root of Tree                                     -->
+  <!-- **************************************************************************************************** -->
+  
+  <node name="root" l="Contents" l2="" type="root">
+    <child name="CHEMBL" />
+  </node>
+  
+  
+  <!-- **************************************************************************************************** -->
+  <!-- CHEMBL                                     -->
+  <!-- **************************************************************************************************** -->
+  
+  <node name="CHEMBL" l="ChEMBL" type="database" PROJECTTYPE="Other">
+    <child name="CHEMBL1" />
+    <child name="CHEMBL2" />
+  </node>
+  
+  <node name="CHEMBL1" l="ChEMBL small molecule(SM) DB" type="database" PROJECTTYPE="Other">
+    <deletedchild name="chembl_structures_dev" l="ChEMBL Structures DEV" type="MetaTable" disabled="false" creationDate="01/12/2017 10:50:42" createdBy="C189925" deletionDate="01/12/2017 11:12:01" deletedBy="C189925" />
+    <child name="chembl_structures" l="Chembl Small Molecule(SM) Structures" type="metatable" />
+    <child name="chembl_properties" l="Chembl SM Compound Properties" type="metatable" />
+    <child name="chembl_mol_dictionary" l="Chembl SM Molecule DIctionary" type="metatable" />
+    <child name="chembl_assay_data" l="Chembl General Assay Data for SM" type="metatable" />
+    <child name="chembl_gene_data" l="Chembl IC50/Ki Assay  Data for SM" type="metatable" />
+    <child name="chembl_ADME_assay_data_SM" l="Chembl ADME Assay Data for SM" type="metatable" />
+    <child name="chembl_therapeutics_SM" l="ChEMBL Therapeutics for SM" type="metatable" />
+    <child name="ChEMBL_Queries" l="ChEMBL Queries and links" type="project" />
+    <child name="chembl_invivo_data_SM" l="ChEMBL in vivo data for SM" type="metatable" />
+	
+  </node>
+  
+  <!-- **************************************************************************************************** -->
+  <!--                              chembl2                                   -->
+  <!-- ***************************************************************************************************** -->
+  
+  <node name="chembl2" l="ChEMBL Data for All molecules" type="database" PROJECTTYPE="Other">
+    <child name="chembl_parent" l="Chembl Compounds (All Molecules (AM))" type="metatable" />
+    <child name="chembl_biotherapeutics" l="ChEMBL Biotherapeutics (non-small molecules)" type="metatable" />
+    <child name="chembl_drugcombinations" l="ChemblDrug Combinations (no structures)" type="metatable" />
+    <child name="chembl_properties_md" l="Chembl Compound Properties for AM" type="metatable" />
+    <child name="chembl_ADC_md" l="Chembl ADCs" type="metatable" />
+    <child name="chembl_ADME_assay_data" l="Chembl ADME Assay Data for AM" type="metatable" />
+    <child name="chembl_therapeutics" l="ChEMBL Therapeutics for AM" type="metatable" />
+    <child name="chembl_invivo_data" l="ChEMBL in vivo data for AM" type="metatable" />
+    <child name="ChEMBL2_Queries" l="ChEMBL(all) Queries and links" type="project" />
+  </node>
+
+</metatree>

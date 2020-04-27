@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- 
+********************************************************************************
+ Mobius root table definitions
+********************************************************************************
+ This is the list of tables that is at the root of a tree of metatables.
+ - Most contain a chemical structure column and have an associated 
+   chemical database cartridge although this is not required.
+ - Some root tables with structures have associated SmallWorld databases
+   and/or ECFP4 fingerprint databases that can be searched. 
+********************************************************************************
+-->
+
+<RootTables>
+	<RootTable Label="Corp DB" DbId = "0" MetaTable="corp_db" Prefix="" PrefixIsStoredInDb="false" InternalFormat="8:00000000" SmallWorldDbName="llyg.anon" EcfpSearchable="false" />
+	<RootTable Label="ChEMBL" DbId = "1" MetaTable="chembl_structures" Prefix="CHEMBL" PrefixIsStored="true" IsStringType="true" InternalFormat="" ExternalFormat="" CidUrl="https://www.ebi.ac.uk/chembl/compound/inspect/[CID]"/>
+</RootTables>

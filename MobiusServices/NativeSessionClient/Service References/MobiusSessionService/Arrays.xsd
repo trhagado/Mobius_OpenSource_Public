@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/Arrays" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://server/MobiusServices/v1.0" />
+  <xs:complexType name="ArrayOfKeyValueOfSessionParameterNamestringwAZUszP_P">
+    <xs:annotation>
+      <xs:appinfo>
+        <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfSessionParameterNamestringwAZUszP_P">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q1="http://server/MobiusServices/v1.0" name="Key" type="q1:SessionParameterName" />
+            <xs:element name="Value" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfKeyValueOfSessionParameterNamestringwAZUszP_P" nillable="true" type="tns:ArrayOfKeyValueOfSessionParameterNamestringwAZUszP_P" />
+  <xs:complexType name="ArrayOfKeyValueOfSessionArrayOfSessionInfo0Ju4W8jp">
+    <xs:annotation>
+      <xs:appinfo>
+        <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfSessionArrayOfSessionInfo0Ju4W8jp">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q2="http://server/MobiusServices/v1.0" name="Key" nillable="true" type="q2:Session" />
+            <xs:element xmlns:q3="http://server/MobiusServices/v1.0" name="Value" nillable="true" type="q3:ArrayOfSessionInfo" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfKeyValueOfSessionArrayOfSessionInfo0Ju4W8jp" nillable="true" type="tns:ArrayOfKeyValueOfSessionArrayOfSessionInfo0Ju4W8jp" />
+</xs:schema>

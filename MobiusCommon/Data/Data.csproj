@@ -1,0 +1,1219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D4397193-C9DB-4A7F-A047-98D40AC12647}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mobius.Data</RootNamespace>
+    <AssemblyName>Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>2</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>2</WarningLevel>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Data.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\Data.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Charts.v19.1.Core, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Data.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.PivotGrid.v19.1.Core, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Pdf.v19.1.Core, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Office.v19.1.Core, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v19.1.Core, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v19.1.Export, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v19.1.Core, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraGrid.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraPivotGrid.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="LumenWorks.Framework.IO">
+      <HintPath>..\ExternalLibraries\LumenWorks.Framework.IO.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Spotfire.Dxp.Data.Formats.Sbdf">
+      <HintPath>..\ExternalLibraries\Spotfire.Dxp.Data.Formats.Sbdf.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Spotfire.Dxp.Data.Formats.Stdf">
+      <HintPath>..\ExternalLibraries\Spotfire.Dxp.Data.Formats.Stdf.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bitmaps\Bitmaps.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bitmaps\Bitmaps.Designer.cs">
+      <DependentUpon>Bitmaps.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Bitmaps\BitmapTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bitmaps\BitmapTest.Designer.cs">
+      <DependentUpon>BitmapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataEx\SubstanceCommon.cs" />
+    <Compile Include="DataEx\RelatedStructureSearchResults.cs" />
+    <Compile Include="DataEx\AssayAttributes.cs" />
+    <Compile Include="DataEx\SasMapParms.cs" />
+    <Compile Include="DataOps\QueryEngineStats.cs" />
+    <Compile Include="DataOps\DataMapsMsx.cs" />
+    <Compile Include="DataEx\UnpivotedAssayResult.cs" />
+    <Compile Include="DataEx\AssayDict.cs" />
+    <Compile Include="DataEx\TargetSummaryOptions.cs" />
+    <Compile Include="DataEx\UcdbCommon.cs" />
+    <Compile Include="DataEx\AnnotationVo.cs" />
+    <Compile Include="DataEx\UnpivotedAssayView.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataOps\Aggregator.cs" />
+    <Compile Include="DataOps\CondFormatMatcher.cs" />
+    <Compile Include="DataOps\Csv.cs" />
+    <Compile Include="DataOps\DataTableUtil.cs" />
+    <Compile Include="DataOps\Delegates.cs" />
+    <Compile Include="DataOps\SpotfireDataExporter.cs" />
+    <Compile Include="DataOps\ResultsSorter.cs" />
+    <Compile Include="DataOps\SdFileDao.cs" />
+    <Compile Include="DataOps\StructureMatcher.cs" />
+    <Compile Include="DataOps\StructureMatcher2.cs" />
+    <Compile Include="DataOps\TargetAssayUtil.cs" />
+    <Compile Include="Data\HelmConverter.cs" />
+    <Compile Include="Data\MoleculeFormatConverter.cs" />
+    <Compile Include="Data\MoleculeList.cs" />
+    <Compile Include="Data\MoleculeMx3.cs" />
+    <Compile Include="Data\CidList.cs" />
+    <Compile Include="Data\CidListElement.cs" />
+    <Compile Include="Data\VoArrayList.cs" />
+    <Compile Include="Data\QueryResultsVoMap.cs" />
+    <Compile Include="Data\MobiusDataType2.cs" />
+    <Compile Include="Data\RowUtil.cs" />
+    <Compile Include="Data\VoArray.cs" />
+    <Compile Include="Data\Hyperlink.cs" />
+    <Compile Include="Data\ImageMx.cs" />
+    <Compile Include="Data\DateTimeMx.cs" />
+    <Compile Include="Data\IDataTableManager.cs" />
+    <Compile Include="Data\InterfaceRefs.cs" />
+    <Compile Include="Data\IUserObject.cs" />
+    <Compile Include="Data\NullValue.cs" />
+    <Compile Include="Data\NumberMx.cs" />
+    <Compile Include="Data\StringMx.cs" />
+    <Compile Include="MetaData\IdentifierMx.cs" />
+    <Compile Include="MetaData\IMetaFactory.cs" />
+    <Compile Include="MetaData\MetaTreeEditNode.cs" />
+    <Compile Include="MetaData\Permissions.cs" />
+    <Compile Include="MetaData\CalcField.cs" />
+    <Compile Include="Data\MoleculeMx.cs" />
+    <Compile Include="Data\MoleculeMx2.cs" />
+    <Compile Include="Data\CompoundId.cs" />
+    <Compile Include="Query\SpotfireViewProps.cs" />
+    <Compile Include="MetaData\UserObjectCollection.cs" />
+    <Compile Include="Query\Aggregation.cs" />
+    <Compile Include="Query\CondFormat.cs" />
+    <Compile Include="MetaData\DictionaryMx.cs" />
+    <Compile Include="MetaData\IDictionaryFactory.cs" />
+    <Compile Include="Data\MobiusDataType.cs" />
+    <Compile Include="MetaData\MetaColumn.cs" />
+    <Compile Include="MetaData\MetaTable.cs" />
+    <Compile Include="MetaData\MetaTableCollection.cs" />
+    <Compile Include="MetaData\MetaTree.cs" />
+    <Compile Include="MetaData\MetaTreeNode.cs" />
+    <Compile Include="MetaData\UserDataImportState.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Data\QualifiedNumber.cs" />
+    <Compile Include="Query\ExportParms.cs" />
+    <Compile Include="Query\MqlUtil.cs" />
+    <Compile Include="Query\PivotGridFieldMx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Query\Query.cs" />
+    <Compile Include="Query\Query2.cs" />
+    <Compile Include="Query\AggregationDef.cs" />
+    <Compile Include="Query\QueryColumn.cs" />
+    <Compile Include="Query\QueryEngineStats.cs" />
+    <Compile Include="Query\QueryTable.cs" />
+    <Compile Include="MetaData\RootTable.cs" />
+    <Compile Include="MetaData\UserObject.cs" />
+    <Compile Include="Query\ResultsPage.cs" />
+    <Compile Include="Query\ResultsPages.cs" />
+    <Compile Include="Query\ResultsViewProps.cs" />
+    <Compile Include="Query\ResultsViewPivotGridProps.cs" />
+    <Compile Include="Query\ToolUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Spotfire\SpotfireDocumentClasses\SpotfireDocumentClasses.csproj">
+      <Project>{ec900570-2e1d-44ff-94a0-630aadb30cde}</Project>
+      <Name>SpotfireDocumentClasses</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\ComOps\ComOps.csproj">
+      <Project>{c8c32a85-6c6b-462f-b15e-cdc53b03e521}</Project>
+      <Name>ComOps</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\HelmWebEditor\HelmWebEditor.csproj">
+      <Project>{6e5a710d-d31a-4a3e-bb3b-e4212921261a}</Project>
+      <Name>HelmWebEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HelmWebServices\HelmWebServices.csproj">
+      <Project>{f8fefca4-b843-4cbc-bef4-d182e259b3ad}</Project>
+      <Name>HelmWebServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MolLib1Mx\MolLib1Mx.csproj">
+      <Project>{a80b808b-5cee-4be9-9725-ecc8953e9c51}</Project>
+      <Name>MolLib1Mx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MolLib2Mx\MolLib2Mx.csproj">
+      <Project>{e9e3b546-1b9f-44e0-8d75-f9dc31b51c43}</Project>
+      <Name>MolLib2Mx</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Bitmaps\Bitmaps.resx">
+      <DependentUpon>Bitmaps.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bitmaps\BitmapTest.resx">
+      <DependentUpon>BitmapTest.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Bitmaps\CondFormat Images\Arrow1.png" />
+    <Content Include="Bitmaps\CondFormat Images\Arrow2.png" />
+    <Content Include="Bitmaps\CondFormat Images\Arrow3.png" />
+    <Content Include="Bitmaps\CondFormat Images\Arrow4.png" />
+    <Content Include="Bitmaps\CondFormat Images\Arrow5.png" />
+    <Content Include="Bitmaps\CondFormat Images\Arrows.png" />
+    <Content Include="Bitmaps\CondFormat Images\Bars1.png" />
+    <Content Include="Bitmaps\CondFormat Images\Bars2.png" />
+    <Content Include="Bitmaps\CondFormat Images\Bars3.png" />
+    <Content Include="Bitmaps\CondFormat Images\Bars4.png" />
+    <Content Include="Bitmaps\CondFormat Images\Bars5.png" />
+    <Content Include="Bitmaps\CondFormat Images\Barset4.png" />
+    <Content Include="Bitmaps\CondFormat Images\BarSet5.png" />
+    <Content Include="Bitmaps\CondFormat Images\Check1.png" />
+    <Content Include="Bitmaps\CondFormat Images\Check2.png" />
+    <Content Include="Bitmaps\CondFormat Images\Check3.png" />
+    <Content Include="Bitmaps\CondFormat Images\CheckSet.png" />
+    <Content Include="Bitmaps\CondFormat Images\Circle1.png" />
+    <Content Include="Bitmaps\CondFormat Images\Circle2.png" />
+    <Content Include="Bitmaps\CondFormat Images\Circle3.png" />
+    <Content Include="Bitmaps\CondFormat Images\Circle4.png" />
+    <Content Include="Bitmaps\CondFormat Images\CircleSet.png" />
+    <Content Include="Bitmaps\CondFormat Images\ColorScale.png" />
+    <Content Include="Bitmaps\CondFormat Images\ColorScale1.png" />
+    <Content Include="Bitmaps\CondFormat Images\ColorScale1b.png" />
+    <Content Include="Bitmaps\CondFormat Images\ColorScale2.png" />
+    <Content Include="Bitmaps\CondFormat Images\ColorScale3.png" />
+    <Content Include="Bitmaps\CondFormat Images\ColorScale4.png" />
+    <Content Include="Bitmaps\CondFormat Images\ColorScale5.png" />
+    <Content Include="Bitmaps\CondFormat Images\ColorScale6.png" />
+    <Content Include="Bitmaps\CondFormat Images\ColorSet.png" />
+    <Content Include="Bitmaps\CondFormat Images\ColorSet1.png" />
+    <Content Include="Bitmaps\CondFormat Images\ColorSet1b.png" />
+    <Content Include="Bitmaps\CondFormat Images\ColorSet2.png" />
+    <Content Include="Bitmaps\CondFormat Images\ColorSet3.png" />
+    <Content Include="Bitmaps\CondFormat Images\ColorSet4.png" />
+    <Content Include="Bitmaps\CondFormat Images\ColorSet5.png" />
+    <Content Include="Bitmaps\CondFormat Images\ColorSet6.png" />
+    <Content Include="Bitmaps\CondFormat Images\DataBars.png" />
+    <Content Include="Bitmaps\CondFormat Images\DataBars2.png" />
+    <Content Include="Bitmaps\CondFormat Images\DataBarsBlue.png" />
+    <Content Include="Bitmaps\CondFormat Images\DataBarsCyan.png" />
+    <Content Include="Bitmaps\CondFormat Images\DataBarsGreen.png" />
+    <Content Include="Bitmaps\CondFormat Images\DataBarsMagenta.png" />
+    <Content Include="Bitmaps\CondFormat Images\DataBarsRed.png" />
+    <Content Include="Bitmaps\CondFormat Images\DataBarsYellow.png" />
+    <Content Include="Bitmaps\CondFormat Images\IconSets.png" />
+    <Content Include="Bitmaps\CondFormat Images\Pie1.png" />
+    <Content Include="Bitmaps\CondFormat Images\Pie2.png" />
+    <Content Include="Bitmaps\CondFormat Images\Pie3.png" />
+    <Content Include="Bitmaps\CondFormat Images\Pie4.png" />
+    <Content Include="Bitmaps\CondFormat Images\Pie5.png" />
+    <Content Include="Bitmaps\CondFormat Images\PieSet4.png" />
+    <Content Include="Bitmaps\CondFormat Images\PieSet5.png" />
+    <Content Include="Bitmaps\CondFormat Images\Shape1.png" />
+    <Content Include="Bitmaps\CondFormat Images\Shape2.png" />
+    <Content Include="Bitmaps\CondFormat Images\Shape3.png" />
+    <Content Include="Bitmaps\CondFormat Images\ShapeSet.png" />
+    <Content Include="Bitmaps\CondFormat Images\UpDown1.png" />
+    <Content Include="Bitmaps\CondFormat Images\UpDown2.png" />
+    <Content Include="Bitmaps\CondFormat Images\UpDown3.png" />
+    <Content Include="Bitmaps\CondFormat Images\UpDownSet.png" />
+    <Content Include="Bitmaps\DevExpressImages\ActiveCustomersList_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\ActiveRents_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Actor_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\AddFile_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\AddFolder_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\AddItem_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\AddToAlbum_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\AddToLibrary_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Add_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Album_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Appearance_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\attach-16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\AttachmentObject_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Back_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\BarImages16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\BuyNow_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Cancel_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Categories_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\CloseDetails_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Close_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Collage_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\ColorMixer_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Company_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Completed_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\contact-16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Contact_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\CustomerFilmRentsList_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\CustomerInfoCards_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\CustomerRevenue_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\CustomersByDate_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\CustomersKPI_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\delete-16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Delete_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\EditContact_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\EditFeed_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\EditTask_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Edit_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\EMail_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Employee_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\ExportToExcel_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\ExportToHTML_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\ExportToIMG_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\ExportToMHT_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\ExportToPDF_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\ExportToRTF_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\ExportToTXT_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\ExportToXML_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Export_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\FilmItemInfoCards_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Film_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Filter_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\FolderIcons16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Folder_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Forward_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\GenerateData_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\GetStarted_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\GetSupport_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Help_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\High16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Home_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Important_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\info-16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Info_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\ItemMarked_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\LayoutFlip_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\LayoutOptions_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\LayoutRotate_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Library_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Low16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Mail_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\ManageItems_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Mark_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\MediaPerformance_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\MoviesKPI_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Movie_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\NavigationBar_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Navigation_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\NewAlbum_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\NewButton_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\NewContact_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\NewFeed_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\NewMail_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\NewTask_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\New_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Next_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\note-16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Open_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Order_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Other_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Palette_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Period_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Person_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Preview_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Previous_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Print_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Priority_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Refresh_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\RemoveAlbum_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\RemoveFolder_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\RemoveFromAlbum_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Remove_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\ResetToDefault_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Return_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\RevenueSplit_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Revenue_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\sale-16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Sale_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\SaveAndClose_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Save_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Scheduler_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\SelectAllMarked_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Black.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Blue.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Blueprint.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Caramel.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Coffee.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Dark-Side.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Darkroom.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-DevExpress-2010.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Foggy.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Glass-Oceans.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-High-Contrast.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-iMaginary.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Lilian.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Liquid-Sky.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-London-Liquid-Sky.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-McSkin.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Metro.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Money-Twins.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Office-2007-Black.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Office-2007-Blue.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Office-2007-Green.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Office-2007-Pink.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Office-2007-Silver.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Office-2010-Black.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Office-2010-Blue.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Office-2010-Silver.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Pumpkin.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Seven-Classic.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Seven.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Sharp-Plus.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Sharp.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Springtime.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Stardust.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Summer.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-The-Asphalt-World.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Unknown.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Valentine.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-VS10.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Whiteprint.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Windows Classic.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Skin-Xmas.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\SkinFlat.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\SkinUltraFlat.bmp" />
+    <Content Include="Bitmaps\DevExpressImages\Slideshow_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\TheMostProfitableGenresList_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Today_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\TopCustomers_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\TopFilmList_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Undo_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\UnmarkAll_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Unmark_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Upload_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\UserKey_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Views_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\View_16x16.png" />
+    <Content Include="Bitmaps\DevExpressImages\Wizard_16x16.png" />
+    <Content Include="Bitmaps\MiscBitmaps\Add.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Add.png" />
+    <Content Include="Bitmaps\MiscBitmaps\AddColumns.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AddResultsPage.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AddResultsPage2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AddRows.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AddRule.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AddSpotfire.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AddSpotfire.png" />
+    <Content Include="Bitmaps\MiscBitmaps\AddSummary.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AddToFavorites.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AddView.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AddView2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Alert.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Align.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Align20H.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignBottom.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignBottom20H.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignCenter.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignCenter20.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignCenter20H.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignGeneral.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignGeneral20.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignGeneral20H.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignGeneral22.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignGeneral22H.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignJustify.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignJustify20.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignJustify20H.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignLeft.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignLeft20.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignLeft20H.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignMiddle.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignMiddle20.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignMiddle20H.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignRight.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignRight20.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignRight20H.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignTop.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignTop20.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AlignTop20H.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AnnotationTable.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AnnotationTable32.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AnnotationTableFolder.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\AnnotationTablePublic.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\apply_16x16.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\apply_32x32.png" />
+    <Content Include="Bitmaps\MiscBitmaps\AreaChart.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\BallMultiColor.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\BallSmall.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\BallSmallGreen.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\BallSmallGreen2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\BallSmallGreen3.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\BarChart.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\BarChart.png" />
+    <Content Include="Bitmaps\MiscBitmaps\BarColorCodeTable.png" />
+    <Content Include="Bitmaps\MiscBitmaps\BarColorCodeTable2.png" />
+    <Content Include="Bitmaps\MiscBitmaps\BasicAndListFilters.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Blank.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\BlueBall.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Blueball2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\BlueBall5x8.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\BlueDot5x8.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Books.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\BookSearch.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Bottom.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\BrowseRefresh.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\BrowseRefresh2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\BrowseStop.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\BrowseStop2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\CalcField.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\CalcField.png" />
+    <Content Include="Bitmaps\MiscBitmaps\CalcField32.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\CalcFieldFolder.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\CalcFieldPublic.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\cancel_16x16.png" />
+    <Content Include="Bitmaps\MiscBitmaps\cancel_32x32.png" />
+    <Content Include="Bitmaps\MiscBitmaps\CfMaster.png" />
+    <Content Include="Bitmaps\MiscBitmaps\ChartAdd.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ChartEdit.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Checked.png" />
+    <Content Include="Bitmaps\MiscBitmaps\CheckMark5x8.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\CheckOff.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\CheckOn.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\CheckOn.png" />
+    <Content Include="Bitmaps\MiscBitmaps\ChevronDown.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ChevronDown.png" />
+    <Content Include="Bitmaps\MiscBitmaps\ChevronDown5x8.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ChevronLt.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ChevronRt.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ChevronUp.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ChevronUp.png" />
+    <Content Include="Bitmaps\MiscBitmaps\Clipboard.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Close.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\CloseDocument.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\CloseWindow.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\CloseWindow.png" />
+    <Content Include="Bitmaps\MiscBitmaps\CloseWindow2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ColumnWidth.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\CondFormat.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\CondFormat2 .bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\CondFormat3Color.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\CondFormat4.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\CondFormatActivityClass.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\CondFormatEdit.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\CondFormatPlus.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\CondFormatPlusSmall.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\CondFormatSmall.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Copy.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\CRC.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Cut.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\DataBase.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\DataBaseSubset.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Date.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Delete.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\DeleteColumn.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\DeleteRow.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Design.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\DetailsOnDemand.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\DNA1-16.png" />
+    <Content Include="Bitmaps\MiscBitmaps\DNA2-16.png" />
+    <Content Include="Bitmaps\MiscBitmaps\DNA3-16.png" />
+    <Content Include="Bitmaps\MiscBitmaps\DoughnutChart.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Down.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Down2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\DropDown10x7.png" />
+    <Content Include="Bitmaps\MiscBitmaps\DropDown16x16.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\DropDown5x5.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\DropDown8x8.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\DropDown8x8.png" />
+    <Content Include="Bitmaps\MiscBitmaps\DropDownBlack5x5.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\DropDownBlack5x5.png" />
+    <Content Include="Bitmaps\MiscBitmaps\DropDownBlack5x8.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\DropDownBlue.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\DropDownBlue5x5.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\DropDownChevron8x8.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\DropDownChevron8x8.png" />
+    <Content Include="Bitmaps\MiscBitmaps\DropdownGreen.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\DropUpChevron8x8.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Edit.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Edit.png" />
+    <Content Include="Bitmaps\MiscBitmaps\Edit2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\EditHyperlink.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\EditQuery.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\EditRule.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Ellipsis.gif" />
+    <Content Include="Bitmaps\MiscBitmaps\Email.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\EmptySquare.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Excel.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Excel2007.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Excel2010.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Exit.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Export.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Favorites.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Favorites.png" />
+    <Content Include="Bitmaps\MiscBitmaps\FavoritesAdd.png" />
+    <Content Include="Bitmaps\MiscBitmaps\FileClose.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\FileOpen.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\FillColor.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Filter.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\FilterAdd.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\FilterClear.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Find.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\First.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Folder.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Folder2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\FolderNew.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\FolderSearch.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\FontColor.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Format.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\FourColor.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\FourColor2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\FourColor3.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\FullScreen.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Fx.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Fx2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\FxSearch.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Gear.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Go.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Go.png" />
+    <Content Include="Bitmaps\MiscBitmaps\Graph.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Grayball.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Grayball2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\GreenSquare.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\GreenSquare11x11.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\GreenSquareHalfFull11x11.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Group.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Hand.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\HeatDendogramMap.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Heatmap.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Heatmap2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\HeatMap32.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Height.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Helm.png" />
+    <Content Include="Bitmaps\MiscBitmaps\Help.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Help.png" />
+    <Content Include="Bitmaps\MiscBitmaps\HideDetail.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\History.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\History.png" />
+    <Content Include="Bitmaps\MiscBitmaps\History2.png" />
+    <Content Include="Bitmaps\MiscBitmaps\Home.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Home2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Hyperlink.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Hyperlink.png" />
+    <Content Include="Bitmaps\MiscBitmaps\Import.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\index_32x32.png" />
+    <Content Include="Bitmaps\MiscBitmaps\Info.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Info2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\IsisBase.BMP" />
+    <Content Include="Bitmaps\MiscBitmaps\IsisDraw.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Key.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\KeyResult.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Landscape32.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Last.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Left.png" />
+    <Content Include="Bitmaps\MiscBitmaps\Left2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\LeftRight.png" />
+    <Content Include="Bitmaps\MiscBitmaps\LeftRight2.png" />
+    <Content Include="Bitmaps\MiscBitmaps\LeftRight2b.png" />
+    <Content Include="Bitmaps\MiscBitmaps\LeftRight2c.png" />
+    <Content Include="Bitmaps\MiscBitmaps\LeftRight3.png" />
+    <Content Include="Bitmaps\MiscBitmaps\LeftSmall.png" />
+    <Content Include="Bitmaps\MiscBitmaps\Lightning.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Lightning.png" />
+    <Content Include="Bitmaps\MiscBitmaps\Lightning2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\LineChart.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\LineColor.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\List.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\List2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\List32.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ListAnd.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ListFolder.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ListLogic.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ListNot.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ListOr.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ListPublic.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ListSearch.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MarkerCalloutLine.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MarkerCalloutLine.png" />
+    <Content Include="Bitmaps\MiscBitmaps\MarkerCircle.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MarkerCross.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MarkerDiamond.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MarkerHexagon.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MarkerPentagon.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MarkerPlus.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MarkerSquare.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MarkerSquareSmall.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MarkerSquareSmall.png" />
+    <Content Include="Bitmaps\MiscBitmaps\MarkerStar.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MarkerTriangle.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MarkerTriangleInverted.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MaximizeWindow.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MaximizeWindow2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Mobius.ico" />
+    <Content Include="Bitmaps\MiscBitmaps\Mobius16x16-2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Mobius16X16.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Mobius26x26Black.ico" />
+    <Content Include="Bitmaps\MiscBitmaps\Mobius26x26Blue.ico" />
+    <Content Include="Bitmaps\MiscBitmaps\Mobius32x32.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Mobius48x48.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Mobius71x71.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Mobius76x76.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Mobius76x76DkBlueBack.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Mobius92x92Black.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Mobius92x92Blue.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MobiusDkBlackBack.ico" />
+    <Content Include="Bitmaps\MiscBitmaps\MobiusDkBlueBack.ico" />
+    <Content Include="Bitmaps\MiscBitmaps\MouseRotate.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MouseSelect.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MouseSelectMinus.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MouseSelectPlus.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MouseTranslate.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MouseTranslate2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MouseZoom.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\MouseZoom2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\NewDoc.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\NewTab.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Next.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Next2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Number.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\NumberFormat.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\NumberList.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\OpBetween.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\OpContains.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\OpenDocument.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\OpenDocument.png" />
+    <Content Include="Bitmaps\MiscBitmaps\OpenHyperlink.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\OpEq.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\OpGe.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\OpGt.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\OpIsAnyOf.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\OpIsBlank.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\OpIsNoneOf.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\OpIsNotBlank.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\OpLe.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\OpLt.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\OpNe.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\OpNotBetween.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\PageLayout.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\PageLayoutEvenly.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\PageLayoutMaximizeActive.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\PageLayoutSideBySide.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\PageLayoutStacked.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\PageLayoutTabbed.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Paste.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\People.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\People2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Person.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\PieChart.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\PivotAreaColumn.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\PivotAreaData.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\PivotAreaFilter.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\PivotAreaRow.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\PivotChart.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\PivotFields_16x16.png" />
+    <Content Include="Bitmaps\MiscBitmaps\Portrait32.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Previous.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Previous2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Print.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Print2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Print32.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\PrintPreview.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Processing.gif" />
+    <Content Include="Bitmaps\MiscBitmaps\Project.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ProjectNew.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Query.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Query2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Query3.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Query32.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\QueryFolder.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\QueryPlus.png" />
+    <Content Include="Bitmaps\MiscBitmaps\QueryPlus2.png" />
+    <Content Include="Bitmaps\MiscBitmaps\QueryPublic.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\RadarAdd.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\RedBall10x10.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\RedBallSmall.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\RedFlag.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Redo.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\RemoveFolder_16x16.png" />
+    <Content Include="Bitmaps\MiscBitmaps\Rename.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ResearchEffort.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ResetChartView.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\RestoreWindow2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ResultsPageBlank.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ResultsPageMultipleViews.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\RetrievingImage.jpg" />
+    <Content Include="Bitmaps\MiscBitmaps\Right.png" />
+    <Content Include="Bitmaps\MiscBitmaps\Right2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\RightSmall.png" />
+    <Content Include="Bitmaps\MiscBitmaps\RunQuery.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\RunQuery.png" />
+    <Content Include="Bitmaps\MiscBitmaps\RunQuery2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\RunQuery2.png" />
+    <Content Include="Bitmaps\MiscBitmaps\SarTable.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SarTable32.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SarTablePublic.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SasMap.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Save.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Save32.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SaveAs.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SaveAs32.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ScatterPlot.png" />
+    <Content Include="Bitmaps\MiscBitmaps\ScrollDown.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ScrollDown16x16.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ScrollToBottom.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ScrollToTable.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ScrollToTop.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ScrollUp.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Search3.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Settings.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Settings.png" />
+    <Content Include="Bitmaps\MiscBitmaps\SharedFolder.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SharedOpenFolder.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SharePoint.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ShowDetail.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortAscending.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortAscending02.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortAscending03.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortDescending.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortDescending01.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortDescending02.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortDescending03.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortDescending_1.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortDescending_2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortDescending_3.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortedAscending.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortedAscending1.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortedAscending2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortedAscending3.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortedDescending.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortedDescending1.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortedDescending2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortedDescending3.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortEither.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Spotfire.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Spotfire.Dxp.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Spotfire.Dxp.ico" />
+    <Content Include="Bitmaps\MiscBitmaps\Spotfire.Dxp.png" />
+    <Content Include="Bitmaps\MiscBitmaps\Spotfire.png" />
+    <Content Include="Bitmaps\MiscBitmaps\SpotfireLink.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Struct.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Structure.png" />
+    <Content Include="Bitmaps\MiscBitmaps\Struct2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\StructPlus.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\StructSearch.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\StructWithRGroup.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Subtract.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SummarizeAndOrder.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Summary 8x8.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Summary.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Summary2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SummaryOff.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SummaryOn.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\TabDropDown.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Table.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\TableData.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\TableData2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\TableData3.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\TableDataMultiple.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\TableDataPlus.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\TableDataPlus.ico" />
+    <Content Include="Bitmaps\MiscBitmaps\TableDataPlus.png" />
+    <Content Include="Bitmaps\MiscBitmaps\TableDataPlus2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\TableDataPlus2.png" />
+    <Content Include="Bitmaps\MiscBitmaps\TableDataPlus3.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\TableDataPlus4.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\TableN.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\TablePreviewSingle.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\TableSingle.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\TableStruct.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Target.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Target2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\TargetFamily.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\TargetFamily2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\TargetFamily3.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\TargetPlus.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\TechSupport.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Text.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\TextAlign.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Tools.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Top.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\TrendLine.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Undo.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Up.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Up2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Up5x5.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\UpArrow.png" />
+    <Content Include="Bitmaps\MiscBitmaps\UserDatabase32.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\UsersBrowse.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\UsersCheckNames.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\VideoRecorder.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\ViewChartWindows.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Width.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Word.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Word2007.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\Word2010.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\World.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\WorldSearch.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\YellowHalfFull11x11.bmp" />
+    <Content Include="Bitmaps\ViewType Images\HtmlTable.png" />
+    <Content Include="Bitmaps\ViewType Images\TrellisCard.png" />
+    <Content Include="Bitmaps\ViewType Images\Undefined.png" />
+    <None Include="Bitmaps\MiscBitmaps\TrackBar.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\TextEdit.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\SurfaceChart.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\Sum.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\SpotfireScatterPlot.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\SpotfireProperties.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\SpotfireBarChart.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\SortAscending01.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortAscending_1.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortAscending_2.bmp" />
+    <Content Include="Bitmaps\MiscBitmaps\SortAscending_3.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\RangeTrackBar.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\Properties.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\Permissions.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\Min.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\MessageBoxWarningIcon.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\MessageBoxQuestionIcon.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\MessageBoxInformationIcon.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\MessageBoxErrorIcon.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\Max.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\index_16x16.png" />
+    <None Include="Bitmaps\MiscBitmaps\FilterQuick.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\Filter5x8.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\Design1.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\Count.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\Average.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\apply_16x16.png" />
+    <None Include="Bitmaps\MiscBitmaps\Apply.bmp" />
+    <None Include="Bitmaps\MiscBitmaps\3DOnOff.bmp" />
+    <Content Include="Bitmaps\NodeXL Vertex Shapes\Circle.png" />
+    <Content Include="Bitmaps\NodeXL Vertex Shapes\Diamond.png" />
+    <Content Include="Bitmaps\NodeXL Vertex Shapes\Disk.png" />
+    <Content Include="Bitmaps\NodeXL Vertex Shapes\Image.png" />
+    <Content Include="Bitmaps\NodeXL Vertex Shapes\Label.png" />
+    <Content Include="Bitmaps\NodeXL Vertex Shapes\SolidDiamond.png" />
+    <Content Include="Bitmaps\NodeXL Vertex Shapes\SolidSquare.png" />
+    <Content Include="Bitmaps\NodeXL Vertex Shapes\SolidTriangle.png" />
+    <Content Include="Bitmaps\NodeXL Vertex Shapes\Sphere.png" />
+    <Content Include="Bitmaps\NodeXL Vertex Shapes\Square.png" />
+    <Content Include="Bitmaps\NodeXL Vertex Shapes\Triangle.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\AddSpotfire.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Analysis.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\ArrangeEvenly.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\ArrangeMaximizeActive.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\ArrangeSideBySide.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\ArrangeStacked.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\BarChart.ico" />
+    <Content Include="Bitmaps\SpotfireBitmaps\BarChart.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\BarColorCodeTable.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\BarColorCodeTable2.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\BubbleChart.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\BubbleChart32Blue.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\CondFormatSummary.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\CondFormatSummary32.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\CondFormatSummary32Blue.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Data.ico" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Data.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\DetailsOnDemand.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Filters.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\HeapMap.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Heatmap.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\HeatMap.ico" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Heatmap32.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Heatmap32Blue.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Help.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\KPI.ico" />
+    <Content Include="Bitmaps\SpotfireBitmaps\KPI.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Network.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Network32.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Network32Blue.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\NetworkGraph.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\NewPage32Blue.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\OpenDoc.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\PivotTable.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\PivotTable2.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\PivotTable3.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\PivotTable32.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\PivotTable32Blue.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\RadarChart.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\RadarChart32.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\ScatterPlot.ico" />
+    <Content Include="Bitmaps\SpotfireBitmaps\ScatterPlot.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Settings.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Spotfire.Dxp.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Spotfire.Dxp.ico" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Spotfire.Dxp.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Spotfire.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Spotfire32.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Summary.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Summary.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Summary32.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Summary32Blue.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Table.ico" />
+    <Content Include="Bitmaps\SpotfireBitmaps\Table.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TableView.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TableView32.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TableView32Blue.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TargetSummary.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TargetSummary32.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TargetSummary32Blue.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TargetSummaryDendogram.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TargetSummaryDendogram.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TargetSummaryDendogram32.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TargetSummaryDendogram32Blue.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TargetSummaryPivot.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TargetSummaryPivot32.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TargetSummaryPivot32Blue.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TargetTargetNetwork.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TargetTargetNetwork2.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TargetTargetNetwork2_32.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TargetTargetNetwork3.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TargetTargetNetwork32.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TargetTargetNetwork3_32.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TargetTargetTable.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TargetTargetTable32.bmp" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TreeMap.ico" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TreeMap.png" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TrellisCard.ico" />
+    <Content Include="Bitmaps\SpotfireBitmaps\TrellisCard.png" />
+    <Content Include="Bitmaps\ViewType Images\Add.png" />
+    <Content Include="Bitmaps\ViewType Images\BlankPage.png" />
+    <Content Include="Bitmaps\ViewType Images\BubbleChart.bmp" />
+    <Content Include="Bitmaps\ViewType Images\BubbleChart32Blue.bmp" />
+    <Content Include="Bitmaps\ViewType Images\CondFormatSummary.bmp" />
+    <Content Include="Bitmaps\ViewType Images\CondFormatSummary32.bmp" />
+    <Content Include="Bitmaps\ViewType Images\CondFormatSummary32Blue.bmp" />
+    <Content Include="Bitmaps\ViewType Images\FromLibrary.png" />
+    <Content Include="Bitmaps\ViewType Images\Heatmap32.bmp" />
+    <Content Include="Bitmaps\ViewType Images\Heatmap32Blue.bmp" />
+    <Content Include="Bitmaps\ViewType Images\Help.png" />
+    <Content Include="Bitmaps\ViewType Images\KPI.png" />
+    <Content Include="Bitmaps\ViewType Images\Network32.bmp" />
+    <Content Include="Bitmaps\ViewType Images\Network32Blue.bmp" />
+    <Content Include="Bitmaps\ViewType Images\NetworkGraph.png" />
+    <Content Include="Bitmaps\ViewType Images\NewPage32Blue.bmp" />
+    <Content Include="Bitmaps\ViewType Images\PivotTable.bmp" />
+    <Content Include="Bitmaps\ViewType Images\PivotTable.png" />
+    <Content Include="Bitmaps\ViewType Images\PivotTable2.bmp" />
+    <Content Include="Bitmaps\ViewType Images\PivotTable3.bmp" />
+    <Content Include="Bitmaps\ViewType Images\PivotTable32.bmp" />
+    <Content Include="Bitmaps\ViewType Images\PivotTable32Blue.bmp" />
+    <Content Include="Bitmaps\ViewType Images\RadarChart.bmp" />
+    <Content Include="Bitmaps\ViewType Images\RadarChart32.bmp" />
+    <Content Include="Bitmaps\ViewType Images\ScatterPlot.png" />
+    <Content Include="Bitmaps\ViewType Images\SecondaryQuery.png" />
+    <Content Include="Bitmaps\ViewType Images\SpillTheBeans.png" />
+    <Content Include="Bitmaps\ViewType Images\Spotfire32.bmp" />
+    <Content Include="Bitmaps\ViewType Images\SpotfireDs.png" />
+    <Content Include="Bitmaps\ViewType Images\SpotfireDxp.png" />
+    <Content Include="Bitmaps\ViewType Images\SpotfireTable.png" />
+    <Content Include="Bitmaps\ViewType Images\Summary.bmp" />
+    <Content Include="Bitmaps\ViewType Images\Summary.png" />
+    <Content Include="Bitmaps\ViewType Images\Summary32.bmp" />
+    <Content Include="Bitmaps\ViewType Images\Summary32Blue.bmp" />
+    <Content Include="Bitmaps\ViewType Images\Table.png" />
+    <Content Include="Bitmaps\ViewType Images\TableView.bmp" />
+    <Content Include="Bitmaps\ViewType Images\TableView32.bmp" />
+    <Content Include="Bitmaps\ViewType Images\TableView32Blue.bmp" />
+    <Content Include="Bitmaps\ViewType Images\TargetSummary.bmp" />
+    <Content Include="Bitmaps\ViewType Images\TargetSummary32.bmp" />
+    <Content Include="Bitmaps\ViewType Images\TargetSummary32Blue.bmp" />
+    <Content Include="Bitmaps\ViewType Images\TargetSummaryDendogram.bmp" />
+    <Content Include="Bitmaps\ViewType Images\TargetSummaryDendogram.png" />
+    <Content Include="Bitmaps\ViewType Images\TargetSummaryDendogram32.bmp" />
+    <Content Include="Bitmaps\ViewType Images\TargetSummaryDendogram32Blue.bmp" />
+    <Content Include="Bitmaps\ViewType Images\TargetSummaryPivot.bmp" />
+    <Content Include="Bitmaps\ViewType Images\TargetSummaryPivot32.bmp" />
+    <Content Include="Bitmaps\ViewType Images\TargetSummaryPivot32Blue.bmp" />
+    <Content Include="Bitmaps\ViewType Images\TargetTargetNetwork.bmp" />
+    <Content Include="Bitmaps\ViewType Images\TargetTargetNetwork2.bmp" />
+    <Content Include="Bitmaps\ViewType Images\TargetTargetNetwork2_32.bmp" />
+    <Content Include="Bitmaps\ViewType Images\TargetTargetNetwork32.bmp" />
+    <Content Include="Bitmaps\ViewType Images\TargetTargetNetwork3_32.bmp" />
+    <Content Include="Bitmaps\ViewType Images\TargetTargetTable.bmp" />
+    <Content Include="Bitmaps\ViewType Images\TargetTargetTable32.bmp" />
+    <Content Include="Bitmaps\ViewType Images\TreeMap.png" />
+    <Content Include="Bitmaps\ViewType Images\TrellisCard.ico" />
+    <None Include="Bitmaps\ViewType Images\TargetTargetNetwork3.bmp" />
+    <None Include="Bitmaps\ViewType Images\Network.bmp" />
+    <None Include="Bitmaps\ViewType Images\Heatmap.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Bitmaps\DataTypeImages\" />
+    <Folder Include="Bitmaps\DevExpress Skin Images\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
