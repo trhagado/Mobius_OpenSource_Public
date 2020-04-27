@@ -1,0 +1,2046 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- **************************************************** -->
+<!-- Basic Mobius metatable definitions for chembl database -->
+<!-- **************************************************** -->
+<metatables>
+
+	
+	<!-- **************************************************** -->
+	<!--  Chembl   -->
+	<!-- **************************************************** -->
+	<metatable tablename="chembl_structures" l="ChEMBL Structures" map="
+	select 
+		md.chembl_id,  
+		css.ctab,
+		cp.full_mwt molweight,
+		cp.full_molformula molformula,
+		cs.canonical_smiles molsmiles
+	from 
+	 chembl_owner.compound_struct_symyx css,
+	 chembl_owner.molecule_dictionary md, 
+	 chembl_owner.compound_structures cs, 
+	 chembl_owner.compound_properties cp
+	where 
+	 cs.molregno = md.molregno and
+	 css.molregno = md.molregno and
+	 cp.molregno (+) = md.molregno">
+	  <c name="chembl_ID" l="Chembl Id" type="compoundId" />
+		<c name="molstructure" l="Structure" type="structure" width="35" />
+		<c name="moldatabases" l="Database" type="dbLink" display="selectable" dictionary="structure_databases" dictionaryMultipleSelect="true" />
+		<c name="molformula" l="Molecular Formula" type="string" display="selectable" width="20" />
+		<c name="molweight" l="Mol. Wt." type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
+		<c name="molsmiles" l="Smiles" type="string" width="25" DisplayLevel="Selectable"/>
+		<c name="molsimilarity" l="Similarity Score" type="float" display="selectable" searchable="false" displayFormat="decimal" width="8" decimals="2" map="0" dataTransform="GetMolsim" />
+	</metatable>
+
+
+	<!-- **************************************************** -->
+	<!--  Chembl cmpd properties -->
+	<!-- **************************************************** -->
+	<metatable tablename="chembl_properties" l="ChEMBL Properties" parent="chembl_structures" map="
+	select distinct
+		md.chembl_id,  
+		cp.*
+	from 
+	 chembl_owner.molecule_dictionary md, 
+	 chembl_owner.compound_properties cp
+	where 
+	 cp.molregno (+) = md.molregno">
+	  <c name="chembl_ID" l="Chembl Id" type="compoundId" />
+		<c name="full_mwt" l="Mol. Wt. (full)" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
+		<c name="mw_freebase" l="Mol. Wt. (freebase)" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
+		<c name="alogp" l="alogP" type="float" displayFormat="decimal" width="6" decimals="2" display="selected" />
+		<c name="hba" l="HBA" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="hbd" l="HBD" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="PSA" l="PSA" type="float" displayFormat="decimal" width="6" decimals="2" display="selected" />
+		<c name="RTB" l="#Rot. Bonds" type="integer" width="6" display="selected" />
+		<c name="ro3_pass" l="ROF (pass?)" type="string" width="6" DisplayLevel="selected"/>
+		<c name="num_ro5_violations" l="#ROF violations" type="integer"  width="5" decimals="2" display="selected" />
+		<c name="acd_most_apka" l="Most acidic pKa" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
+		<c name="acd_most_bpka" l="Most basic pKa" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
+		<c name="acd_logp" l="clogP" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
+		<c name="acd_LogD" l="clogD" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
+	</metatable>
+
+	<!-- **************************************************** -->
+	<!--  chembl_mol_dictionary -->
+	<!-- **************************************************** -->
+	<metatable tablename="chembl_mol_dictionary" l="ChEMBL Molecule Dictionary" parent="chembl_structures" map="
+	select distinct
+		md.*
+	from 
+	 chembl_owner.molecule_dictionary md
+	where 
+	  md.molregno is not null">
+	  <c name="chembl_ID" l="Chembl Id" type="compoundId" />
+		<c name="pref_name" l="preferred name" type="string" width="6" DisplayLevel="selected"/>
+		<c name="max_phase" l="Max Phase" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="therapeutic_flag" l="Therapeutic flag" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="dosed_ingredient" l="Dosed Ingredient" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="structure_type" l="structure type" type="string" width="6" DisplayLevel="selected"/>
+		<c name="chebi_id" l="Chebi Id" type="integer" displayFormat="decimal" width="6"  display="hidden" />
+		<c name="Chebi_Par_ID" l="Chebi par id" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="molecule_type" l="Molecule Type" type="string" width="6" DisplayLevel="selected"/>
+		<c name="first_approval" l="First Approval" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="oral" l="Oral" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="parenteral" l="Parenteral" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="topical" l="Topical" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="black_box_warning" l="black blox warning" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="natural_Product" l="Natural Product" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="prodrug" l="prodrug" type="integer" displayFormat="decimal" width="6"  display="selected" />
+	</metatable>
+	
+
+	
+  <!-- **************************************************** -->
+	<!--  Chembl chembl_assay_data  -->
+	<!-- **************************************************** -->
+	<metatable tablename="chembl_assay_data" l="ChEMBL General Assay Data" parent="chembl_structures" map="
+select distinct
+md.molregno molID, 
+md.chembl_id,
+cs.canonical_smiles smiles, 
+cs.canonical_smiles str_smiles, 
+cp.Full_MWT, 
+cp.AlogP, 
+cp.acd_logp, 
+cp.acd_logD,
+cr.src_compound_id,
+ac.standard_value, 
+ac.standard_units, 
+ac.standard_type, 
+ac.activity_comment,
+ass.assay_id,
+td.pref_name, 
+ac.standard_relation, 
+c.accession,
+ass.confidence_score, 
+td.organism, 
+td.organism  org,
+pfc.L1, 
+pfc.L2, 
+pfc.L3,
+docs.Journal||','||docs.year||','||docs.volume||','||docs.issue||','||docs.first_page||'-'||docs.last_page source,
+td.target_type targettype
+from
+chembl_owner.compound_structures cs, 
+chembl_owner.compound_properties cp, 
+chembl_owner.compound_records cr,
+chembl_owner.molecule_hierarchy mh, 
+chembl_owner.molecule_dictionary md,
+chembl_owner.target_dictionary td, 
+target_type tt,
+target_components tc,  
+component_sequences c ,
+chembl_owner.assays ass, 
+chembl_owner.PROTEIN_FAMILY_CLASSIFICATION pfc,
+chembl_owner.COMPONENT_CLASS cc,    
+chembl_owner.activities ac,
+chembl_owner.DOCS docs
+where
+mh.molregno = md.molregno
+and md.molregno = cp.molregno
+and md.molregno = cr.molregno
+and mh.parent_molregno  = cs.molregno
+and cr.record_id = ac.record_id
+and ass.assay_id = ac.assay_id
+and td.tid = ass.tid 
+and td.target_type = tt.target_type 
+and td.tid = tc.tid (+)
+and tc.component_id = c.component_id (+) 
+and tt.parent_type = 'PROTEIN' 
+AND ASS.DOC_ID = DOCS.doc_id
+AND (C.COMPONENT_ID = CC.COMPONENT_ID(+))
+AND (C.COMPONENT_ID = PFC.PROTEIN_CLASS_ID(+)) 
+AND (ASS.ASSAY_TYPE IN ('B', 'F'))
+AND (TD.TARGET_TYPE in ('SINGLE PROTEIN', 'PROTEIN FAMILY', 'PROTEIN COMPLEX','SELECTIVITY GROUP', 'PROTEIN COMPLEX GROUP','PROTEIN-PROTEIN INTERACTION'))
+AND (C.DB_SOURCE = 'SWISS-PROT')
+AND (TD.ORGANISM IN
+('Bos taurus','Homo sapiens', 'Mus musculus', 'Rattus norvegicus')) 
+AND (ASS.CONFIDENCE_SCORE >= 4) 
+order by standard_value,accession  ">
+	  <c name="chembl_ID" l="Chembl Id" type="compoundId" />
+		<c name="molID" l="molregno" type="integer" width="6"  display="hidden" />
+        <c name="smiles" l="smiles" type="string" width="25" DisplayLevel="selectable" />
+        <c name="str_smiles" l="smiles structure" type="structure" dataTransForm ="FromSmiles" DisplayLevel="selectable" /> 
+		<c name="standard_relation" l="Relation" type="string" width="6" DisplayLevel="selectable"/>
+		<c name="standard_value" l="standard value" type="float" displayFormat="decimal" width="9" decimals="2" display="selected" />
+		<c name="standard_units" l="standard units" type="string" width="6" DisplayLevel="selected"/>
+		<c name="standard_type" l="standard type" type="string" width="6" DisplayLevel="selected"/>
+		<c name="activity_comment" l="Activity Comment" type="string" width="12" DisplayLevel="selectable"/>
+		<c name="assay_id" l="Assay Id" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+    <c name="pref_name" l="preferred name" type="string" width="20" DisplayLevel="selected" />
+        <c name="org" l="organism" type="string" width="5" DisplayLevel="selected" />
+        <c name="confidence_score" l="confidence score" type="integer" width="6"  DisplayLevel="selected" />
+        <c name="accession" l="protein accession id" type="string" width="10" DisplayLevel="selected" />
+        <c name="src_compound_id" l="Source Compound id" type="string" width="10" DisplayLevel="selectable" />
+        <c name="Source" l="Source" type="string" width="10" DisplayLevel="selectable" />
+        <c name="L1" l="Target Top level" type="string" width="6" DisplayLevel="selectable" />
+        <c name="L2" l="Target Level 2" type="string" width="6" DisplayLevel="selectable" />
+        <c name="L3" l="Target Level 3" type="string" width="6" DisplayLevel="selectable" />
+        <c name="TARGETTYPE" l="Target Type" type="string" width="6" DisplayLevel="selectable"  dictionary="targetypeflags" /> 
+	</metatable>
+	
+	
+
+ 	
+
+    <!-- **************************************************** -->
+	<!--  Chembl chembl_gene_data  -->
+	<!-- **************************************************** -->
+	<metatable tablename="chembl_gene_data" l="ChEMBL CRC (Potency, IC50, Ki, EC50, Kd, Kb, Ki app, K app) Assay Data" parent="chembl_structures" map="
+select distinct
+md.molregno molID, 
+md.chembl_id,
+cs.canonical_smiles smiles, 
+cs.canonical_smiles str_smiles, 
+cp.Full_MWT, 
+cp.AlogP, 
+cp.acd_logp, 
+cp.acd_logD,
+cr.src_compound_id,
+ac.standard_value, 
+(round(-log(10,ac.standard_value),2) + 9) pAct, 
+ac.standard_units, 
+ac.standard_type, 
+ac.activity_comment,
+ass.assay_id,
+td.pref_name, 
+ac.standard_relation, 
+c.accession,
+ass.confidence_score, 
+td.organism, 
+td.organism  org,
+pfc.L1, 
+pfc.L2, 
+pfc.L3,
+docs.Journal||','||docs.year||','||docs.volume||','||docs.issue||','||docs.first_page||'-'||docs.last_page source,               
+td.target_type targettype
+from
+chembl_owner.compound_structures cs, 
+chembl_owner.compound_properties cp, 
+chembl_owner.compound_records cr,
+chembl_owner.molecule_hierarchy mh, 
+chembl_owner.molecule_dictionary md,
+chembl_owner.target_dictionary td, 
+chembl_owner.target_type tt,
+chembl_owner.target_components tc,  
+chembl_owner.component_sequences c,
+chembl_owner.assays ass, 
+chembl_owner.PROTEIN_FAMILY_CLASSIFICATION pfc,
+chembl_owner.COMPONENT_CLASS cc,    
+chembl_owner.activities ac,
+chembl_owner.DOCS docs,  
+(SELECT distinct ASSAY_ID, 'CRC' AS MEASUREMENT
+              FROM chembl_owner.ACTIVITIES
+              WHERE (ACTIVITIES.STANDARD_UNITS IN ('nM', 'uM', 'um', 'M', 'mM', 'pM'))
+               AND (ACTIVITIES.STANDARD_TYPE IN ('Potency', 'IC50', 'Ki', 'EC50', 'Kd', 'Kb', 'Ki app', 'KB', 'K app'))) TEMP1
+where
+mh.molregno = md.molregno
+and md.molregno = cp.molregno
+and md.molregno = cr.molregno
+and mh.parent_molregno  = cs.molregno
+and cr.record_id = ac.record_id
+and ass.assay_id = ac.assay_id
+and td.tid = ass.tid 
+and td.target_type = tt.target_type 
+and td.tid = tc.tid (+)
+and tc.component_id = c.component_id (+) 
+and tt.parent_type = 'PROTEIN' 
+AND ASS.DOC_ID = DOCS.doc_id
+AND (C.COMPONENT_ID = CC.COMPONENT_ID(+))
+AND (C.COMPONENT_ID = PFC.PROTEIN_CLASS_ID(+)) 
+AND (ASS.ASSAY_ID = TEMP1.ASSAY_ID)
+AND (ASS.ASSAY_TYPE IN ('B', 'F'))
+AND (TD.TARGET_TYPE in ('SINGLE PROTEIN', 'PROTEIN FAMILY', 'PROTEIN COMPLEX','SELECTIVITY GROUP', 'PROTEIN COMPLEX GROUP','PROTEIN-PROTEIN INTERACTION'))
+AND (C.DB_SOURCE = 'SWISS-PROT')
+AND (TD.ORGANISM IN
+('Bos taurus','Homo sapiens', 'Mus musculus', 'Rattus norvegicus')) 
+AND (ASS.CONFIDENCE_SCORE >= 4) 
+and ac.standard_value>0 ">
+	  <c name="chembl_ID" l="Chembl Id" type="compoundId" />
+		<c name="molID" l="molregno" type="integer" width="6"  display="hidden" />
+        <c name="smiles" l="smiles" type="string" width="25" DisplayLevel="selectable" />
+        <c name="str_smiles" l="smiles structure" type="structure" dataTransForm ="FromSmiles" DisplayLevel="selectable" /> 
+		<c name="standard_relation" l="Relation" type="string" width="6" DisplayLevel="selectable"/>
+		<c name="standard_value" l="standard value" type="float" displayFormat="decimal" width="9" decimals="2" display="selected" />
+		<c name="pAct" l="pAct" type="float" displayFormat="decimal" width="6" decimals="1"  display="hidden" />
+		<c name="standard_units" l="standard units" type="string" width="6" DisplayLevel="selected"/>
+		<c name="standard_type" l="standard type" type="string" width="6" DisplayLevel="selected"/>
+		<c name="activity_comment" l="Activity Comment" type="string" width="12" DisplayLevel="selectable"/>
+		<c name="assay_id" l="Assay Id" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+    <c name="pref_name" l="preferred name" type="string" width="20" DisplayLevel="selected" />
+        <c name="org" l="organism" type="string" width="5" DisplayLevel="selected" />
+        <c name="confidence_score" l="confidence score" type="integer" width="6"  DisplayLevel="selected" />
+        <c name="accession" l="protein accession id" type="string" width="10" DisplayLevel="selected" />
+        <c name="src_compound_id" l="Source Compound id" type="string" width="10" DisplayLevel="selectable" />
+        <c name="Source" l="Source" type="string" width="10" DisplayLevel="selectable" />
+        <c name="L1" l="Target Top level" type="string" width="6" DisplayLevel="selectable" />
+        <c name="L2" l="Target Level 2" type="string" width="6" DisplayLevel="selectable" />
+        <c name="L3" l="Target Level 3" type="string" width="6" DisplayLevel="selectable" /> 
+        <c name="TARGETTYPE" l="Target Type" type="string" width="6" DisplayLevel="selectable"  dictionary="targetypeflags" /> 
+	</metatable>
+
+    <!-- **************************************************** -->
+	<!--  Entregene_to_uniprot -->
+	<!-- **************************************************** -->
+	<metatable tablename="Entregene_to_uniprot" l="Entregene_to_unitprot" metabroker="generic"  TableMap="mbs_user.Entregene_to_uniprot">
+	  <c name="Entrez_gene_ID" l="Entre Gene id" type="compoundId" />
+        <c name="Gene_Symbol" l="Gene Symbol" type="string" width="10" DisplayLevel="selected" />
+        <c name="Protein_name" l="Protein name" type="string" width="25" DisplayLevel="selected" />
+        <c name="Synonyms" l="synonyms" type="string" width="25" DisplayLevel="selectable" />
+        <c name="uniprot_id" l="Uniprot id" type="string" width="10" DisplayLevel="selected" />
+	</metatable>
+	
+	
+	<!-- **************************************************** -->
+	<!--  STB Structure table (ChEMBL) -->
+	<!-- **************************************************** -->
+	<metatable tablename="chembl_stb_structure" l="ChEMBL Structures(test)" l2="Structures" RowCountSql="tableMap"
+	 TableMap=" select b.*, c.cpd_source, c.cpd_number,c.cpd_source||c.cpd_number chembl_id from
+stb_owner.stb_cpd_base b,
+stb_owner.stb_cpd c
+where b.cpd_id=c.cpd_id and c.cpd_source='CHEMBL' ">
+		<c name="cpd_id" l="Compound Id" type="compoundId" storageType ="integer" width="9"/>
+		<c name="molstructure" l="Structure" type="smiles" width="35" searchable="false" map="smiles"/>
+		<c name="molformula" l="Molecular Formula" type="string" display="selectable" width="20" map="cpd_id" dataTransform="getMolFormula" searchable="false"/>
+		<c name="molweight" l="Mol. Wt." type="float" displayFormat="decimal" width="6" decimals="2" display="selectable" map="cpd_id" dataTransform="getMolWeight" searchable="false"/>
+		<c name="molsmiles" l="Smiles" type="string" display="selectable" searchable ="true" width="25" map="smiles" />
+		<c name="cpd_source" l="Source" type="string" display="selectable" searchable ="true"  />
+		<c name="cpd_number" l="Cpd Number" type="string" display="selectable" searchable ="true"  />
+		<c name="chembl_id" l="Chembl ID" type="string" display="selectable" searchable ="true"  />
+	</metatable> 
+	
+	<!-- **************************************************** -->
+	<!--  Assay detail (Lilly / ChEMBL) -->
+	<!-- **************************************************** -->
+	<metatable tablename="chembl_STB_NONSUM" l="ChEMBL Assay Data (Unpivoted)" metabroker="TargetAssay" parent="stb_structure"
+	 TableMap="
+		select
+    r.*,
+    r.average_val AVERAGE_VAL_QN,
+    r.most_potent_val MOST_POTENT_VAL_QN,
+    CalcActivityBin(PREFIX, AVERAGE_VAL) ACTIVITY_BIN,
+    CalcActivityBin(PREFIX, MOST_POTENT_VAL) ACTIVITY_BIN_MOST_POTENT,
+    null TARGET_MAP_X,
+    null TARGET_MAP_Y,
+    concat(cpd_source,cpd_number) chembl_id
+    from
+    stb_owner.stb_nonsum r  where CPD_SOURCE='CHEMBL'
+     " >
+		<c name="cpd_id" l="Compound Id" type="compoundId" storageType ="integer" width="9"/>
+		<c name="GENE_SYMBOL" l="Gene Symbol" type="string" dataTypeImage="target" width="9" case="upper" dictionary="TA_Gene_Symbols" ClickFunction="ShowContextMenu:TargetContextMenu" />
+		<c Name="GENE_IDS" Label="Gene Ids" DataType="String" DisplayLevel="Selected" DisplayWidth="12" />
+		<c name="ASSAY_TYPE" l="Assay Type" type="string" width="10" display="selected" dictionary="TA_Assay_Type" DictionaryMultipleSelect="true" desc="Type of assay, e.g. binding, functional"/>
+		<c name="ASSAY_MODE" l="Assay Mode" type="string" width="12" display="selected" dictionary="TA_Assay_Mode" DictionaryMultipleSelect="true" desc="Mode of assay, e.g. agonist, antagonist, potentiator"/>
+		<c name="ASSAY_MEASUREMENT" l="Result Type" type="string" width="4" display="selected" dictionary="TA_Result_Type" DictionaryMultipleSelect="true" desc="Type of result, e.g. single point(SP) or concentration response curve (CRC)"/>
+		<c Name="ASSAY_SOURCE" Label="Assay Source" DataType="String" DisplayLevel="Selected" DisplayWidth="12" />
+		<c Name="ASSAY_ID" Label="Assay Id" DataType="String" DisplayLevel="Selected" DisplayWidth="12" />
+		<c Name="ASSAY_DESC" Label="Assay Desc" DataType="String" DisplayLevel="Selected" DisplayWidth="12" />
+		<c Name="SMILES" Label="Smiles" DataType="String" DisplayLevel="Selected" DisplayWidth="12" dictionary="stb_databases" />
+		<c Name="CPD_SOURCE" Label="Cpd Source" DataType="String" DisplayLevel="Selected" DisplayWidth="12" />
+		<c Name="CPD_NUMBER" Label="Cpd Number" DataType="Integer" DisplayLevel="Selected" DisplayFormat="SigDigits" DisplayWidth="12" />
+		<c Name="ACTIVITY_TYPE" Label="Activity Type" DataType="String" DisplayLevel="Selected" DisplayWidth="12" />
+        <c Name="AVERAGE_VAL_QN" Label="Result Value" DataType="QualifiedNumber" display="selected" DisplayFormat="SigDigits" DetailsAvailable="true" DisplayWidth="12" Decimals="3" 
+			 Map="PREFIX, AVERAGE_VAL, N, SDEV"/>
+		<c Name="PREFIX" Label="Result Qualifier" DataType="String" display="hidden" DisplayWidth="6" />
+		<c Name="AVERAGE_VAL" Label="Result Value Number" DataType="Number" display="hidden" DisplayFormat="SigDigits" DisplayWidth="12" Decimals="3" />
+		<c Name="SDEV" Label="Std. Dev" DataType="Number" display="hidden" DisplayFormat="SigDigits" DisplayWidth="8" Decimals="3" />
+		<c Name="N" Label="N" DataType="Integer" display="hidden" DisplayFormat="SigDigits" DisplayWidth="3" />
+        <c Name="UOM" Label="Uom" DataType="String" DisplayLevel="Selected" DisplayWidth="12" />
+        <c Name="CONC" Label="Conc" DataType="Number" DisplayLevel="Selected" DisplayFormat="SigDigits" DisplayWidth="12" Decimals="3" />
+        <c name="ACTIVITY_BIN" l="Activity Bin" type="integer" dataTypeImage="condFormatSmall" condFormat="Activity Bin Conditional Formatting" display="selected" width="5" />
+		<c Name="MOST_POTENT_VAL_QN" Label="Most Potent Result Value" DataType="QualifiedNumber" DisplayLevel="Selected" DisplayFormat="SigDigits" DisplayWidth="12" Decimals="3" DetailsAvailable="true"
+			 map ="null, MOST_POTENT_VAL"/>
+		<c Name="MOST_POTENT_VAL" Label="Most Potent Result Value Number" DataType="Number" DisplayLevel="Hidden" DisplayFormat="SigDigits" DisplayWidth="12" Decimals="3" />
+		<c name="ACTIVITY_BIN_MOST_POTENT" l="Activity Bin (Most Potent)" type="integer" dataTypeImage="condFormatSmall" condFormat="Activity Bin Conditional Formatting" display="selected" width="5" />
+		<c Name="SUM_RESULT_ID" Label="Sum Result Id" DataType="Integer" DisplayLevel="Hidden" DisplayFormat="SigDigits" DisplayWidth="12" />
+		<c Name="LILLY_SUM_RESULT_ID" Label="Sum Result Id" DataType="Integer" DisplayLevel="Hidden" DisplayFormat="SigDigits" DisplayWidth="12" />
+		<c name="TARGET_MAP_X" l="Target Map X" type="integer" width="7" display="hidden" searchable="false" columnMap="null"/>
+		<c name="TARGET_MAP_Y" l="Target Map Y" type="integer" width="7" display="hidden" searchable="false" columnMap="null"/> 
+	</metatable>
+
+	<!-- **************************************************** -->
+	<!--  Assay detail (Lilly / ChEMBL) -->
+	<!-- **************************************************** -->
+	<metatable tablename="chembl_STB_STR_NONSUM" l="ChEMBL Assay Data (Unpivoted)" metabroker="TargetAssay" parent="chembl_structures"
+	 TableMap="
+    select
+    r.cpd_source||r.cpd_number chembl_id,
+    r.*,
+    r.cpd_id ,
+    r.average_val AVERAGE_VAL_QN,
+    r.most_potent_val MOST_POTENT_VAL_QN,
+    CalcActivityBin(PREFIX, AVERAGE_VAL) ACTIVITY_BIN,
+    CalcActivityBin(PREFIX, MOST_POTENT_VAL) ACTIVITY_BIN_MOST_POTENT,
+    null TARGET_MAP_X,
+    null TARGET_MAP_Y 
+    from
+    stb_owner.stb_nonsum r
+    where  r.CPD_SOURCE='CHEMBL'  " >
+		<c name="chembl_id" l="Chembl Id" type="compoundId" width="9"/>
+		<c name="CPDID" l="LLY/Chembl Combined Cpd Id" type="string" width="9" display="selectable"/>
+		<c name="GENE_SYMBOL" l="Gene Symbol" type="string" dataTypeImage="target" width="9" case="upper" dictionary="TA_Gene_Symbols" ClickFunction="ShowContextMenu:TargetContextMenu" />
+		<c Name="GENE_IDS" Label="Gene Ids" DataType="String" DisplayLevel="selectable" DisplayWidth="12" />
+		<c name="ASSAY_TYPE" l="Assay Type" type="string" width="10" display="selectable" dictionary="TA_Assay_Type" DictionaryMultipleSelect="true" desc="Type of assay, e.g. binding, functional"/>
+		<c name="ASSAY_MODE" l="Assay Mode" type="string" width="12" display="selectable" dictionary="TA_Assay_Mode" DictionaryMultipleSelect="true" desc="Mode of assay, e.g. agonist, antagonist, potentiator"/>
+		<c name="ASSAY_MEASUREMENT" l="Result Type" type="string" width="4" display="selected" dictionary="TA_Result_Type" DictionaryMultipleSelect="true" desc="Type of result, e.g. single point(SP) or concentration response curve (CRC)"/>
+		<c Name="ASSAY_SOURCE" Label="Assay Source" DataType="String" DisplayLevel="selectable" DisplayWidth="12" />
+		<c Name="ASSAY_ID" Label="Assay Id" DataType="String" DisplayLevel="selectable" DisplayWidth="12" />
+		<c Name="ASSAY_DESC" Label="Assay Desc" DataType="String" DisplayLevel="selectable" DisplayWidth="12" />
+		<c Name="ACTIVITY_TYPE" Label="Activity Type" DataType="String" DisplayLevel="Selected" DisplayWidth="12" />
+        <c Name="AVERAGE_VAL_QN" Label="Result Value" DataType="QualifiedNumber" display="selectable" DisplayFormat="SigDigits" DetailsAvailable="true" DisplayWidth="12" Decimals="3" 
+			 Map="PREFIX, AVERAGE_VAL, N, SDEV"/>
+		<c Name="PREFIX" Label="Result Qualifier" DataType="String" display="hidden" DisplayWidth="6" />
+		<c Name="AVERAGE_VAL" Label="Result Value Number" DataType="Number" display="hidden" DisplayFormat="SigDigits" DisplayWidth="12" Decimals="3" />
+		<c Name="SDEV" Label="Std. Dev" DataType="Number" display="hidden" DisplayFormat="SigDigits" DisplayWidth="8" Decimals="3" />
+		<c Name="N" Label="N" DataType="Integer" display="hidden" DisplayFormat="SigDigits" DisplayWidth="3" />
+        <c Name="UOM" Label="Uom" DataType="String" DisplayLevel="Selected" DisplayWidth="12" />
+        <c Name="CONC" Label="Conc" DataType="Number" DisplayLevel="Selected" DisplayFormat="SigDigits" DisplayWidth="12" Decimals="3" />
+        <c name="ACTIVITY_BIN" l="Activity Bin" type="integer" dataTypeImage="condFormatSmall" condFormat="Activity Bin Conditional Formatting" display="selectable" width="5" />
+		<c Name="MOST_POTENT_VAL_QN" Label="Most Potent Result Value" DataType="QualifiedNumber" DisplayLevel="selectable" DisplayFormat="SigDigits" DisplayWidth="12" Decimals="3" DetailsAvailable="true"
+			 map ="null, MOST_POTENT_VAL"/>
+		<c Name="MOST_POTENT_VAL" Label="Most Potent Result Value Number" DataType="Number" DisplayLevel="Hidden" DisplayFormat="SigDigits" DisplayWidth="12" Decimals="3" />
+		<c name="ACTIVITY_BIN_MOST_POTENT" l="Activity Bin (Most Potent)" type="integer" dataTypeImage="condFormatSmall" condFormat="Activity Bin Conditional Formatting" display="selectable" width="5" />
+		<c Name="SUM_RESULT_ID" Label="Sum Result Id" DataType="Integer" DisplayLevel="Hidden" DisplayFormat="SigDigits" DisplayWidth="12" />
+		<c Name="LILLY_SUM_RESULT_ID" Label="Sum Result Id" DataType="Integer" DisplayLevel="Hidden" DisplayFormat="SigDigits" DisplayWidth="12" />
+		<c name="TARGET_MAP_X" l="Target Map X" type="integer" width="7" display="hidden" searchable="false" columnMap="null"/>
+		<c name="TARGET_MAP_Y" l="Target Map Y" type="integer" width="7" display="hidden" searchable="false" columnMap="null"/>
+	</metatable>	
+	
+	
+
+	<!-- **************************************************** -->
+	<!--  chembl_parent -->
+	<!-- **************************************************** -->
+	<metatable tablename="chembl_parent" l="ChEMBL Parent data" tablemap="
+	select 
+		distinct md.*
+	from 
+	 chembl_owner.molecule_dictionary md
+	 where chembl_id is not null
+	">
+	  <c name="chembl_ID" l="Chembl Id" type="compoundId" />
+    <c name="pref_name" l="preferred name" type="string" width="20" DisplayLevel="selected" />
+		<c name="max_phase" l="Max Phase" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="therapeutic_flag" l="Therapeutic flag" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="dosed_ingredient" l="Dosed Ingredient" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="structure_type" l="structure type" type="string" width="6" DisplayLevel="selected"/>
+		<c name="chebi_id" l="Chebi Id" type="integer" displayFormat="decimal" width="6"  display="hidden" />
+		<c name="Chebi_Par_ID" l="Chebi par id" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="molecule_type" l="Molecule Type" type="string" width="6" DisplayLevel="selected"/>
+		<c name="first_approval" l="First Approval" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="oral" l="Oral" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="parenteral" l="Parenteral" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="topical" l="Topical" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="black_box_warning" l="black blox warning" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="natural_Product" l="Natural Product" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="prodrug" l="prodrug" type="integer" displayFormat="decimal" width="6"  display="selected" />
+	</metatable>
+	
+	
+        <!-- **************************************************** -->
+        <!--  Chembl biotherapeutics   -->
+        <!-- **************************************************** -->
+        <metatable tablename="chembl_biotherapeutics" l="ChEMBL Biotherapeutics" parent="chembl_structures" map="
+select md.*,b.molregno,bc.*,bcs.*,bcs.organism org
+from chembl_owner.molecule_dictionary md,
+       chembl_owner.biotherapeutics b,
+       chembl_owner.biotherapeutic_components bc,
+       chembl_owner.bio_component_sequences bcs
+ where md.molregno=b.molregno(+)
+   and b.molregno=bc.molregno(+)
+   and bc.component_id=bcs.component_id(+)
+   and md.molecule_type not like 'Small molecule'">
+     <c name="chembl_ID" l="Chembl Id" type="compoundId" />
+    <c name="pref_name" l="preferred name" type="string" width="20" DisplayLevel="selected" />
+     <c name="STRUCTURE_TYPE" l="Structure Type" type="string" width="6" DisplayLevel="selected"/>
+     <c name="MOLECULE_TYPE" l="Molecule Type" type="string" width="6" DisplayLevel="selected"/>
+     <c name="THERAPEUTIC_FLAG" l="Therapeutic Flag (1=yes,2=no)" type="integer" width="6" DisplayLevel="selected"/>
+     <c name="MAX_PHASE" l="Max phase reached (4 = approved)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="DOSED_INGREDIENT" l="Dosed in this form? (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="DESCRIPTION" l="Descript" type="string" width="6" DisplayLevel="selectable"/>
+     <c name="CHEBI_ID" l="CHEBI_ID" type="integer" displayFormat="decimal" width="6"  display="hidden" />
+     <c name="CHEBI_PAR_ID" l="CHEBI_PAR_ID" type="integer" displayFormat="decimal" width="6"  display="hidden" />
+     <c name="FIRST_APPROVAL" l="Approval Year" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="ORAL" l="Oral (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="PARENTERAL" l="IP (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="TOPICAL" l="Topical (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="BLACK_BOX_WARNING" l="Black box warning? (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="NATURAL_PRODUCT" l="Natural Product? (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="FIRST_IN_CLASS" l="First in Class? (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="CHIRALITY" l="Dose form: racemic(0), 1 isomer(1), achiral(2)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="PRODRUG" l="Prodrug? (1=yes,2=no) " type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="INORGANIC_FLAG" l="Inorganic? (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="USAN_YEAR" l="Usan Year" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="AVAILABILITY_TYPE" l="Availability (0=no, 1 = prescription, 2=OTC)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="BIOCOMP_ID" l="BIOCOMP_ID" type="integer" displayFormat="decimal" width="6"  display="hidden" />
+     <c name="TAX_ID" l="TAX_ID" type="integer" displayFormat="decimal" width="6"  display="hidden" />     
+     <c name="COMPONENT_TYPE" l="COMPONENT_TYPE" type="string" width="6" DisplayLevel="hidden"/>
+     <c name="SEQUENCE" l="SEQUENCE" type="string" width="6" DisplayLevel="hidden"/>
+     <c name="SEQUENCE_MD5SUM" l="SEQUENCE_MD5SUM" type="string" width="6" DisplayLevel="hidden"/>
+     <c name="organism" l="Organism" type="string" width="6" DisplayLevel="selectable"/>
+     <c name="USAN_STEM" l="Usan Stem" type="string" width="6" DisplayLevel="hidden"/>
+</metatable>
+
+
+        <!-- **************************************************** -->
+        <!--  Chembl drugcombinations   -->
+        <!-- **************************************************** -->
+        <metatable tablename="chembl_drugcombinations" l="ChEMBL Drug Combinations" map="
+select f.product_id, m.*
+  from  chembl_owner.formulations f, chembl_owner.molecule_dictionary m
+where f.molregno=m.molregno
+and product_id in (
+select distinct product_id
+  from formulations f, molecule_dictionary md
+where f.molregno=md.molregno
+  and md.max_phase=4
+  and md.dosed_ingredient=1
+  and md.therapeutic_flag=1
+  group by product_id having count(distinct f.molregno) >1)">
+     <c name="product_ID" l="Product Id" type="compoundId" />
+     <c name="chembl_ID" l="Chembl Id" type="string" />    
+    <c name="pref_name" l="preferred name" type="string" width="20" DisplayLevel="selected" />
+     <c name="STRUCTURE_TYPE" l="Structure Type" type="string" width="6" DisplayLevel="selected"/>
+     <c name="MOLECULE_TYPE" l="Molecule Type" type="string" width="6" DisplayLevel="selected"/>
+     <c name="THERAPEUTIC_FLAG" l="Therapeutic Flag (1=yes,2=no)" type="integer" width="6" DisplayLevel="selected"/>
+     <c name="MAX_PHASE" l="Max phase reached (4 = approved)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="DOSED_INGREDIENT" l="Dosed in this form? (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="CHEBI_ID" l="CHEBI_ID" type="integer" displayFormat="decimal" width="6"  display="hidden" />
+     <c name="CHEBI_PAR_ID" l="CHEBI_PAR_ID" type="integer" displayFormat="decimal" width="6"  display="hidden" />
+     <c name="FIRST_APPROVAL" l="Approval Year" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="ORAL" l="Oral (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="PARENTERAL" l="IP (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="TOPICAL" l="Topical (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="BLACK_BOX_WARNING" l="Black box warning? (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="NATURAL_PRODUCT" l="Natural Product? (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="FIRST_IN_CLASS" l="First in Class? (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="CHIRALITY" l="Dose form: racemic(0), 1 isomer(1), achiral(2)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="PRODRUG" l="Prodrug? (1=yes,2=no) " type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="INORGANIC_FLAG" l="Inorganic? (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="USAN_YEAR" l="Usan Year" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="AVAILABILITY_TYPE" l="Availability (0=no, 1 = prescription, 2=OTC)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="USAN_STEM" l="Usan Stem" type="string" width="6" DisplayLevel="hidden"/>
+</metatable>
+
+
+	
+	
+	
+	<!-- **************************************************** -->
+	<!--  Chembl cmpd properties -->
+	<!-- **************************************************** -->
+	<metatable tablename="chembl_properties_md" l="ChEMBL Properties" parent="chembl_parent" map="
+	select distinct
+		md.chembl_id,  
+		cp.*
+	from 
+	 chembl_owner.molecule_dictionary md, 
+	 chembl_owner.compound_properties cp
+	where 
+	 cp.molregno (+) = md.molregno">
+	  <c name="chembl_ID" l="Chembl Id" type="compoundId" />
+		<c name="full_mwt" l="Mol. Wt. (full)" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
+		<c name="mw_freebase" l="Mol. Wt. (freebase)" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
+		<c name="alogp" l="alogP" type="float" displayFormat="decimal" width="6" decimals="2" display="selected" />
+		<c name="hba" l="HBA" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="hbd" l="HBD" type="integer" displayFormat="decimal" width="6"  display="selected" />
+		<c name="PSA" l="PSA" type="float" displayFormat="decimal" width="6" decimals="2" display="selected" />
+		<c name="RTB" l="#Rot. Bonds" type="integer" width="6" display="selected" />
+		<c name="ro3_pass" l="ROF (pass?)" type="string" width="6" DisplayLevel="selected"/>
+		<c name="num_ro5_violations" l="#ROF violations" type="integer"  width="5" decimals="2" display="selected" />
+		<c name="acd_most_apka" l="Most acidic pKa" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
+		<c name="acd_most_bpka" l="Most basic pKa" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
+		<c name="acd_logp" l="clogP" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
+		<c name="acd_LogD" l="clogD" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
+	</metatable>
+	
+	
+	<!-- **************************************************** -->
+	<!--  Chembl ADCs -->
+	<!-- **************************************************** -->
+	<metatable tablename="chembl_ADC_md" l="ChEMBL ADCs" parent="chembl_parent" map="
+select md.molregno, md.chembl_id, md.pref_name, decode(molregno,
+675524,'Ozogamicin',
+675439,'Tiuxetan',
+1121865,'Vedotin',
+1121868,'Mertansine',
+1121869,'Ravtansine',
+1121871,'Bogatox',
+1121899,'Vedotin',
+1121902,'Ravtansine',
+1121908,'Mertansine',
+1121914,'Pasudotox',
+1121916,'Estafenatox',
+1121923,'Monatox',
+1121953,'Emtansine',
+1381723,'Brallobarbital',
+1381724,'calicheamicin',
+1381725,'Doxorubicin',
+1381727,'Merpentan',
+1381728,'Mertansine',
+1380156,'Paptox',
+1381306,'Pentetate',
+1380417,'Tafenatox',
+1381390,'Aritox',
+1381056,'Aritox',
+1381307,'Pendetide',
+1380858,'Cituxetan',
+1380877,'Ozogamacin',
+1380514,'Mafenatox',
+1380926,'Celmoleukin',
+1380933,'Tiuxetan',
+1380935,'Tetraxetan',
+1380974,'Tetraxetan',
+1381051,'Aritox',
+1381066,'Pendetide', NULL) as ADC from
+chembl_owner.molecule_dictionary md
+where molregno in (675524,675439,1121865,1121868,1121869,1121871,1121899,1121902,1121908,1121914,1121916,1121923,1121953,1381723,1381724,1381725,1381727,1381728,1380156,1381306,1380417,1381390,1381056,1381307,1380858,1380877,1380514,1380926,1380933,1380935,1380974,1381051,1381066)
+">
+	  <c name="chembl_ID" l="Chembl Id" type="compoundId" />
+		<c name="molregno" l="Molregno" type="integer" width="8" DisplayLevel="hidden"/>
+    <c name="pref_name" l="preferred name" type="string" width="20" DisplayLevel="selected" />
+		<c name="ADC" l="ADC name" type="string" width="16" DisplayLevel="selected"/>
+	</metatable>
+	
+	<!-- **************************************************** -->
+	<!--  Chembl chembl_ADME_assay_data  -->
+	<!-- **************************************************** -->
+	<metatable tablename="chembl_ADME_assay_data" l="ChEMBL ADME Assay Data" parent="chembl_parent" map="  
+select distinct
+md.molregno molID, 
+md.chembl_id,
+cr.src_compound_id,
+td.pref_name, 
+ac.standard_type, 
+ac.standard_value, 
+ac.standard_units, 
+ac.activity_comment,
+ac.standard_relation, 
+ass.confidence_score, 
+td.organism  org,
+docs.Journal||','||docs.year||','||docs.volume||','||docs.issue||','||docs.first_page||'-'||docs.last_page source
+from
+chembl_owner.compound_structures cs, 
+chembl_owner.compound_properties cp, 
+chembl_owner.compound_records cr,
+chembl_owner.molecule_hierarchy mh, 
+chembl_owner.molecule_dictionary md,
+chembl_owner.target_dictionary td, 
+target_type tt,
+target_components tc,  
+chembl_owner.assays ass, 
+chembl_owner.COMPONENT_CLASS cc,    
+chembl_owner.activities ac,
+chembl_owner.DOCS docs
+where
+mh.molregno = md.molregno
+and md.molregno = cp.molregno
+and md.molregno = cr.molregno
+and mh.parent_molregno  = cs.molregno
+and cr.record_id = ac.record_id
+and ass.assay_id = ac.assay_id
+and td.tid = ass.tid 
+and td.target_type = tt.target_type 
+and td.tid = tc.tid (+)
+and tt.parent_type = 'PROTEIN' 
+AND ASS.DOC_ID = DOCS.doc_id
+AND (TD.ORGANISM IN
+('Bos taurus','Homo sapiens', 'Mus musculus', 'Rattus norvegicus')) 
+AND (ASS.CONFIDENCE_SCORE >= 4)
+AND ass.assay_type = 'A' ">
+	  <c name="chembl_ID" l="Chembl Id" type="compoundId" />
+		<c name="molID" l="molregno" type="integer" width="6"  display="hidden" />
+    <c name="pref_name" l="preferred name" type="string" width="20" DisplayLevel="selected" />
+		<c name="standard_type" l="standard type" type="string" width="6" DisplayLevel="selected"/>
+		<c name="standard_relation" l="Relation" type="string" width="6" DisplayLevel="selectable"/>
+		<c name="standard_value" l="standard value" type="float" displayFormat="decimal" width="9" decimals="2" display="selected" />
+		<c name="standard_units" l="standard units" type="string" width="6" DisplayLevel="selected"/>
+		<c name="activity_comment" l="Activity Comment" type="string" width="12" DisplayLevel="selectable"/>
+    <c name="org" l="organism" type="string" width="5" DisplayLevel="selected" />
+    <c name="confidence_score" l="confidence score" type="integer" width="6"  DisplayLevel="selected" />
+    <c name="Source" l="Source" type="string" width="10" DisplayLevel="selectable" />
+	</metatable>	
+	
+	<!-- **************************************************** -->
+	<!--  Chembl chembl_ADME_assay_data  -->
+	<!-- **************************************************** -->
+	<metatable tablename="chembl_ADME_assay_data_SM" l="ChEMBL ADME Assay Data for SM" parent="chembl_structures" map="  
+select distinct
+md.molregno molID, 
+md.chembl_id,
+cr.src_compound_id,
+td.pref_name, 
+ac.standard_type, 
+ac.standard_value, 
+ac.standard_units, 
+ac.activity_comment,
+ac.standard_relation, 
+ass.confidence_score, 
+td.organism  org,
+docs.Journal||','||docs.year||','||docs.volume||','||docs.issue||','||docs.first_page||'-'||docs.last_page source
+from
+chembl_owner.compound_structures cs, 
+chembl_owner.compound_properties cp, 
+chembl_owner.compound_records cr,
+chembl_owner.molecule_hierarchy mh, 
+chembl_owner.molecule_dictionary md,
+chembl_owner.target_dictionary td, 
+target_type tt,
+target_components tc,  
+chembl_owner.assays ass, 
+chembl_owner.COMPONENT_CLASS cc,    
+chembl_owner.activities ac,
+chembl_owner.DOCS docs
+where
+mh.molregno = md.molregno
+and md.molregno = cp.molregno
+and md.molregno = cr.molregno
+and mh.parent_molregno  = cs.molregno
+and cr.record_id = ac.record_id
+and ass.assay_id = ac.assay_id
+and td.tid = ass.tid 
+and td.target_type = tt.target_type 
+and td.tid = tc.tid (+)
+and tt.parent_type = 'PROTEIN' 
+AND ASS.DOC_ID = DOCS.doc_id
+AND (TD.ORGANISM IN
+('Bos taurus','Homo sapiens', 'Mus musculus', 'Rattus norvegicus')) 
+AND (ASS.CONFIDENCE_SCORE >= 4)
+AND ass.assay_type = 'A' ">
+	  <c name="chembl_ID" l="Chembl Id" type="compoundId" />
+		<c name="molID" l="molregno" type="integer" width="6"  display="hidden" />
+    <c name="pref_name" l="preferred name" type="string" width="20" DisplayLevel="selected" />
+		<c name="standard_type" l="standard type" type="string" width="6" DisplayLevel="selected"/>
+		<c name="standard_relation" l="Relation" type="string" width="6" DisplayLevel="selectable"/>
+		<c name="standard_value" l="standard value" type="float" displayFormat="decimal" width="9" decimals="2" display="selected" />
+		<c name="standard_units" l="standard units" type="string" width="6" DisplayLevel="selected"/>
+		<c name="activity_comment" l="Activity Comment" type="string" width="12" DisplayLevel="selectable"/>
+    <c name="org" l="organism" type="string" width="5" DisplayLevel="selected" />
+    <c name="confidence_score" l="confidence score" type="integer" width="6"  DisplayLevel="selected" />
+    <c name="Source" l="Source" type="string" width="10" DisplayLevel="selectable" />
+	</metatable>	
+	
+	
+	<!-- **************************************************** -->
+	<!--  Chembl Therapeutics -->
+	<!-- **************************************************** -->
+	<metatable tablename="chembl_therapeutics" l="ChEMBL Therapeutics" parent="chembl_parent" map="
+	select * from chembl_owner.molecule_dictionary md,chembl_owner.drug_mechanism mech
+	where
+   md.max_phase=4
+  and md.dosed_ingredient=1
+  and md.therapeutic_flag=1
+  and md.molregno=mech.molregno(+)">
+     <c name="chembl_ID" l="Chembl Id" type="compoundId" />
+     <c name="PREF_NAME" l="Preferred Name" type="string" width="20" DisplayLevel="selected"/>
+     <c name="STRUCTURE_TYPE" l="Structure Type" type="string" width="6" DisplayLevel="selected"/>
+     <c name="MOLECULE_TYPE" l="Molecule Type" type="string" width="6" DisplayLevel="selected"/>
+     <c name="THERAPEUTIC_FLAG" l="Therapeutic Flag (1=yes,2=no)" type="integer" width="6" DisplayLevel="selected"/>
+     <c name="MAX_PHASE" l="Max phase reached (4 = approved)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="DOSED_INGREDIENT" l="Dosed in this form? (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="CHEBI_ID" l="CHEBI_ID" type="integer" displayFormat="decimal" width="6"  display="hidden" />
+     <c name="CHEBI_PAR_ID" l="CHEBI_PAR_ID" type="integer" displayFormat="decimal" width="6"  display="hidden" />
+     <c name="FIRST_APPROVAL" l="Approval Year" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="ORAL" l="Oral (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="PARENTERAL" l="IP (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="TOPICAL" l="Topical (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="BLACK_BOX_WARNING" l="Black box warning? (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="NATURAL_PRODUCT" l="Natural Product? (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="FIRST_IN_CLASS" l="First in Class? (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="CHIRALITY" l="Dose form: racemic(0), 1 isomer(1), achiral(2)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="PRODRUG" l="Prodrug? (1=yes,2=no) " type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="INORGANIC_FLAG" l="Inorganic? (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="USAN_YEAR" l="Usan Year" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="AVAILABILITY_TYPE" l="Availability (0=no, 1 = prescription, 2=OTC)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="USAN_STEM" l="Usan Stem" type="string" width="6" DisplayLevel="hidden"/>
+        <c name="action_type" l="Action Type" type="string" width="10" DisplayLevel="selectable"  /> 
+        <c name="mechanism_of_action" l="Mechanism of Action" type="string" width="10" DisplayLevel="selectable"  /> 
+        <c name="mechanism_comment" l="Mechanism Comment" type="string" width="10" DisplayLevel="selectable"  /> 
+        <c name="selectivity_comment" l="Selectivity Comment" type="string" width="10" DisplayLevel="selectable"  /> 
+	</metatable>	
+	
+	<!-- **************************************************** -->
+	<!--  Chembl Therapeutics -->
+	<!-- **************************************************** -->
+	<metatable tablename="chembl_therapeutics_SM" l="ChEMBL Therapeutics for SM" parent="chembl_structures" map="
+	select * from chembl_owner.molecule_dictionary md  where
+   md.max_phase=4
+  and md.dosed_ingredient=1
+  and md.therapeutic_flag=1">
+     <c name="chembl_ID" l="Chembl Id" type="compoundId" />
+     <c name="PREF_NAME" l="Preferred Name" type="string" width="20" DisplayLevel="selected"/>
+     <c name="STRUCTURE_TYPE" l="Structure Type" type="string" width="6" DisplayLevel="selected"/>
+     <c name="MOLECULE_TYPE" l="Molecule Type" type="string" width="6" DisplayLevel="selected"/>
+     <c name="THERAPEUTIC_FLAG" l="Therapeutic Flag (1=yes,2=no)" type="integer" width="6" DisplayLevel="selected"/>
+     <c name="MAX_PHASE" l="Max phase reached (4 = approved)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="DOSED_INGREDIENT" l="Dosed in this form? (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="CHEBI_ID" l="CHEBI_ID" type="integer" displayFormat="decimal" width="6"  display="hidden" />
+     <c name="CHEBI_PAR_ID" l="CHEBI_PAR_ID" type="integer" displayFormat="decimal" width="6"  display="hidden" />
+     <c name="FIRST_APPROVAL" l="Approval Year" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="ORAL" l="Oral (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="PARENTERAL" l="IP (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="TOPICAL" l="Topical (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="BLACK_BOX_WARNING" l="Black box warning? (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="NATURAL_PRODUCT" l="Natural Product? (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="FIRST_IN_CLASS" l="First in Class? (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="CHIRALITY" l="Dose form: racemic(0), 1 isomer(1), achiral(2)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="PRODRUG" l="Prodrug? (1=yes,2=no) " type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="INORGANIC_FLAG" l="Inorganic? (1=yes,2=no)" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="USAN_YEAR" l="Usan Year" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+     <c name="AVAILABILITY_TYPE" l="Availability (0=no, 1 = prescription, 2=OTC)" type="integer" displayFormat="decimal" width="6"  display="selected" />
+     <c name="USAN_STEM" l="Usan Stem" type="string" width="6" DisplayLevel="hidden"/>
+	</metatable>	
+	
+	
+  <!-- **************************************************** -->
+	<!--  Chembl invivo_assay_data  -->
+	<!-- **************************************************** -->
+	<metatable tablename="chembl_invivo_data" l="ChEMBL General in vivo Data" parent="chembl_structures" map="
+select distinct
+md.molregno molID, 
+md.chembl_id,
+cr.src_compound_id,
+td.pref_name, 
+ass.description descript, 
+ac.standard_type, 
+ac.standard_value, 
+ac.standard_units, 
+ac.activity_comment,
+ac.standard_relation, 
+ass.confidence_score, 
+td.organism  org,
+docs.Journal||','||docs.year||','||docs.volume||','||docs.issue||','||docs.first_page||'-'||docs.last_page source
+from
+chembl_owner.compound_structures cs, 
+chembl_owner.compound_properties cp, 
+chembl_owner.compound_records cr,
+chembl_owner.molecule_hierarchy mh, 
+chembl_owner.molecule_dictionary md,
+chembl_owner.target_dictionary td, 
+target_type tt,
+target_components tc,  
+chembl_owner.assays ass, 
+chembl_owner.COMPONENT_CLASS cc,    
+chembl_owner.activities ac,
+chembl_owner.DOCS docs
+where
+mh.molregno = md.molregno
+and md.molregno = cp.molregno
+and md.molregno = cr.molregno
+and mh.parent_molregno  = cs.molregno
+and cr.record_id = ac.record_id
+and ass.assay_id = ac.assay_id
+and td.tid = ass.tid 
+and td.target_type = tt.target_type 
+and td.tid = tc.tid (+)
+and tt.parent_type = 'PROTEIN' 
+AND ASS.DOC_ID = DOCS.doc_id
+AND (ASS.CONFIDENCE_SCORE >= 4)
+AND assay_test_type='In vivo' ">
+	  <c name="chembl_ID" l="Chembl Id" type="compoundId" />
+		<c name="molID" l="molregno" type="integer" width="6"  display="hidden" />
+    <c name="pref_name" l="preferred name" type="string" width="20" DisplayLevel="selected" />
+    <c name="descript" l="Description" type="string" width="20" DisplayLevel="selected" />
+		<c name="standard_type" l="standard type" type="string" width="6" DisplayLevel="selected"/>
+		<c name="standard_relation" l="Relation" type="string" width="6" DisplayLevel="selectable"/>
+		<c name="standard_value" l="standard value" type="float" displayFormat="decimal" width="9" decimals="2" display="selected" />
+		<c name="standard_units" l="standard units" type="string" width="6" DisplayLevel="selected"/>
+		<c name="activity_comment" l="Activity Comment" type="string" width="12" DisplayLevel="selectable"/>
+    <c name="org" l="organism" type="string" width="5" DisplayLevel="selected" />
+    <c name="confidence_score" l="confidence score" type="integer" width="6"  DisplayLevel="selected" />
+    <c name="Source" l="Source" type="string" width="10" DisplayLevel="selectable" />
+	</metatable>	
+	
+  <!-- **************************************************** -->
+	<!--  Chembl invivo_assay_data  -->
+	<!-- **************************************************** -->
+	<metatable tablename="chembl_invivo_data_sm" l="ChEMBL General in vivo Data for SM" parent="chembl_structures" map="
+select distinct
+md.molregno molID, 
+md.chembl_id,
+cr.src_compound_id,
+td.pref_name, 
+ass.description descript, 
+ac.standard_type, 
+ac.standard_value, 
+ac.standard_units, 
+ac.activity_comment,
+ac.standard_relation, 
+ass.confidence_score, 
+td.organism  org,
+docs.Journal||','||docs.year||','||docs.volume||','||docs.issue||','||docs.first_page||'-'||docs.last_page source
+from
+chembl_owner.compound_structures cs, 
+chembl_owner.compound_properties cp, 
+chembl_owner.compound_records cr,
+chembl_owner.molecule_hierarchy mh, 
+chembl_owner.molecule_dictionary md,
+chembl_owner.target_dictionary td, 
+target_type tt,
+target_components tc,  
+chembl_owner.assays ass, 
+chembl_owner.COMPONENT_CLASS cc,    
+chembl_owner.activities ac,
+chembl_owner.DOCS docs
+where
+mh.molregno = md.molregno
+and md.molregno = cp.molregno
+and md.molregno = cr.molregno
+and mh.parent_molregno  = cs.molregno
+and cr.record_id = ac.record_id
+and ass.assay_id = ac.assay_id
+and td.tid = ass.tid 
+and td.target_type = tt.target_type 
+and td.tid = tc.tid (+)
+and tt.parent_type = 'PROTEIN' 
+AND ASS.DOC_ID = DOCS.doc_id
+AND (ASS.CONFIDENCE_SCORE >= 4)
+AND assay_test_type='In vivo' ">
+	  <c name="chembl_ID" l="Chembl Id" type="compoundId" />
+		<c name="molID" l="molregno" type="integer" width="6"  display="hidden" />
+    <c name="pref_name" l="preferred name" type="string" width="20" DisplayLevel="selected" />
+    <c name="descript" l="Description" type="string" width="20" DisplayLevel="selected" />
+		<c name="standard_type" l="standard type" type="string" width="6" DisplayLevel="selected"/>
+		<c name="standard_relation" l="Relation" type="string" width="6" DisplayLevel="selectable"/>
+		<c name="standard_value" l="standard value" type="float" displayFormat="decimal" width="9" decimals="2" display="selected" />
+		<c name="standard_units" l="standard units" type="string" width="6" DisplayLevel="selected"/>
+		<c name="activity_comment" l="Activity Comment" type="string" width="12" DisplayLevel="selectable"/>
+    <c name="org" l="organism" type="string" width="5" DisplayLevel="selected" />   
+    <c name="confidence_score" l="confidence score" type="integer" width="6"  DisplayLevel="selected" />
+    <c name="Source" l="Source" type="string" width="10" DisplayLevel="selectable" />
+	</metatable>	
+	
+	
+  <!-- **************************************************** -->
+	<!--  Chembl chembl_assay_data_PPI  -->
+	<!-- **************************************************** -->
+	<metatable tablename="chembl_assay_data_PPI" l="ChEMBL General Assay PPI Data" parent="chembl_structures" map="
+select distinct
+md.molregno molID, 
+md.chembl_id,
+cs.canonical_smiles smiles, 
+cs.canonical_smiles str_smiles, 
+cp.Full_MWT, 
+cp.AlogP, 
+cp.acd_logp, 
+cp.acd_logD,
+cr.src_compound_id,
+ac.standard_value, 
+ac.standard_units, 
+ac.standard_type, 
+ac.activity_comment,
+ass.assay_id,
+td.tid,
+td.pref_name, 
+ac.standard_relation, 
+c.accession,
+ass.confidence_score, 
+td.organism, 
+td.organism  org,
+pfc.L1, 
+pfc.L2, 
+pfc.L3,
+docs.Journal||','||docs.year||','||docs.volume||','||docs.issue||','||docs.first_page||'-'||docs.last_page source,
+td.target_type targettype,
+mech.action_type,
+mech.mechanism_of_action,
+mech.mechanism_comment,
+mech.selectivity_comment
+from
+chembl_owner.compound_structures cs, 
+chembl_owner.compound_properties cp, 
+chembl_owner.compound_records cr,
+chembl_owner.molecule_hierarchy mh, 
+chembl_owner.molecule_dictionary md,
+chembl_owner.target_dictionary td, 
+target_type tt,
+target_components tc,  
+component_sequences c ,
+chembl_owner.assays ass, 
+chembl_owner.PROTEIN_FAMILY_CLASSIFICATION pfc,
+chembl_owner.COMPONENT_CLASS cc,    
+chembl_owner.activities ac,
+chembl_owner.DOCS docs,
+chembl_owner.Drug_mechanism mech
+where
+mh.molregno = md.molregno
+and md.molregno = cp.molregno
+and md.molregno = mech.molregno(+)
+and md.molregno = cr.molregno
+and mh.parent_molregno  = cs.molregno
+and cr.record_id = ac.record_id
+and ass.assay_id = ac.assay_id
+and td.tid = ass.tid 
+and td.target_type = tt.target_type 
+and td.tid = tc.tid (+)
+and tc.component_id = c.component_id (+) 
+and tt.parent_type = 'PROTEIN' 
+AND ASS.DOC_ID = DOCS.doc_id
+AND (C.COMPONENT_ID = CC.COMPONENT_ID(+))
+AND (C.COMPONENT_ID = PFC.PROTEIN_CLASS_ID(+)) 
+AND (ASS.ASSAY_TYPE IN ('B', 'F'))
+AND (C.DB_SOURCE = 'SWISS-PROT')
+AND (TD.ORGANISM IN
+('Bos taurus','Homo sapiens', 'Mus musculus', 'Rattus norvegicus')) 
+AND (ASS.CONFIDENCE_SCORE >= 4) 
+AND (TD.TARGET_TYPE in ('SINGLE PROTEIN', 'PROTEIN FAMILY', 'PROTEIN COMPLEX','SELECTIVITY GROUP', 'PROTEIN COMPLEX GROUP','PROTEIN-PROTEIN INTERACTION'))
+and (c.accession in ('O35618',
+'O35734',
+'O35800',
+'O35923',
+'O40619',
+'O42123',
+'O42277',
+'O42354',
+'O42724',
+'O42786',
+'O44388',
+'O46375',
+'O46412',
+'O46654',
+'O48649',
+'O53021',
+'O54890',
+'O55017',
+'O55052',
+'O55245',
+'O57539',
+'O58001',
+'O59837',
+'O59924',
+'O60885',
+'O62641',
+'O62802',
+'O62807',
+'O70309',
+'O73682',
+'O73706',
+'O73872',
+'O73948',
+'O74036',
+'O75578',
+'O77507',
+'O77510',
+'O77620',
+'O77737',
+'O77764',
+'O88275',
+'O88559',
+'O93748',
+'O94128',
+'O94178',
+'O95622',
+'O97513',
+'O97605',
+'O97626',
+'P00441',
+'P00442',
+'P00443',
+'P00445',
+'P01106',
+'P01108',
+'P01109',
+'P01116',
+'P01117',
+'P01375',
+'P01589',
+'P01590',
+'P02554',
+'P02557',
+'P02638',
+'P02766',
+'P02767',
+'P03111',
+'P03112',
+'P03113',
+'P03114',
+'P03116',
+'P03117',
+'P03118',
+'P03119',
+'P03120',
+'P03122',
+'P03946',
+'P04014',
+'P04015',
+'P04106',
+'P04107',
+'P04163',
+'P04178',
+'P04233',
+'P04271',
+'P04272',
+'P04351',
+'P04441',
+'P04631',
+'P04924',
+'P05016',
+'P05106',
+'P05107',
+'P05219',
+'P05220',
+'P05304',
+'P05556',
+'P05943',
+'P06420',
+'P06421',
+'P06422',
+'P06423',
+'P06455',
+'P06789',
+'P06790',
+'P06804',
+'P06920',
+'P06921',
+'P07228',
+'P07309',
+'P07355',
+'P07356',
+'P07437',
+'P07489',
+'P07509',
+'P07632',
+'P08207',
+'P08228',
+'P08344',
+'P08345',
+'P08514',
+'P08537',
+'P08562',
+'P08644',
+'P08648',
+'P09055',
+'P09212',
+'P09416',
+'P09670',
+'P09793',
+'P0A2N6',
+'P0A2N7',
+'P0AFL3',
+'P0AFL4',
+'P0AFL5',
+'P0C6D6',
+'P0CW58',
+'P0CW59',
+'P0CW91',
+'P0CW92',
+'P10111',
+'P10226',
+'P10247',
+'P10415',
+'P10417',
+'P10747',
+'P10872',
+'P10873',
+'P10875',
+'P10876',
+'P10878',
+'P11076',
+'P11298',
+'P11299',
+'P11328',
+'P11418',
+'P11442',
+'P11482',
+'P11688',
+'P11833',
+'P11835',
+'P11857',
+'P12303',
+'P12342',
+'P12457',
+'P12543',
+'P12606',
+'P12607',
+'P13296',
+'P13612',
+'P13926',
+'P14068',
+'P14140',
+'P14174',
+'P14642',
+'P14643',
+'P14851',
+'P15107',
+'P15691',
+'P15692',
+'P16040',
+'P16144',
+'P16410',
+'P16599',
+'P16612',
+'P17108',
+'P17301',
+'P17382',
+'P17383',
+'P17742',
+'P17785',
+'P17852',
+'P17938',
+'P18084',
+'P18203',
+'P18288',
+'P18563',
+'P18564',
+'P18614',
+'P19101',
+'P19114',
+'P19620',
+'P20365',
+'P20802',
+'P21148',
+'P22012',
+'P22153',
+'P22154',
+'P22155',
+'P22156',
+'P22419',
+'P22420',
+'P22555',
+'P22852',
+'P23229',
+'P23284',
+'P23383',
+'P23417',
+'P23563',
+'P23583',
+'P23804',
+'P24367',
+'P24368',
+'P24369',
+'P24637',
+'P24706',
+'P24801',
+'P24829',
+'P24830',
+'P25440',
+'P25481',
+'P25482',
+'P25791',
+'P25801',
+'P25942',
+'P26006',
+'P26007',
+'P26009',
+'P26010',
+'P26011',
+'P26012',
+'P26013',
+'P26542',
+'P26543',
+'P26544',
+'P26545',
+'P26546',
+'P26547',
+'P26617',
+'P26769',
+'P26883',
+'P26891',
+'P26897',
+'P26898',
+'P27003',
+'P27004',
+'P27006',
+'P27220',
+'P27221',
+'P27222',
+'P27223',
+'P27512',
+'P27548',
+'P27551',
+'P27552',
+'P27731',
+'P28268',
+'P28287',
+'P28574',
+'P28758',
+'P28824',
+'P29117',
+'P29553',
+'P29965',
+'P30404',
+'P30405',
+'P30412',
+'P30436',
+'P30623',
+'P30668',
+'P30803',
+'P30822',
+'P30904',
+'P31041',
+'P31042',
+'P31043',
+'P32255',
+'P32256',
+'P32592',
+'P32883',
+'P33127',
+'P33188',
+'P33431',
+'P33620',
+'P33625',
+'P33629',
+'P33681',
+'P34108',
+'P34331',
+'P34499',
+'P34500',
+'P34502',
+'P34697',
+'P34884',
+'P35222',
+'P35394',
+'P36220',
+'P36397',
+'P36579',
+'P36719',
+'P36720',
+'P36721',
+'P36722',
+'P36723',
+'P36724',
+'P36725',
+'P36727',
+'P36728',
+'P36729',
+'P36730',
+'P36778',
+'P36779',
+'P36780',
+'P36781',
+'P36782',
+'P36783',
+'P36784',
+'P36785',
+'P36786',
+'P36787',
+'P36788',
+'P36789',
+'P36790',
+'P36791',
+'P36792',
+'P36793',
+'P36794',
+'P36795',
+'P36796',
+'P36797',
+'P36798',
+'P36835',
+'P36939',
+'P37231',
+'P37234',
+'P37238',
+'P37383',
+'P37997',
+'P40144',
+'P40763',
+'P41351',
+'P41352',
+'P41385',
+'P41387',
+'P41388',
+'P41690',
+'P41741',
+'P41742',
+'P41799',
+'P42069',
+'P42070',
+'P42072',
+'P42204',
+'P42227',
+'P42229',
+'P42230',
+'P42231',
+'P44113',
+'P45877',
+'P46649',
+'P48094',
+'P49032',
+'P49033',
+'P49134',
+'P49141',
+'P49142',
+'P49143',
+'P49151',
+'P49418',
+'P49798',
+'P49799',
+'P49950',
+'P49951',
+'P50114',
+'P50259',
+'P50390',
+'P50412',
+'P50478',
+'P50719',
+'P50758',
+'P50759',
+'P50760',
+'P50761',
+'P50762',
+'P50763',
+'P50764',
+'P50765',
+'P50766',
+'P50767',
+'P50768',
+'P50769',
+'P50770',
+'P50771',
+'P50772',
+'P50773',
+'P50808',
+'P50809',
+'P51435',
+'P51587',
+'P51643',
+'P51742',
+'P51743',
+'P51747',
+'P51749',
+'P51821',
+'P51822',
+'P51894',
+'P52161',
+'P52162',
+'P52164',
+'P52273',
+'P52631',
+'P53350',
+'P53372',
+'P53373',
+'P53374',
+'P53375',
+'P53376',
+'P53563',
+'P53708',
+'P53710',
+'P53711',
+'P53712',
+'P53713',
+'P53714',
+'P55955',
+'P55957',
+'P56199',
+'P56273',
+'P56950',
+'P56951',
+'P57790',
+'P57797',
+'P58492',
+'P59684',
+'P59693',
+'P59694',
+'P59695',
+'P60052',
+'P60568',
+'P60569',
+'P60902',
+'P60903',
+'P61209',
+'P61210',
+'P61244',
+'P61245',
+'P61622',
+'P61635',
+'P62205',
+'P62504',
+'P62935',
+'P62936',
+'P62937',
+'P62938',
+'P62940',
+'P62941',
+'P62942',
+'P62943',
+'P62998',
+'P62999',
+'P63000',
+'P63001',
+'P63034',
+'P63035',
+'P63304',
+'P63305',
+'P67964',
+'P67965',
+'P68271',
+'P68290',
+'P68291',
+'P69895',
+'P70032',
+'P70062',
+'P70063',
+'P70064',
+'P70099',
+'P70365',
+'P70444',
+'P77173',
+'P78545',
+'P79008',
+'P79337',
+'P79374',
+'P79795',
+'P79800',
+'P80177',
+'P80236',
+'P80311',
+'P80566',
+'P80747',
+'P80928',
+'P81036',
+'P81174',
+'P83129',
+'P84077',
+'P84078',
+'P84079',
+'P84080',
+'P84309',
+'P87066',
+'P89463',
+'P91664',
+'P93176',
+'P93258',
+'P93343',
+'P94102',
+'P97333',
+'P97929',
+'P98170',
+'Q00264',
+'Q00609',
+'Q00610',
+'Q00651',
+'Q00709',
+'Q00731',
+'Q00975',
+'Q00987',
+'Q01196',
+'Q02048',
+'Q02049',
+'Q02248',
+'Q02261',
+'Q02262',
+'Q02263',
+'Q02264',
+'Q02294',
+'Q02410',
+'Q02512',
+'Q02513',
+'Q02960',
+'Q02K11',
+'Q03164',
+'Q03347',
+'Q03575',
+'Q04400',
+'Q04709',
+'Q05111',
+'Q05112',
+'Q05133',
+'Q05134',
+'Q05135',
+'Q05147',
+'Q05152',
+'Q06274',
+'Q06331',
+'Q06599',
+'Q06609',
+'Q07016',
+'Q07441',
+'Q07812',
+'Q07813',
+'Q07816',
+'Q07817',
+'Q07832',
+'Q07846',
+'Q07847',
+'Q07848',
+'Q07849',
+'Q07850',
+'Q07851',
+'Q07885',
+'Q07889',
+'Q07936',
+'Q07983',
+'Q08024',
+'Q08081',
+'Q080K8',
+'Q08114',
+'Q08115',
+'Q08297',
+'Q08462',
+'Q08867',
+'Q08E11',
+'Q09062',
+'Q0HK32',
+'Q0HWD3',
+'Q0I2I2',
+'Q0IIW3',
+'Q0IJ31',
+'Q0P5I0',
+'Q0PGG7',
+'Q0R4E4',
+'Q0TF54',
+'Q0VCX4',
+'Q0ZQK3',
+'Q0ZQK6',
+'Q0ZQK7',
+'Q0ZQK8',
+'Q0ZQL0',
+'Q0ZQL1',
+'Q0ZQL2',
+'Q12L81',
+'Q12UG7',
+'Q13683',
+'Q13797',
+'Q13951',
+'Q14145',
+'Q15596',
+'Q15750',
+'Q15788',
+'Q16611',
+'Q16665',
+'Q16HH9',
+'Q18EU1',
+'Q19LH4',
+'Q19S50',
+'Q1C5X8',
+'Q1CJV8',
+'Q1G1A2',
+'Q1ICK1',
+'Q1LU19',
+'Q1LZ94',
+'Q1R8W0',
+'Q1RPR6',
+'Q1WM27',
+'Q1WM29',
+'Q1ZZU7',
+'Q22285',
+'Q22288',
+'Q24829',
+'Q25761',
+'Q25BC3',
+'Q27352',
+'Q27380',
+'Q27977',
+'Q28071',
+'Q28203',
+'Q28350',
+'Q28566',
+'Q28IX8',
+'Q29031',
+'Q29416',
+'Q29615',
+'Q29616',
+'Q29RM9',
+'Q2HJ21',
+'Q2HJ27',
+'Q2HJ86',
+'Q2KI41',
+'Q2KJ94',
+'Q2MH05',
+'Q2NE95',
+'Q2NSC1',
+'Q2PE47',
+'Q2PE78',
+'Q2Q1M6',
+'Q2TA25',
+'Q2U2U3',
+'Q2VJ42',
+'Q309Z6',
+'Q31Y67',
+'Q32DE1',
+'Q32S26',
+'Q38771',
+'Q38825',
+'Q38IC8',
+'Q39445',
+'Q3BV17',
+'Q3KFB3',
+'Q3KVN1',
+'Q3LRP1',
+'Q3UPW2',
+'Q3UX10',
+'Q3V3R4',
+'Q3YZD0',
+'Q3ZTK5',
+'Q46A31',
+'Q47YH9',
+'Q48328',
+'Q48KR3',
+'Q49593',
+'Q4HZS8',
+'Q4JAT5',
+'Q4JHS0',
+'Q4KFH2',
+'Q4P235',
+'Q4PJW2',
+'Q4QLI9',
+'Q4R525',
+'Q4R549',
+'Q4R5P2',
+'Q4R8Y1',
+'Q4R9N3',
+'Q4U313',
+'Q4U3Q4',
+'Q4UTA8',
+'Q4V7E1',
+'Q4WA70',
+'Q4ZVF7',
+'Q52NY7',
+'Q52RN5',
+'Q539C2',
+'Q54EV7',
+'Q54SM3',
+'Q55075',
+'Q55BN0',
+'Q570C0',
+'Q57LT0',
+'Q58F21',
+'Q59641',
+'Q5BKL8',
+'Q5E3L0',
+'Q5EB59',
+'Q5EFX7',
+'Q5FB29',
+'Q5I2J3',
+'Q5JET4',
+'Q5M8V8',
+'Q5MBA8',
+'Q5MNY4',
+'Q5NVS2',
+'Q5PND8',
+'Q5PXD0',
+'Q5R5A0',
+'Q5R747',
+'Q5R774',
+'Q5R8S7',
+'Q5R943',
+'Q5RBH2',
+'Q5RCA9',
+'Q5RIW8',
+'Q5TJG6',
+'Q5U7I5',
+'Q5UBX3',
+'Q5VI41',
+'Q5XIN1',
+'Q60524',
+'Q60989',
+'Q61026',
+'Q61221',
+'Q61337',
+'Q61738',
+'Q61739',
+'Q62245',
+'Q62469',
+'Q62470',
+'Q62658',
+'Q62673',
+'Q62771',
+'Q63046',
+'Q63258',
+'Q63690',
+'Q64373',
+'Q64632',
+'Q65RN5',
+'Q668M5',
+'Q684M4',
+'Q68FD5',
+'Q6AYF4',
+'Q6C662',
+'Q6CPE2',
+'Q6D8S6',
+'Q6DN04',
+'Q6DTV9',
+'Q6DV79',
+'Q6ECI6',
+'Q6FWL5',
+'Q6GL68',
+'Q6GLE7',
+'Q6H543',
+'Q6L126',
+'Q6LTU6',
+'Q6MGA9',
+'Q6P423',
+'Q6P5F9',
+'Q6PF39',
+'Q6QDC9',
+'Q6R755',
+'Q6RUV5',
+'Q6SQH4',
+'Q6T3B0',
+'Q6TEQ7',
+'Q6UDI9',
+'Q6YNR6',
+'Q705F3',
+'Q705F4',
+'Q705G8',
+'Q70Q35',
+'Q711T9',
+'Q71G51',
+'Q74MX9',
+'Q751L8',
+'Q752Y2',
+'Q75N23',
+'Q767L7',
+'Q76BK2',
+'Q76MY7',
+'Q7JFM2',
+'Q7JFM3',
+'Q7JFM4',
+'Q7JFM5',
+'Q7JJ13',
+'Q7JJU6',
+'Q7KQL3',
+'Q7KQL5',
+'Q7M1R5',
+'Q7MMT6',
+'Q7N6Y5',
+'Q7SZC6',
+'Q7TQF7',
+'Q7VMX6',
+'Q7YRL5',
+'Q7YRZ8',
+'Q7ZUW7',
+'Q7ZXK3',
+'Q7ZYI3',
+'Q80902',
+'Q80903',
+'Q80909',
+'Q80910',
+'Q80915',
+'Q80916',
+'Q80922',
+'Q80923',
+'Q80930',
+'Q80937',
+'Q80943',
+'Q80944',
+'Q80950',
+'Q80951',
+'Q80957',
+'Q80958',
+'Q80TL1',
+'Q80U96',
+'Q80YQ2',
+'Q81020',
+'Q81021',
+'Q81966',
+'Q81999',
+'Q82007',
+'Q83QN9',
+'Q84293',
+'Q84294',
+'Q84356',
+'Q84TG9',
+'Q863C4',
+'Q864S8',
+'Q865X2',
+'Q865Y1',
+'Q86ZP5',
+'Q87A87',
+'Q87RJ5',
+'Q87YY5',
+'Q88F24',
+'Q89420',
+'Q89536',
+'Q8BDD6',
+'Q8BDD7',
+'Q8BDG4',
+'Q8CF89',
+'Q8DFK4',
+'Q8ED69',
+'Q8FFC0',
+'Q8HXP8',
+'Q8HXP9',
+'Q8HXQ0',
+'Q8HXQ1',
+'Q8HXQ2',
+'Q8HXQ3',
+'Q8HXQ4',
+'Q8HXS3',
+'Q8HXW1',
+'Q8HZD9',
+'Q8J0N2',
+'Q8J0N3',
+'Q8JFG3',
+'Q8JGM8',
+'Q8MKG8',
+'Q8MKH2',
+'Q8MKI8',
+'Q8PAB7',
+'Q8PM10',
+'Q8PZN5',
+'Q8SQ34',
+'Q8SQB8',
+'Q8SRI6',
+'Q8SS99',
+'Q8TK71',
+'Q8WNN6',
+'Q8WNR1',
+'Q8WQ47',
+'Q8WZE0',
+'Q8X492',
+'Q8ZYR9',
+'Q90615',
+'Q90XH3',
+'Q90ZB6',
+'Q91060',
+'Q91240',
+'Q91575',
+'Q91687',
+'Q91Y44',
+'Q92268',
+'Q92335',
+'Q924A0',
+'Q92934',
+'Q94650',
+'Q95115',
+'Q95KP3',
+'Q95MQ5',
+'Q96361',
+'Q96452',
+'Q96TU8',
+'Q96VL0',
+'Q975Y1',
+'Q97BJ9',
+'Q98SW2',
+'Q98TW1',
+'Q99418',
+'Q99KR7',
+'Q99PS1',
+'Q9BDM3',
+'Q9BDM7',
+'Q9BDN3',
+'Q9BEA1',
+'Q9C0N4',
+'Q9C413',
+'Q9CKC8',
+'Q9EPU2',
+'Q9ESU6',
+'Q9FT36',
+'Q9GKR0',
+'Q9GLP0',
+'Q9GSR5',
+'Q9HCS4',
+'Q9HFQ3',
+'Q9HJ68',
+'Q9HMM4',
+'Q9I3I5',
+'Q9I8A9',
+'Q9I8D8',
+'Q9JH48',
+'Q9JH49',
+'Q9JIQ3',
+'Q9JJV8',
+'Q9JLT6',
+'Q9KTD2',
+'Q9LKI8',
+'Q9MYN8',
+'Q9MYV3',
+'Q9MYX7',
+'Q9MZT6',
+'Q9MZT7',
+'Q9MZT8',
+'Q9MZT9',
+'Q9MZU0',
+'Q9N2N6',
+'Q9NQB0',
+'Q9NR28',
+'Q9NY65',
+'Q9PAG1',
+'Q9PTJ3',
+'Q9PVX8',
+'Q9QUM0',
+'Q9QWJ9',
+'Q9R0I6',
+'Q9SCC8',
+'Q9SEV2',
+'Q9SQL5',
+'Q9TTC6',
+'Q9TUZ1',
+'Q9UKX5',
+'Q9ULK4',
+'Q9UV72',
+'Q9UWR5',
+'Q9V233',
+'Q9VRX3',
+'Q9W1X7',
+'Q9W705',
+'Q9WU82',
+'Q9WUI9',
+'Q9WVR8',
+'Q9XS38',
+'Q9XSI1',
+'Q9XT83',
+'Q9XT84',
+'Q9XTA5',
+'Q9Y6Q9',
+'Q9Y8J4',
+'Q9YH38',
+'Q9YIB9',
+'Q9Z0T9',
+'Q9Z1J1',
+'Q9Z2V2',
+'Q9Z2X8',
+'Q9ZRB7',
+'Q9ZRJ4'
+ ))
+order by standard_value,accession  ">
+	  <c name="chembl_ID" l="Chembl Id" type="compoundId" />
+		<c name="molID" l="molregno" type="integer" width="6"  display="hidden" />
+        <c name="smiles" l="smiles" type="string" width="25" DisplayLevel="selectable" />
+        <c name="str_smiles" l="smiles structure" type="structure" dataTransForm ="FromSmiles" DisplayLevel="selectable" /> 
+		<c name="standard_relation" l="Relation" type="string" width="6" DisplayLevel="selectable"/>
+		<c name="standard_value" l="standard value" type="float" displayFormat="decimal" width="9" decimals="2" display="selected" />
+		<c name="standard_units" l="standard units" type="string" width="6" DisplayLevel="selected"/>
+		<c name="standard_type" l="standard type" type="string" width="6" DisplayLevel="selected"/>
+		<c name="activity_comment" l="Activity Comment" type="string" width="12" DisplayLevel="selectable"/>
+		<c name="assay_id" l="Assay Id" type="integer" displayFormat="decimal" width="6"  display="selectable" />
+    <c name="pref_name" l="preferred name" type="string" width="20" DisplayLevel="selected" />
+        <c name="org" l="organism" type="string" width="5" DisplayLevel="selected" />
+        <c name="confidence_score" l="confidence score" type="integer" width="6"  DisplayLevel="selected" />
+        <c name="accession" l="protein accession id" type="string" width="10" DisplayLevel="selected" />
+        <c name="src_compound_id" l="Source Compound id" type="string" width="10" DisplayLevel="selectable" />
+        <c name="Source" l="Source" type="string" width="10" DisplayLevel="selectable" />
+        <c name="L1" l="Target Top level" type="string" width="6" DisplayLevel="selectable" />
+        <c name="L2" l="Target Level 2" type="string" width="6" DisplayLevel="selectable" />
+        <c name="L3" l="Target Level 3" type="string" width="6" DisplayLevel="selectable" />
+        <c name="TARGETTYPE" l="Target Type" type="string" width="6" DisplayLevel="selectable" dictionary="targetypeflags" /> 
+        <c name="action_type" l="Action Type" type="string" width="10" DisplayLevel="selectable"  /> 
+        <c name="mechanism_of_action" l="Mechanism of Action" type="string" width="10" DisplayLevel="selectable"  /> 
+        <c name="mechanism_comment" l="Mechanism Comment" type="string" width="10" DisplayLevel="selectable"  /> 
+        <c name="selectivity_comment" l="Selectivity Comment" type="string" width="10" DisplayLevel="selectable"  /> 
+	</metatable>
+	
+	
+	<!-- **************************************************** -->
+	<!--  Chembl Structures DEV  -->
+	<!-- **************************************************** -->
+	<metatable tablename="chembl_structures_dev" l="ChEMBL Structures DEV" map="
+	select 
+		md.chembl_id,  
+		css.ctab,
+		cp.full_mwt molweight,
+		cp.full_molformula molformula,
+		cs.canonical_smiles molsmiles
+	from 
+	 chembl_owner_dev.compound_struct_symyx css,
+	 chembl_owner_dev.molecule_dictionary md, 
+	 chembl_owner_dev.compound_structures cs, 
+	 chembl_owner_dev.compound_properties cp
+	where 
+	 cs.molregno = md.molregno and
+	 css.molregno = md.molregno and
+	 cp.molregno (+) = md.molregno">
+	  <c name="chembl_ID" l="Chembl Id" type="compoundId" />
+		<c name="molstructure" l="Structure" type="structure" width="35" />
+		<c name="moldatabases" l="Database" type="dbLink" display="selectable" dictionary="structure_databases" dictionaryMultipleSelect="true" />
+		<c name="molformula" l="Molecular Formula" type="string" display="selectable" width="20" />
+		<c name="molweight" l="Mol. Wt." type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
+		<c name="molsmiles" l="Smiles" type="string" width="25" DisplayLevel="Selectable"/>
+		<c name="molsimilarity" l="Similarity Score" type="float" display="selectable" searchable="false" displayFormat="decimal" width="8" decimals="2" map="0" dataTransform="GetMolsim" />
+	</metatable>
+	
+</metatables>
