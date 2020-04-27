@@ -19,13 +19,13 @@ namespace Mobius.UAL
 			return;
 		}
 
-		public static string SelectString (
+		public static string SelectString(
 			string sql)
 		{
-			return SelectString(null,sql);
+			return SelectString(null, sql);
 		}
 
-		public static string SelectString (
+		public static string SelectString(
 			DbConnectionMx mxConn,
 			string sql)
 		{
@@ -42,16 +42,16 @@ namespace Mobius.UAL
 			else value = dr.GetString(0);
 			dr.Close();
 			drd.Dispose();
-			return value;	
+			return value;
 		}
 
-		public static int SelectInt (
+		public static int SelectInt(
 			string sql)
 		{
-			return SelectInt(null,sql);
+			return SelectInt(null, sql);
 		}
 
-		public static int SelectInt (
+		public static int SelectInt(
 			DbConnectionMx mxConn,
 			string sql)
 		{
@@ -65,13 +65,13 @@ namespace Mobius.UAL
 
 			if (!dr.Read()) throw (new Exception("SelectInt Read failed"));
 
-			value =  drd.GetInt(0);
+			value = drd.GetInt(0);
 			dr.Close();
 			drd.Dispose();
-			return value;	
+			return value;
 		}
 
-		public static int SelectInt (
+		public static int SelectInt(
 			string sql,
 			OracleDbType parmType,
 			object parmValue)
@@ -88,11 +88,11 @@ namespace Mobius.UAL
 			return value;
 		}
 
-		public static int SelectInt (
+		public static int SelectInt(
 			string sql,
 			OracleDbType[] parmTypes,
 			object[] parmValues)
-		{ 
+		{
 			DbCommandMx cmd = DbCommandMx.PrepareExecuteAndRead(sql, parmTypes, parmValues);
 			if (cmd == null) return NullValue.NullNumber;
 
@@ -101,16 +101,26 @@ namespace Mobius.UAL
 			return value;
 		}
 
-
-
-
-	public static DateTime SelectDateTime (
-			string sql)
+		public static long SelectLong(
+			string sql,
+			OracleDbType[] parmTypes = null,
+			object[] parmValues = null)
 		{
-			return SelectDateTime(null,sql);
+			DbCommandMx cmd = DbCommandMx.PrepareExecuteAndRead(sql, parmTypes, parmValues);
+			if (cmd == null) return NullValue.NullNumber;
+
+			long value = cmd.GetLong(0);
+			cmd.CloseReader();
+			return value;
 		}
 
-		public static DateTime SelectDateTime (
+		public static DateTime SelectDateTime(
+			string sql)
+		{
+			return SelectDateTime(null, sql);
+		}
+
+		public static DateTime SelectDateTime(
 			DbConnectionMx mxConn,
 			string sql)
 		{
@@ -127,7 +137,7 @@ namespace Mobius.UAL
 			else value = dr.GetDateTime(0);
 			dr.Close();
 			drd.Dispose();
-			return value;	
+			return value;
 		}
 
 

@@ -769,7 +769,7 @@ namespace Mobius.UAL
 				 Security.IsAdministrator(Security.UserName)) // admins can read all
 				{
 					if (RestrictedDatabaseView.UserIsMemberOfCurrentView(uo.Owner) && RestrictedMetatable.MetatableIsNotGenerallyRestricted(uo.Name)) // if restricted view then see if user is part of the view
-                        
+
 						break;
 				}
 			}
@@ -817,6 +817,9 @@ namespace Mobius.UAL
 			int id,
 			bool setUpdateDateToCurrentDate)
 		{
+			OracleDbType[] pt = null; // parameter type array
+			object[] p = null; // parameter value array
+
 			bool deleted;
 			string changeOpCode;
 			UserObject existingUo = null;
@@ -834,6 +837,9 @@ namespace Mobius.UAL
 			try
 			{
 				//if (id == 273801) id = id; // debug
+
+				if (id > 0) uo.Id = id; // keep same id if replacing existing object or id supplied
+				else uo.Id = GetNextId();
 
 				if (id > 0) // id supplied?
 				{
@@ -868,30 +874,28 @@ namespace Mobius.UAL
 
 				drDao = new DbCommandMx();
 
-				OracleDbType[] pa = new OracleDbType[15];
+				pt = new OracleDbType[15];
 
-				pa[0] = OracleDbType.Int32;
-				pa[1] = OracleDbType.Int32;
-				pa[2] = OracleDbType.Varchar2;
-				pa[3] = OracleDbType.Varchar2;
-				pa[4] = OracleDbType.Varchar2;
-				pa[5] = OracleDbType.Int32;
-				pa[6] = OracleDbType.Varchar2;
-				pa[7] = OracleDbType.Int32;
-				pa[8] = OracleDbType.Int32;
-				pa[9] = OracleDbType.Clob;
-				pa[10] = OracleDbType.Varchar2;
-				pa[11] = OracleDbType.Varchar2;
-				pa[12] = OracleDbType.Date;
-				pa[13] = OracleDbType.Date;
-				pa[14] = OracleDbType.Varchar2;
+				pt[0] = OracleDbType.Int32;
+				pt[1] = OracleDbType.Int32;
+				pt[2] = OracleDbType.Varchar2;
+				pt[3] = OracleDbType.Varchar2;
+				pt[4] = OracleDbType.Varchar2;
+				pt[5] = OracleDbType.Int32;
+				pt[6] = OracleDbType.Varchar2;
+				pt[7] = OracleDbType.Int32;
+				pt[8] = OracleDbType.Int32;
+				pt[9] = OracleDbType.Clob;
+				pt[10] = OracleDbType.Varchar2;
+				pt[11] = OracleDbType.Varchar2;
+				pt[12] = OracleDbType.Date;
+				pt[13] = OracleDbType.Date;
+				pt[14] = OracleDbType.Varchar2;
 
-				drDao.Prepare(sql, pa);
+				drDao.Prepare(sql, pt);
 
-				object[] p = new object[15];
-				if (id > 0) uo.Id = id; // keep same id if replacing existing object or id supplied
-				else uo.Id = GetNextId();
-				p[0] = uo.Id;
+				p = new object[15];
+				p[0] = (long)uo.Id;
 				p[1] = (int)uo.Type;
 				p[2] = uo.Owner.ToUpper();
 				p[3] = uo.Name;
@@ -910,6 +914,21 @@ namespace Mobius.UAL
 				if (uo.ACL != "") p[14] = uo.ACL; else p[14] = " ";
 
 				int count = drDao.ExecuteNonReader(p); // do the insert
+
+				// Do as literal
+
+				//for (int pi = 0; pi < 14; pi++)
+				//{
+				//	string sv = null;
+				//	if (p[pi] != null) sv = "'" + p[pi].ToString() + "'";
+				//	else sv = "null";
+				//	sql = sql.Replace(":" + pi + ",", sv + ",");
+				//}
+
+				//sql = sql.Replace(":14", "'" + p[14].ToString() + "'");
+
+				//int count = drDao.PrepareAndExecuteNonReader(sql); // do the insert
+
 				drDao.Dispose();
 
 				if (uo.Type == UserObjectType.Query) // if object is a shared query check that underlying annotations, calc fields and lists are also shared
@@ -1352,7 +1371,7 @@ namespace Mobius.UAL
 			uo.Name = parmName;
 
 			if (value == null || value.Length < 4000) // max 4000 chars for desc column
-				uo.Description = value; 
+				uo.Description = value;
 			else uo.Content = value; // use long content col for storage if >= 4000 chars to avoid overflow exceptions
 
 			Write(uo);

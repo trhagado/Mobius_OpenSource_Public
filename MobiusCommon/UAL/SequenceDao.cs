@@ -3,6 +3,7 @@ using Mobius.ComOps;
 using System;
 using System.Data;
 using System.Collections.Generic;
+using System.Data.Common;
 
 using Oracle.DataAccess.Client;
 
@@ -55,6 +56,20 @@ namespace Mobius.UAL
 		public static long NextValLong(
 			string seqName)
 		{
+			return NextValLongMySQL(seqName);
+
+			//return NextValLongOracle(seqName);
+		}
+
+		/// <summary>
+		/// Get the next value for the sequence (Oracle)
+		/// </summary>
+		/// <param name="seqName"></param>
+		/// <returns></returns>
+
+		public static long NextValLongOracle(
+		string seqName)
+		{
 			string sql;
 			long nextVal;
 
@@ -87,6 +102,63 @@ namespace Mobius.UAL
 			//			DebugLog.Message("Read sequence, set size = " + seqQueue.Count.ToString() + ", Time(ms) = " + t0.ToString());
 			return nextVal;
 		}
+
+		/// <summary>
+		/// Get the next value for the sequence (MySQL)
+		/// </summary>
+		/// <param name="seqName"></param>
+		/// <returns></returns>
+
+		public static long NextValLongMySQL(
+			string seqName)
+		{
+			string sql;
+			long nextVal;
+
+			SequenceDao seqDao = Lookup(seqName);
+
+			Queue<long> seqQueue = seqDao.Queue;
+			if (seqQueue.Count > 0)
+			{
+				nextVal = seqQueue.Dequeue();
+				return nextVal;
+			}
+
+			int count = (seqDao.CacheSize > 0 ? seqDao.CacheSize : 1);
+
+			int t0 = TimeOfDay.Milliseconds();
+
+			sql = String.Format(
+			@"update mbs_owner.mbs_sequences 
+			set value = last_insert_id(value) + {0}
+			where name = '{1}'", count, seqName.ToUpper());
+
+			DbCommandMx.PrepareAndExecuteNonReaderSql(sql);
+
+			DbCommandMx readCmd = new DbCommandMx();
+			readCmd.MxConn = DbConnectionMx.Get("MySql_Mobius");
+			sql = "select last_insert_id()"; // gets value before update above
+			readCmd.PrepareUsingDefinedConnection(sql, null);
+			DbDataReader rdr = readCmd.ExecuteReader();
+
+			bool readOk = rdr.Read();
+			AssertMx.IsTrue(readOk, "readOk");
+			long value = rdr.GetInt64(0);
+			rdr.Close();
+
+			nextVal = value + 1; // return this one now
+
+			long v2 = value + 2; // next value
+			long vn = value + count; // last value
+
+			for (long vi = v2; vi <= vn; vi++)
+				seqQueue.Enqueue(vi);
+
+			t0 = TimeOfDay.Milliseconds() - t0;
+			//			DebugLog.Message("Read sequence, set size = " + seqQueue.Count.ToString() + ", Time(ms) = " + t0.ToString());
+			return nextVal;
+		}
+
 
 		/// <summary>
 		/// Lookup a sequence by name & create if doesn't already exist

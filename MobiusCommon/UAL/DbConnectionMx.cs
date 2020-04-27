@@ -17,6 +17,8 @@ using System.Data.OleDb;
 
 using Oracle.DataAccess.Client;
 
+using MySql.Data.MySqlClient;
+
 namespace Mobius.UAL
 {
 	/// <summary>
@@ -49,6 +51,7 @@ namespace Mobius.UAL
 		public static int ConnectionLeakDetectionInterval = -1; // time in seconds a connection must exist to be considered a leak
 		public static bool NoDatabaseAccessIsAvailable = false; // set to true for test mode with no database access
 		public static Version OracleClientVersion = null;
+		public static Version MySqlClientVersion = null;
 
 		public static bool LogDbConnectionDetail = false;
 		public static bool Debug => LogDbConnectionDetail;
@@ -60,6 +63,9 @@ namespace Mobius.UAL
 
 		public OracleConnection OracleConn { get { return DbConn as OracleConnection; } }
 		public bool IsOracleConn { get { return OracleConn != null; } }
+
+		public MySqlConnection MySqlDbConn { get { return DbConn as MySqlConnection; } }
+		public bool IsMySqlConn { get { return MySqlDbConn != null; } }
 
 		public OdbcConnection OdbcDbConn { get { return DbConn as OdbcConnection; } }
 		public bool IsOdbcConn { get { return OdbcDbConn != null; } }
@@ -423,6 +429,26 @@ namespace Mobius.UAL
 		{
 			bool isOracle = Lex.StartsWith(dbName, "Oracle:") || !dbName.Contains(":");
 			return isOracle;
+		}
+
+		/// <summary>
+		/// Return true if the supplied SQL maps to an MySql source
+		/// </summary>
+		/// <param name="mt"></param>
+		/// <returns></returns>
+
+		public static bool IsSqlFromMySqlSource(string sql)
+		{
+			DataSourceMx rootSource = GetRootDataSource(sql);
+			if (rootSource == null) return false;
+			return IsMySqlDatabase(rootSource.DatabaseName);
+		}
+
+		public static bool IsMySqlDatabase(string dbName)
+		{
+			bool isMySql = Lex.StartsWith(dbName, "MySql");
+			if (isMySql) return true;
+			else return false;
 		}
 
 		/// <summary>
@@ -975,6 +1001,11 @@ namespace Mobius.UAL
 
 			DataSourceMx ds = new DataSourceMx();
 
+
+			string dbType = lex.Get();
+			if (!Enum.TryParse<DatabaseType>(dbType, true, out ds.DbType))
+				throw new Exception("Invalid Database type: " + dbType);
+
 			ds.Name = lex.GetUpper();
 			string asTok = lex.Get();
 			ds.DatabaseName = lex.GetUpper();
@@ -1086,7 +1117,7 @@ namespace Mobius.UAL
 
 		// Dictionary of all connections for session
 
-		public static Dictionary<string, SessionConnection> SessionConnections =  
+		public static Dictionary<string, SessionConnection> SessionConnections =
 			new Dictionary<string, SessionConnection>(StringComparer.OrdinalIgnoreCase);
 
 		public static bool Pooling = true; // process wide pooling information used when connecting 
@@ -1169,10 +1200,13 @@ namespace Mobius.UAL
 
 						try
 						{
-							if (DbConnectionMx.IsOracleDatabase(dbName))
+							if (dataSource.DbType == DatabaseType.Oracle)
 								conn.DbConn = GetOracleConnection(dataSource);
 
-							else if (DbConnectionMx.IsOdbcDatabase(dbName))
+							if (dataSource.DbType == DatabaseType.MySql)
+								conn.DbConn = GetMySqlConnection(dataSource);
+
+							else if (dataSource.DbType == DatabaseType.ODBC)
 								conn.DbConn = GetOdbcConnection(dataSource); // connect with ODBC
 
 							else throw new ArgumentException("Unrecognized database type: " + dbName);
@@ -1349,11 +1383,46 @@ namespace Mobius.UAL
 				}
 			}
 
-// Get client version
+			// Get client version
 
 			if (DbConnectionMx.OracleClientVersion == null) try
 				{
 					DbConnectionMx.OracleClientVersion = typeof(OracleConnection).Assembly.GetName().Version;
+				}
+				catch (Exception ex) { string msg = ex.Message; }
+
+			return conn;
+		}
+
+		static DbConnection GetMySqlConnection(DataSourceMx connInf)
+		{
+			MySqlCommand oraCmd;
+
+			string dbName = connInf.DatabaseName;
+
+			MySqlConnection conn = new MySqlConnection();
+			conn.ConnectionString = connInf.DatabaseName;
+
+			if (Debug)
+			{
+				string cs2 = Lex.Replace(conn.ConnectionString, connInf.Password, "xxxxxxxx"); // don't log the password
+				DebugLog.Message("Opening MySql connection with ConnectionString: " + cs2);
+			}
+
+			int t0 = TimeOfDay.Milliseconds();
+			conn.Open();
+
+			int connectTime = TimeOfDay.Milliseconds() - t0;
+			if (connectTime > 0) // new connection (i.e. connectTime > 0)
+			{
+				// do any needed initialization here
+			}
+
+			// Get client version
+
+			if (DbConnectionMx.MySqlClientVersion == null) try
+				{
+					DbConnectionMx.MySqlClientVersion = typeof(MySqlConnection).Assembly.GetName().Version;
 				}
 				catch (Exception ex) { string msg = ex.Message; }
 
@@ -1465,7 +1534,7 @@ namespace Mobius.UAL
 
 				ActiveCount--;
 				if (ActiveCount > 0) return; // if positive count then keep it
-															 //if (!SessionConnection.Pooling) return;  // also keep if not pooling connections (no, allow pooling to be turned off to force reconnect)
+																		 //if (!SessionConnection.Pooling) return;  // also keep if not pooling connections (no, allow pooling to be turned off to force reconnect)
 
 				if (DbConn == null)
 				{
@@ -1532,6 +1601,7 @@ namespace Mobius.UAL
 		public static Dictionary<string, DataSourceMx> DataSources = null; // data source information
 		public static Dictionary<string, Schema> Schemas = null; // map of schema names to their corresponding schema
 
+		public DatabaseType DbType = DatabaseType.Undefined; // e.g. Oracle, MySQL...
 		public string Name; // data source/connection name
 		public string DatabaseName = ""; // Database connection name (e.g. Tnsnames.ora name of Oracle instance to connect to, ODBC connection string, etc)
 		public string UserName = ""; // id used to connect to database
@@ -1617,7 +1687,13 @@ namespace Mobius.UAL
 					{
 						XmlNode att = atts.Item(i);
 
-						if (Lex.Eq(att.Name, "Name"))
+						if (Lex.Eq(att.Name, "DatabaseType") || Lex.Eq(att.Name, "DbType"))
+						{
+							if (!Enum.TryParse<DatabaseType>(att.Value, true, out cd.DbType))
+								throw new Exception("Invalid Database type: " + att.Value);
+						}
+
+						else if (Lex.Eq(att.Name, "Name"))
 							cd.Name = att.Value.ToUpper().Trim();
 
 						else if (Lex.Eq(att.Name, "DatabaseName") || Lex.Eq(att.Name, "OracleName"))
@@ -1632,7 +1708,7 @@ namespace Mobius.UAL
 						else if (Lex.Eq(att.Name, "Password"))
 							cd.Password = att.Value.Trim(); // keep case as is (Oracle 11g)
 
-						else if (Lex.Eq(att.Name, "ChemCartridgeInit")) // chemical cartridge initialization
+						else if (Lex.Eq(att.Name, "MdlInit")) // mdl initialization
 							cd.InitCommand = "select cdcaux.ctenvinit('" + att.Value.Trim() + "') from dual";
 
 						else if (Lex.Eq(att.Name, "InitCommand"))
@@ -1701,6 +1777,18 @@ namespace Mobius.UAL
 		}
 
 	} //	DataSourceMx
+
+	/// <summary>
+	/// Type of database server
+	/// </summary>
+
+	public enum DatabaseType
+	{
+		Undefined = 0,
+		MySql = 1,
+		Oracle = 2,
+		ODBC = 3
+	}
 
 	/// <summary>
 	/// Structure associating schema with a data source

@@ -11,10 +11,13 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Data;
 using System.Data.Common;
+
 using System.Data.Odbc;
 using System.Data.OleDb;
 
-using Oracle.DataAccess.Client; 
+using MySql.Data.MySqlClient;
+
+using Oracle.DataAccess.Client;
 using Oracle.DataAccess.Types;
 
 namespace Mobius.UAL
@@ -22,7 +25,7 @@ namespace Mobius.UAL
 	/// <summary>
 	/// DbCommandOracle Methods
 	/// </summary>
-	
+
 	public partial class DbCommandMx
 	{
 		internal int Id = InstanceCount++; // id of this instance
@@ -47,6 +50,7 @@ namespace Mobius.UAL
 
 		public DbCommand Cmd; // associated command
 		public OracleCommand OracleCmd { get { return Cmd as OracleCommand; } }
+		public MySqlCommand MySqlCmd { get { return Cmd as MySqlCommand; } }
 		public OdbcCommand OdbcCmd { get { return Cmd as OdbcCommand; } }
 		public OleDbCommand OleDbCmd { get { return Cmd as OleDbCommand; } }
 
@@ -54,6 +58,7 @@ namespace Mobius.UAL
 
 		public DbDataReader Rdr; // data reader for command (can set FetchSize for bigger read buffer)
 		public OracleDataReader OracleRdr { get { return Rdr as OracleDataReader; } }
+		public MySqlDataReader MySqlRdr { get { return Rdr as MySqlDataReader; } }
 		public OdbcDataReader OdbcRdr { get { return Rdr as OdbcDataReader; } }
 		public OleDbDataReader OleDbRdr { get { return Rdr as OleDbDataReader; } }
 
@@ -65,7 +70,7 @@ namespace Mobius.UAL
 
 		public KeyListPredTypeEnum KeyListPredType = DefaultKeyListPredType;
 		public bool SingleKeyRetrieval = false; // if true retrieve keys singly for potentially improved performance
-		public DbType KeyListParameterType; 
+		public DbType KeyListParameterType;
 		public List<string> KeyList;
 		public int FirstKeyIdx = -1;
 		public int LastKeyIdx = -1;
@@ -88,7 +93,7 @@ namespace Mobius.UAL
 		public static int LogReadsMaxRows = 2; // max number of reads to log if Debug = true
 		public static int LogLongReadLimit = 0; // 10; // log any reads that take longer than this many ms if > 0
 		public static bool FixupSqlFlag;
-		
+
 		public static int MaxOdbcInListItemCount = 256; // maximum number of items in a SQL sublist (playing it safe for Netezza)
 		public static int MaxOracleInListItemCount = 1000; // maximum number of items in a SQL sublist
 		public static int MaxOracleStringSize = 4000; // for char, varchar2 (32767 possible for 12C and later) 
@@ -120,7 +125,7 @@ namespace Mobius.UAL
 		public int ExecuteReaderCount = 0; // instance stats
 		public double ExecuteReaderTime = 0;
 
-		public int ReadCount = 0; 
+		public int ReadCount = 0;
 		public double LastReadTime = 0;
 		public double LastLongReadTime = 0;
 		public double TotalReadTime = 0;
@@ -159,9 +164,9 @@ namespace Mobius.UAL
 			return;
 		}
 
-/// <summary>
-/// Destructor 
-/// </summary>
+		/// <summary>
+		/// Destructor 
+		/// </summary>
 
 		/// <summary>
 		/// Finalizer
@@ -179,11 +184,11 @@ namespace Mobius.UAL
 		/// <param name="sql"></param>
 		/// <returns></returns>
 
-		public DbConnectionMx SetConnection (
+		public DbConnectionMx SetConnection(
 			string sql)
 		{
 			DbConnectionMx mxConn = DbConnectionMx.MapSqlToConnection(ref sql); // get connection name from sql
-			if (mxConn!=null) 
+			if (mxConn != null)
 			{
 				if (this.MxConn != null) MxConn.Close(); // free any prev connection
 				this.MxConn = mxConn; // MxConn may be preset for non-reader sql
@@ -192,15 +197,15 @@ namespace Mobius.UAL
 			return mxConn;
 		}
 
-/// <summary>
-/// abbreviated AddDataColumn
-/// </summary>
-/// <param name="table"></param>
-/// <param name="colName"></param>
-/// <param name="type"></param>
-/// <returns></returns>
+		/// <summary>
+		/// abbreviated AddDataColumn
+		/// </summary>
+		/// <param name="table"></param>
+		/// <param name="colName"></param>
+		/// <param name="type"></param>
+		/// <returns></returns>
 
-		public static DataColumn ADC(  
+		public static DataColumn ADC(
 			DataTable table,
 			string colName,
 			DbType type)
@@ -328,12 +333,12 @@ namespace Mobius.UAL
 			return GetParameterTypes(table, 0);
 		}
 
-/// <summary>
-/// Get an array of oracle parameter types for the columns in a dataTable
-/// </summary>
-/// <param name="table"></param>
-/// <param name="extraParameterCount"></param>
-/// <returns></returns>
+		/// <summary>
+		/// Get an array of oracle parameter types for the columns in a dataTable
+		/// </summary>
+		/// <param name="table"></param>
+		/// <param name="extraParameterCount"></param>
+		/// <returns></returns>
 
 		public static DbType[] GetParameterTypes(
 			DataTable table,
@@ -392,7 +397,7 @@ namespace Mobius.UAL
 			return PrepareExecuteAndRead(
 				sql,
 				new OracleDbType[] { parameterType },
-				new object[] { parmValue } );
+				new object[] { parmValue });
 		}
 
 		/// <summary>
@@ -425,7 +430,7 @@ namespace Mobius.UAL
 		/// </summary>
 		/// <param name="sql"></param>
 
-		public void Prepare (
+		public void Prepare(
 			string sql)
 		{
 			Prepare(sql, DbType.String, 0);
@@ -437,7 +442,7 @@ namespace Mobius.UAL
 		/// <param name="sql"></param>
 		/// <param name="stringParameterCount"></param>
 
-		public void PrepareMultipleParameter (
+		public void PrepareMultipleParameter(
 			string sql,
 			int stringParameterCount)
 		{
@@ -445,11 +450,11 @@ namespace Mobius.UAL
 			//			Prepare(sql,stringParameterCount,OracleType.Int32); // corp # is numeric
 		}
 
-/// <summary>
-/// Prepare query for a single parameter of the specified type
-/// </summary>
-/// <param name="sql"></param>
-/// <param name="parameterType"></param>
+		/// <summary>
+		/// Prepare query for a single parameter of the specified type
+		/// </summary>
+		/// <param name="sql"></param>
+		/// <param name="parameterType"></param>
 
 		public void PrepareParameterized(
 			string sql,
@@ -472,12 +477,12 @@ namespace Mobius.UAL
 			Prepare(sql, parameterType, 1);
 		}
 
-/// <summary>
-/// Prepare query for a single parameter of the specified type
-/// </summary>
-/// <param name="sql"></param>
-/// <param name="parameterType"></param>
-/// <param name="parameterCount"></param>
+		/// <summary>
+		/// Prepare query for a single parameter of the specified type
+		/// </summary>
+		/// <param name="sql"></param>
+		/// <param name="parameterType"></param>
+		/// <param name="parameterCount"></param>
 
 		public void Prepare(
 			string sql,
@@ -500,22 +505,22 @@ namespace Mobius.UAL
 			OracleDbType parameterType,
 			int parameterCount)
 		{
-			OracleDbType [] pa = null;
-			if (parameterCount>0)
+			OracleDbType[] pa = null;
+			if (parameterCount > 0)
 			{
 				pa = new OracleDbType[parameterCount];
-				for (int i1=0; i1<parameterCount; i1++)
-					pa[i1]=parameterType;
+				for (int i1 = 0; i1 < parameterCount; i1++)
+					pa[i1] = parameterType;
 			}
 			Prepare(sql, pa);
-      return;
+			return;
 		}
 
-/// <summary>
-/// Prepare query, possibly modifying sql to use dblinks
-/// </summary>
-/// <param name="sql"></param>
-/// <param name="parmArray"></param>
+		/// <summary>
+		/// Prepare query, possibly modifying sql to use dblinks
+		/// </summary>
+		/// <param name="sql"></param>
+		/// <param name="parmArray"></param>
 
 		public void PrepareParameterized(
 			string sql,
@@ -527,7 +532,7 @@ namespace Mobius.UAL
 
 			for (int pai = 0; pai < parmArray.Length; pai++)
 			{
-				oracleParms[pai] =  DbTypeToOracleDbType(parmArray[pai]);
+				oracleParms[pai] = DbTypeToOracleDbType(parmArray[pai]);
 			}
 
 			Prepare(sql, oracleParms);
@@ -542,7 +547,7 @@ namespace Mobius.UAL
 
 		public void Prepare(
 			string sql,
-			OracleDbType [] parmArray)
+			OracleDbType[] parmArray)
 		{
 			OracleParameter p;
 
@@ -550,7 +555,7 @@ namespace Mobius.UAL
 
 			if (NoDatabaseAccessIsAvailable) return;
 
-			if (FixupSqlFlag) sql = FixupSql(sql);
+			if (FixupSqlFlag) sql = DoTempSqlFixups(sql);
 
 			//if (Lex.Contains(sql, ":1001")) sql = sql; // debug
 			//sql = Lex.Replace(sql, "first_rows", ""); // debug
@@ -568,10 +573,10 @@ namespace Mobius.UAL
 			return;
 		}
 
-/// <summary>
-/// Prepare the statement using the supplied sql and connection defined for command
-/// </summary>
-/// <param name="sql"></param>
+		/// <summary>
+		/// Prepare the statement using the supplied sql and connection defined for command
+		/// </summary>
+		/// <param name="sql"></param>
 
 		public void PrepareUsingDefinedConnection(
 			string sql)
@@ -580,11 +585,11 @@ namespace Mobius.UAL
 			return;
 		}
 
-/// <summary>
-/// Prepare the statement using the supplied sql and connection defined for command
-/// </summary>
-/// <param name="sql"></param>
-/// <param name="parmArray"></param>
+		/// <summary>
+		/// Prepare the statement using the supplied sql and connection defined for command
+		/// </summary>
+		/// <param name="sql"></param>
+		/// <param name="parmArray"></param>
 
 		public void PrepareUsingDefinedConnection(
 			string sql,
@@ -613,6 +618,9 @@ namespace Mobius.UAL
 				if (MxConn.DbConn is OracleConnection)
 					PrepareOracleSql(sql, parmArray);
 
+				else if (MxConn.DbConn is MySqlConnection)
+					PrepareMySql(sql, parmArray);
+
 				else if (MxConn.DbConn is OdbcConnection)
 					PrepareOdbcSql(sql, parmArray);
 
@@ -625,7 +633,7 @@ namespace Mobius.UAL
 
 				PrepareReaderTime += t0;
 				PrepareReaderCount++;
-				
+
 				GlobalLastPrepareReaderTime = t0;
 				GlobalTotalPrepareReaderTime += t0;
 				GlobalPrepareReaderCount++;
@@ -653,12 +661,12 @@ namespace Mobius.UAL
 			return;
 		}
 
-/// <summary>
-/// PrepareOracleSql
-/// </summary>
-/// <param name="sql"></param>
-/// <param name="parmArray">Array of parameter types</param>
-// /// <param name="arrayBindSize">Parameter count if binding as an array of parameters of the same type</param>
+		/// <summary>
+		/// PrepareOracleSql
+		/// </summary>
+		/// <param name="sql"></param>
+		/// <param name="parmArray">Array of parameter types</param>
+		// /// <param name="arrayBindSize">Parameter count if binding as an array of parameters of the same type</param>
 
 		void PrepareOracleSql(
 			string sql,
@@ -679,7 +687,7 @@ namespace Mobius.UAL
 			if (!Security.UserInfo.Privileges.CanRetrieveSequences)
 				sql = MoleculeMx.RemoveSqlSequenceRetrievalMethods(sql);
 
-			LastSql = sql; 
+			LastSql = sql;
 
 			// Create paramters
 
@@ -707,7 +715,81 @@ namespace Mobius.UAL
 		}
 
 		/// <summary>
-		/// Prepare query
+		/// Prepare MySQL query
+		/// </summary>
+		/// <param name="sql"></param>
+		/// <param name="parmArray"></param>
+
+		void PrepareMySql(
+			string sql,
+			OracleDbType[] parmArray)
+		{
+			MySqlParameter p;
+			MySqlDbType mySqlType;
+
+			//if (ClientState.IsDeveloper) // debug
+			//  SystemUtil.Beep();
+
+			try
+			{
+				Cmd = new MySqlCommand();
+				// Create paramters
+
+				Cmd.Parameters.Clear();
+				if (parmArray != null && parmArray.Length > 0)
+				{
+					for (int pi = 0; pi < parmArray.Length; pi++)
+					{
+						p = new MySqlParameter();
+						p.ParameterName = pi.ToString();
+
+						string parmToken = ":" + pi; // token in sql
+						if (sql.Contains(parmToken)) // replace with proper format parameter
+						{
+							string newParmToken = "@p" + pi;
+							sql = sql.Replace(parmToken, newParmToken);
+							p.ParameterName = "p" + pi;
+						}
+
+						else p = p; // may have already been converted to MySQL form previously 
+
+						mySqlType = ConvertOracleDbTypeToMySqlType(parmArray[pi]);
+						p.MySqlDbType = mySqlType;
+						Cmd.Parameters.Add(p);
+					}
+				}
+
+				LastSql = sql; // update any modified SQL
+
+				if (Lex.Contains(sql, "obj_typ_id=@p0"))
+					sql = sql;
+				//       @"select obj_id, obj_typ_id, ownr_id, obj_nm, obj_desc_txt, fldr_typ_id, fldr_nm, acs_lvl_id, obj_itm_cnt, obj_cntnt, crt_dt, upd_dt, acl 
+				//from MBS_OWNER.mbs_usr_obj 
+				//where obj_typ_id = ?p0 and ownr_id = ?p1 
+				//order by fldr_typ_id, fldr_nm, lower(obj_nm)";
+
+				// Prepare command
+
+				Cmd.Connection = MxConn.DbConn;
+
+				if (Lex.Eq(DatabaseName, "NullDb")) // use fixed query to empty csv file for null database
+					sql = @"SELECT * FROM MobiusServerData\MetaData\NullDb.csv";
+
+				Cmd.CommandText = sql;
+				Cmd.Prepare();
+			}
+
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message, ex);
+			}
+
+			return;
+		}
+
+
+		/// <summary>
+		/// Prepare query for ODBC
 		/// </summary>
 		/// <param name="sql"></param>
 		/// <param name="parmArray"></param>
@@ -719,37 +801,56 @@ namespace Mobius.UAL
 			OdbcParameter p;
 			OdbcType odbcType;
 
-			Cmd = new OdbcCommand();
 			//if (ClientState.IsDeveloper) // debug
 			//  SystemUtil.Beep();
 
-			// Create paramters
-
-			Cmd.Parameters.Clear();
-			if (parmArray != null && parmArray.Length > 0)
+			try
 			{
-				for (int pi = 0; pi < parmArray.Length; pi++)
+				Cmd = new OdbcCommand();
+				// Create paramters
+
+				Cmd.Parameters.Clear();
+				if (parmArray != null && parmArray.Length > 0)
 				{
-					p = new OdbcParameter();
-					p.ParameterName = pi.ToString();
-					odbcType = ConvertOracleDbTypeToOdbcType(parmArray[pi]);
-					p.OdbcType = odbcType;
-					Cmd.Parameters.Add(p);
-					string parmName = ":" + pi;
-					if (sql.Contains(parmName)) sql = sql.Replace(parmName, "?");
-					else continue; // may have already been converted to ODBC form 
+					for (int pi = 0; pi < parmArray.Length; pi++)
+					{
+						p = new OdbcParameter();
+						p.ParameterName = pi.ToString();
+
+						string parmToken = ":" + pi; // token in sql
+						if (sql.Contains(parmToken)) // replace with proper format parameter
+						{
+							string newParmToken = "@p" + pi;
+							sql = sql.Replace(parmToken, newParmToken);
+							p.ParameterName = "p" + pi;
+						}
+
+						else p = p; // may have already been converted to ODBC form previously 
+
+						odbcType = ConvertOracleDbTypeToOdbcType(parmArray[pi]);
+						p.OdbcType = odbcType;
+						Cmd.Parameters.Add(p);
+					}
 				}
+
+				LastSql = sql; // update any modified SQL
+
+
+				// Prepare command
+
+				Cmd.Connection = MxConn.DbConn;
+
+				if (Lex.Eq(DatabaseName, "NullDb")) // use fixed query to empty csv file for null database
+					sql = @"SELECT * FROM MobiusServerData\MetaData\NullDb.csv";
+
+				Cmd.CommandText = sql;
+				Cmd.Prepare();
 			}
 
-			// Prepare command
-
-			Cmd.Connection = MxConn.DbConn;
-
-			if (Lex.Eq(DatabaseName, "NullDb")) // use fixed query to empty csv file for null database
-				sql = @"SELECT * FROM MobiusServerData\MetaData\NullDb.csv";
-
-			Cmd.CommandText = sql;
-			Cmd.Prepare();
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message, ex);
+			}
 
 			return;
 		}
@@ -777,9 +878,35 @@ namespace Mobius.UAL
 				case OracleDbType.Double: return OdbcType.Double;
 				case OracleDbType.Single: return OdbcType.Real;
 
-				case OracleDbType.Date: return OdbcType.Timestamp;
+				case OracleDbType.Date: return OdbcType.Date;
 
 				case OracleDbType.Raw: return OdbcType.Binary;
+
+				default:
+					throw new ArgumentException("Invalid DbType: " + oType);
+			}
+		}
+
+		static MySqlDbType ConvertOracleDbTypeToMySqlType(OracleDbType oType)
+		{
+			switch (oType)
+			{
+				case OracleDbType.Char: return MySqlDbType.VarChar;
+				case OracleDbType.Varchar2: return MySqlDbType.VarChar;
+				case OracleDbType.Long: return MySqlDbType.LongText;
+				case OracleDbType.Clob: return MySqlDbType.LongText;
+
+				case OracleDbType.Decimal: return MySqlDbType.Decimal;
+				case OracleDbType.Byte: return MySqlDbType.Byte;
+				case OracleDbType.Int16: return MySqlDbType.Int16;
+				case OracleDbType.Int32: return MySqlDbType.Int32;
+				case OracleDbType.Int64: return MySqlDbType.Int64;
+				case OracleDbType.Double: return MySqlDbType.Double;
+				case OracleDbType.Single: return MySqlDbType.Float;
+
+				case OracleDbType.Date: return MySqlDbType.DateTime;
+
+				case OracleDbType.Raw: return MySqlDbType.Bit;
 
 				default:
 					throw new ArgumentException("Invalid DbType: " + oType);
@@ -825,11 +952,11 @@ namespace Mobius.UAL
 			return;
 		}
 
-/// <summary>
-/// ConvertOracleDbTypeToOleDbType
-/// </summary>
-/// <param name="oType"></param>
-/// <returns></returns>
+		/// <summary>
+		/// ConvertOracleDbTypeToOleDbType
+		/// </summary>
+		/// <param name="oType"></param>
+		/// <returns></returns>
 
 		static OleDbType ConvertOracleDbTypeToOleDbType(OracleDbType oType)
 		{
@@ -857,27 +984,27 @@ namespace Mobius.UAL
 			}
 		}
 
-/// <summary>
-/// 
-/// </summary>
-/// <returns></returns>
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 
 		public DbDataReader ExecuteReader()
 		{
 			object[] parmValues = new object[0];
 			return ExecuteReader(parmValues);
 		}
-	
-/// <summary>
-/// 
-/// </summary>
-/// <param name="parmValue"></param>
-/// <returns></returns>
-	
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="parmValue"></param>
+		/// <returns></returns>
+
 		public DbDataReader ExecuteReader(
 			object parmValue)
 		{
-			object [] parmValues = new object[1];
+			object[] parmValues = new object[1];
 			parmValues[0] = parmValue;
 			return ExecuteReader(parmValues);
 		}
@@ -925,7 +1052,7 @@ namespace Mobius.UAL
 
 			if (CheckForCancel == null && Timeout <= 0) // no need to check for cancel or timeout
 			{
-					ExecuteReader2(false);
+				ExecuteReader2(false);
 			}
 
 			else // allow cancel by starting executeReader on separate thread
@@ -972,9 +1099,9 @@ namespace Mobius.UAL
 						{
 							string msg = "DbCommandMx.CancellableExecuteReader Error:\r\n" +
 								ex.Message;
-							
-							if (Lex.Contains(ex.Message, "ORA-01012") || Lex.Contains(ex.Message, "ORA-00028")) 
-								{} // keep simple if forced logoff
+
+							if (Lex.Contains(ex.Message, "ORA-01012") || Lex.Contains(ex.Message, "ORA-00028"))
+							{ } // keep simple if forced logoff
 
 							else // include sql and stack trace
 							{
@@ -990,7 +1117,7 @@ namespace Mobius.UAL
 				}
 			}
 
-// Adjust fetchsize for Oracle
+			// Adjust fetchsize for Oracle
 
 			if (Rdr != null)
 			{
@@ -1002,7 +1129,7 @@ namespace Mobius.UAL
 					fetchSize = OracleRdr.FetchSize; // default size is 131072
 					long fetchSize2 = rowSize * DbFetchRowCount; // size for desired number of rows 
 					if (fetchSize2 > DbFetchSizeMax) fetchSize2 = DbFetchSizeMax; // limit to a max size
-					if (fetchSize2 > fetchSize) 
+					if (fetchSize2 > fetchSize)
 						OracleRdr.FetchSize = fetchSize = fetchSize2;
 				}
 			}
@@ -1063,7 +1190,7 @@ namespace Mobius.UAL
 					StackTraceString = ex.StackTrace.ToString();
 
 					string msg = "DbCommandMx.ExecuteReader Error:\r\n" +
-					 ex.Message + "\r\n\r\n" +	"Sql: " + OracleDao.FormatSql(LastSql);
+					 ex.Message + "\r\n\r\n" + "Sql: " + OracleDao.FormatSql(LastSql);
 
 					LogException(DebugLog.FormatExceptionMessage(ex, msg));
 					if (!runningOnSeparateThread) throw new Exception(msg);
@@ -1076,7 +1203,7 @@ namespace Mobius.UAL
 		/// </summary>
 		/// <returns></returns>
 
-		public bool Read ()
+		public bool Read()
 		{
 			Stopwatch sw = Stopwatch.StartNew();
 
@@ -1147,7 +1274,7 @@ namespace Mobius.UAL
 				}
 			}
 
-//			if (LastSql.Contains("GLUCOKINASE_ACTIVATOR_I")) // debug
+			//			if (LastSql.Contains("GLUCOKINASE_ACTIVATOR_I")) // debug
 			//if (Lex.Contains(LastSql, "DCSGTR")) // debug
 			//  {
 			//  if (ReadResult)
@@ -1222,11 +1349,11 @@ namespace Mobius.UAL
 			return;
 		}
 
-/// <summary>
-/// CloseReader
-/// </summary>
+		/// <summary>
+		/// CloseReader
+		/// </summary>
 
-		public void CloseReader ()
+		public void CloseReader()
 		{
 			if (LogDatabaseCalls) LogDatabaseCall();
 
@@ -1320,18 +1447,18 @@ namespace Mobius.UAL
 			catch (Exception Exception) { return; } // ignore
 		}
 
-/// <summary>
-/// Log reader database call
-/// </summary>
+		/// <summary>
+		/// Log reader database call
+		/// </summary>
 
 		void LogDatabaseCall()
 		{
 			LogDatabaseCall("Reader");
 		}
 
-/// <summary>
-/// LogDatabaseCall
-/// </summary>
+		/// <summary>
+		/// LogDatabaseCall
+		/// </summary>
 
 		void LogDatabaseCall(string commandType)
 		{
@@ -1350,7 +1477,7 @@ namespace Mobius.UAL
 
 				Stopwatch sw = Stopwatch.StartNew();
 
-				string sql =  Lex.RemoveLineBreaksAndTabs(LastSql);
+				string sql = Lex.RemoveLineBreaksAndTabs(LastSql);
 				string txt = DatabaseName + " " + DatabaseAcct + " " + sql; // string to hash
 				string hash = Lex.ComputeMD5Hash(txt);
 
@@ -1362,7 +1489,7 @@ namespace Mobius.UAL
 				lock (SqlHash)
 				{
 
-// Log sql statement if needed
+					// Log sql statement if needed
 
 					if (!SqlHash.Contains(hash))
 					{
@@ -1388,17 +1515,17 @@ namespace Mobius.UAL
 						LogDatabaseCallMsg(logFile, msg);
 					}
 
-// Log call stats
+					// Log call stats
 
 					msg =
 						"<SqlExec DT='&dt' SqlId='&sqlId' Process='&process' Username='&username' ReadCnt='&readCnt' ReadTime='&readTime' ParmCnt='&parmCnt' ParmVals='&parmVals' />\r\n";
 
 					if (commandType == "NonReader") // adjust for nonreader
 					{
-						msg = Lex.Replace(msg, "ReadCnt=", "NonReaderCnt="); 
+						msg = Lex.Replace(msg, "ReadCnt=", "NonReaderCnt=");
 						ReadCount = ExecuteNonReaderRowCount;
 
-						msg = Lex.Replace(msg, "ReadTime=", "NonReaderTime="); 
+						msg = Lex.Replace(msg, "ReadTime=", "NonReaderTime=");
 						ExecuteReaderTime = ExecuteNonReaderTime;
 					}
 
@@ -1434,9 +1561,9 @@ namespace Mobius.UAL
 			catch (Exception Exception) { return; } // ignore
 		}
 
-/// <summary>
-/// SerializeParameterTypes
-/// </summary>
+		/// <summary>
+		/// SerializeParameterTypes
+		/// </summary>
 
 		void SerializeParameterTypes()
 		{
@@ -1454,7 +1581,7 @@ namespace Mobius.UAL
 
 			for (int pi = 0; pi < parms.Count; pi++)
 			{
-				if (pi > 0)	sb.Append(",");
+				if (pi > 0) sb.Append(",");
 
 				DbParameter p = parms[pi];
 				sb.Append(p.ParameterName + " " + p.DbType);
@@ -1465,9 +1592,9 @@ namespace Mobius.UAL
 		}
 
 
-/// <summary>
+		/// <summary>
 		/// SerializeParameterValues
-/// </summary>
+		/// </summary>
 
 		void SerializeParameterValues()
 		{
@@ -1485,7 +1612,7 @@ namespace Mobius.UAL
 
 			for (int pi = 0; pi < parms.Count; pi++)
 			{
-				if (pi > 0)	sb.Append(",");
+				if (pi > 0) sb.Append(",");
 
 				DbParameter p = parms[pi];
 
@@ -1500,11 +1627,11 @@ namespace Mobius.UAL
 			return;
 		}
 
-/// <summary>
-/// LogDatabaseCallMsg
-/// </summary>
-/// <param name="logFileName"></param>
-/// <param name="msg"></param>
+		/// <summary>
+		/// LogDatabaseCallMsg
+		/// </summary>
+		/// <param name="logFileName"></param>
+		/// <param name="msg"></param>
 
 		void LogDatabaseCallMsg(string logFileName, string msg)
 		{
@@ -1594,11 +1721,11 @@ namespace Mobius.UAL
 			return count;
 		}
 
-/// <summary>
-/// Prepare and execute non reader
-/// </summary>
-/// <param name="sql"></param>
-/// <returns></returns>
+		/// <summary>
+		/// Prepare and execute non reader
+		/// </summary>
+		/// <param name="sql"></param>
+		/// <returns></returns>
 
 		public int PrepareAndExecuteNonReader(
 			string sql,
@@ -1616,7 +1743,7 @@ namespace Mobius.UAL
 		public int ExecuteNonReader(
 			bool logExceptions = true)
 		{
-			object [] parmValues = null;
+			object[] parmValues = null;
 			return ExecuteNonReader(parmValues, logExceptions);
 		}
 
@@ -1624,25 +1751,25 @@ namespace Mobius.UAL
 			object parmValue,
 			bool logExceptions = true)
 		{
-			object [] parmValues = new object[1];
+			object[] parmValues = new object[1];
 			parmValues[0] = parmValue;
 			return ExecuteNonReader(parmValues, logExceptions);
 		}
 
 		public int ExecuteNonReader(
-			object [] parmValues,
+			object[] parmValues,
 			bool logExceptions = true)
 		{
 			int count = 0;
 
-			if (parmValues!=null) // set parameter values
+			if (parmValues != null) // set parameter values
 			{
-				for (int pi=0; pi<parmValues.Length; pi++) 
-					Cmd.Parameters[pi].Value = parmValues[pi]; 
+				for (int pi = 0; pi < parmValues.Length; pi++)
+					Cmd.Parameters[pi].Value = parmValues[pi];
 			}
 
 			Stopwatch sw = Stopwatch.StartNew();
-			try 
+			try
 			{
 				count = Cmd.ExecuteNonQuery();
 			}
@@ -1654,11 +1781,11 @@ namespace Mobius.UAL
 						ex.Message + "\r\n\r\n" +
 						"Sql: " + OracleDao.FormatSql(LastSql);
 					LogException(DebugLog.FormatExceptionMessage(ex, msg));
-					throw new Exception (ex.Message, ex);
+					throw new Exception(ex.Message, ex);
 				}
 			}
 
-			ExecuteNonReaderRowCount = count; 
+			ExecuteNonReaderRowCount = count;
 			GlobalExecuteNonReaderCount += count;
 
 			int tDelta = (int)sw.ElapsedMilliseconds;
@@ -1666,7 +1793,7 @@ namespace Mobius.UAL
 			GlobalLastExecuteNonReaderTime = tDelta;
 			GlobalTotalExecuteReaderTime += tDelta;
 
-			if (LogDbCommandDetail) 
+			if (LogDbCommandDetail)
 				DebugLog.Message("ExecuteNonReader: RowCount = " + ExecuteNonReaderRowCount + ", Time = " + FT(tDelta) + ", Sql = " + Lex.RemoveLineBreaksAndTabs(LastSql));
 
 			//if (LogDatabaseCalls) // log NonReader database call (disabled)
@@ -1738,9 +1865,9 @@ namespace Mobius.UAL
 			return aa;
 		}
 
-/// <summary>
-/// Begin transaction
-/// </summary>
+		/// <summary>
+		/// Begin transaction
+		/// </summary>
 
 		public void BeginTransaction()
 		{
@@ -1748,9 +1875,9 @@ namespace Mobius.UAL
 			MxConn.BeginTransaction();
 		}
 
-/// <summary>
-/// Commit transaction
-/// </summary>
+		/// <summary>
+		/// Commit transaction
+		/// </summary>
 
 		public void Commit()
 		{
@@ -1758,9 +1885,9 @@ namespace Mobius.UAL
 			MxConn.Commit();
 		}
 
-/// <summary>
-/// Rollback transaction
-/// </summary>
+		/// <summary>
+		/// Rollback transaction
+		/// </summary>
 
 		public void Rollback()
 		{
@@ -1768,13 +1895,13 @@ namespace Mobius.UAL
 			MxConn.Rollback();
 		}
 
-/// <summary>
-/// Prepare a query that takes a list as part of criteria
-/// </summary>
-/// <param name="sql"></param>
-/// <param name="parameterType"></param>
+		/// <summary>
+		/// Prepare a query that takes a list as part of criteria
+		/// </summary>
+		/// <param name="sql"></param>
+		/// <param name="parameterType"></param>
 
-		public void PrepareListReader (
+		public void PrepareListReader(
 			string sql,
 			DbType parameterType)
 		{
@@ -1782,12 +1909,12 @@ namespace Mobius.UAL
 			return;
 		}
 
-/// <summary>
-/// Prepare a query that takes a list as part of criteria
-/// </summary>
-/// <param name="sql"></param>
-/// <param name="parameterType"></param>
-/// <param name="keyPredType"></param>
+		/// <summary>
+		/// Prepare a query that takes a list as part of criteria
+		/// </summary>
+		/// <param name="sql"></param>
+		/// <param name="parameterType"></param>
+		/// <param name="keyPredType"></param>
 
 		public void PrepareListReader(
 			string sql,
@@ -1800,27 +1927,27 @@ namespace Mobius.UAL
 			return;
 		}
 
-/// <summary>
-/// Open a list reader
-/// </summary>
-/// <param name="list"></param>
+		/// <summary>
+		/// Open a list reader
+		/// </summary>
+		/// <param name="list"></param>
 
-		public void ExecuteListReader (
+		public void ExecuteListReader(
 			List<string> list)
-	{
+		{
 			AssertMx.IsNotNull(ListSql, "ListSql");
 			KeyList = list;
 			LastKeyCount = LastKeyIdx = -1;
-			if (list==null || list.Count<=0) return;
+			if (list == null || list.Count <= 0) return;
 			PrepareNextListChunk();
-	}
+		}
 
-/// <summary>
-/// Read next row from list
-/// </summary>
-/// <returns></returns>
+		/// <summary>
+		/// Read next row from list
+		/// </summary>
+		/// <returns></returns>
 
-		public bool ListRead ()
+		public bool ListRead()
 		{
 			if (LastKeyCount < 0) return false;
 			if (this.Read()) return true;
@@ -1830,9 +1957,9 @@ namespace Mobius.UAL
 			return ListRead();
 		}
 
-/// <summary>
-/// Prepare & execute sql for next chunk of list entries
-/// </summary>
+		/// <summary>
+		/// Prepare & execute sql for next chunk of list entries
+		/// </summary>
 
 		void PrepareNextListChunk()
 		{
@@ -1864,7 +1991,7 @@ namespace Mobius.UAL
 				ExecuteReader(); // run the query
 			}
 
-// Subsetting, select next chunk of keys
+			// Subsetting, select next chunk of keys
 
 			else
 			{
@@ -1883,7 +2010,7 @@ namespace Mobius.UAL
 						string parmList = "";
 						for (i1 = 0; i1 < keyCount; i1++) // build parameters
 						{
-							parmList += ":" + i1; 
+							parmList += ":" + i1;
 							if (i1 < keyCount - 1)
 							{
 								parmList += ",";
@@ -1947,7 +2074,7 @@ namespace Mobius.UAL
 
 			if (LogDbCommandDetail)
 			{
-				string keyPredType = KeyListPredType.ToString() +  "(" + keyCount + ")";
+				string keyPredType = KeyListPredType.ToString() + "(" + keyCount + ")";
 				int tDelta = (int)sw.Elapsed.TotalMilliseconds;
 				DebugLog.Message(this.GetType().Name + " Execute - KeyListPredType: " + keyPredType + ", time: " + FT(tDelta) + ", sql: " + Lex.RemoveLineBreaksAndTabs(sql2));
 			}
@@ -1957,11 +2084,11 @@ namespace Mobius.UAL
 				return;
 		}
 
-/// <summary>
-/// Format time for easy id of magnitude <1>, <<10>>, <<<100>>>, <<<<1000>>>>, <<<<<10000>>>>>,
-/// </summary>
-/// <param name="t"></param>
-/// <returns></returns>
+		/// <summary>
+		/// Format time for easy id of magnitude <1>, <<10>>, <<<100>>>, <<<<1000>>>>, <<<<<10000>>>>>,
+		/// </summary>
+		/// <param name="t"></param>
+		/// <returns></returns>
 
 		string FT(double t)
 		{
@@ -1972,15 +2099,15 @@ namespace Mobius.UAL
 			else return "<<<<<<" + t + ">>>>>";
 		}
 
-/// <summary>
-/// Build in list predicate using temporary database table
-/// </summary>
-/// <param name="baseSql"></param>
-/// <param name="keyName"></param>
-/// <param name="keyList"></param>
-/// <param name="firstKeyIdx"></param>
-/// <param name="keyCount"></param>
-/// <returns></returns>
+		/// <summary>
+		/// Build in list predicate using temporary database table
+		/// </summary>
+		/// <param name="baseSql"></param>
+		/// <param name="keyName"></param>
+		/// <param name="keyList"></param>
+		/// <param name="firstKeyIdx"></param>
+		/// <param name="keyCount"></param>
+		/// <returns></returns>
 
 		public string BuildTempDbTableKeyListPredicate(
 			ref string baseSql,
@@ -2140,7 +2267,7 @@ namespace Mobius.UAL
 		public bool CancelTest()
 		{
 			bool result;
-			
+
 			Rdr = Cmd.ExecuteReader();
 
 			//			if (Rdr.Read())
@@ -2151,7 +2278,7 @@ namespace Mobius.UAL
 			ThreadStart ts = new ThreadStart(CancellableRead);
 			Thread t1 = new Thread(ts);
 			t1.Name = "CancelReadTest";
-      t1.IsBackground = true;
+			t1.IsBackground = true;
 			t1.SetApartmentState(ApartmentState.STA);
 			t1.Start();
 
@@ -2161,13 +2288,13 @@ namespace Mobius.UAL
 			return false;
 		}
 
-/// <summary>
-/// See if a reader value is null by name
-/// </summary>
-/// <param name="name"></param>
-/// <returns></returns>
+		/// <summary>
+		/// See if a reader value is null by name
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
 
-		public bool IsNullByName (
+		public bool IsNullByName(
 			string name)
 		{
 			int pos;
@@ -2182,7 +2309,7 @@ namespace Mobius.UAL
 		/// <param name="pos"></param>
 		/// <returns></returns>
 
-		public bool IsNull (
+		public bool IsNull(
 			int pos)
 		{
 			if (Rdr.IsDBNull(pos)) return true;
@@ -2195,7 +2322,7 @@ namespace Mobius.UAL
 		/// <param name="name"></param>
 		/// <returns></returns>
 
-		public object GetObjectByName (
+		public object GetObjectByName(
 			string name)
 		{
 			int pos;
@@ -2209,7 +2336,7 @@ namespace Mobius.UAL
 		/// <param name="pos"></param>
 		/// <returns></returns>
 
-		public object GetObject (
+		public object GetObject(
 			int pos)
 		{
 			if (Rdr.IsDBNull(pos)) return null;
@@ -2222,7 +2349,7 @@ namespace Mobius.UAL
 		/// <param name="name"></param>
 		/// <returns></returns>
 
-		public string GetStringByName (
+		public string GetStringByName(
 			string name)
 		{
 			int pos;
@@ -2236,7 +2363,7 @@ namespace Mobius.UAL
 		/// <param name="pos"></param>
 		/// <returns></returns>
 
-		public string GetString (
+		public string GetString(
 			int pos)
 		{
 			if (Rdr.IsDBNull(pos)) return "";
@@ -2250,7 +2377,7 @@ namespace Mobius.UAL
 		/// <param name="name"></param>
 		/// <returns></returns>
 
-		public string GetClobByName (
+		public string GetClobByName(
 			string name)
 		{
 			int pos;
@@ -2289,7 +2416,7 @@ namespace Mobius.UAL
 		/// <param name="name"></param>
 		/// <returns></returns>
 
-		public byte[] GetBinaryByName (
+		public byte[] GetBinaryByName(
 			string name)
 		{
 			int pos;
@@ -2310,7 +2437,7 @@ namespace Mobius.UAL
 
 			if (IsOracle)
 			{
-				byte[] ba = (byte [])OracleRdr.GetOracleBinary(pos);
+				byte[] ba = (byte[])OracleRdr.GetOracleBinary(pos);
 				return ba;
 			}
 
@@ -2323,7 +2450,7 @@ namespace Mobius.UAL
 		/// <param name="name"></param>
 		/// <returns></returns>
 
-		public byte[] GetBlobByName (
+		public byte[] GetBlobByName(
 			string name)
 		{
 			int pos;
@@ -2359,7 +2486,7 @@ namespace Mobius.UAL
 		/// <param name="pos"></param>
 		/// <returns></returns>
 
-		public int GetIntByName (
+		public int GetIntByName(
 			string name)
 		{
 			int pos;
@@ -2374,7 +2501,7 @@ namespace Mobius.UAL
 		/// <param name="pos"></param>
 		/// <returns></returns>
 
-		public int GetInt (
+		public int GetInt(
 			int pos)
 		{
 			int value;
@@ -2384,7 +2511,7 @@ namespace Mobius.UAL
 			if (IsOracle)
 				value = OracleRdr.GetOracleDecimal(pos).ToInt32();
 			else
-				value =  Convert.ToInt32(Rdr.GetValue(pos));
+				value = Convert.ToInt32(Rdr.GetValue(pos));
 
 			return value;
 		}
@@ -2395,7 +2522,7 @@ namespace Mobius.UAL
 		/// <param name="name"></param>
 		/// <returns></returns>
 
-		public long GetLongByName (
+		public long GetLongByName(
 			string name)
 		{
 			int pos;
@@ -2410,7 +2537,7 @@ namespace Mobius.UAL
 		/// <param name="pos"></param>
 		/// <returns></returns>
 
-		public long GetLong (
+		public long GetLong(
 			int pos)
 		{
 			if (Rdr.IsDBNull(pos)) return NullValue.NullNumber;
@@ -2427,7 +2554,7 @@ namespace Mobius.UAL
 		/// <param name="name"></param>
 		/// <returns></returns>
 
-		public double GetDoubleByName (
+		public double GetDoubleByName(
 			string name)
 		{
 			int pos;
@@ -2440,7 +2567,7 @@ namespace Mobius.UAL
 		/// </summary>
 		/// <param name="pos"></param>
 		/// <returns></returns>
-		public double GetDouble (
+		public double GetDouble(
 			int pos)
 
 		{
@@ -2459,7 +2586,7 @@ namespace Mobius.UAL
 		/// <param name="name"></param>
 		/// <returns></returns>
 
-		public DateTime GetDateTimeByName (
+		public DateTime GetDateTimeByName(
 			string name)
 		{
 			int pos;
@@ -2467,12 +2594,12 @@ namespace Mobius.UAL
 			return GetDateTime(pos);
 		}
 
-/// <summary>
-/// Get ordinal from name with adding name to any exception
-/// </summary>
-/// <param name="rdr"></param>
-/// <param name="name"></param>
-/// <returns></returns>
+		/// <summary>
+		/// Get ordinal from name with adding name to any exception
+		/// </summary>
+		/// <param name="rdr"></param>
+		/// <param name="name"></param>
+		/// <returns></returns>
 
 		public int GetOrdinal(
 			DbDataReader rdr,
@@ -2496,7 +2623,7 @@ namespace Mobius.UAL
 		/// </summary>
 		/// <param name="pos"></param>
 		/// <returns></returns>
-		public DateTime GetDateTime (
+		public DateTime GetDateTime(
 			int pos)
 		{
 			if (Rdr.IsDBNull(pos)) return DateTime.MinValue;
@@ -2507,7 +2634,7 @@ namespace Mobius.UAL
 		/// Dispose of the command
 		/// </summary>
 
-		public void Dispose ()
+		public void Dispose()
 		{
 			if (LogDatabaseCalls) LogDatabaseCall();
 
@@ -2535,9 +2662,9 @@ namespace Mobius.UAL
 		/// <summary>
 		/// Do temp fixups to sql
 		/// </summary>
-		/// <param name="?"></param>
+		/// <param name="sql"></param>
 
-		string FixupSql(
+		string DoTempSqlFixups(
 			string sql)
 		{
 			//sql = FixupSql(sql, "mbs_owner.mbs_adw_rslt", "(select cmpnd_id ext_cmpnd_id_txt, sbstnc_id ext_cmpnd_id_nbr, t0.* from mbs_owner.mbs_adw_rslt t0)");
@@ -2569,22 +2696,22 @@ namespace Mobius.UAL
 			return sql2;
 		}
 
-/// <summary>
-/// IsNumericDbType
-/// </summary>
-/// <param name="type"></param>
-/// <returns></returns>
+		/// <summary>
+		/// IsNumericDbType
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
 
 		public static bool IsNumericDbType(DbType type)
 		{
 			return IsIntegerDbType(type) || IsNonintegerNumericDbType(type);
 		}
 
-/// <summary>
-/// IsIntegerDbType
-/// </summary>
-/// <param name="type"></param>
-/// <returns></returns>
+		/// <summary>
+		/// IsIntegerDbType
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
 
 		public static bool IsIntegerDbType(DbType type)
 		{
@@ -2592,11 +2719,11 @@ namespace Mobius.UAL
 				type == DbType.Int64;
 		}
 
-/// <summary>
-/// IsNonintegerNumericDbType
-/// </summary>
-/// <param name="type"></param>
-/// <returns></returns>
+		/// <summary>
+		/// IsNonintegerNumericDbType
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
 
 		public static bool IsNonintegerNumericDbType(DbType type)
 		{
@@ -2604,11 +2731,11 @@ namespace Mobius.UAL
 				type == DbType.Single;
 		}
 
-/// <summary>
-/// Convert OracleDbType to DbType
-/// </summary>
-/// <param name="oraDbType"></param>
-/// <returns></returns>
+		/// <summary>
+		/// Convert OracleDbType to DbType
+		/// </summary>
+		/// <param name="oraDbType"></param>
+		/// <returns></returns>
 
 		public static DbType OracleDbTypeToDbType(OracleDbType oraDbType)
 		{
@@ -2660,11 +2787,11 @@ namespace Mobius.UAL
 			}
 		}
 
-/// <summary>
-/// Convert DbType to OracleDbType
-/// </summary>
-/// <param name="dbType"></param>
-/// <returns></returns>
+		/// <summary>
+		/// Convert DbType to OracleDbType
+		/// </summary>
+		/// <param name="dbType"></param>
+		/// <returns></returns>
 
 		internal static OracleDbType DbTypeToOracleDbType(DbType dbType)
 		{
@@ -2722,7 +2849,7 @@ namespace Mobius.UAL
 				DebugLog.Message(msg);
 		}
 	}
-	
+
 	/// <summary>
 	/// The caller implements this interface to allow checking for user cancel 
 	/// of a running query.
@@ -2736,9 +2863,9 @@ namespace Mobius.UAL
 		}
 	}
 
-/// <summary>
-/// Form of sql predicate to use for key lists
-/// </summary>
+	/// <summary>
+	/// Form of sql predicate to use for key lists
+	/// </summary>
 
 	public enum KeyListPredTypeEnum
 	{

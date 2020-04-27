@@ -97,6 +97,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="vjslib">
+      <HintPath>..\..\..\MobiusOldCode\MobiusCommon\ExternalLibraries\vjslib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -240,11 +243,6 @@
       <Project>{6bbefb30-18e1-4e1e-bb86-52df2b7d5642}</Project>
       <Name>Tools</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="vjscor.dll" />
-    <Content Include="vjslib.dll" />
-    <Content Include="vjsnativ.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
