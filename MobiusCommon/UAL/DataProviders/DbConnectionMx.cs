@@ -360,7 +360,7 @@ namespace Mobius.UAL
 				foreach (DataSourceMx source2 in DataSourceMx.DataSources.Values)
 				{
 					if (source2 == source) continue; // no link to self
-					if (!IsOracleDatabase(source2.DatabaseLocator)) continue; // oracle sources only
+					if (!IsOracleDataSource(source2)) continue; // oracle sources only
 
 					if (Lex.IsDefined(singleInstance) &&
 						Lex.Ne(singleInstance, source.DataSourceName) && Lex.Ne(singleInstance, source2.DataSourceName))
@@ -412,23 +412,18 @@ namespace Mobius.UAL
 		{
 			DataSourceMx rootSource = GetRootDataSource(sql);
 			if (rootSource == null) return false;
-			return IsOracleDatabase(rootSource.DatabaseLocator);
-
-			//string sql2 = sql;
-			//DbConnectionMx conn = MapSqlToConnection(ref sql2);
-			//return conn.IsOracleConn;
+			return (rootSource.DbType == DatabaseType.Oracle);
 		}
 
 		/// <summary>
-		/// Return true if Oracle database
+		/// Return true if Oracle data source
 		/// </summary>
-		/// <param name="dbName"></param>
+		/// <param name="source"></param>
 		/// <returns></returns>
 
-		public static bool IsOracleDatabase(string dbName)
+		public static bool IsOracleDataSource(DataSourceMx source)
 		{
-			bool isOracle = Lex.StartsWith(dbName, "Oracle:") || !dbName.Contains(":");
-			return isOracle;
+			return (source.DbType == DatabaseType.Oracle);
 		}
 
 		/// <summary>
@@ -441,14 +436,18 @@ namespace Mobius.UAL
 		{
 			DataSourceMx rootSource = GetRootDataSource(sql);
 			if (rootSource == null) return false;
-			return IsMySqlDatabase(rootSource.DatabaseLocator);
+			return (rootSource.DbType == DatabaseType.MySql);
 		}
 
-		public static bool IsMySqlDatabase(string dbName)
+		/// <summary>
+		/// Return true if Oracle data source
+		/// </summary>
+		/// <param name="source"></param>
+		/// <returns></returns>
+
+		public static bool IsMySqlDataSource(DataSourceMx source)
 		{
-			bool isMySql = Lex.StartsWith(dbName, "MySql");
-			if (isMySql) return true;
-			else return false;
+			return (source.DbType == DatabaseType.MySql);
 		}
 
 		/// <summary>
@@ -461,43 +460,19 @@ namespace Mobius.UAL
 		{
 			DataSourceMx rootSource = GetRootDataSource(sql);
 			if (rootSource == null) return false;
-			return IsOdbcDatabase(rootSource.DatabaseLocator);
+			return (rootSource.DbType == DatabaseType.ODBC);
 		}
 
 		/// <summary>
-		/// Return true if ODBC database
+		/// Return true if ODBC data source
 		/// </summary>
 		/// <param name="dbName"></param>
 		/// <returns></returns>
 
-		public static bool IsOdbcDatabase(string dbName)
+		public static bool IsOdbcDataSource(DataSourceMx source)
 		{
-			bool isOdbc = Lex.StartsWith(dbName, "ODBC:");
-			if (isOdbc) return true;
-			else return false;
+			return (source.DbType == DatabaseType.Oracle);
 		}
-
-		public static bool IsNetezzaDatabase(string dbName)
-		{
-			return Lex.Contains(dbName.ToUpper(), "NETEZZA");
-		}
-
-		/// <summary>
-		/// Return bool indicating if the supplied sql string can be "parameterized"
-		/// </summary>
-		/// <param name="sql"></param>
-		/// <returns></returns>
-
-		//public static bool CanParameterizeSql(string sql)
-		//{
-		//	//if (Lex.Contains(sql, "stb_")) sql = sql; // debug
-
-		//	//return false; // never allow (debug)
-
-		//	if (ClientState.IsDeveloper) return false; // return false if ODBC (e.g. Netazza) (todo: fix this up)
-
-		//	else return true;
-		//}
 
 		/// <summary>
 		/// Scan sql & get connection based on schema name(s) in the SQL.
@@ -1508,9 +1483,8 @@ namespace Mobius.UAL
 				if (Debug)
 					DebugLog.Message("Closing connection: " + InstanceName + " count = " + ActiveCount);
 
-				if (DataSource != null && // if ODBC datasource && not Netezza then don't close underlying connection
-				 DbConnectionMx.IsOdbcDatabase(DataSource.DatabaseLocator) &&
-				 !DbConnectionMx.IsNetezzaDatabase(DataSource.DatabaseLocator))
+				if (DataSource != null && // if ODBC datasource then don't close underlying connection
+				 DbConnectionMx.IsOdbcDataSource(DataSource))
 				{
 					return; // don't close underlying ODBC connections
 				}

@@ -29,83 +29,58 @@ namespace Mobius.UAL
 		/// <returns></returns>
 
 		public static MetaTable GetMetaTableFromDatabaseDictionary(
+			DbConnectionMx conn,
+			string schema,
 			string tableName)
 		{
 			int t0 = TimeOfDay.Milliseconds();
 
-			string[] sa = tableName.Split('.');
-			if (sa.Length != 2) return null;
-
-			string schema = sa[0];
-			string tname = sa[1];
-
-			DataSourceMx gds = DbSchemaMx.GetDataSourceForSchemaName(schema);
-			if (gds == null) throw new Exception("Can't find DataSource for Schema: " + schema);
-
-			DbConnectionMx gConn = DbConnectionMx.GetConnection(gds.DataSourceName);
-			if (gConn == null) throw new Exception("Failed to get connection for DataSource: " + gds.DataSourceName);
-
-
-			MySqlConnection conn = gConn.MySqlDbConn;
-			if (conn == null) throw new Exception(String.Format("Failed to get connection for DataSource.Schema: {0}.{1}),",
-				gds.DataSourceName, schema));
-
-			string sql = String.Format(
-				@"SELECT *
-					FROM INFORMATION_SCHEMA.COLUMNS
-					WHERE 
-           table_name = '{0}' and
-					 AND table_schema = '{1}'
-					ORDER BY ORDINAL_POSITION", 
-				schema, tname);
-
-			// todo
-	
 			MetaTable mt = new MetaTable();
 			mt.MetaBrokerType = MetaBrokerType.Generic;
-			mt.Name = tname;
-			mt.Label = MetaTable.IdToLabel(tname);
-			mt.TableMap = tableName;
+			mt.Name = tableName;
+			mt.Label = MetaTable.IdToLabel(tableName);
+			mt.TableMap = schema + "." + tableName;
 
-			return mt;
-		}
-
-#if false
-
-			List<DbColumnMetadata> cmdList = GetTableMetadataFromOracleDictionary(tableName);
+			List<DbColumnMetadata> cmdList = GetTableMetadataFromMySqlDictionary(conn, schema, tableName);
 			for (int ci = 0; ci < cmdList.Count; ci++)
 			{
 				DbColumnMetadata cmd = cmdList[ci];
 
 				MetaColumn mc = new MetaColumn();
-				mc.Name = cmd.column_name;
+				mc.Name = cmd.Name;
 				mc.ColumnMap = mc.Name;
-				mc.Label = MetaTable.IdToLabel(cmd.column_name);
+				mc.Label = MetaTable.IdToLabel(cmd.Name);
 
-				if (cmd.data_type == "VARCHAR" ||
-					cmd.data_type == "VARCHAR2" ||
-					cmd.data_type == "NVARCHAR2" ||
-					cmd.data_type == "CHAR" ||
-					cmd.data_type == "CHARACTER" ||
-					cmd.data_type == "LONG") mc.DataType = MetaColumnType.String;
-				else if (cmd.data_type == "INTEGER")
+				if (Lex.Contains(cmd.Type, "CHAR") ||
+				 Lex.Contains(cmd.Type, "TEXT"))
+					mc.DataType = MetaColumnType.String;
+
+				else if (Lex.Contains(cmd.Type, "INT") ||
+					Lex.Contains(cmd.Type, "ENUM"))
 					mc.DataType = MetaColumnType.Integer;
 
-				else if (cmd.data_type == "NUMBER" ||
-					cmd.data_type == "FLOAT")
+				else if (cmd.Type == "FLOAT" || 
+					cmd.Type == "REAL" ||
+					cmd.Type == "DOUBLE" ||
+					cmd.Type == "DECIMAL" ||
+					cmd.Type == "NUMERIC")
 				{
 					mc.DataType = MetaColumnType.Number;
-					mc.Format = ColumnFormatEnum.SigDigits; // display with 3 sig figures by default
-					mc.Decimals = 3;
+					mc.Format = ColumnFormatEnum.Decimal;
+					mc.Decimals = cmd.Scale;
 				}
 
-				else if (cmd.data_type == "DATE" || cmd.data_type.StartsWith("TIMESTAMP")) mc.DataType = MetaColumnType.Date;
+				else if (cmd.Type == "DATE" ||
+				 cmd.Type == "DATETIME" ||
+				 cmd.Type == "TIMESTAMP") 
+					mc.DataType = MetaColumnType.Date;
 
 				else continue; // unrecognized
 
 				mc.InitialSelection = ColumnSelectionEnum.Selected;
 				mc.Width = 12;
 				mc.MetaTable = mt;
+				mc.Description = cmd.Comment;
 
 				mt.AddMetaColumn(mc);
 			}
@@ -114,211 +89,46 @@ namespace Mobius.UAL
 			return mt;
 		}
 
-		/// <summary>
-		/// GetTableMetadataFromOracleDictionary
-		/// </summary>
-		/// <param name="tableName"></param>
-		/// <returns></returns>
-
-		public static List<DbColumnMetadata> GetTableMetadataFromOracleDictionary(
+		public static List<DbColumnMetadata> GetTableMetadataFromMySqlDictionary(
+			DbConnectionMx conn,
+			string schema,
 			string tableName)
 		{
-			int t0 = TimeOfDay.Milliseconds();
-
-			DbColumnMetadata cmd;
-			List<DbColumnMetadata> cmdList = new List<DbColumnMetadata>();
-
-			string sql = "select column_name,data_type,data_length,data_precision,data_scale,nullable " +
-				"from sys.all_tab_columns where owner=:0 " +
-				"and table_name=:1 order by column_id";
-
-			DbConnectionMx conn = DbConnectionMx.MapSqlToConnection(ref tableName); // get proper connection
-			if (conn == null)
-				throw new Exception("Connection not found for tableName: " + tableName);
+			string sql = String.Format(
+				@"SELECT *
+			  FROM INFORMATION_SCHEMA.COLUMNS
+				WHERE 
+           table_schema = '{0}' 
+           AND table_name = '{1}'
+				ORDER BY ORDINAL_POSITION",
+				schema, tableName);
 
 			DbCommandMx drd = new DbCommandMx();
 			drd.MxConn = conn;
-			int parmCount = 2;
-			drd.PrepareMultipleParameter(sql, parmCount);
+			drd.PrepareUsingDefinedConnection(sql);
+			DbDataReader rdr = drd.ExecuteReader();
 
-			string[] sa = tableName.Split('.');
-			if (sa.Length != 2) throw new Exception("TableName not in owner.tableName form: " + tableName);
-			string creator = sa[0];
-			string tname = sa[1];
+			List<DbColumnMetadata> md = new List<DbColumnMetadata>();
 
-			if (Lex.Eq(creator, "mbs_user")) // workaround to allow tables owned by dev mbs_owner
-				creator = "mbs_owner"; // to be accessed via synonyms defined on dev mbs_user
+      while (rdr.Read())
+      {
+        DbColumnMetadata cmd = new DbColumnMetadata();
+        cmd.Name = drd.GetStringByName("column_name");
+        cmd.Type = drd.GetStringByName("data_type");
+        cmd.Length = drd.GetLongByName("character_maximum_length");
+        cmd.Precision = drd.GetIntByName("numeric_precision");
+        cmd.Scale = drd.GetIntByName("numeric_scale");
+        cmd.Nullable = drd.GetStringByName("is_nullable");
+        cmd.Comment = drd.GetStringByName("column_comment");
 
-			object[] p = new object[2];
-			p[0] = creator.ToUpper();
-			p[1] = tname.ToUpper();
+        md.Add(cmd);
+      }
 
-			drd.ExecuteReader(p);
-			while (drd.Read())
-			{
-				cmd = new DbColumnMetadata();
-				cmd.column_name = drd.GetStringByName("column_name");
-				cmd.data_type = drd.GetStringByName("data_type");
-				cmd.data_length = drd.GetIntByName("data_length");
-				cmd.data_precision = drd.GetIntByName("data_precision");
-				cmd.data_scale = drd.GetIntByName("data_scale");
-				cmd.nullable = drd.GetStringByName("nullable");
-
-				cmdList.Add(cmd);
-			}
-
-			drd.Dispose();
-
-			t0 = TimeOfDay.Milliseconds() - t0;
-			return cmdList;
+      rdr.Close();
+			return md;
 		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sql"></param>
-		/// <param name="sourceName"></param>
-		/// <param name="schemaName"></param>
-		/// <returns></returns>
-
-		public static List<DbColumnMetadata> GetColumnMetadataFromSql(
-			string sql,
-			DbConnectionMx conn)
-		{
-			int t0 = TimeOfDay.Milliseconds();
-
-			DbColumnMetadata md;
-			List<DbColumnMetadata> mdList = new List<DbColumnMetadata>();
-
-			string sql2 = sql + " where 1=2"; // make execution fast
-			DbCommandMx cmd = new DbCommandMx();
-			cmd.MxConn = conn;
-			cmd.PrepareUsingDefinedConnection(sql2);
-
-			OracleDataReader rdr = cmd.ExecuteReader() as OracleDataReader;
-
-			for (int fi = 0; fi < rdr.FieldCount; fi++)
-			{
-				md = new DbColumnMetadata();
-				md.column_name = rdr.GetName(fi);
-				md.data_type = rdr.GetDataTypeName(fi); // 
-
-				mdList.Add(md);
-			}
-
-			rdr.Dispose();
-
-			t0 = TimeOfDay.Milliseconds() - t0;
-			return mdList;
-		}
-
-		/// <summary>
-		/// GetMetaTableFromOdbcDictionary
-		/// </summary>
-		/// <param name="tableName"></param>
-		/// <returns></returns>
-
-		public static MetaTable GetMetaTableFromOdbcDictionary(
-			string tableName)
-		{
-			string data_type = null; // delete
-
-			int t0 = TimeOfDay.Milliseconds();
-
-			string[] sa = tableName.Split('.');
-			if (sa.Length != 2) return null;
-
-			string creator = sa[0];
-			string tname = sa[1];
-
-			MetaTable mt = new MetaTable();
-			mt.MetaBrokerType = MetaBrokerType.Generic;
-			mt.Name = tname;
-			mt.Label = MetaTable.IdToLabel(tname);
-			mt.TableMap = tableName;
-
-			string sql = "select * from " + tableName;
-
-			DbCommandMx drd = new DbCommandMx();
-			drd.Prepare(sql);
-			drd.ExecuteReader();
-			DataTable st = drd.Rdr.GetSchemaTable();
-
-			for (int ri = 0; ri < st.Rows.Count; ri++)
-			{
-				DataRow dr = st.Rows[ri];
-				string column_name = dr["ColumnName"] as string;
-				Type type = dr["DataType"] as Type;
-				int data_length = (int)dr["ColumnSize"];
-				int data_precision = (short)dr["NumericPrecision"];
-				int data_scale = (short)dr["NumericScale"];
-				bool nullable = (bool)dr["AllowDBNull"];
-
-				MetaColumn mc = new MetaColumn();
-				mc.Name = column_name;
-				mc.ColumnMap = mc.Name;
-				mc.Label = MetaTable.IdToLabel(column_name);
-
-				if (Lex.Eq(type.Name, "String"))
-					mc.DataType = MetaColumnType.String;
-
-				else if (Lex.StartsWith(type.Name, "Int"))
-					mc.DataType = MetaColumnType.Integer;
-
-				else if (Lex.Eq(type.Name, "Single") ||
-					Lex.Eq(type.Name, "Double"))
-				{
-					mc.DataType = MetaColumnType.Number;
-					mc.Format = ColumnFormatEnum.SigDigits; // display with 3 sig figures by default
-					mc.Decimals = 3;
-				}
-
-				else if (Lex.Eq(type.Name, "DateTime")) mc.DataType = MetaColumnType.Date;
-
-				else continue; // unrecognized
-
-				mc.InitialSelection = ColumnSelectionEnum.Selected;
-				mc.Width = 12;
-				mc.MetaTable = mt;
-
-				mt.AddMetaColumn(mc);
-			}
-
-			drd.Dispose();
-
-			t0 = TimeOfDay.Milliseconds() - t0;
-			return mt;
-		}
-
-
-		/// <summary>
-		/// TruncateStringIfExceedsMaxStringSize 
-		/// </summary>
-		/// <param name="s"></param>
-		/// <returns></returns>
-		public static string TruncateStringIfExceedsMaxStringSize(string s)
-		{
-			if (s == null || s.Length <= DbCommandMx.MaxOracleStringSize)
-				return s;
-
-			else return (s.Substring(0, DbCommandMx.MaxOracleStringSize));
-		}
-		/// <summary>
-		/// ClearStringIfExceedsMaxStringSize
-		/// </summary>
-		/// <param name="s"></param>
-		/// <returns></returns>
-
-		public static string ClearStringIfExceedsMaxStringSize(string s)
-		{
-			if (s != null && s.Length <= DbCommandMx.MaxOracleStringSize)
-				return s;
-
-			else return "";
-		}
-
-#endif
 
 	}
+
 
 }

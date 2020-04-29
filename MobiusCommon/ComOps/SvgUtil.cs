@@ -27,11 +27,9 @@ namespace Mobius.ComOps
 		/// <param name="s"></param>
 		/// <returns></returns>
 
-		public static string CompressToBase64String(string s)
+		public static string CompressSvgString(string s)
 		{
-			byte[] bytes = GZip.Compress(s);
-			string s2 = Convert.ToBase64String(bytes);
-			return s2;
+			return GZip.CompressToString(s);
 		}
 
 		public static bool IsSvgString(
@@ -63,56 +61,8 @@ namespace Mobius.ComOps
 				return true;
 			}
 
-			else return TryDecompressFromBase64String(s, out svgXml);
+			else return GZip.TryDecompressFromString(s, out svgXml);
 		}
-
-/// <summary>
-/// Try to decompress svg from a Gzip compressed Base64 string
-/// </summary>
-/// <param name="s"></param>
-/// <param name="svg"></param>
-/// <returns></returns>
-
-			public static bool TryDecompressFromBase64String(
-			string s, 
-			out string svg)
-		{
-			svg = null;
-
-			byte[] bytes;
-
-			if (!TryFromBase64String(s, out bytes)) return false;
-
-			if (!GZip.TryDecompress(bytes, out svg)) return false;
-
-			return true;
-		}
-
-/// <summary>
-/// This methods tries to convert a string from Base64 form into a byte array
-/// </summary>
-/// <param name="s"></param>
-/// <param name="bytes"></param>
-/// <returns></returns>
-
-		public static bool TryFromBase64String(
-			string s,
-			out byte[] bytes)
-		{
-			bytes = null;
-
-			try
-			{
-				bytes = Convert.FromBase64String(s);
-				return true;
-			}
-
-			catch (Exception ex)
-			{
-				return false;
-			}
-		}
-
 
 		/// <summary>
 		/// Get bitmap from SVG XML

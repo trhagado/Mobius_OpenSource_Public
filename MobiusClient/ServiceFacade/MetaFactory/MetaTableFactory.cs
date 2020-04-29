@@ -188,7 +188,7 @@ namespace Mobius.ServiceFacade
 					return mt;
 			}
 
-			else return Mobius.MetaFactoryNamespace.OracleMetaFactory.GetMetaTableFromDatabaseDictionary(mtName);
+			else return Mobius.MetaFactoryNamespace.MetaTableFactory.GetMetaTableFromDatabaseDictionary(mtName);
 		}
 
 		/// <summary>

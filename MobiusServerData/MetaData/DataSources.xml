@@ -8,11 +8,14 @@
 	  connectionString="Server=localhost;Port=3306;UserId=root;Password=tree1357;" />
 
 		<SchemaToConnection schema="mbs_owner"           connection="MySql_Mobius"    label="Mobius System Data" />
+		
 		<SchemaToConnection schema="ucdb_owner"          connection="MySql_Mobius"    label="User Cmpnd. Db" />
-		<SchemaToConnection schema="CHEMBL_26"        connection="MySql_Mobius"    label="ChEMBL data" />
+		
+		<SchemaToConnection schema="CHEMBL_OWNER" aliasFor="CHEMBL_26" connection="MySql_Mobius" label="ChEMBL data" /> 
+	  
 	  
 	<Connection name="xxx857" dbType="Oracle"  oracleName="xxx857"  userName="xxx"            password="xxx" keyDataSource="true" />
-		<SchemaToConnection schema="CHEMBL_owner" connection="xxx857" label="Alias Example" />	
+		<SchemaToConnection schema="aliasSchemaName" aliasFor="realSchemaNameForAssociatedConnection" connection="xxx857" label="Alias Example; alias contains real schema name" />	
 	
 	<Connection name="xxx361" dbType="Oracle"  oracleName="xxx361"  userName="xxx"         password="xxx" />
 

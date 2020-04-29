@@ -30,50 +30,46 @@ namespace Mobius.UAL
 		/// <returns></returns>
 
 		public static MetaTable GetMetaTableFromDatabaseDictionary(
+			DbConnectionMx conn,
+			string schemaName,
 			string tableName)
 		{
 			int t0 = TimeOfDay.Milliseconds();
 
-			string[] sa = tableName.Split('.');
-			if (sa.Length != 2) return null;
-
-			string creator = sa[0];
-			string tname = sa[1];
-
 			MetaTable mt = new MetaTable();
 			mt.MetaBrokerType = MetaBrokerType.Generic;
-			mt.Name = tname;
-			mt.Label = MetaTable.IdToLabel(tname);
-			mt.TableMap = tableName;
+			mt.Name = tableName;
+			mt.Label = MetaTable.IdToLabel(tableName);
+			mt.TableMap = schemaName + "." + tableName;
 
-			List<DbColumnMetadata> cmdList = GetTableMetadataFromOracleDictionary(tableName);
+			List<DbColumnMetadata> cmdList = GetTableMetadataFromOracleDictionary(conn, schemaName, tableName);
 			for (int ci = 0; ci <cmdList.Count; ci++)
 			{
 				DbColumnMetadata cmd = cmdList[ci];
 
 				MetaColumn mc = new MetaColumn();
-				mc.Name = cmd.column_name;
+				mc.Name = cmd.Name;
 				mc.ColumnMap = mc.Name;
-				mc.Label = MetaTable.IdToLabel(cmd.column_name);
+				mc.Label = MetaTable.IdToLabel(cmd.Name);
 
-				if (cmd.data_type == "VARCHAR" ||
-					cmd.data_type == "VARCHAR2" ||
-					cmd.data_type == "NVARCHAR2" ||
-					cmd.data_type == "CHAR" ||
-					cmd.data_type == "CHARACTER" ||
-					cmd.data_type == "LONG") mc.DataType = MetaColumnType.String;
-				else if (cmd.data_type == "INTEGER")
+				if (cmd.Type == "VARCHAR" ||
+					cmd.Type == "VARCHAR2" ||
+					cmd.Type == "NVARCHAR2" ||
+					cmd.Type == "CHAR" ||
+					cmd.Type == "CHARACTER" ||
+					cmd.Type == "LONG") mc.DataType = MetaColumnType.String;
+				else if (cmd.Type == "INTEGER")
 					mc.DataType = MetaColumnType.Integer;
 
-				else if (cmd.data_type == "NUMBER" ||
-					cmd.data_type == "FLOAT")
+				else if (cmd.Type == "NUMBER" ||
+					cmd.Type == "FLOAT")
 				{
 					mc.DataType = MetaColumnType.Number;
 					mc.Format = ColumnFormatEnum.SigDigits; // display with 3 sig figures by default
 					mc.Decimals = 3;
 				}
 
-				else if (cmd.data_type == "DATE" || cmd.data_type.StartsWith("TIMESTAMP")) mc.DataType = MetaColumnType.Date;
+				else if (cmd.Type == "DATE" || cmd.Type.StartsWith("TIMESTAMP")) mc.DataType = MetaColumnType.Date;
 
 				else continue; // unrecognized
 
@@ -95,6 +91,8 @@ namespace Mobius.UAL
 /// <returns></returns>
 
 		public static List<DbColumnMetadata> GetTableMetadataFromOracleDictionary(
+			DbConnectionMx conn,
+			string schemaName,
 			string tableName)
 		{
 			int t0 = TimeOfDay.Milliseconds();
@@ -106,7 +104,6 @@ namespace Mobius.UAL
 				"from sys.all_tab_columns where owner=:0 " +
 				"and table_name=:1 order by column_id";
 
-			DbConnectionMx conn = DbConnectionMx.MapSqlToConnection(ref tableName); // get proper connection
 			if (conn == null)
 				throw new Exception("Connection not found for tableName: " + tableName);
 
@@ -131,12 +128,12 @@ namespace Mobius.UAL
 			while (drd.Read())
 			{
 				cmd = new DbColumnMetadata();
-				cmd.column_name = drd.GetStringByName("column_name");
-				cmd.data_type = drd.GetStringByName("data_type");
-				cmd.data_length = drd.GetIntByName("data_length");
-				cmd.data_precision = drd.GetIntByName("data_precision");
-				cmd.data_scale = drd.GetIntByName("data_scale");
-				cmd.nullable = drd.GetStringByName("nullable");
+				cmd.Name = drd.GetStringByName("column_name");
+				cmd.Type = drd.GetStringByName("data_type");
+				cmd.Length = drd.GetIntByName("data_length");
+				cmd.Precision = drd.GetIntByName("data_precision");
+				cmd.Scale = drd.GetIntByName("data_scale");
+				cmd.Nullable = drd.GetStringByName("nullable");
 
 				cmdList.Add(cmd);
 			}
@@ -174,8 +171,8 @@ namespace Mobius.UAL
 			for (int fi = 0; fi < rdr.FieldCount; fi++)
 			{
 				md = new DbColumnMetadata();
-				md.column_name = rdr.GetName(fi);
-				md.data_type = rdr.GetDataTypeName(fi); // 
+				md.Name = rdr.GetName(fi);
+				md.Type = rdr.GetDataTypeName(fi); // 
 
 				mdList.Add(md);
 			}
@@ -246,12 +243,13 @@ namespace Mobius.UAL
 
 	public class DbColumnMetadata
 	{
-		public string column_name = "";
-		public string data_type = "";
-		public int data_length = -1;
-		public int data_precision = -1; // number of significant digits
-		public int data_scale = -1; // number of places to move the decimal point
-		public string nullable = "";
+		public string Name = "";
+		public string Type = "";
+		public long Length = -1;
+		public int Precision = -1; // number of significant digits
+		public int Scale = -1; // number of places to move the decimal point
+		public string Nullable = "";
+		public string Comment = "";
 	}
 
 }

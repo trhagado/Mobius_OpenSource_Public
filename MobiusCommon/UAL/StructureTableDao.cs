@@ -427,7 +427,7 @@ namespace Mobius.UAL
 							if (Lex.IsDefined(helm))
 							{
 								svg = HelmControl.GetSvg(helm);
-								vo[1] = SvgUtil.CompressToBase64String(svg); // store compressed svg in molstructure column for now
+								vo[1] = SvgUtil.CompressSvgString(svg); // store compressed svg in molstructure column for now
 								helmStructures++;
 							}
 						}

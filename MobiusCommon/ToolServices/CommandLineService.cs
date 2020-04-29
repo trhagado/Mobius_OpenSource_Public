@@ -946,7 +946,8 @@ namespace Mobius.ToolServices
 			// Check to see if any cols need recasting of their type
 
 			string fullViewName = "DEV_MBS_OWNER." + viewName; // owner-qualified view name (must use DEV_MBS_OWNER alias)
-			List<DbColumnMetadata> cmdList = OracleMx.GetTableMetadataFromOracleDictionary(fullViewName);
+			List<DbColumnMetadata> cmdList = null;  // OracleMx.GetTableMetadataFromOracleDictionary(conn, schemaName, tableName); // fullViewName);
+			if (DebugMx.True) throw new NotImplementedException();
 
 			string castCols = "";
 			int castCount = 0;
@@ -966,7 +967,7 @@ namespace Mobius.ToolServices
 				if (mc.IsNumeric && (mc.DataType == MetaColumnType.Integer || mc.DataType == MetaColumnType.CompoundId))
 				{
 					DbColumnMetadata md = cmdList[sci];
-					if ((md.data_type == "NUMBER" || md.data_type == "FLOAT") && md.data_scale != 0)
+					if ((md.Type == "NUMBER" || md.Type == "FLOAT") && md.Scale != 0)
 					{
 						expr = "cast (" + expr + " as integer) " + expr;  //  integer same as number(22,0)--- " as number(38, 0)) " + expr;
 						castCount++;

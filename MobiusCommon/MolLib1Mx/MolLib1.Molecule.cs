@@ -192,7 +192,7 @@ namespace Mobius.MolLib1
 			String sdata;
 
 			boundingRect = new Rectangle();
-			throw new NotImplementedException();
+			return; // todo -	throw new NotImplementedException();
 		}
 
 		/// <summary>
@@ -238,7 +238,7 @@ namespace Mobius.MolLib1
 
 		public static int AdjustBondLengthToValidRange(int bondLen)
 		{
-			throw new NotImplementedException();
+			return bondLen; // todo - throw new NotImplementedException();
 		}
 
 		/// <summary>
@@ -439,7 +439,7 @@ namespace Mobius.MolLib1
 		public static void SetStandardDisplayPreferences(
 			DisplayPreferences dp)
 		{
-			throw new NotImplementedException();
+			return; // todo - throw new NotImplementedException();
 		}
 
 		/// <summary>
@@ -459,7 +459,7 @@ namespace Mobius.MolLib1
 		public static void SetNewStereoDisplayPreferences(
 			DisplayPreferences dp)
 		{
-			throw new NotImplementedException();
+			return; // todo - throw new NotImplementedException();
 		}
 
 		/// <summary>

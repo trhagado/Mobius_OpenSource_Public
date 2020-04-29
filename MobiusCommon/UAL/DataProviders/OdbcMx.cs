@@ -20,28 +20,23 @@ namespace Mobius.UAL
 		/// <returns></returns>
 
 		public static MetaTable GetMetaTableFromDatabaseDictionary(
+			DbConnectionMx conn,
+			string schemaName,
 			string tableName)
 		{
-			string data_type = null; // delete
-
 			int t0 = TimeOfDay.Milliseconds();
-
-			string[] sa = tableName.Split('.');
-			if (sa.Length != 2) return null;
-
-			string creator = sa[0];
-			string tname = sa[1];
 
 			MetaTable mt = new MetaTable();
 			mt.MetaBrokerType = MetaBrokerType.Generic;
-			mt.Name = tname;
-			mt.Label = MetaTable.IdToLabel(tname);
+			mt.Name = tableName;
+			mt.Label = MetaTable.IdToLabel(tableName);
 			mt.TableMap = tableName;
 
 			string sql = "select * from " + tableName;
 
 			DbCommandMx drd = new DbCommandMx();
-			drd.Prepare(sql);
+			drd.MxConn = conn;
+			drd.PrepareUsingDefinedConnection(sql);
 			drd.ExecuteReader();
 			DataTable st = drd.Rdr.GetSchemaTable();
 

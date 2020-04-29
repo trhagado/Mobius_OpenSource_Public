@@ -144,10 +144,12 @@ namespace Mobius.MolLib1
 		{
 			if (Lex.IsUndefined(molfile)) return "";
 
-			string chimeString = StructureConverter.MolfileStringToChimeString(molfile);
+			string chimeString = GZip.CompressToString(molfile); // GZipping now rather than using MDL algorithm
 			if (chimeString == null) chimeString = "";
 			return chimeString;
 		}
+
+
 
 		/// <summary>
 		/// MolfileStringToSmilesString
@@ -208,11 +210,14 @@ namespace Mobius.MolLib1
 
 		public static string ChimeStringToMolfileString(string chimeString)
 		{
+			string molfile;
+
 			if (Lex.IsUndefined(chimeString)) return "";
 
-			string molfile = StructureConverter.ChimeStringToMolfileString(chimeString);
-			if (molfile == null) molfile = "";
-			return molfile;
+			if (GZip.TryDecompressFromString(chimeString, out molfile)) // GZipping now rather than using MDL algorithm
+				return molfile;
+
+			else return ""; // failed
 		}
 
 		/// <summary>

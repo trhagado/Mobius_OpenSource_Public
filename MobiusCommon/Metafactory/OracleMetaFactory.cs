@@ -34,7 +34,7 @@ namespace Mobius.MetaFactoryNamespace
 			if (sa.Length < 2) return null;
 
 			name2 = sa[0] + "." + sa[1];
-			mt = GetMetaTableFromDatabaseDictionary(name2);
+			mt = MetaTableFactory.GetMetaTableFromDatabaseDictionary(name2);
 			if (mt == null || mt.MetaColumns.Count == 0) return null;
 			mt.Name = mtName; // assign fully qualified name
 
@@ -51,18 +51,6 @@ namespace Mobius.MetaFactoryNamespace
 			}
 
 			return mt;
-		}
-
-/// <summary>
-/// Get a metatable from Oracle catalog
-/// </summary>
-/// <param name="mtName">schema.table</param>
-/// <returns></returns>
-
-		public static MetaTable GetMetaTableFromDatabaseDictionary(
-			string mtName)
-		{
-			return OracleMx.GetMetaTableFromDatabaseDictionary(mtName);
 		}
 
 		/// <summary>

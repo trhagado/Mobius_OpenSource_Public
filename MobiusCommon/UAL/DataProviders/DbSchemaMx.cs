@@ -20,6 +20,7 @@ namespace Mobius.UAL
     public string Label = ""; // label associated with schema
     public string DataSourceName = ""; // datasource name
 
+
     /// <summary>
     /// Get the DataSourceMx associated with a schema name
     /// </summary>
@@ -28,12 +29,9 @@ namespace Mobius.UAL
 
     public static DataSourceMx GetDataSourceForSchemaName(string schemaName)
     {
-      if (Lex.IsUndefined(schemaName)) return null; // schema not defined
+      DbSchemaMx schema = GetSchemaInfoFromName(schemaName);
 
-      if (!DataSourceMx.Schemas.ContainsKey(schemaName)) return null; // unknown schema
-
-      string dsName = DataSourceMx.Schemas[schemaName].DataSourceName;
-
+      string dsName = schema?.DataSourceName;
       if (Lex.IsUndefined(dsName)) return null;
 
       if (!DataSourceMx.DataSources.ContainsKey(dsName)) return null; // unknown datasource
@@ -41,7 +39,23 @@ namespace Mobius.UAL
       DataSourceMx ds = DataSourceMx.DataSources[dsName];
       return ds;
     }
-  }
 
+    /// <summary>
+    /// Get schema information from schema name
+    /// </summary>
+    /// <param name="schemaName"></param>
+    /// <returns></returns>
+
+    public static DbSchemaMx GetSchemaInfoFromName(string schemaName)
+    {
+      if (Lex.IsUndefined(schemaName)) return null; // schema not defined
+
+      if (DataSourceMx.Schemas.ContainsKey(schemaName))
+        return DataSourceMx.Schemas[schemaName];
+
+      else return null; // unknown schema
+    }
+
+  }
 }
 

@@ -199,7 +199,7 @@ namespace Mobius.Data
 			{
 				string txt = svg;
 				if (Lex.Contains(svg, "<svg")) // compress if necessary before storage
-					txt = SvgUtil.CompressToBase64String(svg);
+					txt = SvgUtil.CompressSvgString(svg);
 
 				SetAltForm("SVG", txt);
 			}

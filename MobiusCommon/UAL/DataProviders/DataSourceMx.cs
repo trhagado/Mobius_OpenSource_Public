@@ -58,6 +58,7 @@ namespace Mobius.UAL
 			DbCommandMx.DbFetchSizeMax = ServicesIniFile.ReadInt("DbFetchSizeMax", DbCommandMx.DbFetchSizeMax);
 
 			DataSources = new Dictionary<string, DataSourceMx>(StringComparer.OrdinalIgnoreCase);
+			Schemas = new Dictionary<string, DbSchemaMx>(StringComparer.OrdinalIgnoreCase);
 
 			string dsFileName = ServicesDirs.MetaDataDir + @"\" + "DataSources.xml";
 
@@ -192,29 +193,6 @@ namespace Mobius.UAL
 
 			return DataSources.Count;
 		}
-
-		/// <summary>
-		/// Get a metatable from a database catalog
-		/// </summary>
-		/// <param name="mtName"></param>
-		/// <returns></returns>
-
-		public static MetaTable GetMetaTableFromDatabaseDictionary(
-			string mtName)
-		{
-			if (DbConnectionMx.IsSqlFromMySqlSource(mtName))
-				return MySqlMx.GetMetaTableFromDatabaseDictionary(mtName);
-
-			else if (DbConnectionMx.IsSqlFromOracleSource(mtName))
-				return OracleMx.GetMetaTableFromDatabaseDictionary(mtName);
-
-			else if (DbConnectionMx.IsSqlFromOdbcSource(mtName))
-				return OdbcMx.GetMetaTableFromDatabaseDictionary(mtName);
-
-			else throw new Exception("Database dictionary not supported for: " + mtName);
-		}
-
-
 	} //	DataSourceMx
 
 	/// <summary>

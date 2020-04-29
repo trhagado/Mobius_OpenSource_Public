@@ -7,33 +7,34 @@
 
 	
 	<!-- **************************************************** -->
-	<!--  Chembl   -->
+	<!-- Chembl Structures -->
 	<!-- **************************************************** -->
-	<metatable tablename="chembl_structures" l="ChEMBL Structures" map="
+	<metatable tablename="chembl_structures" l="ChEMBL Structures" MetaBroker="Generic" map="
 	select 
 		md.chembl_id,  
-		css.ctab,
-		cp.full_mwt molweight,
+		cs.molfile,
 		cp.full_molformula molformula,
-		cs.canonical_smiles molsmiles
+		cp.full_mwt molweight,
+		cs.molregno,
+		cs.canonical_smiles molsmiles,
+		cs.standard_inchi,
+		cs.standard_inchi_key
 	from 
-	 chembl_owner.compound_struct_symyx css,
-	 chembl_owner.molecule_dictionary md, 
-	 chembl_owner.compound_structures cs, 
-	 chembl_owner.compound_properties cp
-	where 
-	 cs.molregno = md.molregno and
-	 css.molregno = md.molregno and
-	 cp.molregno (+) = md.molregno">
-	  <c name="chembl_ID" l="Chembl Id" type="compoundId" />
-		<c name="molstructure" l="Structure" type="structure" width="35" />
+	 chembl_owner.molecule_dictionary md
+     right join chembl_owner.compound_structures cs on cs.molregno = md.molregno
+	 right join chembl_owner.compound_properties cp on cp.molregno = md.molregno">
+		<c name="chembl_ID" l="Chembl Id" type="compoundId" Key="true" width="12"/>
+		<c Name="molregno" Label="Molregno" DataType="Integer"  Description="Internal Primary Key for the compound structure and foreign key to molecule_dictionary table" DisplayLevel="Hidden" DisplayWidth="12" ColumnMap="molregno" />
+		<c name="molstructure" l="Structure" type="structure" width="35" ColumnMap="molfile"/>
 		<c name="moldatabases" l="Database" type="dbLink" display="selectable" dictionary="structure_databases" dictionaryMultipleSelect="true" />
 		<c name="molformula" l="Molecular Formula" type="string" display="selectable" width="20" />
-		<c name="molweight" l="Mol. Wt." type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
-		<c name="molsmiles" l="Smiles" type="string" width="25" DisplayLevel="Selectable"/>
+		<c name="molweight" l="Mol. Wt." type="float" displayFormat="decimal" width="10" decimals="2" display="selectable" />
+	<!--	<c Name="molfile" Label="Molfile" DataType="String" Description="MDL Connection table representation of compound" DisplayLevel="Selectable" DisplayWidth="12" ColumnMap="molfile" /> -->
+		<c Name="standard_inchi" Label="Standard Inchi" DataType="String" Description="IUPAC standard InChI for the compound" DisplayLevel="hidden" DisplayWidth="12" ColumnMap="standard_inchi" />
+		<c Name="standard_inchi_key" Label="Standard Inchi Key" DataType="String" Description="IUPAC standard InChI key for the compound" DisplayLevel="hidden" DisplayWidth="12" ColumnMap="standard_inchi_key" />
+		<c Name="molsmiles" Label="Smiles" DataType="String" Description="Canonical smiles, generated using pipeline pilot" DisplayLevel="Selected" DisplayWidth="12" ColumnMap="molsmiles" />
 		<c name="molsimilarity" l="Similarity Score" type="float" display="selectable" searchable="false" displayFormat="decimal" width="8" decimals="2" map="0" dataTransform="GetMolsim" />
 	</metatable>
-
 
 	<!-- **************************************************** -->
 	<!--  Chembl cmpd properties -->
@@ -42,8 +43,8 @@
 	<metatable tablename="chembl_properties" l="ChEMBL Properties" parent="chembl_structures" map="
 	SELECT md.chembl_id,  cp.*
 	from 
-	 chembl_26.compound_properties cp 
-	 left join chembl_26.molecule_dictionary md
+	 chembl_owner.compound_properties cp 
+	 left join chembl_owner.molecule_dictionary md
 	 on cp.molregno = md.molregno">
 		<c name="chembl_ID" l="Chembl Id" type="compoundId" />
 		<c name="full_mwt" l="Mol. Wt. (full)" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
@@ -74,30 +75,43 @@
 	<!-- **************************************************** -->
 	<!--  chembl_mol_dictionary -->
 	<!-- **************************************************** -->
-	<metatable tablename="chembl_mol_dictionary" l="ChEMBL Molecule Dictionary" parent="chembl_structures" map="
-	select distinct
-		md.*
-	from 
-	 chembl_owner.molecule_dictionary md
-	where 
-	  md.molregno is not null">
-	  <c name="chembl_ID" l="Chembl Id" type="compoundId" />
-		<c name="pref_name" l="preferred name" type="string" width="6" DisplayLevel="selected"/>
-		<c name="max_phase" l="Max Phase" type="integer" displayFormat="decimal" width="6"  display="selected" />
-		<c name="therapeutic_flag" l="Therapeutic flag" type="integer" displayFormat="decimal" width="6"  display="selected" />
-		<c name="dosed_ingredient" l="Dosed Ingredient" type="integer" displayFormat="decimal" width="6"  display="selected" />
-		<c name="structure_type" l="structure type" type="string" width="6" DisplayLevel="selected"/>
-		<c name="chebi_id" l="Chebi Id" type="integer" displayFormat="decimal" width="6"  display="hidden" />
-		<c name="Chebi_Par_ID" l="Chebi par id" type="integer" displayFormat="decimal" width="6"  display="selected" />
-		<c name="molecule_type" l="Molecule Type" type="string" width="6" DisplayLevel="selected"/>
-		<c name="first_approval" l="First Approval" type="integer" displayFormat="decimal" width="6"  display="selected" />
-		<c name="oral" l="Oral" type="integer" displayFormat="decimal" width="6"  display="selected" />
-		<c name="parenteral" l="Parenteral" type="integer" displayFormat="decimal" width="6"  display="selected" />
-		<c name="topical" l="Topical" type="integer" displayFormat="decimal" width="6"  display="selected" />
-		<c name="black_box_warning" l="black blox warning" type="integer" displayFormat="decimal" width="6"  display="selected" />
-		<c name="natural_Product" l="Natural Product" type="integer" displayFormat="decimal" width="6"  display="selected" />
-		<c name="prodrug" l="prodrug" type="integer" displayFormat="decimal" width="6"  display="selected" />
-	</metatable>
+	
+	<MetaTable Name="chembl_mol_dictionary" Label="ChEMBL Molecule Dictionary" MetaBroker="Generic" Parent="MOLECULE_DICTIONARY" TableMap="
+	select md.*
+	from chembl_owner.molecule_dictionary md
+	where md.molregno is not null">
+  <c name="chembl_ID" l="Chembl Id" type="compoundId" Key="true" DisplayWidth="12"/>
+  <c Name="molregno" Label="Molregno" DataType="Integer"  DisplayLevel="Selected" DisplayWidth="12" ColumnMap="molregno" />
+  <c Name="pref_name" Label="Pref Name" DataType="String" DisplayLevel="Selected" DisplayWidth="12" ColumnMap="pref_name" />
+  <c Name="max_phase" Label="Max Phase" DataType="Integer" DisplayLevel="Selected" DisplayWidth="12" ColumnMap="max_phase" />
+  <c Name="therapeutic_flag" Label="Therapeutic Flag" DataType="Integer" DisplayLevel="Selected" DisplayWidth="12" ColumnMap="therapeutic_flag" />
+  <c Name="dosed_ingredient" Label="Dosed Ingredient" DataType="Integer" DisplayLevel="Selected" DisplayWidth="12" ColumnMap="dosed_ingredient" />
+  <c Name="structure_type" Label="Structure Type" DataType="String" DisplayLevel="Selected" DisplayWidth="12" ColumnMap="structure_type" />
+  <c Name="chebi_par_id" Label="Chebi Par Id" DataType="Integer" DisplayLevel="Selected" DisplayWidth="12" ColumnMap="chebi_par_id" />
+  <c Name="molecule_type" Label="Molecule Type" DataType="String" DisplayLevel="Selected" DisplayWidth="12" ColumnMap="molecule_type" />
+  <c Name="first_approval" Label="First Approval" DataType="Integer" DisplayLevel="Selected" DisplayWidth="12" ColumnMap="first_approval" />
+  <c Name="oral" Label="Oral" DataType="Integer" DisplayLevel="Selected" DisplayWidth="12" ColumnMap="oral" />
+  <c Name="parenteral" Label="Parenteral" DataType="Integer" DisplayLevel="Selected" DisplayWidth="12" ColumnMap="parenteral" />
+  <c Name="topical" Label="Topical" DataType="Integer" DisplayLevel="Selected" DisplayWidth="12" ColumnMap="topical" />
+  <c Name="black_box_warning" Label="Black Box Warning" DataType="Integer" DisplayLevel="Selected" DisplayWidth="12" ColumnMap="black_box_warning" />
+  <c Name="natural_product" Label="Natural Product" DataType="Integer" DisplayLevel="Selected" DisplayWidth="12" ColumnMap="natural_product" />
+  <c Name="first_in_class" Label="First In Class" DataType="Integer" DisplayLevel="Selected" DisplayWidth="12" ColumnMap="first_in_class" />
+  <c Name="prodrug" Label="Prodrug" DataType="Integer" DisplayLevel="selectable" DisplayWidth="12" ColumnMap="prodrug" />
+  <c Name="chirality" Label="Chirality" DataType="Integer" DisplayLevel="selectable" DisplayWidth="12" ColumnMap="chirality" />
+  <c Name="inorganic_flag" Label="Inorganic Flag" DataType="Integer" DisplayLevel="selectable" DisplayWidth="12" ColumnMap="inorganic_flag" />
+  <c Name="usan_year" Label="Usan Year" DataType="Integer" DisplayLevel="selectable" DisplayWidth="12" ColumnMap="usan_year" />
+  <c Name="availability_type" Label="Availability Type" DataType="Integer" DisplayLevel="selectable" DisplayWidth="12" ColumnMap="availability_type" />
+  <c Name="usan_stem" Label="Usan Stem" DataType="String" DisplayLevel="selectable" DisplayWidth="12" ColumnMap="usan_stem" />
+  <c Name="polymer_flag" Label="Polymer Flag" DataType="Integer" DisplayLevel="selectable" DisplayWidth="12" ColumnMap="polymer_flag" />
+  <c Name="usan_substem" Label="Usan Substem" DataType="String" DisplayLevel="selectable" DisplayWidth="12" ColumnMap="usan_substem" />
+  <c Name="usan_stem_definition" Label="Usan Stem Definition" DataType="String" DisplayLevel="selectable" DisplayWidth="12" ColumnMap="usan_stem_definition" />
+  <c Name="indication_class" Label="Indication Class" DataType="String" DisplayLevel="selectable" DisplayWidth="12" ColumnMap="indication_class" />
+  <c Name="withdrawn_flag" Label="Withdrawn Flag" DataType="Integer" DisplayLevel="selectable" DisplayWidth="12" ColumnMap="withdrawn_flag" />
+  <c Name="withdrawn_year" Label="Withdrawn Year" DataType="Integer" DisplayLevel="selectable" DisplayWidth="12" ColumnMap="withdrawn_year" />
+  <c Name="withdrawn_country" Label="Withdrawn Country" DataType="String" DisplayLevel="selectable" DisplayWidth="12" ColumnMap="withdrawn_country" />
+  <c Name="withdrawn_reason" Label="Withdrawn Reason" DataType="String" DisplayLevel="selectable" DisplayWidth="12" ColumnMap="withdrawn_reason" />
+  <c Name="withdrawn_class" Label="Withdrawn Class" DataType="String" DisplayLevel="selectable" DisplayWidth="12" ColumnMap="withdrawn_class" />
+</MetaTable>
 
 	
   <!-- **************************************************** -->

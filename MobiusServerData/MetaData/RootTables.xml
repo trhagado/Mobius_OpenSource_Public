@@ -14,5 +14,5 @@
 
 <RootTables>
 	<RootTable Label="Corp DB" DbId = "0" MetaTable="corp_db" Prefix="" PrefixIsStoredInDb="false" InternalFormat="8:00000000" SmallWorldDbName="llyg.anon" EcfpSearchable="false" />
-	<RootTable Label="ChEMBL" DbId = "1" MetaTable="chembl_structures" Prefix="CHEMBL" PrefixIsStored="true" IsStringType="true" InternalFormat="" ExternalFormat="" CidUrl="https://www.ebi.ac.uk/chembl/compound/inspect/[CID]"/>
+	<RootTable Label="ChEMBL" DbId = "1" MetaTable="chembl_structures" Prefix="CHEMBL" PrefixIsStored="true" IsStringType="true" InternalFormat="" ExternalFormat="" CartridgeSearchable="false" CidUrl="https://www.ebi.ac.uk/chembl/compound/inspect/[CID]"/>
 </RootTables>

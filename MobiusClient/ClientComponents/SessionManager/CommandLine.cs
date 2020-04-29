@@ -1788,7 +1788,7 @@ namespace Mobius.ClientComponents
 			//DbConnection.AssociateSchema
 			
 
-			MetaTable mt = OracleMetaFactory.GetMetaTableFromDatabaseDictionary(tableName);
+			MetaTable mt = MetaTableFactory.GetMetaTableFromDatabaseDictionary(tableName);
 			if (mt == null) return "Failed";
 
 			mt.Parent = mt; // point to self for now

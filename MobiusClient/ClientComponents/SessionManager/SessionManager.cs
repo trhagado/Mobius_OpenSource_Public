@@ -1251,9 +1251,11 @@ namespace Mobius.ClientComponents
 		{
 			get
 			{
-				if (Form.ActiveForm != null) return Form.ActiveForm; // if we have an active form use it
-				else if (Instance != null) return Instance.ShellForm; // use shell form if it exists
-				else return null; // no luck
+				if (Form.ActiveForm is Progress) return Instance?.ShellForm;
+				else if (Form.ActiveForm.GetType() == typeof(Progress)) return Instance?.ShellForm;
+
+				if (Form.ActiveForm != null) return Form.ActiveForm;
+				else return null;
 			}
 		}
 

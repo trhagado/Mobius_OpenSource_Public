@@ -77,19 +77,81 @@ namespace Mobius.ComOps
 
 				return Encoding.UTF8.GetString(mso.ToArray());
 			}
+
 		}
 
-        //public static void CopyTo(Stream src, Stream dest)
-        //{
-        //    byte[] bytes = new byte[4096];
+		/// <summary>
+		/// Compress a string to a GZipped Base64String
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
 
-        //    int cnt;
+		public static string CompressToString(string s)
+		{
+			byte[] bytes = GZip.Compress(s);
+			string compressed = Convert.ToBase64String(bytes);
+			return compressed;
+		}
 
-        //    while ((cnt = src.Read(bytes, 0, bytes.Length)) != 0)
-        //    {
-        //        dest.Write(bytes, 0, cnt);
-        //    }
-        //}
+		/// <summary>
+		/// Try to decompress a string from a Gzip compressed Base64 string
+		/// </summary>
+		/// <param name="s"></param>
+		/// <param name="decompressed"></param>
+		/// <returns></returns>
+
+		public static bool TryDecompressFromString(
+		string s,
+		out string decompressed)
+		{
+			decompressed = null;
+
+			byte[] bytes;
+
+			if (!TryDecompressFromString(s, out bytes)) return false;
+
+			if (!GZip.TryDecompress(bytes, out decompressed)) return false;
+
+			return true;
+		}
+
+		/// <summary>
+		/// This methods tries to convert a string from Base64 form into a byte array
+		/// </summary>
+		/// <param name="s"></param>
+		/// <param name="bytes"></param>
+		/// <returns></returns>
+
+		public static bool TryDecompressFromString(
+			string s,
+			out byte[] bytes)
+		{
+			bytes = null;
+
+			try
+			{
+				bytes = Convert.FromBase64String(s);
+				return true;
+			}
+
+			catch (Exception ex)
+			{
+				return false;
+			}
+		}
+
+
+		//public static void CopyTo(Stream src, Stream dest)
+		//{
+		//    byte[] bytes = new byte[4096];
+
+		//    int cnt;
+
+		//    while ((cnt = src.Read(bytes, 0, bytes.Length)) != 0)
+		//    {
+		//        dest.Write(bytes, 0, cnt);
+		//    }
+		//}
 
 		public static void Test()
 		{

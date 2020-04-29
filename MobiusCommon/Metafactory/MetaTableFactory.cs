@@ -705,6 +705,47 @@ namespace Mobius.MetaFactoryNamespace
 			// todo
 			return labels;
 		}
+
+		/// <summary>
+		/// Get a metatable from a database catalog
+		/// </summary>
+		/// <param name="schemaDotTableName"></param>
+		/// <returns></returns>
+
+		public static MetaTable GetMetaTableFromDatabaseDictionary(
+			string schemaDotTableName)
+		{
+			string[] sa = schemaDotTableName.Split('.');
+			if (sa.Length != 2) return null;
+
+			string schemaName = sa[0];
+			string tableName = sa[1];
+
+			DbSchemaMx schema = DbSchemaMx.GetSchemaInfoFromName(schemaName);
+			if (schema == null) return null; // unknown schema
+
+			if (Lex.IsDefined(schema.AliasFor))
+				schemaName = schema.AliasFor; 
+
+			string dsName = schema.DataSourceName;
+
+			DataSourceMx dataSource = DbConnectionMx.GetRootDataSource(schemaDotTableName);
+			if (dataSource == null) return null;
+
+			DbConnectionMx conn = DbConnectionMx.GetConnection(dataSource.DataSourceName);
+
+			if (dataSource.DbType == DatabaseType.MySql)
+				return MySqlMx.GetMetaTableFromDatabaseDictionary(conn, schemaName, tableName);
+
+			else if (dataSource.DbType == DatabaseType.Oracle)
+				return OracleMx.GetMetaTableFromDatabaseDictionary(conn, schemaName, tableName);
+
+			else if (dataSource.DbType == DatabaseType.ODBC)
+				return OdbcMx.GetMetaTableFromDatabaseDictionary(conn, schemaName, tableName);
+
+			throw new Exception("Database dictionary not supported for: " + schemaDotTableName);
+		}
+
 	}
 
 	/// <summary>
