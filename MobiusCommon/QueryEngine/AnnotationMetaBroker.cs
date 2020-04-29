@@ -1160,7 +1160,7 @@ namespace Mobius.QueryEngineLibrary
 		/// <param name="mt"></param>
 		/// <returns></returns>
 
-		public override DataSchemaMx CheckDataSourceAccessibility(
+		public override DbSchemaMx CheckDataSourceAccessibility(
 		MetaTable mt)
 		{
 			return GenericMetaBroker.CheckDataSourceAccessibility("mbs_owner");

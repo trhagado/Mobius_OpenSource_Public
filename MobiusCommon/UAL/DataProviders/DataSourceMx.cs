@@ -17,7 +17,7 @@ namespace Mobius.UAL
 	public class DataSourceMx
 	{
 		public static Dictionary<string, DataSourceMx> DataSources = null; // data source information
-		public static Dictionary<string, DataSchemaMx> Schemas = null; // map of schema names to their corresponding schema
+		public static Dictionary<string, DbSchemaMx> Schemas = null; // map of schema names to their corresponding schema
 
 		public DatabaseType DbType = DatabaseType.Undefined; // e.g. Oracle, MySQL...
 		public string DataSourceName; // data source/connection name
@@ -155,7 +155,7 @@ namespace Mobius.UAL
 				Lex.Eq(node.Name, "SchemaToConnection"))
 				{
 
-					DataSchemaMx schema = new DataSchemaMx();
+					DbSchemaMx schema = new DbSchemaMx();
 					atts = node.Attributes;
 					for (int i = 0; i < atts.Count; i++)
 					{

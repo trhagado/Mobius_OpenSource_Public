@@ -779,7 +779,7 @@ namespace Mobius.QueryEngineLibrary
 				{
 					if (imb == null) throw new Exception("No data available (MetaBroker not defined)");
 					DateTime t1 = DateTime.Now;
-					DataSchemaMx schema = imb.CheckDataSourceAccessibility(mt);
+					DbSchemaMx schema = imb.CheckDataSourceAccessibility(mt);
 					tDelta = (int)TimeOfDay.Delta(ref t1);
 					if (LogBasics) DebugLog.Message("Table: " + mt.Name + ", time: " + tDelta);
 

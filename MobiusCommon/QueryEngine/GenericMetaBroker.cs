@@ -125,11 +125,11 @@ namespace Mobius.QueryEngineLibrary
 			QueryTable qt)
 		{
 			DataSourceMx rootSource;
-			DataSchemaMx rootSchema;
+			DbSchemaMx rootSchema;
 
 			MetaTable mt = qt.MetaTable;
 
-			Dictionary<string, Dictionary<string, DataSchemaMx>> sourceDict =
+			Dictionary<string, Dictionary<string, DbSchemaMx>> sourceDict =
 				DbConnectionMx.GetDataSources(mt.TableMap, out rootSource, out rootSchema);
 
 			if (rootSchema == null) return "";
@@ -1859,16 +1859,16 @@ public virtual bool ShouldPresearchCheckAndTransform(
 		/// <param name="mt"></param>
 		/// <returns></returns>
 
-		public virtual DataSchemaMx CheckDataSourceAccessibility(
+		public virtual DbSchemaMx CheckDataSourceAccessibility(
 			MetaTable mt)
 		{
 			DataSourceMx firstSource;
-			DataSchemaMx firstSchema;
+			DbSchemaMx firstSchema;
 			DbConnectionMx conn = null;
 
 			if (mt.TableMap == null || mt.TableMap == "") return null;
 
-			Dictionary<string, Dictionary<string, DataSchemaMx>> connDict =
+			Dictionary<string, Dictionary<string, DbSchemaMx>> connDict =
 				DbConnectionMx.GetDataSources(mt.TableMap, out firstSource, out firstSchema); // get sources listed in map
 
 			if (connDict == null || connDict.Count == 0) return null; // no sources found
@@ -1883,7 +1883,7 @@ public virtual bool ShouldPresearchCheckAndTransform(
 
 				catch (MobiusConnectionOpenException ex)
 				{
-					foreach (DataSchemaMx schema in connDict[connName].Values) // return first schema for connection
+					foreach (DbSchemaMx schema in connDict[connName].Values) // return first schema for connection
 						return schema;
 				}
 
@@ -1900,7 +1900,7 @@ public virtual bool ShouldPresearchCheckAndTransform(
 /// <param name="schemaName"></param>
 /// <returns>Schema object that failed or null if ok</returns>
 
-		public static DataSchemaMx CheckDataSourceAccessibility(
+		public static DbSchemaMx CheckDataSourceAccessibility(
 			string schemaName)
 		{
 			schemaName = schemaName.ToUpper(); // stored as upper case

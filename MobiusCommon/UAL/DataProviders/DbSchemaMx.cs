@@ -13,7 +13,7 @@ namespace Mobius.UAL
   /// Database Schema and associated data source
   /// </summary>
 
-  public class DataSchemaMx
+  public class DbSchemaMx
   {
     public string Name = ""; // name of database schema
     public string AliasFor = ""; // really an alias for this schema

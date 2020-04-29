@@ -83,7 +83,7 @@ namespace Mobius.UAL
 		}
 		string _lastSql = null;
 
-		public DataSchemaMx LastRootSchema = null; // last root schema that was used when getting this connection
+		public DbSchemaMx LastRootSchema = null; // last root schema that was used when getting this connection
 
 		public Dictionary<string, SessionConnection> SessionConnections = new Dictionary<string, SessionConnection>(StringComparer.OrdinalIgnoreCase); // dict of all connections for session indexed by connection name
 
@@ -292,7 +292,7 @@ namespace Mobius.UAL
 				{
 					errorCount++;
 					txt += errorCount.ToString() + ". " + source.DataSourceName + " - " + ex.Message + "\n";
-					foreach (DataSchemaMx schema in DataSourceMx.Schemas.Values)
+					foreach (DbSchemaMx schema in DataSourceMx.Schemas.Values)
 					{
 						if (Lex.Eq(schema.DataSourceName, source.DataSourceName))
 							txt += "    - " + schema.Label + " (" + schema.Name + ")\n";
@@ -534,10 +534,10 @@ namespace Mobius.UAL
 		{
 			DataSourceMx rootSource;
 			DbConnectionMx mxConn;
-			DataSchemaMx rootSchema;
+			DbSchemaMx rootSchema;
 			string rootSourceName = "", sourceName = "", placeHolder;
 
-			Dictionary<string, Dictionary<string, DataSchemaMx>> connDict = GetDataSources(sql, out rootSource, out rootSchema);
+			Dictionary<string, Dictionary<string, DbSchemaMx>> connDict = GetDataSources(sql, out rootSource, out rootSchema);
 			if (rootSource != null) rootSourceName = rootSource.DataSourceName;
 
 			if (NoDatabaseAccessIsAvailable)
@@ -581,7 +581,7 @@ namespace Mobius.UAL
 				string target = schemaName + ".";
 				if (!Lex.Contains(sql, target)) continue;
 
-				DataSchemaMx schema = DataSourceMx.Schemas[schemaName];
+				DbSchemaMx schema = DataSourceMx.Schemas[schemaName];
 				sourceName = schema.DataSourceName;
 				if (sourceName != rootSourceName) // remap if not root source
 				{
@@ -618,12 +618,12 @@ namespace Mobius.UAL
 		/// <returns></returns>
 
 		static List<string> GetSchemaNamesOrderedByLength(
-			Dictionary<string, Dictionary<string, DataSchemaMx>> connDict)
+			Dictionary<string, Dictionary<string, DbSchemaMx>> connDict)
 		{
 			HashSet<string> sHash = new HashSet<string>();
-			foreach (Dictionary<string, DataSchemaMx> sd in connDict.Values)
+			foreach (Dictionary<string, DbSchemaMx> sd in connDict.Values)
 			{
-				foreach (DataSchemaMx s in sd.Values)
+				foreach (DbSchemaMx s in sd.Values)
 				{
 					if (!sHash.Contains(s.Name)) sHash.Add(s.Name);
 				}
@@ -656,9 +656,9 @@ namespace Mobius.UAL
 			string sql)
 		{
 			DataSourceMx rootSource;
-			DataSchemaMx rootSchema;
+			DbSchemaMx rootSchema;
 
-			Dictionary<string, Dictionary<string, DataSchemaMx>> connDict = GetDataSources(sql, out rootSource, out rootSchema);
+			Dictionary<string, Dictionary<string, DbSchemaMx>> connDict = GetDataSources(sql, out rootSource, out rootSchema);
 			return rootSource;
 		}
 
@@ -669,15 +669,15 @@ namespace Mobius.UAL
 		/// <param name="sql"></param>
 		/// <returns>Dictionary indexed by source name with list of schemas associated with each source</returns>
 
-		public static Dictionary<string, Dictionary<string, DataSchemaMx>> GetDataSources(
+		public static Dictionary<string, Dictionary<string, DbSchemaMx>> GetDataSources(
 			string sql,
 			out DataSourceMx rootSource,
-			out DataSchemaMx rootSchema)
+			out DbSchemaMx rootSchema)
 		{
 			//if (Lex.Contains(sql, "_moltable")) sql = sql; // debug
 
-			Dictionary<string, Dictionary<string, DataSchemaMx>> sourceDict =
-				new Dictionary<string, Dictionary<string, DataSchemaMx>>(StringComparer.OrdinalIgnoreCase);
+			Dictionary<string, Dictionary<string, DbSchemaMx>> sourceDict =
+				new Dictionary<string, Dictionary<string, DbSchemaMx>>(StringComparer.OrdinalIgnoreCase);
 
 			rootSource = null;
 			rootSchema = null;
@@ -699,7 +699,7 @@ namespace Mobius.UAL
 				if (!DataSourceMx.Schemas.ContainsKey(tok)) continue; // schema name?
 
 				string schemaName = tok;
-				DataSchemaMx schema = DataSourceMx.Schemas[schemaName];
+				DbSchemaMx schema = DataSourceMx.Schemas[schemaName];
 				int schemaNamePos = ptok.Position;
 
 				ptok = lex.GetPositionedToken();
@@ -709,7 +709,7 @@ namespace Mobius.UAL
 				DataSourceMx source = DataSourceMx.DataSources[sourceName];
 
 				if (!sourceDict.ContainsKey(sourceName)) // first entry for source?
-					sourceDict[sourceName] = new Dictionary<string, DataSchemaMx>(StringComparer.OrdinalIgnoreCase); // create schema dict
+					sourceDict[sourceName] = new Dictionary<string, DbSchemaMx>(StringComparer.OrdinalIgnoreCase); // create schema dict
 
 				sourceDict[sourceName][schemaName] = schema; // include the schema
 
@@ -828,7 +828,7 @@ namespace Mobius.UAL
 				MobiusConnectionOpenException ex,
 				string schemaName)
 		{
-			DataSchemaMx schema = DataSourceMx.Schemas[schemaName.ToUpper()];
+			DbSchemaMx schema = DataSourceMx.Schemas[schemaName.ToUpper()];
 			string sourceLabel = schema.Label;
 			if (sourceLabel == null || sourceLabel == "") sourceLabel = schema.DataSourceName;
 			else sourceLabel += " (" + schema.DataSourceName + ")";
@@ -847,7 +847,7 @@ namespace Mobius.UAL
 		public static string GetSpecificConnectionOpenMessage(
 			string schemaName)
 		{
-			DataSchemaMx schema = DataSourceMx.Schemas[schemaName.ToUpper()];
+			DbSchemaMx schema = DataSourceMx.Schemas[schemaName.ToUpper()];
 			string sourceLabel = schema.Label;
 			if (sourceLabel == null || sourceLabel == "") sourceLabel = schema.DataSourceName;
 			else sourceLabel += " (" + schema.DataSourceName + ")";
@@ -1068,7 +1068,7 @@ namespace Mobius.UAL
 			if (!DataSourceMx.DataSources.ContainsKey(dsName))
 				return "Data source " + dsName + " is not defined";
 
-			DataSchemaMx s = new DataSchemaMx();
+			DbSchemaMx s = new DbSchemaMx();
 			s.Name = schemaName;
 			s.DataSourceName = dsName;
 			DataSourceMx.Schemas[schemaName] = s;

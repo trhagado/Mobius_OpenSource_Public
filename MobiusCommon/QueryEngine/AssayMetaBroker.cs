@@ -2584,7 +2584,7 @@ where aprvl_sts_cd = 'Y' and dtld_rslt_id = :0";
 		/// <param name="mt"></param>
 		/// <returns></returns>
 
-		public override DataSchemaMx CheckDataSourceAccessibility(
+		public override DbSchemaMx CheckDataSourceAccessibility(
 		MetaTable mt)
 		{
 			return GenericMetaBroker.CheckDataSourceAccessibility("assay_owner");

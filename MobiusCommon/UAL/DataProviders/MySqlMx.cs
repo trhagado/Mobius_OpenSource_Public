@@ -39,7 +39,7 @@ namespace Mobius.UAL
 			string schema = sa[0];
 			string tname = sa[1];
 
-			DataSourceMx gds = DataSchemaMx.GetDataSourceForSchemaName(schema);
+			DataSourceMx gds = DbSchemaMx.GetDataSourceForSchemaName(schema);
 			if (gds == null) throw new Exception("Can't find DataSource for Schema: " + schema);
 
 			DbConnectionMx gConn = DbConnectionMx.GetConnection(gds.DataSourceName);

@@ -104,7 +104,7 @@ namespace Mobius.QueryEngineLibrary
 		public override string GetTableCriteriaGroupName(
 			QueryTable qt)
 		{
-			return DataSchemaMx.GetDataSourceForSchemaName("<schemaName>")?.DataSourceName;
+			return DbSchemaMx.GetDataSourceForSchemaName("<schemaName>")?.DataSourceName;
 		}
 
 		/// <summary>

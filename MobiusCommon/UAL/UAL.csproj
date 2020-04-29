@@ -221,7 +221,7 @@
   <ItemGroup>
     <Compile Include="ActiveDirectoryDao.cs" />
     <Compile Include="ClientUI.cs" />
-    <Compile Include="DataProviders\DataSchemaMx.cs" />
+    <Compile Include="DataProviders\DbSchemaMx.cs" />
     <Compile Include="DataProviders\DataSourceMx.cs" />
     <Compile Include="DataProviders\DbCommandMx.cs" />
     <Compile Include="DataProviders\DbConnectionMx.cs" />

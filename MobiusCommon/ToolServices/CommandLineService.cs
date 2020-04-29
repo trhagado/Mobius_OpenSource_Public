@@ -359,7 +359,7 @@ namespace Mobius.ToolServices
 			if (!DataSourceMx.DataSources.ContainsKey(dsName))
 				return "Data source " + dsName + " is not defined";
 
-			DataSchemaMx s = new DataSchemaMx();
+			DbSchemaMx s = new DbSchemaMx();
 			s.Name = schemaName;
 			s.DataSourceName = dsName;
 			DataSourceMx.Schemas[schemaName] = s;
