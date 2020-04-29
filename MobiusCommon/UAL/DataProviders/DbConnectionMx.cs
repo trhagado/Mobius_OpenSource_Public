@@ -19,7 +19,7 @@ using Oracle.DataAccess.Client;
 
 using MySql.Data.MySqlClient;
 
-namespace Mobius.UAL
+namespace Mobius.UAL 
 {
 	/// <summary>
 	/// Database connection management
@@ -95,29 +95,29 @@ namespace Mobius.UAL
 		/// <summary>
 		/// Get Mobius connection by name, connecting to database if needed.
 		/// </summary>
-		/// <param name="name"></param>
+		/// <param name="connName"></param>
 		/// <returns></returns>
 
-		public static DbConnectionMx Get(
-			string name)
+		public static DbConnectionMx GetConnection(
+			string connName)
 		{
 			try
 			{
 				lock (DbConnectionsDict) // lock in case multiple threads trying to connect
 				{
-					if (name == null || name == "")
+					if (connName == null || connName == "")
 						throw new Exception("Missing connection name");
 
-					if (NoDatabaseAccessIsAvailable) name = "NullDb"; // send all queries to the null database
+					if (NoDatabaseAccessIsAvailable) connName = "NullDb"; // send all queries to the null database
 
-					name = name.ToUpper();
+					connName = connName.ToUpper();
 
-					if (Debug) DebugLog.Message("Get connection " + name);
+					if (Debug) DebugLog.Message("Get connection " + connName);
 
 					DbConnectionMx conn = new DbConnectionMx();
 					IdSeq++;
 					conn.Id = IdSeq;
-					conn.SessionConn = SessionConnection.Get(name);
+					conn.SessionConn = SessionConnection.Get(connName);
 					conn.DbConn = conn.SessionConn.DbConn;
 					conn.StackTrace = new StackTrace(true); // for debug
 
@@ -252,9 +252,9 @@ namespace Mobius.UAL
 			string txt = "";
 			foreach (DataSourceMx source in DataSourceMx.DataSources.Values)
 			{
-				txt += source.Name + " ";
+				txt += source.DataSourceName + " ";
 				DateTime dt;
-				try { dt = TestConnection(source.Name); }
+				try { dt = TestConnection(source.DataSourceName); }
 				catch (Exception ex)
 				{
 					txt += ex.Message + "\n";
@@ -287,14 +287,14 @@ namespace Mobius.UAL
 			{
 				if (!source.IsKeyDataSource) continue;
 
-				try { dt = TestConnection(source.Name); }
+				try { dt = TestConnection(source.DataSourceName); }
 				catch (Exception ex)
 				{
 					errorCount++;
-					txt += errorCount.ToString() + ". " + source.Name + " - " + ex.Message + "\n";
+					txt += errorCount.ToString() + ". " + source.DataSourceName + " - " + ex.Message + "\n";
 					foreach (DataSchemaMx schema in DataSourceMx.Schemas.Values)
 					{
-						if (Lex.Eq(schema.DataSourceName, source.Name))
+						if (Lex.Eq(schema.DataSourceName, source.DataSourceName))
 							txt += "    - " + schema.Label + " (" + schema.Name + ")\n";
 					}
 				}
@@ -320,7 +320,7 @@ namespace Mobius.UAL
 		public static DateTime TestConnection(
 			string sourceName)
 		{
-			DbConnectionMx c = Get(sourceName);
+			DbConnectionMx c = GetConnection(sourceName);
 			string sql = "select expiry_date from user_users";
 			DateTime dt = SelectSingleValueDao.SelectDateTime(c, sql);
 			c.Close();
@@ -343,14 +343,14 @@ namespace Mobius.UAL
 
 			foreach (DataSourceMx source in DataSourceMx.DataSources.Values)
 			{
-				if (!IsOracleDatabase(source.DatabaseName)) continue; // oracle sources only
+				if (source.DbType != DatabaseType.Oracle) continue; // oracle sources only
 
-				msg += source.Name + "\n";
+				msg += source.DataSourceName + "\n";
 				try // create new link
-				{ c = Get(source.Name); } // get connection to database
+				{ c = GetConnection(source.DataSourceName); } // get connection to database
 				catch (Exception ex)
 				{
-					msg += "Failed to get connection or create any links for " + source.Name + ": " + ex.Message + "\n";
+					msg += "Failed to get connection or create any links for " + source.DataSourceName + ": " + ex.Message + "\n";
 					continue;
 				}
 
@@ -360,14 +360,14 @@ namespace Mobius.UAL
 				foreach (DataSourceMx source2 in DataSourceMx.DataSources.Values)
 				{
 					if (source2 == source) continue; // no link to self
-					if (!IsOracleDatabase(source2.DatabaseName)) continue; // oracle sources only
+					if (!IsOracleDatabase(source2.DatabaseLocator)) continue; // oracle sources only
 
 					if (Lex.IsDefined(singleInstance) &&
-						Lex.Ne(singleInstance, source.Name) && Lex.Ne(singleInstance, source2.Name))
+						Lex.Ne(singleInstance, source.DataSourceName) && Lex.Ne(singleInstance, source2.DataSourceName))
 						continue; // if single instance but link does not involve the as link source or dest instance then skip
 
-					string linkName = source2.Name + "_LINK";
-					txt = "Creating link " + source.Name + " to " + source2.Name;
+					string linkName = source2.DataSourceName + "_LINK";
+					txt = "Creating link " + source.DataSourceName + " to " + source2.DataSourceName;
 					Progress.Show(txt);
 					System.Windows.Forms.Application.DoEvents();
 
@@ -384,7 +384,7 @@ namespace Mobius.UAL
 						sql = "create database link " + linkName +
 							" connect to " + source2.UserName +
 							" identified by " + source2.Password +
-							" using '" + source2.DatabaseName + "'";
+							" using '" + source2.DatabaseLocator + "'";
 
 						drd.Prepare(sql);
 						drd.ExecuteNonReader();
@@ -392,7 +392,7 @@ namespace Mobius.UAL
 					}
 					catch (Exception ex)
 					{
-						msg += source.Name + " link " + linkName + " create failed: " + ex.Message + "\n";
+						msg += source.DataSourceName + " link " + linkName + " create failed: " + ex.Message + "\n";
 					}
 				}
 
@@ -412,7 +412,7 @@ namespace Mobius.UAL
 		{
 			DataSourceMx rootSource = GetRootDataSource(sql);
 			if (rootSource == null) return false;
-			return IsOracleDatabase(rootSource.DatabaseName);
+			return IsOracleDatabase(rootSource.DatabaseLocator);
 
 			//string sql2 = sql;
 			//DbConnectionMx conn = MapSqlToConnection(ref sql2);
@@ -441,7 +441,7 @@ namespace Mobius.UAL
 		{
 			DataSourceMx rootSource = GetRootDataSource(sql);
 			if (rootSource == null) return false;
-			return IsMySqlDatabase(rootSource.DatabaseName);
+			return IsMySqlDatabase(rootSource.DatabaseLocator);
 		}
 
 		public static bool IsMySqlDatabase(string dbName)
@@ -461,7 +461,7 @@ namespace Mobius.UAL
 		{
 			DataSourceMx rootSource = GetRootDataSource(sql);
 			if (rootSource == null) return false;
-			return IsOdbcDatabase(rootSource.DatabaseName);
+			return IsOdbcDatabase(rootSource.DatabaseLocator);
 		}
 
 		/// <summary>
@@ -538,7 +538,7 @@ namespace Mobius.UAL
 			string rootSourceName = "", sourceName = "", placeHolder;
 
 			Dictionary<string, Dictionary<string, DataSchemaMx>> connDict = GetDataSources(sql, out rootSource, out rootSchema);
-			if (rootSource != null) rootSourceName = rootSource.Name;
+			if (rootSource != null) rootSourceName = rootSource.DataSourceName;
 
 			if (NoDatabaseAccessIsAvailable)
 			{
@@ -553,7 +553,7 @@ namespace Mobius.UAL
 				forcedSourceName = forcedSourceName.ToUpper();
 				if (!DataSourceMx.DataSources.ContainsKey(forcedSourceName)) throw new Exception("Can't find data source: " + forcedSourceName);
 				rootSource = DataSourceMx.DataSources[forcedSourceName];
-				rootSourceName = rootSource.Name;
+				rootSourceName = rootSource.DataSourceName;
 
 				forcedSchemaName = forcedSchemaName.ToUpper();
 				if (!DataSourceMx.Schemas.ContainsKey(forcedSchemaName)) throw new Exception("Can't find data schema: " + forcedSchemaName);
@@ -603,7 +603,7 @@ namespace Mobius.UAL
 				sourceName = rootSourceName; // use this source
 			}
 
-			mxConn = DbConnectionMx.Get(sourceName);
+			mxConn = DbConnectionMx.GetConnection(sourceName);
 			mxConn.LastRootSchema = rootSchema;
 
 			if (Debug) DebugLog.Message("Connection " + mxConn.SessionConn.InstanceName);
@@ -1006,33 +1006,33 @@ namespace Mobius.UAL
 			if (!Enum.TryParse<DatabaseType>(dbType, true, out ds.DbType))
 				throw new Exception("Invalid Database type: " + dbType);
 
-			ds.Name = lex.GetUpper();
+			ds.DataSourceName = lex.GetUpper();
 			string asTok = lex.Get();
-			ds.DatabaseName = lex.GetUpper();
+			ds.DatabaseLocator = lex.GetUpper();
 			ds.UserName = lex.GetUpper();
 			ds.Password = lex.Get();
 			ds.InitCommand = lex.Get();
 
 			if (Lex.Ne(asTok, "As") ||
-					ds.DatabaseName == "" ||
+					ds.DatabaseLocator == "" ||
 					ds.UserName == "" ||
 					ds.Password == "")
 				return "Syntax: Define Data Source data-source-name As oracle-instance-id userId password";
 
 			DataSourceMx oldDs = null;
-			if (DataSourceMx.DataSources.ContainsKey(ds.Name))
-				oldDs = DataSourceMx.DataSources[ds.Name];
+			if (DataSourceMx.DataSources.ContainsKey(ds.DataSourceName))
+				oldDs = DataSourceMx.DataSources[ds.DataSourceName];
 
-			DataSourceMx.DataSources[ds.Name] = ds;
+			DataSourceMx.DataSources[ds.DataSourceName] = ds;
 			try // make sure we can connect to it
 			{
-				SessionConnection mxConn = SessionConnection.Get(ds.Name);
+				SessionConnection mxConn = SessionConnection.Get(ds.DataSourceName);
 				mxConn.Close();
 			}
 			catch (Exception ex)
 			{
-				if (oldDs != null) DataSourceMx.DataSources[oldDs.Name] = oldDs;
-				DataSourceMx.DataSources.Remove(ds.Name);
+				if (oldDs != null) DataSourceMx.DataSources[oldDs.DataSourceName] = oldDs;
+				DataSourceMx.DataSources.Remove(ds.DataSourceName);
 				return "Error connecting to new data source: " + ex.Message;
 			}
 
@@ -1179,7 +1179,7 @@ namespace Mobius.UAL
 
 					else // get database connection (from local pool or server)
 					{
-						string dbName = dataSource.DatabaseName;
+						string dbName = dataSource.DatabaseLocator;
 
 						try
 						{
@@ -1235,7 +1235,7 @@ namespace Mobius.UAL
 			OracleCommand oraCmd;
 
 			string prefix = "Oracle:";
-			string dbName = connInf.DatabaseName;
+			string dbName = connInf.DatabaseLocator;
 			if (Lex.StartsWith(dbName, prefix)) dbName = dbName.Substring(prefix.Length);
 
 			//if (Lex.Ne(dbName, "DEV857")) dbName = dbName; // debug
@@ -1381,10 +1381,10 @@ namespace Mobius.UAL
 		{
 			MySqlCommand oraCmd;
 
-			string dbName = connInf.DatabaseName;
+			string dbName = connInf.DatabaseLocator;
 
 			MySqlConnection conn = new MySqlConnection();
-			conn.ConnectionString = connInf.DatabaseName;
+			conn.ConnectionString = connInf.DatabaseLocator;
 
 			if (Debug)
 			{
@@ -1425,7 +1425,7 @@ namespace Mobius.UAL
 		static DbConnection GetOdbcConnection(DataSourceMx connInf)
 		{
 			string prefix = "ODBC:";
-			string cs = connInf.DatabaseName; // get connection string prototype
+			string cs = connInf.DatabaseLocator; // get connection string prototype
 			if (Lex.StartsWith(cs, prefix)) cs = cs.Substring(prefix.Length).Trim(); // remove ODBC: prefix
 
 			if (!Lex.Contains(cs, "user=") && !Lex.Contains(cs, "username=") && !Lex.Contains(cs, "password="))
@@ -1465,7 +1465,7 @@ namespace Mobius.UAL
 		static DbConnection GetNetezzaOleDbConnection(DataSourceMx connInf)
 		{
 			string prefix = "Netezza:";
-			string dbString = connInf.DatabaseName;
+			string dbString = connInf.DatabaseLocator;
 			if (Lex.StartsWith(dbString, prefix)) dbString = dbString.Substring(prefix.Length);
 
 			string userName = connInf.UserName;
@@ -1509,8 +1509,8 @@ namespace Mobius.UAL
 					DebugLog.Message("Closing connection: " + InstanceName + " count = " + ActiveCount);
 
 				if (DataSource != null && // if ODBC datasource && not Netezza then don't close underlying connection
-				 DbConnectionMx.IsOdbcDatabase(DataSource.DatabaseName) &&
-				 !DbConnectionMx.IsNetezzaDatabase(DataSource.DatabaseName))
+				 DbConnectionMx.IsOdbcDatabase(DataSource.DatabaseLocator) &&
+				 !DbConnectionMx.IsNetezzaDatabase(DataSource.DatabaseLocator))
 				{
 					return; // don't close underlying ODBC connections
 				}

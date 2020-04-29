@@ -359,7 +359,7 @@ namespace Mobius.ToolServices
 			if (!DataSourceMx.DataSources.ContainsKey(dsName))
 				return "Data source " + dsName + " is not defined";
 
-			Schema s = new Schema();
+			DataSchemaMx s = new DataSchemaMx();
 			s.Name = schemaName;
 			s.DataSourceName = dsName;
 			DataSourceMx.Schemas[schemaName] = s;
@@ -946,7 +946,7 @@ namespace Mobius.ToolServices
 			// Check to see if any cols need recasting of their type
 
 			string fullViewName = "DEV_MBS_OWNER." + viewName; // owner-qualified view name (must use DEV_MBS_OWNER alias)
-			List<DbColumnMetadata> cmdList = OracleDao.GetTableMetadataFromOracleDictionary(fullViewName);
+			List<DbColumnMetadata> cmdList = OracleMx.GetTableMetadataFromOracleDictionary(fullViewName);
 
 			string castCols = "";
 			int castCount = 0;

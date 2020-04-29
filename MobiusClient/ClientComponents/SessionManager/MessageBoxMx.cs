@@ -20,6 +20,8 @@ namespace Mobius.ClientComponents
   {
     public delegate DialogResult ShowDelegate(string message);
 
+    public static bool UseDevExpressMessageBox = true;
+
     public MessageBoxMx()
     {
       try
@@ -212,8 +214,6 @@ namespace Mobius.ClientComponents
       int width = -1,
       int height = -1)
     {
-      bool UseDevExpressMessageBox = true;
-
       IWin32Window owner = SessionManager.ActiveForm;
       DialogResult dr;
 
@@ -222,7 +222,7 @@ namespace Mobius.ClientComponents
 
         // Use DevExpress message box
 
-        if (UseDevExpressMessageBox)
+        if (Message == null)
         {
           XtraMessageBox.SmartTextWrap = true;
 

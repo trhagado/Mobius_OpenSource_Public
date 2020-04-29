@@ -111,7 +111,7 @@ namespace Mobius.UAL
 						chng_usr_id, 
 						crt_dt, 
 						upd_dt) 
-					values (:0, :1, :2, :3, :4, :5, :6, :7, :8, :9, 'I', :2, sysdate, sysdate)";
+					values (:0, :1, :2, :3, :4, :5, :6, :7, :8, :9, 'I', :2, sysdate(), sysdate())";
 
 				// Note that chng_usr_id is truncated to 12 chars to avoid exceptions for longer user ids. Fix after column is expanded
 

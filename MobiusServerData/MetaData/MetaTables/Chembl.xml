@@ -37,17 +37,15 @@
 
 	<!-- **************************************************** -->
 	<!--  Chembl cmpd properties -->
+	<!--  Remove distinct from select because of slow MySql performance issue -->
 	<!-- **************************************************** -->
 	<metatable tablename="chembl_properties" l="ChEMBL Properties" parent="chembl_structures" map="
-	select distinct
-		md.chembl_id,  
-		cp.*
+	SELECT md.chembl_id,  cp.*
 	from 
-	 chembl_owner.molecule_dictionary md, 
-	 chembl_owner.compound_properties cp
-	where 
-	 cp.molregno (+) = md.molregno">
-	  <c name="chembl_ID" l="Chembl Id" type="compoundId" />
+	 chembl_26.compound_properties cp 
+	 left join chembl_26.molecule_dictionary md
+	 on cp.molregno = md.molregno">
+		<c name="chembl_ID" l="Chembl Id" type="compoundId" />
 		<c name="full_mwt" l="Mol. Wt. (full)" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
 		<c name="mw_freebase" l="Mol. Wt. (freebase)" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
 		<c name="alogp" l="alogP" type="float" displayFormat="decimal" width="6" decimals="2" display="selected" />
@@ -57,12 +55,22 @@
 		<c name="RTB" l="#Rot. Bonds" type="integer" width="6" display="selected" />
 		<c name="ro3_pass" l="ROF (pass?)" type="string" width="6" DisplayLevel="selected"/>
 		<c name="num_ro5_violations" l="#ROF violations" type="integer"  width="5" decimals="2" display="selected" />
-		<c name="acd_most_apka" l="Most acidic pKa" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
-		<c name="acd_most_bpka" l="Most basic pKa" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
-		<c name="acd_logp" l="clogP" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
-		<c name="acd_LogD" l="clogD" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
-	</metatable>
-
+		<c name="cx_most_apka" l="Most acidic pKa" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
+		<c name="cx_most_bpka" l="Most basic pKa" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
+		<c name="cx_logp" l="clogP" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
+		<c name="cx_logd" l="clogD" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" />
+		<c name="molecular_species" type="string" width="6" Display="selected" desc="Indicates whether the compound is an acid/base/neutral"  />
+		<c name="full_mwt" type="float" displayFormat="decimal" width="10" decimals="2" display="selected" desc="Molecular weight of the full compound including any salts" />
+		<c name="aromatic_rings" type="integer" displayFormat="decimal" width="6"  display="selected" desc="Number of aromatic rings" />
+		<c name="heavy_atoms" type="integer" displayFormat="decimal" width="6"  display="selected" desc="Number of heavy (non-hydrogen) atoms" />
+		<c name="qed_weighted" type="float" displayFormat="decimal" width="5" decimals="2" display="selected" desc="Weighted quantitative estimate of drug likeness (as defined by Bickerton et al., Nature Chem 2012)" />
+		<c name="mw_monoisotopic" type="float" displayFormat="decimal" width="12" decimals="4" display="selected" desc="Monoisotopic parent molecular weight" />
+		<c name="full_molformula" type="string" width="16" Display="selected"  desc="Molecular formula for the full compound (including any salt)" />
+		<c name="hba_lipinski" type="integer" displayFormat="decimal" width="6"  display="selected" desc="Number of hydrogen bond acceptors calculated according to Lipinski's original rules (i.e., N + O count))" />
+		<c name="hbd_lipinski" type="integer" displayFormat="decimal" width="6"  display="selected" desc="Number of hydrogen bond donors calculated according to Lipinski's original rules (i.e., NH + OH count)" />
+		<c name="num_lipinski_ro5_violations" type="integer" displayFormat="decimal" width="6" display="selected" desc="Number of violations of Lipinski's rule of five using HBA_LIPINSKI and HBD_LIPINSKI counts" />
+</metatable>
+	
 	<!-- **************************************************** -->
 	<!--  chembl_mol_dictionary -->
 	<!-- **************************************************** -->
@@ -90,7 +98,6 @@
 		<c name="natural_Product" l="Natural Product" type="integer" displayFormat="decimal" width="6"  display="selected" />
 		<c name="prodrug" l="prodrug" type="integer" displayFormat="decimal" width="6"  display="selected" />
 	</metatable>
-	
 
 	
   <!-- **************************************************** -->

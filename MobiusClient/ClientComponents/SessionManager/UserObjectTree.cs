@@ -34,28 +34,12 @@ namespace Mobius.ClientComponents
 		// objects (or combination of types of objects) that the user desires.
 
 		public static Dictionary<string, MetaTreeNode> FolderNodes = new Dictionary<string,MetaTreeNode>();
-		public static MetaTreeNode[] FolderNodeList // list/array of folder nodes
-		{
-			get
-			{
-				if (FolderNodes == null) return null;
-				while (_folderNodeList == null || _folderNodeList.Length != FolderNodes.Count)
-				{
-					_folderNodeList = new MetaTreeNode[FolderNodes.Count];
-					try { FolderNodes.Values.CopyTo(_folderNodeList, 0); }
-					catch { _folderNodeList = null; } // may throw exception if FolderNodes modified during copy, try again
-				}
-				return _folderNodeList;
-			}
-		}
-		static MetaTreeNode[] _folderNodeList = null;
 
 		internal static object BuildLock = new object();
 		internal static Dictionary<string, MetaTreeNode> BuildNodes; // build area for nodes
 		internal static bool BuildPublicObjectContentsTrees = true; // include public objects
 
 		// For parallel retrieval of user objects
-
 
 		public static bool BuildStarted
 		{
@@ -152,7 +136,7 @@ namespace Mobius.ClientComponents
 			UserObjectCollection.SubTreesToRead = uoTypesToRead.Length; // number of trees to read
 
 			int t0 = TimeOfDay.Milliseconds();
-			bool BuildAsynch = true; // set to false for debug
+			bool BuildAsynch = false; // set to false for debug
 			if (BuildAsynch) // normal case
 			{
 				ParameterizedThreadStart pts = new ParameterizedThreadStart(ReadMultipleThreadMethod);
@@ -254,12 +238,11 @@ namespace Mobius.ClientComponents
 
 			lock (BuildLock)
 			{
-
 				BuildNodes = FolderNodes; // work from existing nodes (new may have been added)
 				if (BuildNodes == null) 
 					BuildNodes = new Dictionary<string, MetaTreeNode>();
 
-				int folders = BuildFolderTree(); // folders are needed first
+				int folders = BuildUserFolderTree(); // user folders are needed first
 				int ucdbs = BuildUcdbFolderTree(); // build before annotations that may go in these
 
 				int queries = BuildLeafObjectTree(UserObjectType.Query);
@@ -315,7 +298,7 @@ namespace Mobius.ClientComponents
 		/// recorded in the user object header, is used to group
 		/// </summary>
 
-		static int BuildFolderTree()
+		static int BuildUserFolderTree()
 		{
 			int t0 = TimeOfDay.Milliseconds();
 
@@ -412,7 +395,7 @@ namespace Mobius.ClientComponents
 				else // no user objects in folder, put a placeholder in the tree to indicate we've been here
 				{
 					MetaTreeNode mtn = new MetaTreeNode();
-					mtn.Name = folderName;
+					mtn.Name = mtn.Target = folderName;
 					mtn.Type = MetaTreeNodeType.Project;
 					BuildNodes[folderName] = mtn;
 				}
@@ -635,30 +618,6 @@ namespace Mobius.ClientComponents
 
 			return;
 		}
-
-		/// <summary>
-		/// Create folder node for an existing user object
-		/// </summary>
-		/// <param name="parentNode">Node to add object folder node to</param>
-		/// <param name="objType"></param>
-		/// <returns></returns>
-
-		//public static MetaTreeNode CreateUserFolderNodeAndAdd(
-		//  MetaTreeNode parentNode,
-		//  UserObjectType objType)
-		//{
-		//  MetaTreeNode folderNode;
-		//  folderNode = new MetaTreeNode();
-		//  folderNode.Parent = parentNode;
-		//  folderNode.Label = UserObject.GetTypeLabelPlural(objType);
-		//  folderNode.Name = parentNode.Name + "_" + objType.ToString();
-		//  folderNode.Target = folderNode.Name;
-		//  folderNode.Type = MetaTreeNodeType.UserFolder;
-		//  folderNode.Owner = parentNode.Owner;
-
-		//  parentNode.Nodes.Add(folderNode);
-		//  return folderNode;
-		//}
 
 		/// <summary>
 		/// Updates the access level on parent user folders so that they are public iff
@@ -1071,6 +1030,9 @@ namespace Mobius.ClientComponents
 			if (folderNodes.ContainsKey(folderName)) 
 			{
 				MetaTreeNode folderNode = folderNodes[folderName];
+
+				//if (folderNode != null && Lex.IsUndefined(folderNode?.Target)) folderNode.Target = folderNode.Name; // fixup
+
 				if (!mergeUserObjectFolders) return folderNode;
 
 				mNode = BuildMergedStandardUserObjectFolders(folderNode);
@@ -1302,16 +1264,16 @@ namespace Mobius.ClientComponents
 		/// <param name="name"></param>
 		/// <returns></returns>
 
-		public static MetaTreeNode GetNode(	string name)
+		public static MetaTreeNode GetNodeByName(	string name)
 		{
-			MetaTreeNode folder, node = null;
+			MetaTreeNode node = null;
 
-			MetaTreeNode[] fnList = FolderNodeList;
+			Dictionary<string, Mobius.Data.MetaTreeNode>.ValueCollection fnList = FolderNodes?.Values;
+
 			if (fnList == null) return null;
 
-			for (int fi = 0; fi < fnList.Length; fi++)
+			foreach (MetaTreeNode folder in fnList)
 			{
-				folder = fnList[fi];
 				node = UserObjectTree.GetNode(folder, name);
 				if (node != null) break;
 			}
@@ -1361,16 +1323,16 @@ namespace Mobius.ClientComponents
 		public static MetaTreeNode GetNodeByTarget(
 			string name)
 		{
-			MetaTreeNode folder, node = null;
+			MetaTreeNode node = null;
 
-			if (Lex.IsNullOrEmpty(name)) return null;
+			if (Lex.IsUndefined(name)) return null;
 
-			MetaTreeNode[] fnList = FolderNodeList;
+			Dictionary<string, Mobius.Data.MetaTreeNode>.ValueCollection fnList = FolderNodes?.Values;
+
 			if (fnList == null) return null;
 
-			for (int fi = 0; fi < fnList.Length; fi++)
+			foreach (MetaTreeNode folder in fnList)
 			{
-				folder = fnList[fi];
 				node = UserObjectTree.GetNodeByTarget(folder, name);
 				if (node != null) break;
 			}

@@ -247,7 +247,7 @@ order by mthd_vrsn_id
 			c1.ExecuteReader();
 
 			DbCommandMx cmd = new DbCommandMx();
-			cmd.MxConn = DbConnectionMx.Get("DEV857");
+			cmd.MxConn = DbConnectionMx.GetConnection("DEV857");
 			cmd.BeginTransaction();
 			long totalIns = 0;
 			int vmIdCnt = 0;
@@ -290,7 +290,7 @@ order by mthd_vrsn_id
 			long chunkSize = 100000;
 
 			DbCommandMx cmd = new DbCommandMx();
-			cmd.MxConn = DbConnectionMx.Get("DEV857");
+			cmd.MxConn = DbConnectionMx.GetConnection("DEV857");
 			cmd.BeginTransaction();
 
 			long totalIns = 0;

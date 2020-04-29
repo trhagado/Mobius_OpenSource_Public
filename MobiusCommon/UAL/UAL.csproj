@@ -186,7 +186,6 @@
     </Reference>
     <Reference Include="PoorMansTSqlFormatterLib35">
       <HintPath>..\ExternalLibraries\PoorMansTSqlFormatterLib35.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -222,8 +221,14 @@
   <ItemGroup>
     <Compile Include="ActiveDirectoryDao.cs" />
     <Compile Include="ClientUI.cs" />
+    <Compile Include="DataProviders\DataSchemaMx.cs" />
+    <Compile Include="DataProviders\DataSourceMx.cs" />
+    <Compile Include="DataProviders\DbCommandMx.cs" />
+    <Compile Include="DataProviders\DbConnectionMx.cs" />
+    <Compile Include="DataProviders\MySqlMx.cs" />
+    <Compile Include="DataProviders\OdbcMx.cs" />
+    <Compile Include="DataProviders\OracleMx.cs" />
     <Compile Include="MetaTreeTableDao.cs" />
-    <Compile Include="OracleDao.cs" />
     <Compile Include="PluginDao.cs" />
     <Compile Include="AssayMetadataDao.cs">
       <SubType>Code</SubType>
@@ -253,9 +258,6 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DbCommandMx.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="LDAPMembershipProvider.cs" />
     <Compile Include="UsageDao.cs">
       <SubType>Code</SubType>
@@ -270,7 +272,6 @@
     <Compile Include="UalUtil.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DbConnectionMx.cs" />
     <Compile Include="GenericDwDao.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -304,9 +305,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -345,6 +343,7 @@
       <Version>12.0.3</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

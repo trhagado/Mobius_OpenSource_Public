@@ -402,7 +402,7 @@ namespace Mobius.QueryEngineLibrary
             for (int i0 = 0; i0 < withClauseList.Count; i0++) // prepend "with" clauses
             {
                 string withClause = withClauseList[i0];
-                withClause = OracleDao.FormatSql(withClause); // debug
+                withClause = OracleMx.FormatSql(withClause); // debug
 
                 if (i0 == 0) sql += "with ";
                 else sql += ", ";

@@ -1065,7 +1065,7 @@ namespace Mobius.QueryEngineLibrary
 					{
 						DebugLog.Message("Search Prepare - Time: " + tDelta + ", " +
 							"keySubsetCount: " + (eqp.SearchKeySubset != null ? eqp.SearchKeySubset.Count.ToString() : "0") + ", " +
-							"sql: " + OracleDao.FormatSql(Sql));
+							"sql: " + OracleMx.FormatSql(Sql));
 					}
 
 					// Execute the query

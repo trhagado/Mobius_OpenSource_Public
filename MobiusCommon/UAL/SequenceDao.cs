@@ -18,7 +18,7 @@ namespace Mobius.UAL
 		static Dictionary<string, SequenceDao> Sequences; // dictionary by sequence name of sequences
 
 		string Name = ""; // name of sequence
-		int CacheSize = 0; // number of values to cache locally
+		int CacheSize = 32; // number of values to cache locally
 		Queue<long> Queue = new Queue<long>(); // queue of cached values
 
 		public SequenceDao()
@@ -136,7 +136,7 @@ namespace Mobius.UAL
 			DbCommandMx.PrepareAndExecuteNonReaderSql(sql);
 
 			DbCommandMx readCmd = new DbCommandMx();
-			readCmd.MxConn = DbConnectionMx.Get("MySql_Mobius");
+			readCmd.MxConn = DbConnectionMx.GetConnection("MySql_Mobius");
 			sql = "select last_insert_id()"; // gets value before update above
 			readCmd.PrepareUsingDefinedConnection(sql, null);
 			DbDataReader rdr = readCmd.ExecuteReader();

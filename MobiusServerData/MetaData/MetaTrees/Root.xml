@@ -19,6 +19,7 @@
   <node name="CHEMBL" l="ChEMBL" type="database" PROJECTTYPE="Other">
     <child name="CHEMBL1" />
     <child name="CHEMBL2" />
+	<child name="default_folder" l="Private Queries, Lists..." type="project" item="default_folder" />
   </node>
   
   <node name="CHEMBL1" l="ChEMBL small molecule(SM) DB" type="database" PROJECTTYPE="Other">

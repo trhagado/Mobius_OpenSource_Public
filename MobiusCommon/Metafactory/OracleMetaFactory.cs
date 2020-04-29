@@ -62,7 +62,7 @@ namespace Mobius.MetaFactoryNamespace
 		public static MetaTable GetMetaTableFromDatabaseDictionary(
 			string mtName)
 		{
-			return OracleDao.GetMetaTableFromDatabaseDictionary(mtName);
+			return OracleMx.GetMetaTableFromDatabaseDictionary(mtName);
 		}
 
 		/// <summary>

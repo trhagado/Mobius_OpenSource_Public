@@ -230,7 +230,7 @@ namespace Mobius.QueryEngineLibrary
 			catch (Exception ex)
 			{ // just log message & return;
 				DebugLog.Message("SelectMoleculeForCid Exception, Cid: " + cid + ", table: " + mt.Name + "\n" +
-					"sql: " + OracleDao.FormatSql(sql) + "\n" + DebugLog.FormatExceptionMessage(ex));
+					"sql: " + OracleMx.FormatSql(sql) + "\n" + DebugLog.FormatExceptionMessage(ex));
 
 				if (drd != null) drd.Dispose();
 				return null;
@@ -410,7 +410,7 @@ namespace Mobius.QueryEngineLibrary
 
 				throw new Exception(
 					"SelectStructuresForCorpIdList, table: " + mt.Name + "\n" +
-					"sql: " + OracleDao.FormatSql(sql) + "\n");
+					"sql: " + OracleMx.FormatSql(sql) + "\n");
 			}
 		}
 

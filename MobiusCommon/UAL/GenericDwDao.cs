@@ -528,7 +528,7 @@ namespace Mobius.UAL
 					"crt_dt, " +
 					"updt_dt) " +
 				 "values (nvl(:0," + SeqName + ".nextval)" + // if rslt_id not null use it otherwise call nextval locally
-					",:1,:2,:3,:4,:5,:6,:7,:8,:9,:10,:11,:12,:13,:14,:15,1,sysdate,sysdate,sysdate)";
+					",:1,:2,:3,:4,:5,:6,:7,:8,:9,:10,:11,:12,:13,:14,:15,1,sysdate(),sysdate(),sysdate())";
 
 				if (voList.Count < 10) // require minimum number of rows to use APPEND_VALUESd
 					sql = Lex.Replace(sql, "APPEND_VALUES", "");

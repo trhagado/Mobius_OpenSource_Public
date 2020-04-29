@@ -347,7 +347,7 @@ namespace Mobius.UAL
 				Progress.Show(msg);
 
 				DbCommandMx readCmd = new DbCommandMx();
-				readCmd.MxConn = DbConnectionMx.Get("prd123");
+				readCmd.MxConn = DbConnectionMx.GetConnection("prd123");
 				readCmd.PrepareUsingDefinedConnection(sql, null);
 				DbDataReader rdr = readCmd.ExecuteReader();
 
@@ -382,7 +382,7 @@ namespace Mobius.UAL
 						if (!readCmd.IsNull(1)) // molstructure
 						{
 							chime = readCmd.GetClob(1);
-							chime = OracleDao.ClearStringIfExceedsMaxStringSize(chime);
+							chime = OracleMx.ClearStringIfExceedsMaxStringSize(chime);
 							vo[1] = chime;
 						}
 						else chime = "";
@@ -390,7 +390,7 @@ namespace Mobius.UAL
 						if (!readCmd.IsNull(2)) // molformula
 						{
 							mf = readCmd.GetClob(2);
-							mf = OracleDao.ClearStringIfExceedsMaxStringSize(mf);
+							mf = OracleMx.ClearStringIfExceedsMaxStringSize(mf);
 							vo[2] = mf;
 						}
 
@@ -413,7 +413,7 @@ namespace Mobius.UAL
 									Log("Smiles conversion failure for CorpId: " + CorpId);
 									smilesFails++;
 								}
-								smiles = OracleDao.ClearStringIfExceedsMaxStringSize(smiles);
+								smiles = OracleMx.ClearStringIfExceedsMaxStringSize(smiles);
 
 								vo[4] = smiles;
 							}

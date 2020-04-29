@@ -89,7 +89,7 @@ namespace Mobius.UAL
 			{
 				DateTime t0 = DateTime.Now;
 				cmd = new DbCommandMx();
-				DbConnectionMx dbc = DbConnectionMx.Get(dsName);
+				DbConnectionMx dbc = DbConnectionMx.GetConnection(dsName);
 				cmd.MxConn = dbc;
 				cmd.Prepare(sql, parmType);
 				int insCount = cmd.ExecuteArrayNonReader(pva, ref keyCount);
@@ -128,7 +128,7 @@ namespace Mobius.UAL
 			{
 				DateTime t0 = DateTime.Now;
 				cmd = new DbCommandMx();
-				DbConnectionMx dbc = DbConnectionMx.Get(dsName);
+				DbConnectionMx dbc = DbConnectionMx.GetConnection(dsName);
 				cmd.MxConn = dbc;
 				cmd.Prepare(sql);
 				cmd.ExecuteNonReader();
@@ -178,7 +178,7 @@ namespace Mobius.UAL
 			{
 				DateTime t0 = DateTime.Now;
 				cmd = new DbCommandMx();
-				DbConnectionMx dbc = DbConnectionMx.Get(dsName);
+				DbConnectionMx dbc = DbConnectionMx.GetConnection(dsName);
 				cmd.MxConn = dbc;
 				cmd.Prepare(sql);
 				cmd.ExecuteNonReader();

@@ -561,7 +561,7 @@ namespace Mobius.MetaFactoryNamespace
 				try
 				{
 					dao = new DbCommandMx();
-					dao.MxConn = DbConnectionMx.Get(conName);
+					dao.MxConn = DbConnectionMx.GetConnection(conName);
 
 					sql = "delete from MBS_OWNER.CMN_ASSY_ATRBTS";
 					dao.PrepareUsingDefinedConnection(sql);

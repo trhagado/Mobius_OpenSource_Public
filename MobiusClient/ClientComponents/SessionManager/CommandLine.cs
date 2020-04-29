@@ -1785,6 +1785,9 @@ namespace Mobius.ClientComponents
 		{
 			if (!InputBoxMx.ShowAsNeeded("Enter Owner.TableName to create metatable for:", "Build MetaTable from Database Catalog", ref tableName)) return "";
 
+			//DbConnection.AssociateSchema
+			
+
 			MetaTable mt = OracleMetaFactory.GetMetaTableFromDatabaseDictionary(tableName);
 			if (mt == null) return "Failed";
 

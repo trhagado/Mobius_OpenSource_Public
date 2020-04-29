@@ -921,7 +921,7 @@ namespace Mobius.QueryEngineLibrary
 				sli.Add(mb.Label);
 			else sli.Add(mb.Qt.ActiveLabel + " (" + mb.Qt.MetaTable.Name + ")");
 
-			string formattedSql = OracleDao.FormatSql(sqlWithDbLinks);
+			string formattedSql = OracleMx.FormatSql(sqlWithDbLinks);
 			sli.Add(formattedSql);
 
 			SqlList.Add(sli);
@@ -1034,7 +1034,7 @@ namespace Mobius.QueryEngineLibrary
 
 				// Recast numeric cols that are integers as integers for Spotfire
 
-				List<DbColumnMetadata> cmdList = OracleDao.GetColumnMetadataFromSql(qtSql, conn);
+				List<DbColumnMetadata> cmdList = OracleMx.GetColumnMetadataFromSql(qtSql, conn);
 
 				string qtSelectList = "";
 				remapCount = 0; // number of cols remapped

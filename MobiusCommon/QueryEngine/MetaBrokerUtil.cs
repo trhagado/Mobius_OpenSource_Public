@@ -553,7 +553,7 @@ namespace Mobius.QueryEngineLibrary
 		/// <param name="mt"></param>
 		/// <returns></returns>
 
-		Schema CheckDataSourceAccessibility(
+		DataSchemaMx CheckDataSourceAccessibility(
 			MetaTable mt);
 
 		/// <summary>

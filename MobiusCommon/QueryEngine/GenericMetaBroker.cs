@@ -125,11 +125,11 @@ namespace Mobius.QueryEngineLibrary
 			QueryTable qt)
 		{
 			DataSourceMx rootSource;
-			Schema rootSchema;
+			DataSchemaMx rootSchema;
 
 			MetaTable mt = qt.MetaTable;
 
-			Dictionary<string, Dictionary<string, Schema>> sourceDict =
+			Dictionary<string, Dictionary<string, DataSchemaMx>> sourceDict =
 				DbConnectionMx.GetDataSources(mt.TableMap, out rootSource, out rootSchema);
 
 			if (rootSchema == null) return "";
@@ -943,7 +943,7 @@ namespace Mobius.QueryEngineLibrary
 
 				DebugLog.Message(
 					"GenericMetaBroker.PrepareForFetch.ExecuteReader:\r\n" + DebugLog.FormatExceptionMessage(ex) + "\r\n" +
-					"lastSql: " + OracleDao.FormatSql(lastSql) + "\r\n" +
+					"lastSql: " + OracleMx.FormatSql(lastSql) + "\r\n" +
 					"FirstKeyIdx = " + FirstKeyIdx.ToString() + ", " +
 					"LastKeyIdx = " + LastKeyIdx.ToString());
 				throw new Exception(ex.Message, ex);
@@ -1859,16 +1859,16 @@ public virtual bool ShouldPresearchCheckAndTransform(
 		/// <param name="mt"></param>
 		/// <returns></returns>
 
-		public virtual Schema CheckDataSourceAccessibility(
+		public virtual DataSchemaMx CheckDataSourceAccessibility(
 			MetaTable mt)
 		{
 			DataSourceMx firstSource;
-			Schema firstSchema;
+			DataSchemaMx firstSchema;
 			DbConnectionMx conn = null;
 
 			if (mt.TableMap == null || mt.TableMap == "") return null;
 
-			Dictionary<string, Dictionary<string, Schema>> connDict =
+			Dictionary<string, Dictionary<string, DataSchemaMx>> connDict =
 				DbConnectionMx.GetDataSources(mt.TableMap, out firstSource, out firstSchema); // get sources listed in map
 
 			if (connDict == null || connDict.Count == 0) return null; // no sources found
@@ -1878,12 +1878,12 @@ public virtual bool ShouldPresearchCheckAndTransform(
 				try
 				{
 					//if (Lex.Eq(connName, "DEV857")) mt.Name = mt.Name; // debug
-					conn = DbConnectionMx.Get(connName);
+					conn = DbConnectionMx.GetConnection(connName);
 				}
 
 				catch (MobiusConnectionOpenException ex)
 				{
-					foreach (Schema schema in connDict[connName].Values) // return first schema for connection
+					foreach (DataSchemaMx schema in connDict[connName].Values) // return first schema for connection
 						return schema;
 				}
 
@@ -1900,7 +1900,7 @@ public virtual bool ShouldPresearchCheckAndTransform(
 /// <param name="schemaName"></param>
 /// <returns>Schema object that failed or null if ok</returns>
 
-		public static Schema CheckDataSourceAccessibility(
+		public static DataSchemaMx CheckDataSourceAccessibility(
 			string schemaName)
 		{
 			schemaName = schemaName.ToUpper(); // stored as upper case
@@ -1909,7 +1909,7 @@ public virtual bool ShouldPresearchCheckAndTransform(
 
 			string connName = DataSourceMx.Schemas[schemaName].DataSourceName;
 			DbConnectionMx conn = null;
-			try { conn = DbConnectionMx.Get(connName); }
+			try { conn = DbConnectionMx.GetConnection(connName); }
 			catch (Exception ex)
 			{
 				return DataSourceMx.Schemas[schemaName];

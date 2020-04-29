@@ -23,7 +23,7 @@ namespace Mobius.ClientComponents
 			MetaTreeNode mtn = MetaTree.GetNode(name); // check main tree first
 
 			if (mtn == null) // check UserObject tree if not in main tree
-				mtn = UserObjectTree.GetNode(name);
+				mtn = UserObjectTree.GetNodeByName(name);
 
 			if (mtn == null) // try by main tree target 
 				mtn = MetaTree.GetNodeByTarget(name);

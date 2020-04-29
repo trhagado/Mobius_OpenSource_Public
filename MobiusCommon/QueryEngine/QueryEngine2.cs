@@ -779,7 +779,7 @@ namespace Mobius.QueryEngineLibrary
 				{
 					if (imb == null) throw new Exception("No data available (MetaBroker not defined)");
 					DateTime t1 = DateTime.Now;
-					Schema schema = imb.CheckDataSourceAccessibility(mt);
+					DataSchemaMx schema = imb.CheckDataSourceAccessibility(mt);
 					tDelta = (int)TimeOfDay.Delta(ref t1);
 					if (LogBasics) DebugLog.Message("Table: " + mt.Name + ", time: " + tDelta);
 
@@ -3284,7 +3284,7 @@ namespace Mobius.QueryEngineLibrary
 							", keySubsetCount: " + (eqp.SearchKeySubset != null ? eqp.SearchKeySubset.Count.ToString() : "0") +
 							", time: " + t0 +
 							", sql: " + Lex.RemoveLineBreaksAndTabs(eqp.CallerSuppliedSql));
-					//", sql: " + OracleDao.FormatSql(eqp.CallerSuppliedSql));
+					//", sql: " + OracleMx.FormatSql(eqp.CallerSuppliedSql));
 				}
 
 				Qtd[ti].Closed = false;

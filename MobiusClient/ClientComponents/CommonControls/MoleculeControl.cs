@@ -497,12 +497,14 @@ namespace Mobius.ClientComponents
 
 				string helm = mol.HelmString;
 
-// Put multiple items on the clipboard (SVG, bitmap, Helm)
-// For Word the first item is the default
-// For Excel text is the default
-// Paste Special can be used to select a particular desired format
+				// Put multiple items on the clipboard (SVG, bitmap, Helm)
+				// For Word the first item is the default
+				// For Excel text is the default
+				// Paste Special can be used to select a particular desired format
 
-				string svg = HelmControl.GetSvg(helm); // put the SVG in the clipboard DataObject
+				if (DebugMx.True) throw new NotImplementedException();
+
+				string svg = "todo"; // HelmControl.GetSvg(helm); // put the SVG in the clipboard DataObject
 				if (Lex.IsDefined(svg))
 				{
 					byte[] bytes = Encoding.UTF8.GetBytes(svg);
@@ -512,7 +514,7 @@ namespace Mobius.ClientComponents
 					dataObject.SetData(DataFormats.Html, svg); // also put on as SVG since all machines many not recognize the image/svg+xml MIME type
 				}
 
-				Bitmap bm = HelmControl.GetBitmap(helm, bitmapWidth); // put the bitmap in the clipboard DataObject
+				Bitmap bm = null; // todo  HelmControl.GetBitmap(helm, bitmapWidth); // put the bitmap in the clipboard DataObject
 				if (bm != null)
 					dataObject.SetData(DataFormats.Bitmap, bm);
 
