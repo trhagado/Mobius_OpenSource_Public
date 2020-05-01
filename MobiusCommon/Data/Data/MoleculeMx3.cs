@@ -1,6 +1,6 @@
 ﻿using Mobius.ComOps;
-using Mobius.MolLib1;
-//using Mobius.MolLib2;
+using Mobius.CdkMx;
+using Mobius.MolLib2;
 
 using System;
 using System.Collections.Generic;
@@ -22,11 +22,11 @@ namespace Mobius.Data
 			int fpSubtype = -1,
 			int fpLen = -1)
 		{
-			if (MolLib1.StructureConverter.ICdkUtil == null) DebugMx.Exception("StructureConversion.ICdkUtil is null");
+			if (CdkMol.StructureConverter.ICdkUtil == null) DebugMx.Exception("StructureConversion.ICdkUtil is null");
 
 			string molfile = GetMolfileString();
 
-			object fp = MolLib1.StructureConverter.ICdkUtil.BuildBitSetFingerprint(molfile, (int)fpType, fpSubtype, fpLen);
+			object fp = CdkMol.StructureConverter.ICdkUtil.BuildBitSetFingerprint(molfile, (int)fpType, fpSubtype, fpLen);
 			return fp;
 		}
 
@@ -41,7 +41,7 @@ namespace Mobius.Data
 			object queryFingerprint,
 			object targetFingerprint)
 		{
-			double score = MolLib1.StructureConverter.ICdkUtil.CalculateBitSetFingerprintSimilarity(queryFingerprint, targetFingerprint);
+			double score = CdkMol.StructureConverter.ICdkUtil.CalculateBitSetFingerprintSimilarity(queryFingerprint, targetFingerprint);
 			return score;
 		}
 

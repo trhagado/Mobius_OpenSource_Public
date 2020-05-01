@@ -1,6 +1,6 @@
 ﻿using Mobius.ComOps;
 using Mobius.Helm;
-using Mobius.MolLib1;
+using Mobius.CdkMx;
 
 using DevExpress.Utils;
 
@@ -42,7 +42,7 @@ namespace Mobius.Data
 		/// <param name="markBoundaries">True to mark edges of structure</param>
 		/// <returns>New bounding rectangle for structure in milliinches</returns>
 
-		public MolLib1.Molecule FitStructureIntoRectangle(
+		public CdkMol FitStructureIntoRectangle(
 			ref Rectangle destRect,
 			int desiredBondLength,
 			int translateType,
@@ -51,7 +51,7 @@ namespace Mobius.Data
 			int pageHeight,
 			out Rectangle boundingRect)
 		{
-			MolLib1.Molecule mol = new MolLib1.Molecule();
+			CdkMol mol = new CdkMol();
 
 			mol.FitStructure(ref destRect, desiredBondLength, translateType, fixedHeight, markBoundaries, pageHeight, out boundingRect);
 			return mol;
@@ -68,7 +68,7 @@ namespace Mobius.Data
 		/// <returns></returns>
 
 		public static Bitmap GetFixedHeightMoleculeBitmap(
-			MolLib1.Molecule mol,
+			MoleculeMx mol,
 			int pixWidth,
 			int pixHeight,
 			DisplayPreferences dp,
@@ -91,7 +91,7 @@ namespace Mobius.Data
 			if (dp == null)
 			{
 				dp = new DisplayPreferences();
-				MolLib1.Molecule.SetStandardDisplayPreferences(dp);
+				SetStandardDisplayPreferences(dp);
 			}
 
 			//if (Lex.Contains(qc.Criteria, "SSS")) // no H display if SS query
@@ -142,9 +142,9 @@ namespace Mobius.Data
 		{
 
 			if (dp == null)
-				dp = MolLib1.Molecule.GetStandardDisplayPreferences(); // get preferences if not done yet
+				dp = CdkMol.GetStandardDisplayPreferences(); // get preferences if not done yet
 
-			MolLib1.Molecule mol = new MolLib1.Molecule(GetMolfileString());
+			CdkMol mol = new CdkMol(GetMolfileString());
 			Bitmap bm = mol.GetMoleculeBitmap(bitmapWidth, bitmapHeight, dp);
 			return bm;
 		}
@@ -245,7 +245,7 @@ namespace Mobius.Data
 				DisplayPreferences dp = mol.GetDisplayPreferences();
 				dp.StandardBondLength = MoleculeMx.MilliinchesToDecipoints(desiredBondLength);
 
-				MolLib1.Molecule ml1Mol = mol.FitStructureIntoRectangle // scale and translate structure into supplied rectangle.
+				CdkMol ml1Mol = mol.FitStructureIntoRectangle // scale and translate structure into supplied rectangle.
 					(ref destRect, desiredBondLength, translateType, fixedHeight, markBoundaries, pageHeight, out boundingRect);
 
 				int pixWidth = MoleculeMx.MilliinchesToPixels(destRect.Width);
@@ -276,7 +276,7 @@ namespace Mobius.Data
 		public void CreateStructureCaption(
 			string caption)
 		{
-			MolLib1.Molecule mol = new MolLib1.Molecule(GetMolfileString());
+			CdkMol mol = new CdkMol(GetMolfileString());
 			mol.CreateStructureCaption(caption);
 
 			if (PrimaryFormat == MoleculeFormat.Chime)
@@ -302,7 +302,7 @@ namespace Mobius.Data
 			try
 			{
 
-				MolLib1.Molecule mol = new MolLib1.Molecule(GetMolfileString());
+				CdkMol mol = new CdkMol(GetMolfileString());
 				mol.RemoveStructureCaption();
 
 				if (PrimaryFormat == MoleculeFormat.Chime)
@@ -331,7 +331,7 @@ namespace Mobius.Data
 
 		public static int AdjustBondLengthToValidRange(int bondLen)
 		{
-			return MolLib1.Molecule.AdjustBondLengthToValidRange(bondLen);
+			return CdkMol.AdjustBondLengthToValidRange(bondLen);
 		}
 
 		// Conversions
@@ -427,8 +427,8 @@ namespace Mobius.Data
 		{
 			MoleculeMx cs2;
 
-			MolLib1.Molecule mol = new MolLib1.Molecule(GetMolfileString());
-			MolLib1.Molecule mol2 = mol.Convert((int)flags, name);
+			CdkMol mol = new CdkMol(GetMolfileString());
+			CdkMol mol2 = mol.Convert((int)flags, name);
 
 			if (PrimaryFormat == MoleculeFormat.Chime)
 				cs2 = new MoleculeMx(MoleculeFormat.Chime, mol2.ChimeString);
@@ -454,7 +454,7 @@ namespace Mobius.Data
 			fs.Read(ba, 0, ba.Length);
 			fs.Close();
 
-			MolLib1.StructureConverter sc = new MolLib1.StructureConverter();
+			CdkMol.StructureConverter sc = new CdkMol.StructureConverter();
 			sc.SketchData = ba;
 			string molFile = sc.MolfileString;
 			MoleculeMx cs = new MoleculeMx(MoleculeFormat.Molfile, molFile);
@@ -828,7 +828,7 @@ namespace Mobius.Data
 
 		public static string StructureAccessNotAuthorizedChimeString
 		{
-			get { return MolLib1.StructureConverter.MolfileStringToChimeString(StructureAccessNotAuthorizedMolfile); }
+			get { return CdkMol.StructureConverter.MolfileStringToChimeString(StructureAccessNotAuthorizedMolfile); }
 		}
 
 		/// <summary>
@@ -2024,124 +2024,6 @@ M  END
 			return ssm;
 		}
 
-	}
-
-	/// <summary>
-	/// Structure search types
-	/// Use powers of 2 to allow multiple types to be combined
-	/// </summary>
-
-	public enum StructureSearchType
-	{
-		Unknown = 0,
-		Substructure = 1,
-		MolSim = 2,
-		FullStructure = 4,
-		MatchedPairs = 8,
-		SmallWorld = 16,
-		Related = 32
-	}
-
-	/// <summary>
-	/// StructureSearchType Utilities
-	/// </summary>
-
-	public class SST : StructureSearchTypeUtil { } // alias
-
-	public class StructureSearchTypeUtil
-	{
-		public static string StructureSearchTypeToExternalName(StructureSearchType sst)
-		{
-			if (sst == StructureSearchType.Unknown) return "";
-
-			string txt = sst.ToString(); // default name
-
-			if (sst == StructureSearchType.Substructure)
-				txt = "Substructure";
-
-			else if (sst == StructureSearchType.MolSim)
-				txt = "Similar";
-
-			else if (sst == StructureSearchType.MatchedPairs)
-				txt = "Matched Pair";
-
-			return txt;
-		}
-
-		public static bool IsFull(StructureSearchType searchTypes) => (searchTypes & StructureSearchType.FullStructure) != 0;
-		public static bool IsMmp(StructureSearchType searchTypes) => (searchTypes & StructureSearchType.MatchedPairs) != 0;
-		public static bool IsSw(StructureSearchType searchTypes) => (searchTypes & StructureSearchType.SmallWorld) != 0;
-		public static bool IsSim(StructureSearchType searchTypes) => (searchTypes & StructureSearchType.MolSim) != 0;
-		public static bool IsSSS(StructureSearchType searchTypes) => (searchTypes & StructureSearchType.Substructure) != 0;
-
-	}
-
-	/// <summary>
-	/// Full structure search types
-	/// </summary>
-
-	public class FullStructureSearchType
-	{
-		public const string Exact = "All"; // complete match
-		public const string Fragment = "STE/BON"; // single fragment ignoring other fragments/counterions
-		public const string Isomer = "BON"; // single fragment, no stereo, ignoring other fragments/counterions
-		public const string Tautomer = "TAU"; // tautomers ignoring charge, stereo, fragments etc
-		public const string Parent = "FRA/BON/MET/MAS/RAD/VAL/STE/POL/TYP/MIX";
-	}
-
-	/// <summary>
-	/// Similarity search types
-	/// </summary>
-
-	public enum SimilaritySearchType
-	{
-		Unknown = 0,
-		Normal = 1, // Normal
-		Sub = 2, // Supersimilarity
-		Super = 3, // Subsimilarity
-		ECFP4 = 4 // Extended Connectectivity FingerPrint a max diameter of 4 for each circular neighborhood considered
-	}
-
-	public enum AtomNumberDisplayMode
-	{
-		None = 0,
-		All = 1,
-		AAMapped = 2
-	}
-
-	/// <summary>
-	/// Types of fingerprints currently available (based on CDK types)
-	/// </summary>
-
-	public enum FingerprintType
-	{
-		UndefinedMinusOne = -1,
-		Undefined = 0,
-		Basic = 1,
-		Circular = 2, // ECFPx / FCFPx, must specify subtype
-		Extended = 3,
-		EState = 4,
-		MACCS = 5,
-		PubChem = 6,
-		ShortestPath = 7, // fails with atom type issue for many structures (e.g. 123456)
-		Signature = 8, // can't convert array fingerprint to bitsetfingerprint
-		Substructure = 9,
-	}
-
-	public class CircularFingerprintType
-	{
-		public const int ECFP0 = 1;
-		public const int ECFP2 = 2;
-		public const int ECFP4 = 3;
-		public const int ECFP6 = 4;
-		public const int FCFP0 = 5;
-		public const int FCFP2 = 6;
-		public const int FCFP4 = 7;
-		public const int FCFP6 = 8;
-
-
-		public const int DefaultCircularClass = ECFP4;
-		public const int DefaultCircularLength = 1024;
 	}
 
 }

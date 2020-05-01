@@ -250,10 +250,6 @@
       <Name>Data</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\MobiusCommon\MolLib1Mx\MolLib1Mx.csproj">
-      <Project>{a80b808b-5cee-4be9-9725-ecc8953e9c51}</Project>
-      <Name>MolLib1Mx</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ClientComponents\ClientComponents.csproj">
       <Project>{6e5faa19-0fe1-4075-b6d2-147de76830cc}</Project>
       <Name>ClientComponents</Name>

@@ -1,6 +1,6 @@
 using Mobius.ComOps;
 using Mobius.Data;
-using Mobius.MolLib1;
+using Mobius.CdkMx;
 //using Mobius.ClientControls; // assign later?
 using Mobius.Helm;
 
@@ -210,7 +210,7 @@ namespace Mobius.ClientComponents
 			else if (ViewsTabControl.SelectedTabPage == MolfileTab)
 			{
 				string molfile = MolfileStringEdit.Text;
-				if (!MolLib1.StructureConverter.IsValidMolfile(molfile))
+				if (!CdkMx.StructureConverter.IsValidMolfile(molfile))
 				{
 					MessageBoxMx.ShowError("The text entered is not a valid molfile");
 					return;
@@ -222,7 +222,7 @@ namespace Mobius.ClientComponents
 			else if (ViewsTabControl.SelectedTabPage == ChimeTab)
 			{
 				string chime = ChimeStringEdit.Text;
-				if (!MolLib1.StructureConverter.IsValidChimeString(chime))
+				if (!CdkMx.StructureConverter.IsValidChimeString(chime))
 				{
 					MessageBoxMx.ShowError("The text entered is not a valid Chime string");
 					return;

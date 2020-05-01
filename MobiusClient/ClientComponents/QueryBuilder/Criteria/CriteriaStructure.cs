@@ -1,7 +1,7 @@
 using Mobius.ComOps;
 using Mobius.Data;
 using Mobius.ServiceFacade;
-using Mobius.MolLib1;
+using Mobius.CdkMx;
 
 using DevExpress.XtraEditors;
 
@@ -171,7 +171,7 @@ namespace Mobius.ClientComponents
 			else if (Psc.SearchType == StructureSearchType.SmallWorld) // smallworld not allowed
 				Psc.SearchType = StructureSearchType.Unknown;
 
-			Molecule.SetStandardDisplayPreferences(QueryMolCtl.MolLib1MoleculeControl.Preferences);
+			CdkMol.SetStandardDisplayPreferences(QueryMolCtl.MolLib1MoleculeControl.Preferences);
 
 			if (Psc.SearchType == StructureSearchType.Substructure)
 			{

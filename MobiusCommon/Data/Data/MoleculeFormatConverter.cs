@@ -1,5 +1,4 @@
 ﻿using Mobius.ComOps;
-using Mobius.MolLib1;
 using Mobius.MolLib2;
 
 using System;
@@ -129,13 +128,13 @@ namespace Mobius.Data
 				return MolfileString;
 
 			else if (Lex.IsDefined(ChimeString))
-				molfile = MolLib1.StructureConverter.ChimeStringToMolfileString(ChimeString);
+				molfile = ChimeStringToMolfileString(ChimeString);
 
 			else if (Lex.IsDefined(SmilesString))
-				molfile = MolLib1.StructureConverter.SmilesStringToMolfileString(SmilesString);
+				molfile = MolLib.SmilesStringToMolfileString(SmilesString);
 
 			else if (Lex.IsDefined(InchiString))
-				molfile = MolLib1.StructureConverter.ICdkUtil.InChIStringToMolfileString(PrimaryValue.ToString());
+				molfile = MolLib.InChIStringToMolfileString(PrimaryValue.ToString());
 
 			else if (Lex.IsDefined(HelmString))
 			{
@@ -177,7 +176,7 @@ namespace Mobius.Data
 				return ChimeString;
 
 			molfile = GetMolfileString();
-			chime = MolLib1.StructureConverter.MolfileStringToChimeString(molfile);
+			chime = MolfileStringToChimeString(molfile);
 
 			ChimeString = chime;
 			return chime;
@@ -196,7 +195,7 @@ namespace Mobius.Data
 				return SmilesString;
 
 			molfile = GetMolfileString();
-			smiles = MolLib1.StructureConverter.MolfileStringToSmilesString(molfile);
+			smiles = MolLib.MolfileStringToSmilesString(molfile);
 
 			SmilesString = smiles;
 			return smiles;
@@ -412,14 +411,14 @@ namespace Mobius.Data
 			else if (PrimaryFormat == MoleculeFormat.Molfile && newType == MoleculeFormat.Chime)
 			{
 				if (!Lex.IsNullOrEmpty(MolfileString))
-					ChimeString = MolLib1.StructureConverter.MolfileStringToChimeString(MolfileString);
+					ChimeString = MolfileStringToChimeString(MolfileString);
 				PrimaryFormat = MoleculeFormat.Chime;
 			}
 
 			else if (PrimaryFormat == MoleculeFormat.Chime && newType == MoleculeFormat.Molfile)
 			{
 				if (!Lex.IsNullOrEmpty(ChimeString))
-					MolfileString = MolLib1.StructureConverter.ChimeStringToMolfileString(ChimeString);
+					MolfileString = ChimeStringToMolfileString(ChimeString);
 				PrimaryFormat = MoleculeFormat.Molfile;
 			}
 
@@ -470,19 +469,87 @@ namespace Mobius.Data
 		}
 
 		/// <summary>
-		/// Convert chime to molfile with fixups
+		/// Check if a string is a valid Molfile
+		/// </summary>
+		/// <param name="molfile"></param>
+		/// <returns></returns>
+
+		public static bool IsValidMolfile(string molfile)
+		{
+			if (Lex.IsUndefined(molfile)) return false;
+
+			try
+			{
+				IAtomContainer m = CdkUtil.MolfileToAtomContainer(molfile);
+				if (m != null) return true;
+				else return false;
+			}
+			catch (Exception ex)
+			{
+				return false;
+			}
+
+		}
+
+
+		/// <summary>
+		/// Check if a string is a valid Chime string
 		/// </summary>
 		/// <param name="chime"></param>
 		/// <returns></returns>
 
-		internal string ChimeStringToMolfileString(string chime)
+		public static bool IsValidChimeString(string chime)
 		{
-			if (chime.Contains(" ")) chime = chime.Replace(" ", "");
-			if (chime.Contains("\r")) chime = chime.Replace("\r", "");
-			if (chime.Contains("\n")) chime = chime.Replace("\n", "");
+			if (Lex.IsUndefined(chime)) return false;
 
-			string molFile = MolLib1.StructureConverter.ChimeStringToMolfileString(chime);
-			return molFile;
+			try
+			{
+				string molfile = ChimeStringToMolfileString(chime);
+				return IsValidMolfile(molfile);
+			}
+			catch (Exception ex)
+			{
+				return false;
+			}
+
+		}
+
+		/// <summary>
+		/// Convert a molfile into a chime string
+		/// </summary>
+		/// <param name="molfile"></param>
+		/// <returns></returns>
+
+		public static string MolfileStringToChimeString(string molfile)
+		{
+			if (Lex.IsUndefined(molfile)) return "";
+
+			string chimeString = GZip.CompressToString(molfile); // GZipping now rather than using MDL algorithm
+			if (chimeString == null) chimeString = "";
+			return chimeString;
+		}
+
+
+		/// <summary>
+		/// ChimeStringToMolfileString
+		/// </summary>
+		/// <param name="chimeString"></param>
+		/// <returns></returns>
+
+		public static string ChimeStringToMolfileString(string chimeString)
+		{
+			string molfile;
+
+			if (chimeString.Contains(" ")) chimeString = chimeString.Replace(" ", "");
+			if (chimeString.Contains("\r")) chimeString = chimeString.Replace("\r", "");
+			if (chimeString.Contains("\n")) chimeString = chimeString.Replace("\n", "");
+
+			if (Lex.IsUndefined(chimeString)) return "";
+
+			if (GZip.TryDecompressFromString(chimeString, out molfile)) // GZipping now rather than using MDL algorithm
+				return molfile;
+
+			else return ""; // failed
 		}
 
 	}

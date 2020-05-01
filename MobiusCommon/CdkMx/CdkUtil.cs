@@ -1,6 +1,5 @@
-﻿using Mobius.Data;
+﻿//using Mobius.Data;
 using Mobius.ComOps;
-using Mobius.MolLib1;
 
 using java.io;
 
@@ -24,8 +23,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-
-//Adding comment to test check-in nwr 9/13/2019
 
 namespace Mobius.CdkMx
 {
@@ -53,7 +50,8 @@ namespace Mobius.CdkMx
 	///    http://www.frijters.net/ikvmbin-7.4.5046.zip
 	/// </summary>
 
-	public partial class CdkUtil : ICdkUtil
+	public partial class CdkMol // : IMolLibMx
+
 	{
 		public static IChemObjectBuilder DefaultChemObjectBuilder
 		{
@@ -223,7 +221,7 @@ namespace Mobius.CdkMx
 				if (filterOutCommonCounterIons)
 				{
 					if (CommonSmallFragments.Contains(fragSmiles) ||
-					 CdkUtil.GetHeavyAtomCount(fragMol) <= 6)
+					 GetHeavyAtomCount(fragMol) <= 6)
 						continue;
 				}
 
@@ -532,67 +530,6 @@ namespace Mobius.CdkMx
 			return smiles;
 		}
 
-		/// <summary>
-		/// Convert SmilesToMolfile
-		/// </summary>
-		/// <param name="smiles"></param>
-		/// <returns></returns>
-
-		public string SmilesStringToMolfileString(string smiles)
-		{
-			if (Lex.IsUndefined(smiles)) return "";
-
-			IAtomContainer mol = SmilesToAtomContainer(smiles);
-			if (mol.getAtomCount() == 0) return "";
-
-			string molfile = AtomContainerToMolFile(mol);
-			return molfile;
-		}
-
-		/// <summary>
-		/// Convert molfile to Smiles
-		/// </summary>
-		/// <param name="molfile"></param>
-		/// <returns></returns>
-
-		public string MolfileStringToSmilesString(string molfile)
-		{
-			if (Lex.IsUndefined(molfile)) return "";
-
-			IAtomContainer mol = MolfileToAtomContainer(molfile);
-			if (mol.getAtomCount() == 0) return "";
-
-			string smiles = AtomContainerToSmiles(mol);
-			return smiles;
-		}
-
-
-		/// <summary>
-		/// SmilesToAtomContainer
-		/// </summary>
-		/// <param name="smiles"></param>
-		/// <returns></returns>
-
-		public static IAtomContainer SmilesToAtomContainer(string smiles)
-		{
-			try
-			{
-				SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder);
-
-				IAtomContainer mol = sp.parseSmiles(smiles); // may get "could not parse error" for some CorpIds, e.g.: 3401013, 3418008, 3428937
-
-				ConfigureAtomContainer(mol);
-
-				return mol;
-			}
-
-			catch (Exception ex)
-			{
-				ParseSmilesErrorCount++;
-				LastParseSmilesError = ex.Message;
-				throw new Exception(ex.Message, ex);
-			}
-		}
 
 		/// <summary>
 		/// GetMolecularFormula
@@ -729,6 +666,69 @@ namespace Mobius.CdkMx
 
 			return molMain;
 		}
+
+		/// <summary>
+		/// Convert SmilesToMolfile
+		/// </summary>
+		/// <param name="smiles"></param>
+		/// <returns></returns>
+
+		public string SmilesStringToMolfileString(string smiles)
+		{
+			if (Lex.IsUndefined(smiles)) return "";
+
+			IAtomContainer mol = SmilesToAtomContainer(smiles);
+			if (mol.getAtomCount() == 0) return "";
+
+			string molfile = AtomContainerToMolFile(mol);
+			return molfile;
+		}
+
+		/// <summary>
+		/// Convert molfile to Smiles
+		/// </summary>
+		/// <param name="molfile"></param>
+		/// <returns></returns>
+
+		public string MolfileStringToSmilesString(string molfile)
+		{
+			if (Lex.IsUndefined(molfile)) return "";
+
+			IAtomContainer mol = MolfileToAtomContainer(molfile);
+			if (mol.getAtomCount() == 0) return "";
+
+			string smiles = AtomContainerToSmiles(mol);
+			return smiles;
+		}
+
+
+		/// <summary>
+		/// SmilesToAtomContainer
+		/// </summary>
+		/// <param name="smiles"></param>
+		/// <returns></returns>
+
+		public static IAtomContainer SmilesToAtomContainer(string smiles)
+		{
+			try
+			{
+				SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder);
+
+				IAtomContainer mol = sp.parseSmiles(smiles); // may get "could not parse error" for some CorpIds, e.g.: 3401013, 3418008, 3428937
+
+				ConfigureAtomContainer(mol);
+
+				return mol;
+			}
+
+			catch (Exception ex)
+			{
+				ParseSmilesErrorCount++;
+				LastParseSmilesError = ex.Message;
+				throw new Exception(ex.Message, ex);
+			}
+		}
+
 
 		/// <summary>
 		/// Convert an InChI string to an IAtomContainer

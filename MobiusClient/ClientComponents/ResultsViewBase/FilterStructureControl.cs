@@ -1,6 +1,6 @@
 using Mobius.ComOps;
 using Mobius.Data;
-using Mobius.MolLib1;
+using Mobius.CdkMx;
 using Mobius.ServiceFacade;
 
 using DevExpress.XtraEditors;
@@ -70,7 +70,7 @@ namespace Mobius.ClientComponents
 
 		private void Structure_MouseClick(object sender, MouseEventArgs e)
 		{
-			if (e.Button != MouseButtons.Right) MolLib1.MoleculeControl.EditStructure(StructureRenditor); // edit on single click
+			if (e.Button != MouseButtons.Right) CdkMx.MoleculeControl.EditStructure(StructureRenditor); // edit on single click
 			return;
 		}
 
@@ -91,7 +91,7 @@ namespace Mobius.ClientComponents
 			else
 			{
 				// Chime: CYAAFQwAncwQGj8h7GZ^yjgsajoFd0PQ1OYrnIdaPTl0lGnQYLHH2prJeJi$BhUHcMsE1TyQisJflsW2r293v92iC1^wVm$8wwLM7^krIFa8A1X6Jvu8VIYgCgJ8$y1RuqgCc5ifKbMAflB
-				string chimeString = MolLib1.StructureConverter.MolfileStringToChimeString(StructureRenditor.MolfileString);
+				string chimeString = CdkMx.StructureConverter.MolfileStringToChimeString(StructureRenditor.MolfileString);
 				qc.SecondaryCriteria = "SSS ( " + qc.MetaColumn.Name + ", " + Lex.AddSingleQuotes(chimeString) + ") = 1";
 				qc.SecondaryCriteriaDisplay = qc.ActiveLabel + " contains substructure";
 			}

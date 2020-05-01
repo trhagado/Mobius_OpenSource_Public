@@ -33,10 +33,10 @@ namespace Mobius.ComOps
 	}
 
 	/// <summary>
-	/// Interface to Cdk functionality for ChemicalStructure Class
+	/// Interface to MoleculeLibrary (e.g. Cdk) functionality for MoleculeMx Class
 	/// </summary>
 
-	public interface ICdkUtil
+	public interface IMolLibMx
 	{
 		/// <summary>
 		/// Convert an Inchi string to a molfile

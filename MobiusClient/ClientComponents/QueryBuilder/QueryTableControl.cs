@@ -1,6 +1,6 @@
 ﻿using Mobius.ComOps;
 using Mobius.Data;
-using Mobius.MolLib1;
+using Mobius.CdkMx;
 
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views;
@@ -785,7 +785,7 @@ namespace Mobius.ClientComponents
 				int miWidth = MoleculeMx.PixelsToMilliinches(pixWidth);
 
 				Rectangle destRect = new Rectangle(0, 0, miWidth, 10000);
-				MolLib1.Molecule molLib1Mol = mol.FitStructureIntoRectangle(ref destRect, MoleculeMx.StandardBondLength, 0, 0, false, 11000, out boundingRect);
+				CdkMx.CdkMol molLib1Mol = mol.FitStructureIntoRectangle(ref destRect, MoleculeMx.StandardBondLength, 0, 0, false, 11000, out boundingRect);
 				int pixHeight = MoleculeMx.MilliinchesToPixels(destRect.Height);
 				DisplayPreferences dp = mol.GetDisplayPreferences();
 				if (Lex.Contains(qc.Criteria, "SSS")) // no H display if SS query

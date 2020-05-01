@@ -30,8 +30,6 @@ namespace Mobius.CdkMx
 
 	public class CdkFingerprint
 	{
-		CdkUtil CdkUtil = new CdkUtil();
-
 		static MACCSFingerprinter MACCSFp = null;
 
 		/// <summary>
@@ -240,7 +238,7 @@ namespace Mobius.CdkMx
 			if (corpId > 0) fileName = fileName.Replace("12345", corpId.ToString());
 			string molfile = FileUtil.ReadFile(fileName);
 			//string molfile = FileUtil.ReadFile();
-			IAtomContainer mol = CdkUtil.MolfileToAtomContainer(molfile);
+			IAtomContainer mol = CdkMol.MolfileToAtomContainer(molfile);
 
 			//int fpClass = CircularFingerprinter.CLASS_ECFP6; // FP diameter
 			//int fpLen = 2048; // folded binary fp length
@@ -286,7 +284,7 @@ namespace Mobius.CdkMx
 			{
 				mol = (IAtomContainer)rdr.next();
 
-				mol = CdkUtil.GetLargestMoleculeFragment(mol);
+				mol = CdkMol.GetLargestMoleculeFragment(mol);
 
 				ICountFingerprint cfp1 = cfp.getCountFingerprint(mol); // get hash values and counts for each
 

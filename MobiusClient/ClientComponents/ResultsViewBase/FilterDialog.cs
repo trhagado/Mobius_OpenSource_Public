@@ -1,7 +1,7 @@
 using Mobius.ComOps;
 using Mobius.Data;
 using Mobius.ServiceFacade;
-using Mobius.MolLib1;
+using Mobius.CdkMx;
 
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
@@ -338,7 +338,7 @@ namespace Mobius.ClientComponents
 
 		private void EditStructure_Click(object sender, EventArgs e)
 		{
-			MolLib1.MoleculeControl.EditStructure(FilterStructureControl.StructureRenditor);
+			CdkMx.MoleculeControl.EditStructure(FilterStructureControl.StructureRenditor);
 			return;
 		}
 

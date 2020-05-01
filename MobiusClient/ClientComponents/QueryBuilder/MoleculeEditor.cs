@@ -1,7 +1,7 @@
 ﻿using Mobius.ComOps;
 using Mobius.Data;
 using Mobius.Helm;
-using Mobius.MolLib1;
+using Mobius.CdkMx;
 
 using DevExpress.XtraEditors;
 
@@ -122,8 +122,8 @@ namespace Mobius.ClientComponents
 			try
 			{
 				Instance.MoleculeCtl.Molecule = mol;
-				MolLib1.MoleculeControl molCtl = Instance.MoleculeCtl.MolLib1MoleculeControl;
-				molCtl.EditorReturned += new Mobius.MolLib1.EditorReturnedHandler(Instance.MolLib1EditorReturned);
+				CdkMx.MoleculeControl molCtl = Instance.MoleculeCtl.MolLib1MoleculeControl;
+				molCtl.EditorReturned += new Mobius.CdkMx.EditorReturnedHandler(Instance.MolLib1EditorReturned);
 
 				Instance.Text = title;
 				//molCtl.RenditorName = title; // shows as tooltip on editor Done button
@@ -165,7 +165,7 @@ namespace Mobius.ClientComponents
 
 		private void Call_MolLib1_EditStructure()
 		{
-			MolLib1.MoleculeControl.EditStructure(Instance.MoleculeCtl.MolLib1MoleculeControl);
+			CdkMx.MoleculeControl.EditStructure(Instance.MoleculeCtl.MolLib1MoleculeControl);
 			return;
 		}
 
@@ -175,7 +175,7 @@ namespace Mobius.ClientComponents
 /// <param name="sender"></param>
 /// <param name="e"></param>
 
-		private void MolLib1EditorReturned(object sender, MolLib1.EditorReturnedEventArgs e)
+		private void MolLib1EditorReturned(object sender, CdkMx.EditorReturnedEventArgs e)
 		{
 			if (MoleculeChanged)
 			{

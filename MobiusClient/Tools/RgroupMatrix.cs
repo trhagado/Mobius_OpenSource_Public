@@ -1,8 +1,7 @@
 ﻿using Mobius.ComOps;
 using Mobius.Data;
-using Mobius.MolLib1;
 using Mobius.ClientComponents;
-using Mobius.MolLib1;
+using Mobius.CdkMx;
 using Mobius.ServiceFacade;
 
 using DevExpress.XtraEditors;
@@ -347,7 +346,7 @@ namespace Mobius.Tools
 					mc = mt.AddMetaColumn(rStr + "Str", rStr, MetaColumnType.Structure, ColumnSelectionEnum.Selected, 12);
 					if (ri == 0 && ShowCoreStructure.Checked) // include core structure above R1 if requested
 					{
-						string chimeString = MolLib1.StructureConverter.MolfileStringToSmilesString(SQuery.MolfileString);
+						string chimeString = CdkMolMx.StructureConverter.MolfileStringToSmilesString(SQuery.MolfileString);
 						mc.Label = "R1, Core\tChime=" + chimeString;
 						mc.Width = 25;
 					}

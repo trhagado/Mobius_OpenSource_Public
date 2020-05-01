@@ -301,6 +301,10 @@
       <Name>SpotfireDocumentClasses</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\CdkMx\CdkMx.csproj">
+      <Project>{203d17b0-f97c-4c9b-b406-cae30dad3241}</Project>
+      <Name>CdkMx</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ComOps\ComOps.csproj">
       <Project>{c8c32a85-6c6b-462f-b15e-cdc53b03e521}</Project>
       <Name>ComOps</Name>
@@ -313,10 +317,6 @@
     <ProjectReference Include="..\HelmWebServices\HelmWebServices.csproj">
       <Project>{f8fefca4-b843-4cbc-bef4-d182e259b3ad}</Project>
       <Name>HelmWebServices</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MolLib1Mx\MolLib1Mx.csproj">
-      <Project>{a80b808b-5cee-4be9-9725-ecc8953e9c51}</Project>
-      <Name>MolLib1Mx</Name>
     </ProjectReference>
     <ProjectReference Include="..\MolLib2Mx\MolLib2Mx.csproj">
       <Project>{e9e3b546-1b9f-44e0-8d75-f9dc31b51c43}</Project>

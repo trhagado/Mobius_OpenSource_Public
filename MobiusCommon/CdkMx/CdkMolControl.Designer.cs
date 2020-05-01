@@ -1,6 +1,6 @@
-﻿namespace Mobius.MolLib1
+﻿namespace Mobius.CdkMx
 {
-	partial class MolLib1Control
+	partial class CdkMolControl
 	{
 		/// <summary> 
 		/// Required designer variable.

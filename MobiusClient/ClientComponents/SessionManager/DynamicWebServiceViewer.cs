@@ -1,4 +1,4 @@
-﻿using Mobius.MolLib1;
+﻿using Mobius.CdkMx;
 
 using System;
 using System.Data;
@@ -49,7 +49,7 @@ namespace Mobius.ClientComponents.Dialogs
 
 				int rowsadded = 0;
 				int totalRows = rootObject.returnValue.rows.Length;
-				MolLib1.MoleculeControl hr = new MolLib1.MoleculeControl();
+				CdkMx.MoleculeControl hr = new CdkMx.MoleculeControl();
 				hr.Preferences.BackColor = Color.Transparent;
 
 				int MaxDisplayRows = 100;

@@ -62,6 +62,9 @@
       <HintPath>..\ExternalLibraries\CDK.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="DevExpress.Data.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="IKVM.OpenJDK.Core, Version=7.4.5196.2030, Culture=neutral, PublicKeyToken=d25ce09139c726a9, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\MobiusCommon\ExternalLibraries\IKVM.OpenJDK.Core.dll</HintPath>
@@ -74,6 +77,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -83,6 +87,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CdkFingerprint.cs" />
+    <Compile Include="CdkMol.cs" />
+    <Compile Include="CdkMolControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CdkMolControl.Designer.cs">
+      <DependentUpon>CdkMolControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="CdkUtil.cs" />
     <Compile Include="CdkUtil2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,19 +105,15 @@
       <Name>ComOps</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\MobiusCommon\Data\Data.csproj">
-      <Project>{d4397193-c9db-4a7f-a047-98d40ac12647}</Project>
-      <Name>Data</Name>
-      <Private>False</Private>
+    <ProjectReference Include="..\HelmWebEditor\HelmWebEditor.csproj">
+      <Project>{6e5a710d-d31a-4a3e-bb3b-e4212921261a}</Project>
+      <Name>HelmWebEditor</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MolLib1Mx\MolLib1Mx.csproj">
-      <Project>{a80b808b-5cee-4be9-9725-ecc8953e9c51}</Project>
-      <Name>MolLib1Mx</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MolLib2Mx\MolLib2Mx.csproj">
-      <Project>{e9e3b546-1b9f-44e0-8d75-f9dc31b51c43}</Project>
-      <Name>MolLib2Mx</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CdkMolControl.resx">
+      <DependentUpon>CdkMolControl.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

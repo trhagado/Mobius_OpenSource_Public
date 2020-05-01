@@ -174,10 +174,6 @@
       <Project>{11b976d5-a936-4456-bcaa-93c179b21e9f}</Project>
       <Name>MetaFactory</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\MobiusCommon\MolLib1Mx\MolLib1Mx.csproj">
-      <Project>{a80b808b-5cee-4be9-9725-ecc8953e9c51}</Project>
-      <Name>MolLib1Mx</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\MobiusCommon\MolLib2Mx\MolLib2Mx.csproj">
       <Project>{e9e3b546-1b9f-44e0-8d75-f9dc31b51c43}</Project>
       <Name>MolLib2Mx</Name>

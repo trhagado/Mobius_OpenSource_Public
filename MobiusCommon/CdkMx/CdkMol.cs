@@ -1,8 +1,22 @@
-﻿using Mobius.ComOps;
+﻿//using Mobius.Data;
+using Mobius.ComOps;
+
+using cdk = org.openscience.cdk;
+using org.openscience.cdk;
+using org.openscience.cdk.inchi;
+using org.openscience.cdk.interfaces;
+using org.openscience.cdk.fingerprint;
+using org.openscience.cdk.smiles;
+using org.openscience.cdk.tools.manipulator;
+using org.openscience.cdk.aromaticity;
+using org.openscience.cdk.graph;
+using org.openscience.cdk.qsar.result;
+using org.openscience.cdk.io;
+using org.openscience.cdk.io.iterator;
+using org.openscience.cdk.tools;
 
 using System;
 using System.IO;
-using System.Linq;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Collections;
@@ -11,22 +25,25 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace Mobius.MolLib1
+namespace Mobius.CdkMx
 {
 
 		/// <summary>
-		/// Wrapper for MolLib1 native Molecule class
+		/// Wrapper for native CDK Molecule class
 		/// </summary>
 
-	public class Molecule
+	public partial class CdkMol // : IMolLibMx
 	{
-		public NativeMolecule NativeMolecule = null; // native format library molecule
+		public String MolfileString;
+		public IAtomContainer NativeCdkMol = null; // native format library molecule
+		public string HighlightChildren = "";
+		public Color HighlightColor = Color.Blue;
 
 		/// <summary>
 		/// Basic constructor
 		/// </summary>
 
-		public Molecule()
+		public CdkMol()
 		{
 			return;
 		}
@@ -37,7 +54,7 @@ namespace Mobius.MolLib1
 		/// </summary>
 		/// <param name="molfile"></param>
 
-		public Molecule(string molfile)
+		public CdkMol(string molfile)
 		{
 			MolfileString = molfile;
 		}
@@ -47,7 +64,7 @@ namespace Mobius.MolLib1
 		/// </summary>
 		/// <param name="molfile"></param>
 
-		public Molecule(
+		public CdkMol(
 			StructureType structureType,
 			string molString)
 		{
@@ -56,66 +73,9 @@ namespace Mobius.MolLib1
 			else if (structureType == StructureType.MolFile)
 				MolfileString = molString;
 
-			else if (structureType == StructureType.Chime)
-				ChimeString = molString;
-
 			else throw new ArgumentException("Unsupported StructureFormat: " + structureType);
 
 			return;
-		}
-
-		/// <summary>
-		/// MolfileString form of molecule
-		/// </summary>
-
-		public string MolfileString
-		{
-			get
-			{
-				if (NativeMolecule != null)
-					throw new NotImplementedException();
-
-				else return "";
-			}
-
-			set
-			{
-				if (Lex.IsDefined(value))
-				{
-					throw new NotImplementedException();
-				}
-
-				else NativeMolecule = new NativeMolecule();
-			}
-		}
-
-		/// <summary>
-		/// ChimeString form of molecule
-		/// </summary>
-
-		public string ChimeString
-		{
-			get
-			{
-				if (NativeMolecule != null)
-				{
-					string molFile = StructureConverter.NativeMoleculeToMolfileString(NativeMolecule);
-					return StructureConverter.MolfileStringToChimeString(molFile);
-				}
-
-				else return "";
-			}
-
-			set
-			{
-				if (Lex.IsDefined(value))
-				{
-					string molFile = StructureConverter.ChimeStringToMolfileString(value);
-					NativeMolecule = StructureConverter.MolfileStringToNativeMolecule(molFile);
-				}
-
-				else NativeMolecule = new NativeMolecule();
-			}
 		}
 
 		/// <summary>
@@ -201,7 +161,7 @@ namespace Mobius.MolLib1
 
 		public RectangleF GetBoundingBox()
 		{
-			NativeMolecule mol = NativeMolecule;
+			IAtomContainer mol = NativeCdkMol;
 
 			float left = 0, right = 0, top = 0, bottom = 0;
 			throw new NotImplementedException();
@@ -222,7 +182,7 @@ namespace Mobius.MolLib1
 		{
 			byte[] ba;
 			FileStream fs;
-			StructureConverter sc;
+			//StructureConverter sc;
 			float top, bottom, left, right, height, width, strBottom, hCenter, drop, stdBndLen, scale, fontSize, bondThickness;
 			int txtLen;
 			Bitmap bm;
@@ -249,7 +209,6 @@ namespace Mobius.MolLib1
 
 		public int FixSingleAtomHydrogens()
 		{
-			NativeMolecule m = NativeMolecule;
 			throw new NotImplementedException();
 		}
 
@@ -278,7 +237,6 @@ namespace Mobius.MolLib1
 		{
 			byte[] ba;
 			FileStream fs;
-			StructureConverter sc;
 			float top, bottom, left, right, height, width, strBottom, hCenter, drop;
 			int txtLen;
 			string fieldName = "StructureCaption=";
@@ -297,7 +255,6 @@ namespace Mobius.MolLib1
 		{
 			int stereoAtoms = 0, stereoBonds = 0;
 
-			NativeMolecule m = NativeMolecule; // operate on active molecule
 			throw new NotImplementedException();
 		}
 
@@ -313,7 +270,6 @@ namespace Mobius.MolLib1
 			int removedCnt = 0;
 			int sgi = 0;
 
-			NativeMolecule m = NativeMolecule;
 			throw new NotImplementedException();
 		}
 
@@ -337,15 +293,13 @@ namespace Mobius.MolLib1
 		/// <param name="name">Name to go in first line</param>
 		/// <returns></returns>
 
-		public Molecule Convert(
+		public CdkMol Convert(
 			int intFlags,
 			string name)
 		{
 			int i1, i2, optionsProcessed = 0;
 
 			MoleculeTransformationFlags flags = (MoleculeTransformationFlags)intFlags;
-
-			NativeMolecule m = NativeMolecule;
 
 			throw new NotImplementedException();
 		}
@@ -357,8 +311,6 @@ namespace Mobius.MolLib1
 
 		bool GetLargestFragmentOnly()
 		{
-			NativeMolecule m = NativeMolecule;
-
 			throw new NotImplementedException();
 		}
 
@@ -369,8 +321,6 @@ namespace Mobius.MolLib1
 
 		bool RemoveHydrogens()
 		{
-			NativeMolecule m = NativeMolecule;
-
 			throw new NotImplementedException();
 		}
 
@@ -392,7 +342,7 @@ namespace Mobius.MolLib1
 		/// </summary>
 		/// <returns></returns>
 
-		public NativeMolecule RemoveRGroupAttachmentPointAtoms()
+		public CdkMol RemoveRGroupAttachmentPointAtoms()
 		{
 			throw new NotImplementedException();
 		}
@@ -407,59 +357,6 @@ namespace Mobius.MolLib1
 			int height)
 		{
 			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// Get Standard display preferences
-		/// </summary>
-		/// <returns></returns>
-
-		public static DisplayPreferences GetStandardDisplayPreferences()
-		{
-			DisplayPreferences dp = new DisplayPreferences();
-			SetStandardDisplayPreferences(dp);
-			return dp;
-		}
-
-		/// <summary>
-		/// Set standard display preferences for a Renderer/Reditor control
-		/// </summary>
-		/// <returns></returns>
-
-		public static DisplayPreferences SetStandardDisplayPreferences(MoleculeControl molCtl)
-		{
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// Set standard display preferences for a renderer
-		/// </summary>
-		/// <param name="dp"></param>
-
-		public static void SetStandardDisplayPreferences(
-			DisplayPreferences dp)
-		{
-			return; // todo - throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// One-time initialization of display preferences
-		/// </summary>
-
-		static void InitializeDisplayPreferences()
-		{
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// Use new (2013+) stereo display preferences
-		/// </summary>
-		/// <param name="dp"></param>
-
-		public static void SetNewStereoDisplayPreferences(
-			DisplayPreferences dp)
-		{
-			return; // todo - throw new NotImplementedException();
 		}
 
 		/// <summary>
@@ -514,28 +411,6 @@ namespace Mobius.MolLib1
 
 	}
 
-	/// <summary>
-	/// Native library molecule format
-	/// Replace this class with references to the native molecule associated with this wrapped molecule class
-	/// </summary>
-
-	public class NativeMolecule
-	{
-		public string HighlightChildren = "";
-		public Color HighlightColor = Color.Blue;
-	}
-
-	/// <summary>
-	/// Native library DisplayPreferences
-	/// </summary>
-
-	public class DisplayPreferences
-	{
-		public double StandardBondLength = -1;
-		public HydrogenDisplayMode HydrogenDisplayMode = HydrogenDisplayMode.HeteroOrTerminal;
-		public Color BackColor = Color.Transparent;
-	}
-
 	public delegate void EditorReturnedHandler(object sender, EditorReturnedEventArgs e);
 
 	/// <summary>
@@ -555,7 +430,7 @@ namespace Mobius.MolLib1
 		/// </summary>
 		/// <param name="mol"></param>
 
-		public void SetMolecule(Molecule mol)
+		public void SetMolecule(CdkMol mol)
 		{
 			throw new NotImplementedException();
 		}
@@ -637,63 +512,11 @@ namespace Mobius.MolLib1
 			}
 		}
 
-		public static void SetStandardDisplayPreferences(MoleculeControl molCtl)
-		{
-			return; // throw new NotImplementedException();
-		}
-
 	}
 
 	public class EditorReturnedEventArgs : EventArgs
 	{
 		public bool Validated;
-	}
-
-	/// <summary>
-	/// StructureFormat
-	/// </summary>
-
-	public enum StructureType
-	{
-		Unknown = 0,
-		MolFile = 1,
-		Smiles = 2,
-		Chime = 3
-	}
-
-	public enum HPositionEnum
-	{
-		OFF = -1,
-		AUTO = 0,
-		RIGHT = 1,
-		LEFT = 2,
-		TOP = 3,
-		BOTTOM = 4,
-		DOT = 5,
-		CIRCLE = 6
-	}
-	public enum HDisplayEnum
-	{
-		OFF = 0,
-		HETERO = 1,
-		HETEROTERMINAL = 2,
-		ALL = 3,
-		NONE = 4
-	}
-	public enum HydrogenDisplayMode
-	{
-		Off = 0,
-		Hetero = 1,
-		Terminal = 2,
-		HeteroOrTerminal = 3,
-		All = 4
-	}
-	public enum StereoParityEnum
-	{
-		UNKNOWN = 0,
-		ODD = 1,
-		EVEN = 2,
-		EITHER = 3
 	}
 
 }

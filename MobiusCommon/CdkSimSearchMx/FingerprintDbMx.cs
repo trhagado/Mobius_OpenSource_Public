@@ -450,7 +450,7 @@ namespace Mobius.CdkSearchMx
 										chime = rdr.GetClob(1);
 										if (Lex.IsDefined(chime))
 										{
-											molFile = MolLib1.StructureConverter.ChimeStringToMolfileString(chime); // convert Chime to MolFile
+											molFile = CdkMx.StructureConverter.ChimeStringToMolfileString(chime); // convert Chime to MolFile
 											mol = CdkUtil.MolfileToAtomContainer(molFile);
 										}
 									}

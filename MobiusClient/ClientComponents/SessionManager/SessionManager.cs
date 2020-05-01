@@ -1,6 +1,6 @@
 ﻿using Mobius.ComOps;
 using Mobius.Data;
-using Mobius.MolLib1;
+using Mobius.CdkMx;
 using Mobius.Helm;
 using Mobius.CdkMx;
 
@@ -957,7 +957,7 @@ namespace Mobius.ClientComponents
 			Mobius.Data.InterfaceRefs.IUserObjectIUD = new Mobius.ClientComponents.IUserObjectIUDMethods();
 			Mobius.Data.InterfaceRefs.IUserObjectTree = new Mobius.ClientComponents.IUserObjectTreeMethods();
 
-			MolLib1.StructureConverter.ICdkUtil = new Mobius.CdkMx.CdkUtil();
+			CdkMx.StructureConverter.ICdkUtil = new Mobius.CdkMx.CdkUtil();
 		}
 
 		/// <summary>

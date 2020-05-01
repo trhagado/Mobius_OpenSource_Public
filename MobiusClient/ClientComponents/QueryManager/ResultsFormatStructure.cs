@@ -1,7 +1,7 @@
 ﻿using Mobius.ComOps;
 using Mobius.Data;
 using Mobius.ServiceFacade;
-using Mobius.MolLib1;
+using Mobius.CdkMx;
 using Mobius.Helm;
 
 using System;
@@ -50,7 +50,7 @@ namespace Mobius.ClientComponents
 		ResultsField rfld = null,
 		DataRowMx dataRow = null)
 		{
-			MolLib1.Molecule molLib1Mol = null;
+			CdkMol molLib1Mol = null;
 			Rectangle destRect, boundingRect;
 			int height; // formatted  height in milliinches
 			bool markBoundaries;
@@ -109,7 +109,7 @@ namespace Mobius.ClientComponents
 								mol = StrMatcher.HighlightMatchingSubstructure(mol);
 								if (DebugMx.False) // debug
 								{
-									MolLib1.NativeMolecule m = MolLib1.StructureConverter.MolfileStringToNativeMolecule(mol.GetMolfileString());
+									CdkMx.NativeMolecule m = CdkMx.StructureConverter.MolfileStringToNativeMolecule(mol.GetMolfileString());
 									string highlightChildren = m.HighlightChildren;
 									Color highlightColor = m.HighlightColor;
 									if (debug) DebugLog.StopwatchMessage("tHilight", sw);
@@ -290,7 +290,7 @@ namespace Mobius.ClientComponents
 					if (mol.IsChemStructureFormat) // molfile type molecule
 					{
 						if (debug) DebugLog.StopwatchMessage("tBeforeGetDisplayPreferences", sw);
-						MolLib1.DisplayPreferences dp = mol.GetDisplayPreferences();
+						CdkMx.DisplayPreferences dp = mol.GetDisplayPreferences();
 						if (debug) DebugLog.StopwatchMessage("tGetDisplayPreferences", sw);
 
 						desiredBondLength = MoleculeMx.AdjustBondLengthToValidRange(desiredBondLength); // be sure bond len within allowed range 

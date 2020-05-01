@@ -1,6 +1,6 @@
 ﻿
 using Mobius.ComOps;
-using Mobius.MolLib1;
+using Mobius.CdkMx;
 using Mobius.MolLib2;
 using Mobius.Helm;
 
@@ -28,7 +28,7 @@ namespace Mobius.Data
 	public class HelmConverter
 	{
 
-		static HelmWebServiceMx HelmService
+		static HelmWebServiceMx HelmService//
 		{
 			get
 			{

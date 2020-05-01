@@ -329,10 +329,6 @@
       <Project>{f8fefca4-b843-4cbc-bef4-d182e259b3ad}</Project>
       <Name>HelmWebServices</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MolLib1Mx\MolLib1Mx.csproj">
-      <Project>{a80b808b-5cee-4be9-9725-ecc8953e9c51}</Project>
-      <Name>MolLib1Mx</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MolLib2Mx\MolLib2Mx.csproj">
       <Project>{e9e3b546-1b9f-44e0-8d75-f9dc31b51c43}</Project>
       <Name>MolLib2Mx</Name>

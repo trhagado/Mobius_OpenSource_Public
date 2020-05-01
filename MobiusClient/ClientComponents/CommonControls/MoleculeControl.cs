@@ -1,6 +1,6 @@
 ﻿
 using Mobius.ComOps;
-using Mobius.MolLib1;
+using Mobius.CdkMx;
 using Mobius.MolLib2;
 using Mobius.Helm;
 using Mobius.Data;
@@ -92,7 +92,7 @@ namespace Mobius.ClientComponents
 			{
 				MolLib1MoleculeControl.Dock = DockStyle.Fill;
 				//MolLib1MoleculeControl.BorderStyle = BorderStyle.None;
-				MolLib1.MoleculeControl.SetStandardDisplayPreferences(MolLib1MoleculeControl);
+				CdkMx.MoleculeControl.SetStandardDisplayPreferences(MolLib1MoleculeControl);
 
 				HelmControl.HelmMode = Helm.HelmControlMode.BrowserViewOnly; // setup with rendering directly from Chrome browser (not just a bitmap)
 				HelmControl.Dock = DockStyle.Fill;
@@ -307,7 +307,7 @@ namespace Mobius.ClientComponents
 				Molecule = new MoleculeMx(MoleculeMx.PreferredMoleculeFormat);
 
 			if (DisplayChem)
-				MolLib1.MoleculeControl.EditStructure(MolLib1MoleculeControl);
+				CdkMx.MoleculeControl.EditStructure(MolLib1MoleculeControl);
 
 			else if (DisplayHelm)
 				HelmControl.EditMolecule();

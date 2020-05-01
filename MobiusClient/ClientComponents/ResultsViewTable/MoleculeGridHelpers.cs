@@ -1,7 +1,7 @@
 using Mobius.ComOps;
 using Mobius.Data;
 using Mobius.Helm;
-using Mobius.MolLib1;
+using Mobius.CdkMx;
 using Mobius.ServiceFacade;
 
 using DevExpress.XtraEditors;
@@ -2170,7 +2170,7 @@ namespace Mobius.ClientComponents
 			MoleculeMx mol = ci.Rfld.Header as MoleculeMx;
 			if (MoleculeMx.IsUndefined(mol)) return;
 
-			MolLib1.MoleculeControl hr = new MolLib1.MoleculeControl();
+			CdkMx.MoleculeControl hr = new CdkMx.MoleculeControl();
 			hr.Preferences = mol.GetDisplayPreferences();
 			hr.Preferences.BackColor = Color.Transparent;
 			hr.Preferences.HydrogenDisplayMode = HydrogenDisplayMode.Off;

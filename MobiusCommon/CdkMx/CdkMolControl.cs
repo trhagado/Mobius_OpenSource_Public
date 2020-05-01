@@ -14,9 +14,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ComponentModel;
 
-namespace Mobius.MolLib1
+namespace Mobius.CdkMx
 {
-	public partial class MolLib1Control : DevExpress.XtraEditors.XtraUserControl
+	public partial class CdkMolControl : DevExpress.XtraEditors.XtraUserControl
 	{
 		[DefaultValue(MolLib1ControlMode.BrowserViewOnly)]
 		public MolLib1ControlMode HelmMode { get => _helmMode; set => _helmMode = value; }
@@ -58,7 +58,7 @@ namespace Mobius.MolLib1
 		/// Constructor
 		/// </summary>
 
-		public MolLib1Control()
+		public CdkMolControl()
 		{
 			InitializeComponent();
 
