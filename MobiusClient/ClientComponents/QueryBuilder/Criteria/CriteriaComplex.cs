@@ -411,7 +411,7 @@ namespace Mobius.ClientComponents
 				if (!LabeledCriteria.Structures.ContainsKey(sid.ToUpper())) break;
 			}
 
-			string chime = MoleculeMx.MolFileToChimeString(qc.MolString); // get chime string
+			string chime = MoleculeMx.MolFileStringToChimeString(qc.MolString); // get chime string
 			LabeledCriteria.Structures[sid.ToUpper()] = chime; // store sid & associated chime string
 			qc.MolString = chime;
 			string sCriteria = MqlUtil.ConvertQueryColumnStructureCriteriaToMql(qc);

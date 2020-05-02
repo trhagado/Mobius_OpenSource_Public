@@ -368,7 +368,7 @@ namespace Mobius.QueryEngineLibrary
 					CdkUtil.ConfigureAtomContainer(mol);
 					mol = CdkUtil.GenerateCoordinates(mol); // need coords for proper stereo identification
 					string molFile = CdkUtil.AtomContainerToMolFile(mol);
-					LargestFragmentChimeString = MoleculeMx.MolFileToChimeString(molFile); // get chime string
+					LargestFragmentChimeString = MoleculeMx.MolFileStringToChimeString(molFile); // get chime string
 				}
 
 				if (UseMultipleThreads)
@@ -1228,7 +1228,7 @@ namespace Mobius.QueryEngineLibrary
 						sm.MolStringFormat = MoleculeFormat.Smiles; // smiles (in 3 pieces)
 
 						string molfile = CdkUtil.IntegrateAndHilightMmpStructure(sm.MolString);
-						string chime = MoleculeMx.MolFileToChimeString(molfile);
+						string chime = MoleculeMx.MolFileStringToChimeString(molfile);
 						sm.MolString = chime;
 						sm.MolStringFormat = MoleculeFormat.Chime;
 

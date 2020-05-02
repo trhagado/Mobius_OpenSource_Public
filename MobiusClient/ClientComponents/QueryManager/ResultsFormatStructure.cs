@@ -623,7 +623,7 @@ namespace Mobius.ClientComponents
 
 					if (pssc.SearchType == StructureSearchType.Substructure)
 					{
-						string chime = MoleculeMx.MolFileToChimeString(qc.MolString);
+						string chime = MoleculeMx.MolFileStringToChimeString(qc.MolString);
 						if (!String.IsNullOrEmpty(chime))
 						{
 							AlignStructureToQuery = Lex.Contains(psc.Value2, "Orient") || Lex.Contains(psc.Value2, "Align=True");
@@ -644,7 +644,7 @@ namespace Mobius.ClientComponents
 
 					else if (pssc.SearchType == StructureSearchType.Related) // 
 					{
-						string chime = MoleculeMx.MolFileToChimeString(qc.MolString);
+						string chime = MoleculeMx.MolFileStringToChimeString(qc.MolString);
 						if (!String.IsNullOrEmpty(chime))
 						{
 							AlignStructureToQuery = Lex.Contains(psc.Value2, "Orient") || Lex.Contains(psc.Value2, "Align=True");

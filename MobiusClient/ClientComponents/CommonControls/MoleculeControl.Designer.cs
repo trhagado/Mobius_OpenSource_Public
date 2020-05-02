@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			CdkMx.NativeMolecule molecule1 = new CdkMx.CdkMol().NativeCdkMol;
+			CdkMx.NativeMolecule molecule1 = new CdkMx.CdkMol().NativeMol;
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MoleculeControl));
 			this.MolLib1MoleculeControl = new Mobius.CdkMx.MoleculeControl();
 			this.ToolTipController = new DevExpress.Utils.ToolTipController(this.components);

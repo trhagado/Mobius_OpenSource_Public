@@ -1,4 +1,5 @@
 using Mobius.ComOps;
+using Mobius.CdkMx;
 using Mobius.MolLib2;
 
 using System;
@@ -23,7 +24,7 @@ namespace Mobius.Data
 	/// </summary>
 
 	//[Serializable]
-	public partial class MoleculeMx : MobiusDataType
+	public partial class MoleculeMx : MobiusDataType, IMoleculeMx
 	{
 
 		/// <summary>
@@ -47,17 +48,33 @@ namespace Mobius.Data
 		//[DataMember]
 		public MoleculeFormat PrimaryFormat = MoleculeFormat.Unknown;
 
-		public static IMolLibMx MolLib; // link to low level object implementation
+		public IMolLib MolLib => GetMolLibInstance(); // link to low level object implementation
 
-		///////////////////////////////////////////////////////
-		// String format molecule definitions
-		// The MoleculeFormat Type determins the primary type
-		// for the molecule. Values in other formats
-		// indicate the results of runtime conversions
-		// or multiple type values from a data source
-		///////////////////////////////////////////////////////
+		/// <summary>
+		/// Get or create associated IMolLib instance
+		/// </summary>
+		/// <returns></returns>
 
-		public string MolfileString = null;
+    IMolLib GetMolLibInstance()
+    {
+      if (_molLib == null)
+      {
+        _molLib = (IMolLib)new CdkMx.CdkMol(this);
+      }
+
+      return _molLib;
+    }
+    private IMolLib _molLib;
+
+    ///////////////////////////////////////////////////////
+    // String format molecule definitions
+    // The MoleculeFormat Type determins the primary type
+    // for the molecule. Values in other formats
+    // indicate the results of runtime conversions
+    // or multiple type values from a data source
+    ///////////////////////////////////////////////////////
+
+    public string MolfileString = null;
 
 		public string ChimeString = null;
 
@@ -429,7 +446,7 @@ namespace Mobius.Data
 				this.ChimeString = molString;
 			}
 
-			else if (!String.IsNullOrEmpty(SmilesStringToMolfileString(molString)))
+			else if (!String.IsNullOrEmpty(MolLib.SmilesStringToMolfileString(molString)))
 			{ // see if a Smiles string without a qualifying prefix
 				this.PrimaryFormat = MoleculeFormat.Smiles;
 				this.SmilesString = molString;
@@ -611,89 +628,15 @@ namespace Mobius.Data
 			return !IsDefined(mol);
 		}
 
-		/// <summary>
-		/// Get atom count for molecule
-		/// </summary>
-		/// <returns></returns>
+		public int AtomCount => MolLib.AtomCount; // Get atom count for molecule
 
-		public int AtomCount
-		{
-			get
-			{
-				CdkMolMx mol = new CdkMolMx(GetMolfileString());
-				return mol.AtomCount;
-			}
-		}
+		public int HeavyAtomCount => MolLib.HeavyAtomCount; // Get heavy atom count
 
-		/// <summary>
-		/// Get heavy atom count
-		/// </summary>
+		public bool ContainsQueryFeature => MolLib.ContainsQueryFeature; // Return true if mol contains a query feature
 
-		public int HeavyAtomCount
-		{
-			get
-			{
-				CdkMolMx molLib1Mol = new CdkMolMx(GetMolfileString());
-				return molLib1Mol.HeavyAtomCount;
-			}
-		}
+		public double MolWeight => MolLib.MolWeight; // Get mol weight for a molecule 
 
-		/// <summary>
-		/// Return true if mol contains a query feature
-		/// </summary>
-
-		public bool ContainsQueryFeature
-		{
-			get
-			{
-				CdkMolMx molLib1Mol = new CdkMolMx(GetMolfileString());
-				return molLib1Mol.ContainsQueryFeature;
-			}
-		}
-
-		/// <summary>
-		/// Get mol weight for a molecule 
-		/// </summary>
-		/// <returns></returns>
-
-		public double MolWeight
-		{
-			get
-			{
-				string molFile = null;
-				double mw = -1;
-
-				try
-				{
-					molFile = GetMolfileString();
-					mw = MolLib2.Util.GetMolWeight(molFile);
-					return mw;
-				}
-				catch (Exception ex) { return -1; }
-			}
-		}
-
-		/// <summary>
-		/// Get mol formula
-		/// </summary>
-		/// <returns></returns>
-
-		public string MolFormula
-		{
-			get
-			{
-				string molFile = null;
-				string mf = "";
-
-				try
-				{
-					molFile = GetMolfileString();
-					mf = MolLib2.Util.GetMolFormulaDotDisconnect(molFile);
-					return mf;
-				}
-				catch (Exception ex) { return ""; }
-			}
-		}
+		public string MolFormula => MolLib.MolFormula; //Get mol formula
 
 		/// <summary>
 		/// Get molecule name from molFile
@@ -875,15 +818,15 @@ namespace Mobius.Data
 		/// </summary>
 		/// <returns></returns>
 
-		public CdkMolMx CreateMolecule()
+		public CdkMol CreateMolecule()
 		{
-			CdkMolMx molLib1Mol = null;
+			CdkMol molLib1Mol = null;
 
 			if (PrimaryFormat == MoleculeFormat.Chime) // if already chime don't convert
-				molLib1Mol = new CdkMolMx(CdkMolMx.StructureType.Chime, PrimaryValue);
+				molLib1Mol = new CdkMol(CdkMol.StructureType.Chime, PrimaryValue);
 
 			else // convert other molecules to Molfile format
-				molLib1Mol = new CdkMolMx(CdkMolMx.StructureType.MolFile, GetMolfileString());
+				molLib1Mol = new CdkMol(CdkMol.StructureType.MolFile, GetMolfileString());
 
 			return molLib1Mol;
 		}
@@ -897,7 +840,7 @@ namespace Mobius.Data
 			int width,
 			int height)
 		{
-			CdkMolMx m = new CdkMolMx(GetMolfileString());
+			CdkMol m = new CdkMol(GetMolfileString());
 			Metafile mf = m.GetMetaFile(width, height);
 			return mf;
 		}
@@ -966,9 +909,9 @@ namespace Mobius.Data
 
 				else if (Lex.StartsWith(molString, "Fasta=")) return MoleculeFormat.Fasta;
 
-				else if (!String.IsNullOrEmpty(CdkMolMx.StructureConverter.ChimeStringToMolfileString(molString))) return MoleculeFormat.Chime;
+				else if (!String.IsNullOrEmpty(CdkMol.StructureConverter.ChimeStringToMolfileString(molString))) return MoleculeFormat.Chime;
 
-				else if (!String.IsNullOrEmpty(CdkMolMx.StructureConverter.SmilesStringToMolfileString(molString))) return MoleculeFormat.Smiles;
+				else if (!String.IsNullOrEmpty(CdkMol.StructureConverter.SmilesStringToMolfileString(molString))) return MoleculeFormat.Smiles;
 
 				else return MoleculeFormat.Unknown;
 			}
@@ -1025,31 +968,6 @@ namespace Mobius.Data
 			else return false;
 		}
 
-
-		/// <summary>
-		/// Convert molfile to Chime string
-		/// </summary>
-		/// <param name="?"></param>
-		/// <returns></returns>
-
-		public static string MolFileToChimeString(
-			string molFile)
-		{
-			return CdkMolMx.StructureConverter.MolfileStringToChimeString(molFile);
-		}
-
-		/// <summary>
-		/// Convert Chime string to molfile
-		/// </summary>
-		/// <param name="chimestring"></param>
-		/// <returns></returns>
-
-		public static string ChimeStringToMolFile(
-			string chimeString)
-		{
-			return CdkMolMx.StructureConverter.ChimeStringToMolfileString(chimeString);
-		}
-
 		/// <summary>
 		/// Convert molfile to Smiles string
 		/// </summary>
@@ -1059,7 +977,7 @@ namespace Mobius.Data
 		public static string MolFileToSmilesString(
 			string molFile)
 		{
-			return CdkMolMx.StructureConverter.MolfileStringToSmilesString(molFile);
+			return MoleculeFormatConverter.MolfileStringToSmilesString(molFile);
 		}
 
 		/// <summary>
@@ -1071,7 +989,7 @@ namespace Mobius.Data
 		public static string SmilesStringToMolFile(
 			string smilesString)
 		{
-			return CdkMolMx.StructureConverter.SmilesStringToMolfileString(smilesString);
+			return CdkMolsmil.StructureConverter.SmilesStringToMolfileString(smilesString);
 		}
 
 		/// <summary>
@@ -1083,7 +1001,7 @@ namespace Mobius.Data
 		public static string ChimeStringToSmilesString(
 			string chimeString)
 		{
-			return CdkMolMx.StructureConverter.ChimeStringToSmilesString(chimeString);
+			return CdkMol.StructureConverter.ChimeStringToSmilesString(chimeString);
 		}
 
 		/// <summary>
@@ -1095,7 +1013,7 @@ namespace Mobius.Data
 		public static string SmilesStringToChimeString(
 			string smilesString)
 		{
-			return CdkMolMx.StructureConverter.SmilesStringToChimeString(smilesString);
+			return CdkMol.StructureConverter.SmilesStringToChimeString(smilesString);
 		}
 
 		/// <summary>
@@ -1146,7 +1064,7 @@ namespace Mobius.Data
 		public DisplayPreferences GetDisplayPreferences()
 		{
 			DisplayPreferences dp = new DisplayPreferences();
-			CdkMolMx.SetStandardDisplayPreferences(dp);
+			CdkMol.SetStandardDisplayPreferences(dp);
 			return dp;
 		}
 
@@ -1230,7 +1148,7 @@ namespace Mobius.Data
 				else return 1; // cs is null so this is greater
 			}
 
-			return CdkMolMx.CompareMolWeight(this.GetMolfileString(), cs2.GetMolfileString());
+			return CdkMol.CompareMolWeight(this.GetMolfileString(), cs2.GetMolfileString());
 		}
 
 		/// <summary>

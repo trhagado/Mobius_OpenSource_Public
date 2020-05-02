@@ -277,7 +277,7 @@ namespace Mobius.Data
 			string caption)
 		{
 			CdkMol mol = new CdkMol(GetMolfileString());
-			mol.CreateStructureCaption(caption);
+			CdkMol.CreateStructureCaption(caption);
 
 			if (PrimaryFormat == MoleculeFormat.Chime)
 				ChimeString = mol.ChimeString;

@@ -1,5 +1,4 @@
-﻿using Mobius.Data;
-using Mobius.ComOps;
+﻿using Mobius.ComOps;
 
 using java.io;
 
@@ -70,19 +69,19 @@ public class UniChemUtil
 			//if (Lex.StartsWith(molString, "InChI="))
 			//{
 			//	sourceInchi = molString;
-			//	mol = CdkUtil.InChIToAtomContainer(sourceInchi);
+			//	mol = CdkMol.InChIToAtomContainer(sourceInchi);
 			//}
 
 			//else // assume molfile otherwise
 			//{
 			//	molfile = molString;
-			//	mol = CdkUtil.MolfileToAtomContainer(molfile);
+			//	mol = CdkMol.MolfileToAtomContainer(molfile);
 			//}
 
 			if (mol.getAtomCount() <= 1) throw new Exception("Atom count <= 1");
 
-			int pseudoCount = CdkUtil.RemovePseudoAtoms(mol);
-			mol = CdkUtil.AtomContainerToSmilesAndBack(mol, out molSmiles);
+			int pseudoCount = CdkMol.RemovePseudoAtoms(mol);
+			mol = CdkMol.AtomContainerToSmilesAndBack(mol, out molSmiles);
 
 			InChIGeneratorFactory igf = InChIGeneratorFactory.getInstance();
 			try
@@ -101,8 +100,8 @@ public class UniChemUtil
 			//	{
 			//		//if (Lex.IsUndefined(molfile)) throw ex;
 			//		string molfile2 = SimplifyMolfileForInChIGeneration(molile);
-			//		mol = CdkUtil.MolfileToAtomContainer(molfile2);
-			//		mol = CdkUtil.AtomContainerToSmilesAndBack(mol, out molSmiles);
+			//		mol = CdkMol.MolfileToAtomContainer(molfile2);
+			//		mol = CdkMol.AtomContainerToSmilesAndBack(mol, out molSmiles);
 			//		ig = igf.getInChIGenerator(mol);
 			//	}
 			//	catch (Exception ex2)
@@ -114,7 +113,7 @@ public class UniChemUtil
 			if (!IsAcceptableInchiStatus(ig))
 			{
 				string errMsg = "InChI generation " + ig.getReturnStatus() + ": " + ig.getMessage();
-				molFile = CdkUtil.AtomContainerToMolFile(mol); // debug
+				molFile = CdkMol.AtomContainerToMolFile(mol); // debug
 				throw new Exception(errMsg);
 			}
 
@@ -129,10 +128,10 @@ public class UniChemUtil
 
 			// Build and store fingerprint
 
-			mol = CdkUtil.InChIToAtomContainer(icd.InChIString); 
+			mol = CdkMol.InChIToAtomContainer(icd.InChIString); 
 
-			//int hydRemovedCnt = CdkUtil.RemoveHydrogensBondedToPositiveNitrogens(mol);
-			mol = CdkUtil.RemoveIsotopesStereoExplicitHydrogens(mol); // additional normalization for fingerprint
+			//int hydRemovedCnt = CdkMol.RemoveHydrogensBondedToPositiveNitrogens(mol);
+			mol = CdkMol.RemoveIsotopesStereoExplicitHydrogens(mol); // additional normalization for fingerprint
 
 			BitSetFingerprint fp = // generate a fingerprint
 				CdkFingerprint.BuildBitSetFingerprint(mol, FingerprintType.MACCS, -1, -1);
@@ -141,10 +140,10 @@ public class UniChemUtil
 
 			if (ConnectivityChecker.isConnected(mol)) return icd; // single fragment
 
-			//string mf = CdkUtil.GetMolecularFormula(mol);
+			//string mf = CdkMol.GetMolecularFormula(mol);
 
 			//AtomContainerSet acs = (AtomContainerSet)ConnectivityChecker.partitionIntoMolecules(mol);
-			List<IAtomContainer> frags = CdkUtil.FragmentMolecule(mol, true); // get fragments filtering out small and common frags
+			List<IAtomContainer> frags = CdkMol.FragmentMolecule(mol, true); // get fragments filtering out small and common frags
 
 			for (fi = 0; fi < frags.Count; fi++)
 			{
@@ -155,7 +154,7 @@ public class UniChemUtil
 
 				try
 				{
-					mol2 = CdkUtil.AtomContainerToSmilesAndBack(mol2, out fragSmiles);
+					mol2 = CdkMol.AtomContainerToSmilesAndBack(mol2, out fragSmiles);
 				}
 				catch (Exception ex)
 				{
@@ -169,8 +168,8 @@ public class UniChemUtil
 				string childInChIKey = ig.getInchiKey();
 				string childFIKHB = UniChemUtil.GetFIKHB(childInChIKey);
 
-				mol2 = CdkUtil.InChIToAtomContainer(childInChIString); // convert from inchi
-				mol2 = CdkUtil.RemoveIsotopesStereoExplicitHydrogens(mol2); // additional normalization for fingerprint
+				mol2 = CdkMol.InChIToAtomContainer(childInChIString); // convert from inchi
+				mol2 = CdkMol.RemoveIsotopesStereoExplicitHydrogens(mol2); // additional normalization for fingerprint
 
 				fp = // generate a fingerprint for the fragment
 					CdkFingerprint.BuildBitSetFingerprint(mol2, FingerprintType.MACCS, -1, -1);
@@ -211,9 +210,9 @@ public class UniChemUtil
 
 			DateTime t0 = DateTime.Now;
 
-			mol = CdkUtil.InChIToAtomContainer(icd.InChIString);
+			mol = CdkMol.InChIToAtomContainer(icd.InChIString);
 
-			icd.CanonSmiles = CdkUtil.AtomContainerToSmiles(mol);
+			icd.CanonSmiles = CdkMol.AtomContainerToSmiles(mol);
 
 			InChIToAtomContainerTime += TimeOfDay.Delta(ref t0);
 
@@ -259,7 +258,7 @@ public class UniChemUtil
 				UniChemFIKHBHierarchy fikhbHier = new UniChemFIKHBHierarchy();
 				fikhbHier.ParentFIKHB = parentFIKHB;
 				fikhbHier.ChildFIKHB = childFIKHB;
-				fikhbHier.CanonSmiles = CdkUtil.AtomContainerToSmiles(mol2);
+				fikhbHier.CanonSmiles = CdkMol.AtomContainerToSmiles(mol2);
 				fikhbHier.Fingerprint = fp;
 
 				icd.Children.Add(fikhbHier);

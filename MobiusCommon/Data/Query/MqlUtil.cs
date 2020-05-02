@@ -174,7 +174,7 @@ namespace Mobius.Data
 					qc.Criteria = mcName + "relatedss squery " +
 						Lex.AddSingleQuotes(psc.Value2); // related search parameters
 
-				qc.MolString = MoleculeMx.ChimeStringToMolFile(psc.Value);
+				qc.MolString = MoleculeMx.ChimeStringToMolFileStrimg(psc.Value);
 				return;
 			}
 
@@ -574,7 +574,7 @@ namespace Mobius.Data
 			if (qc.MetaColumn.DataType == MetaColumnType.Structure)
 			{ // copy over structure if structure query
 				if (qc.MolString.IndexOf("V2000") >= 0 || qc.MolString.IndexOf("V3000") >= 0) // convert molfile to chime string to avoid length overflow within oracle
-					psc.Value = MoleculeMx.MolFileToChimeString(qc.MolString);
+					psc.Value = MoleculeMx.MolFileStringToChimeString(qc.MolString);
 				else psc.Value = qc.MolString; // just use value as is
 			}
 			return psc;

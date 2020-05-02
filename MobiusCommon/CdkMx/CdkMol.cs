@@ -1,5 +1,4 @@
-﻿//using Mobius.Data;
-using Mobius.ComOps;
+﻿using Mobius.ComOps;
 
 using cdk = org.openscience.cdk;
 using org.openscience.cdk;
@@ -14,6 +13,7 @@ using org.openscience.cdk.qsar.result;
 using org.openscience.cdk.io;
 using org.openscience.cdk.io.iterator;
 using org.openscience.cdk.tools;
+
 
 using System;
 using System.IO;
@@ -35,9 +35,8 @@ namespace Mobius.CdkMx
 	public partial class CdkMol // : IMolLibMx
 	{
 		public String MolfileString;
-		public IAtomContainer NativeCdkMol = null; // native format library molecule
-		public string HighlightChildren = "";
-		public Color HighlightColor = Color.Blue;
+		public IAtomContainer NativeMol = null; // native format library molecule
+		public IMoleculeMx Parent; // Parent IMoleculeMx that we are supporting
 
 		/// <summary>
 		/// Basic constructor
@@ -48,6 +47,16 @@ namespace Mobius.CdkMx
 			return;
 		}
 
+/// <summary>
+/// Construct and assign parent IMoleculeMx 
+/// </summary>
+/// <param name="parent"></param>
+
+		public CdkMol(IMoleculeMx parent)
+		{
+			Parent = parent;
+			return;
+		}
 
 		/// <summary>
 		/// Construct from Molfile
@@ -78,37 +87,7 @@ namespace Mobius.CdkMx
 			return;
 		}
 
-		/// <summary>
-		/// Get atom count for structure
-		/// </summary>
-		/// <returns></returns>
-
-		public int AtomCount
-		{
-			get { throw new NotImplementedException(); }
-		}
-
-		/// <summary>
-		/// Get heavy atom count
-		/// </summary>
-
-		public int HeavyAtomCount
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-		}
-
-		/// <summary>
-		/// Return true if mol contains a query feature
-		/// </summary>
-
-		public bool ContainsQueryFeature
-		{
-			get { throw new NotImplementedException(); }
-		}
-
+		
 		/// <summary>
 		/// Compare "molweight" of two structures
 		/// </summary>
@@ -161,7 +140,7 @@ namespace Mobius.CdkMx
 
 		public RectangleF GetBoundingBox()
 		{
-			IAtomContainer mol = NativeCdkMol;
+			IAtomContainer mol = NativeMol;
 
 			float left = 0, right = 0, top = 0, bottom = 0;
 			throw new NotImplementedException();

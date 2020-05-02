@@ -1,5 +1,4 @@
-﻿//using Mobius.Data;
-using Mobius.ComOps;
+﻿using Mobius.ComOps;
 
 using java.io;
 
@@ -529,6 +528,39 @@ namespace Mobius.CdkMx
 			string smiles = sg.create(mol);
 			return smiles;
 		}
+
+		/// <summary>
+		/// Get atom count for structure
+		/// </summary>
+		/// <returns></returns>
+
+		public int AtomCount => NativeMol.getAtomCount();
+
+		/// <summary>
+		/// Get heavy atom count
+		/// </summary>
+
+		public int HeavyAtomCount => GetHeavyAtomCount(NativeMol);
+
+		/// <summary>
+		/// Return true if mol contains a query feature
+		/// </summary>
+
+		public bool ContainsQueryFeature
+		{
+			get { throw new NotImplementedException(); }
+		}
+
+		public double MolWeight // get mol weight
+		{
+			get
+			{
+				IMolecularFormula mfm = MolecularFormulaManipulator.getMolecularFormula(NativeMol);
+				return MolecularFormulaManipulator.getMass(mfm, MolecularFormulaManipulator.MolWeight);
+			}
+		}
+
+		public string MolFormula => GetMolecularFormula(NativeMol);// get mol formula
 
 
 		/// <summary>

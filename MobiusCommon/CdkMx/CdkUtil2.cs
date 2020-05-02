@@ -1,5 +1,4 @@
-﻿using Mobius.Data;
-using Mobius.ComOps;
+﻿using Mobius.ComOps;
 
 using java.io;
 
@@ -454,12 +453,12 @@ namespace Mobius.CdkMx
 
 			//mol = GenerateCoordinates(mol); // (should already be done)
 
-			try { molfile2 = CdkUtil.AtomContainerToMolFileV3000(mol); }
+			try { molfile2 = AtomContainerToMolFileV3000(mol); }
 			catch (Exception ex) { ex = ex; }
 
 			if (Lex.IsUndefined(molfile2)) // couldn't convert to v3000, just return unhilighted v2000 file
 			{
-				molfile2 = CdkUtil.AtomContainerToMolFile(mol);
+				molfile2 = AtomContainerToMolFile(mol);
 				return molfile2;
 			}
 
@@ -877,7 +876,7 @@ namespace Mobius.CdkMx
 		{
 			FingerprintType fpType = FingerprintType.Undefined;
 
-			IAtomContainer mol = CdkUtil.MolfileToAtomContainer(molfile);
+			IAtomContainer mol = MolfileToAtomContainer(molfile);
 
 			if (fpTypeInt > 0 && Enum.IsDefined(typeof(FingerprintType), fpTypeInt))
 				fpType = (FingerprintType)fpTypeInt;
@@ -917,13 +916,13 @@ namespace Mobius.CdkMx
 
 			List<BitSetFingerprint> fpList = new List<BitSetFingerprint>();
 
-			int pseudoCount = CdkUtil.RemovePseudoAtoms(mol);
+			int pseudoCount = RemovePseudoAtoms(mol);
 
-			//mol = CdkUtil.AtomContainerToSmilesAndBack(mol, out smiles); // need this for kekulization?
+			//mol = AtomContainerToSmilesAndBack(mol, out smiles); // need this for kekulization?
 
-			mol = CdkUtil.RemoveIsotopesStereoExplicitHydrogens(mol); // additional normalization for fingerprint
+			mol = RemoveIsotopesStereoExplicitHydrogens(mol); // additional normalization for fingerprint
 
-			List<IAtomContainer> frags = CdkUtil.FragmentMolecule(mol, true); // get fragments filtering out small and common frags
+			List<IAtomContainer> frags = FragmentMolecule(mol, true); // get fragments filtering out small and common frags
 
 			if (includeOverallFingerprint && frags.Count > 1) // include overall fingerprint for multiple fragments
 			{
@@ -974,11 +973,11 @@ namespace Mobius.CdkMx
 
 			mol = GetLargestMoleculeFragment(mol);
 
-			int pseudoCount = CdkUtil.RemovePseudoAtoms(mol);
+			int pseudoCount = RemovePseudoAtoms(mol);
 
 			//mol = AtomContainerToSmilesAndBack(mol, out smiles); // need this for kekulization
 
-			mol = CdkUtil.RemoveIsotopesStereoExplicitHydrogens(mol); // additional normalization for fingerprint
+			mol = RemoveIsotopesStereoExplicitHydrogens(mol); // additional normalization for fingerprint
 
 			BitSetFingerprint bfp = CdkFingerprint.BuildBitSetFingerprint(
 				mol,
@@ -1106,23 +1105,23 @@ namespace Mobius.CdkMx
 
 			// Mol object to V2000 & back
 
-			string v2000 = CdkUtil.AtomContainerToMolFile(mol1); // obj to molfile
+			string v2000 = AtomContainerToMolFile(mol1); // obj to molfile
 			msg += "Obj -> CDK V2000\r\n==================================\r\n " + v2000 + "\r\n\r\n";
 
 			IAtomContainer molV2000 = MolfileToAtomContainer(v2000); // molfile to obj
 			int isotopeV2 = molV2000.getAtom(0).getMassNumber().intValue();
 			msg += "V2000 -> Obj isotope: " + isotopeV2 + "\r\n\r\n";
-			string v2000b = CdkUtil.AtomContainerToMolFile(molV2000); // obj back to molfile
+			string v2000b = AtomContainerToMolFile(molV2000); // obj back to molfile
 
 			// Mol object to V3000 & back
 
-			string v3000 = CdkUtil.AtomContainerToMolFileV3000(mol1);  // obj to molfile
+			string v3000 = AtomContainerToMolFileV3000(mol1);  // obj to molfile
 			msg += "Obj -> CDK V3000\r\n==================================\r\n " + v3000 + "\r\n\r\n";
 
 			IAtomContainer molV3000 = MolfileToAtomContainer(v3000); // molfile to obj
 			int isotopeV3 = mol1.getAtom(0).getMassNumber().intValue();
 			msg += "V3000 -> Obj isotope: " + isotopeV3 + "\r\n\r\n";
-			string v3000b = CdkUtil.AtomContainerToMolFileV3000(molV3000); // obj back to molfile
+			string v3000b = AtomContainerToMolFileV3000(molV3000); // obj back to molfile
 
 			return msg;
 		}

@@ -4,11 +4,97 @@ using System.Drawing;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// This file contains the base Interface and Enums to support specific Molecule Libraries (e.g. CDK)
+/// </summary>
+
 namespace Mobius.ComOps
 {
-  public class MoleculeBase
-  {
-  }
+/// <summary>
+/// Interface for a MoleculeMx object that is the parent of an IMolLib object
+/// </summary>
+
+	public interface IMoleculeMx
+	{
+		// No members yet
+	}
+
+	/// <summary>
+	/// Interface to MoleculeLibrary (e.g. Cdk) functionality for MoleculeMx Class
+	/// </summary>
+
+	public interface IMolLib
+	{
+
+		int AtomCount { get; } // Get atom count for molecule
+
+		int HeavyAtomCount { get; } // Get heavy atom count
+
+		bool ContainsQueryFeature { get; } // Return true if mol contains a query feature
+
+		double MolWeight { get; } // Get mol weight for a molecule 
+
+		string MolFormula { get; } //Get mol formula
+
+		/// <summary>
+		/// Convert an Inchi string to a molfile
+		/// </summary>
+		/// <param name="inchiString"></param>
+		/// <returns></returns>
+
+		string InChIStringToMolfileString(string inchiString);
+
+		/// <summary>
+		/// Convert a molfile string to a Smiles string
+		/// </summary>
+		/// <param name="molfile"></param>
+		/// <returns></returns>
+
+		string MolfileStringToSmilesString(string molfile);
+
+		/// <summary>
+		/// Convert a Smiles string to a Molfile string
+		/// </summary>
+		/// <param name="smiles"></param>
+		/// <returns></returns>
+
+		string SmilesStringToMolfileString(string smiles);
+
+		object BuildBitSetFingerprint(
+			string MolfileString,
+			int fpType,
+			int fpSubtype,
+			int fpLen);
+
+
+		/// <summary>
+		/// Get the largest molecule fragment from supplied molfile
+		/// </summary>
+		/// <param name="molfile"></param>
+		/// <returns>Molfile of largest fragment</returns>
+
+		string GetLargestMoleculeFragmentAsMolfile(
+			string molfileString);
+
+		/// <summary>
+		/// Calculate similarity of two Bitsetfingerprints
+		/// </summary>
+		/// <param name="queryFingerprint"></param>
+		/// <param name="targetFingerprint"></param>
+		/// <returns></returns>
+
+		double CalculateBitSetFingerprintSimilarity(object queryFingerprint, object targetFingerprint);
+
+		/// <summary>
+		/// Get array of set bits
+		/// </summary>
+		/// <param name="fingerprint"></param>
+		/// <returns></returns>
+
+		int[] GetBitSet(object fingerprint);
+
+	}
+
 
 	/// <summary>
 	/// Structure search types
