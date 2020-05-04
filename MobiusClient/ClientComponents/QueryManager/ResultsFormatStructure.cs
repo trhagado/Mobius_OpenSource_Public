@@ -50,7 +50,6 @@ namespace Mobius.ClientComponents
 		ResultsField rfld = null,
 		DataRowMx dataRow = null)
 		{
-			CdkMol molLib1Mol = null;
 			Rectangle destRect, boundingRect;
 			int height; // formatted  height in milliinches
 			bool markBoundaries;
@@ -109,9 +108,8 @@ namespace Mobius.ClientComponents
 								mol = StrMatcher.HighlightMatchingSubstructure(mol);
 								if (DebugMx.False) // debug
 								{
-									CdkMx.NativeMolecule m = CdkMx.StructureConverter.MolfileStringToNativeMolecule(mol.GetMolfileString());
-									string highlightChildren = m.HighlightChildren;
-									Color highlightColor = m.HighlightColor;
+									//string highlightChildren = mol.MolLib.HighlightChildren;
+									//Color highlightColor = mol.MolLib.HighlightColor;
 									if (debug) DebugLog.StopwatchMessage("tHilight", sw);
 								}
 							}
@@ -241,11 +239,9 @@ namespace Mobius.ClientComponents
 
 					if (fitStructure)
 					{
-						molLib1Mol = mol.FitStructureIntoRectangle // scale and translate structure into supplied rectangle.
+						mol.MolLib.FitStructureIntoRectangle // scale and translate structure into supplied rectangle.
 						(ref destRect, desiredBondLength, translateType, fixedHeight, markBoundaries, pageHeight, out boundingRect);
 					}
-
-					else molLib1Mol = mol.CreateMolecule(); 
 
 					if (debug) DebugLog.StopwatchMessage("tFitStructure", sw);
 
@@ -290,13 +286,13 @@ namespace Mobius.ClientComponents
 					if (mol.IsChemStructureFormat) // molfile type molecule
 					{
 						if (debug) DebugLog.StopwatchMessage("tBeforeGetDisplayPreferences", sw);
-						CdkMx.DisplayPreferences dp = mol.GetDisplayPreferences();
+						DisplayPreferences dp = mol.GetDisplayPreferences();
 						if (debug) DebugLog.StopwatchMessage("tGetDisplayPreferences", sw);
 
 						desiredBondLength = MoleculeMx.AdjustBondLengthToValidRange(desiredBondLength); // be sure bond len within allowed range 
 						if (debug) DebugLog.StopwatchMessage("tAdjustBondLengthToValidRange", sw);
 						dp.StandardBondLength = MoleculeMx.MilliinchesToDecipoints(desiredBondLength);
-						bm = MoleculeMx.GetFixedHeightMoleculeBitmap(molLib1Mol, pixWidth, pixHeight, dp, cellStyle, mol.Caption);
+						bm = mol.MolLib.GetFixedHeightMoleculeBitmap(pixWidth, pixHeight, dp, cellStyle, mol.Caption);
 						if (debug) DebugLog.StopwatchMessage("tGetBitmap", sw);
 					}
 

@@ -301,10 +301,6 @@
       <Name>SpotfireDocumentClasses</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\CdkMx\CdkMx.csproj">
-      <Project>{203d17b0-f97c-4c9b-b406-cae30dad3241}</Project>
-      <Name>CdkMx</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ComOps\ComOps.csproj">
       <Project>{c8c32a85-6c6b-462f-b15e-cdc53b03e521}</Project>
       <Name>ComOps</Name>

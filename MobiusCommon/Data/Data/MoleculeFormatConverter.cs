@@ -1,5 +1,4 @@
 ﻿using Mobius.ComOps;
-using Mobius.MolLib2;
 
 using System;
 using System.IO;
@@ -476,10 +475,14 @@ namespace Mobius.Data
 
 		public static bool IsValidMolfile(string molfile)
 		{
+			
 			if (Lex.IsUndefined(molfile)) return false;
+
+			xxx
 
 			try
 			{
+				 = MolLibFactory.CreateInstance(null).SmilesStringToMolfileString(smilesString);
 				IAtomContainer m = CdkUtil.MolfileToAtomContainer(molfile);
 				if (m != null) return true;
 				else return false;
@@ -551,6 +554,19 @@ namespace Mobius.Data
 
 			else return ""; // failed
 		}
+
+		public static string SmilesStringToMolfileString(string smilesString)
+		{
+			string molFile = MolLibFactory.CreateInstance(null).SmilesStringToMolfileString(smilesString);
+			return molFile;
+		}
+
+		public static string MolfileStringToSmilesString(string molfileString)
+		{
+			string smiles = MolLibFactory.CreateInstance(null).MolfileStringToSmilesString(molfileString);
+			return smiles;
+		}
+
 
 	}
 }

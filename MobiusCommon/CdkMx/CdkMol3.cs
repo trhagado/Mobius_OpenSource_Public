@@ -21,6 +21,7 @@ using org.openscience.cdk.config.isotopes;
 using net.sf.jniinchi; // low level IUPAC interface, needed for access to some enumerations
 
 using System;
+using System.Drawing;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -28,9 +29,8 @@ using System.Text;
 namespace Mobius.CdkMx
 {
 
-	public partial class CdkMol // : IMolLibMx
+	public partial class CdkMol : IMolLib
 	{
-
 		static int hilightIsotopeValue = -100;
 
 		static int IntegrateAndHilightMmpStructureCount = 0;

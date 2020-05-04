@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,13 +11,19 @@ using System.Threading.Tasks;
 
 namespace Mobius.ComOps
 {
-/// <summary>
-/// Interface for a MoleculeMx object that is the parent of an IMolLib object
-/// </summary>
+	/// <summary>
+	/// Interface for a MoleculeMx object that is the parent of an IMolLib object
+	/// </summary>
 
 	public interface IMoleculeMx
 	{
-		// No members yet
+		MoleculeFormat PrimaryFormat { get; }
+		string  PrimaryValue { get; }
+	}
+
+	public interface IMolLibFactory
+	{
+		IMolLib CreateInstance(IMoleculeMx molMx);
 	}
 
 	/// <summary>
@@ -25,6 +32,10 @@ namespace Mobius.ComOps
 
 	public interface IMolLib
 	{
+
+		void UpdateNativeMolecule(); // update native molecule to 
+
+		bool IsValidMolfile(string molfile);
 
 		int AtomCount { get; } // Get atom count for molecule
 
@@ -92,6 +103,19 @@ namespace Mobius.ComOps
 		/// <returns></returns>
 
 		int[] GetBitSet(object fingerprint);
+
+		void FitStructureIntoRectangle(
+			ref Rectangle destRect,
+			int desiredBondLength,
+			int translateType,
+			int fixedHeight,
+			bool markBoundaries,
+			int pageHeight,
+			out Rectangle boundingRect);
+
+		public Metafile GetMetaFile(
+		 int width,
+		 int height);
 
 	}
 

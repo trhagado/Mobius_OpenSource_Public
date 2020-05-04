@@ -87,7 +87,43 @@ namespace Mobius.CdkMx
 			return;
 		}
 
-		
+		/// <summary>
+		/// update native molecule to match parent molecule
+		/// </summary>
+
+		public void UpdateNativeMolecule()
+		{
+			if (Parent != null)
+			{
+				NativeMol = MolfileToAtomContainer(Parent.Molfile);
+			}
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Check if a string is a valid Molfile
+		/// </summary>
+		/// <param name="molfile"></param>
+		/// <returns></returns>
+
+		public bool IsValidMolfile(string molfile)
+		{
+			if (Lex.IsUndefined(molfile)) return false;
+
+			try
+			{
+				IAtomContainer m = MolfileToAtomContainer(molfile);
+				if (m != null) return true;
+				else return false;
+			}
+			catch (Exception ex)
+			{
+				return false;
+			}
+
+		}
+
+
 		/// <summary>
 		/// Compare "molweight" of two structures
 		/// </summary>
@@ -111,7 +147,7 @@ namespace Mobius.CdkMx
 		/// <param name="markBoundaries">True to mark edges of structure</param>
 		/// <returns>New bounding rectangle for structure in milliinches</returns>
 
-		public void FitStructure(
+		public void FitStructureIntoRectangle(
 			ref Rectangle destRect,
 			int desiredBondLength,
 			int translateType,
@@ -143,29 +179,6 @@ namespace Mobius.CdkMx
 			IAtomContainer mol = NativeMol;
 
 			float left = 0, right = 0, top = 0, bottom = 0;
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// Render molecule into bitmap of specified size.
-		/// </summary>
-		/// <param name="bitmapWidth"></param>
-		/// <param name="bitmapHeight"></param>
-		/// <param name="dp"></param>
-		/// <returns></returns>
-
-		public Bitmap GetMoleculeBitmap(
-			int bitmapWidth,
-			int bitmapHeight,
-			DisplayPreferences dp)
-		{
-			byte[] ba;
-			FileStream fs;
-			//StructureConverter sc;
-			float top, bottom, left, right, height, width, strBottom, hCenter, drop, stdBndLen, scale, fontSize, bondThickness;
-			int txtLen;
-			Bitmap bm;
-
 			throw new NotImplementedException();
 		}
 
@@ -322,18 +335,6 @@ namespace Mobius.CdkMx
 		/// <returns></returns>
 
 		public CdkMol RemoveRGroupAttachmentPointAtoms()
-		{
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// Convert to Metafile 
-		/// </summary>
-		/// <returns></returns>
-
-		public Metafile GetMetaFile(
-			int width,
-			int height)
 		{
 			throw new NotImplementedException();
 		}

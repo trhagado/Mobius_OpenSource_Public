@@ -1,6 +1,4 @@
 using Mobius.ComOps;
-using Mobius.CdkMx;
-using Mobius.MolLib2;
 
 using System;
 using System.IO;
@@ -48,7 +46,10 @@ namespace Mobius.Data
 		//[DataMember]
 		public MoleculeFormat PrimaryFormat = MoleculeFormat.Unknown;
 
+		public static IMolLibFactory MolLibFactory = null;
+
 		public IMolLib MolLib => GetMolLibInstance(); // link to low level object implementation
+
 
 		/// <summary>
 		/// Get or create associated IMolLib instance
@@ -59,8 +60,9 @@ namespace Mobius.Data
     {
       if (_molLib == null)
       {
-        _molLib = (IMolLib)new CdkMx.CdkMol(this);
-      }
+				AssertMx.IsNotNull(MolLibFactory);
+				_molLib = MolLibFactory.CreateInstance(this);
+			}
 
       return _molLib;
     }
@@ -814,38 +816,6 @@ namespace Mobius.Data
 		}
 
 		/// <summary>
-		/// Create an internal MolLib1.Molecule from structure
-		/// </summary>
-		/// <returns></returns>
-
-		public CdkMol CreateMolecule()
-		{
-			CdkMol molLib1Mol = null;
-
-			if (PrimaryFormat == MoleculeFormat.Chime) // if already chime don't convert
-				molLib1Mol = new CdkMol(CdkMol.StructureType.Chime, PrimaryValue);
-
-			else // convert other molecules to Molfile format
-				molLib1Mol = new CdkMol(CdkMol.StructureType.MolFile, GetMolfileString());
-
-			return molLib1Mol;
-		}
-
-		/// <summary>
-		/// Convert to Metafile 
-		/// </summary>
-		/// <returns></returns>
-
-		public Metafile GetMetafile(
-			int width,
-			int height)
-		{
-			CdkMol m = new CdkMol(GetMolfileString());
-			Metafile mf = m.GetMetaFile(width, height);
-			return mf;
-		}
-
-		/// <summary>
 		/// Check if valid HELM string
 		/// </summary>
 		/// <param name="helm"></param>
@@ -909,9 +879,9 @@ namespace Mobius.Data
 
 				else if (Lex.StartsWith(molString, "Fasta=")) return MoleculeFormat.Fasta;
 
-				else if (!String.IsNullOrEmpty(CdkMol.StructureConverter.ChimeStringToMolfileString(molString))) return MoleculeFormat.Chime;
+				else if (!String.IsNullOrEmpty(ChimeStringToMolfileString(molString))) return MoleculeFormat.Chime;
 
-				else if (!String.IsNullOrEmpty(CdkMol.StructureConverter.SmilesStringToMolfileString(molString))) return MoleculeFormat.Smiles;
+				else if (!String.IsNullOrEmpty(SmilesStringToMolfileString(molString))) return MoleculeFormat.Smiles;
 
 				else return MoleculeFormat.Unknown;
 			}

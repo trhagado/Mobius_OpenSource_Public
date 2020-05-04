@@ -1,6 +1,5 @@
 ﻿using Mobius.ComOps;
 using Mobius.Helm;
-using Mobius.CdkMx;
 
 using DevExpress.Utils;
 
@@ -30,127 +29,7 @@ namespace Mobius.Data
 
 		public const int DefaultStructurePopupWidth = 768; // 256, 512...
 
-		/// <summary>
-		/// Scale and translate structure into supplied rectangle.
-		/// This method involves scaling,
-		/// translating, and adjustments to font sizes and line widths.
-		/// </summary>
-		/// <param name="destRect">Destination rect to fit into, bottom may be adjusted</param>
-		/// <param name="desiredBondLength">0=no scale, 1=bond length for "standard" size box, >1 = desired bond length in milliinches</param>
-		/// <param name="translateType">0=no xlate, 1=xlate, 2= xlate to upper left</param>
-		/// <param name="fixedHeight">0=no, 1=yes, 2=yes unless too tall to fit</param>
-		/// <param name="markBoundaries">True to mark edges of structure</param>
-		/// <returns>New bounding rectangle for structure in milliinches</returns>
-
-		public CdkMol FitStructureIntoRectangle(
-			ref Rectangle destRect,
-			int desiredBondLength,
-			int translateType,
-			int fixedHeight,
-			bool markBoundaries,
-			int pageHeight,
-			out Rectangle boundingRect)
-		{
-			CdkMol mol = new CdkMol();
-
-			mol.FitStructure(ref destRect, desiredBondLength, translateType, fixedHeight, markBoundaries, pageHeight, out boundingRect);
-			return mol;
-		}
-
-		/// <summary>
-		/// Get structure bitmap with optional caption
-		/// </summary>
-		/// <param name="pixWidth"></param>
-		/// <param name="pixHeight"></param>
-		/// <param name="desiredBondLength">Desired length in milliinches</param>
-		/// <param name="cellStyle"></param>
-		/// <param name="caption"></param>
-		/// <returns></returns>
-
-		public static Bitmap GetFixedHeightMoleculeBitmap(
-			MoleculeMx mol,
-			int pixWidth,
-			int pixHeight,
-			DisplayPreferences dp,
-			CellStyleMx cellStyle,
-			string caption)
-		{
-			const int minWidth = 100, minHeight = 100;
-
-			if (pixWidth < minWidth) pixWidth = minWidth;
-			if (pixHeight < minHeight) pixHeight = minHeight;
-
-			Bitmap bm = null;
-
-			if (cellStyle == null)
-			{
-				Font font = new Font("Tahoma", 8.25f);
-				cellStyle = new CellStyleMx(font, Color.Black, Color.Empty);
-			}
-
-			if (dp == null)
-			{
-				dp = new DisplayPreferences();
-				SetStandardDisplayPreferences(dp);
-			}
-
-			//if (Lex.Contains(qc.Criteria, "SSS")) // no H display if SS query
-			//  dp.HydrogenDisplayMode = HydrogenDisplayMode.Off;
-			if (String.IsNullOrEmpty(caption))
-				bm = mol.GetMoleculeBitmap(pixWidth, pixHeight, dp);
-
-			else
-			{
-				bm = mol.GetMoleculeBitmap(pixWidth, pixHeight + 20, dp); // get image with a bit of extra height for text
-
-				Rectangle captionRect = new Rectangle(2, 0, pixWidth, pixHeight); // show the text part
-				Graphics g = System.Drawing.Graphics.FromImage(bm);
-				Brush brush = Brushes.Black;
-				if (cellStyle.ForeColor == Color.Blue) brush = Brushes.Blue;
-				g.DrawString(caption, cellStyle.Font, brush, captionRect);
-			}
-
-			return bm;
-		}
-
-		/// <summary>
-		/// Render molecule into bitmap of specified size with standard display preferences
-		/// </summary>
-		/// <param name="bitmapWidth"></param>
-		/// <param name="bitmapHeight"></param>
-		/// <returns></returns>
-
-		public Bitmap GetMoleculeBitmap(
-			int bitmapWidth,
-			int bitmapHeight)
-		{
-			return GetMoleculeBitmap(bitmapWidth, bitmapHeight, null);
-		}
-
-		/// <summary>
-		/// Render molecule into bitmap of specified size.
-		/// </summary>
-		/// <param name="bitmapWidth"></param>
-		/// <param name="bitmapHeight"></param>
-		/// <param name="dp"></param>
-		/// <returns></returns>
-
-		public Bitmap GetMoleculeBitmap(
-			int bitmapWidth,
-			int bitmapHeight,
-			DisplayPreferences dp)
-		{
-
-			if (dp == null)
-				dp = CdkMol.GetStandardDisplayPreferences(); // get preferences if not done yet
-
-			CdkMol mol = new CdkMol(GetMolfileString());
-			Bitmap bm = mol.GetMoleculeBitmap(bitmapWidth, bitmapHeight, dp);
-			return bm;
-		}
-
-
-		/// <summary>
+				/// <summary>
 		/// Build a molecule tooltip containing the structure and optional label
 		/// </summary>
 		/// <param name="mol"></param>

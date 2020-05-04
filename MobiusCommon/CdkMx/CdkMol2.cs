@@ -49,7 +49,7 @@ namespace Mobius.CdkMx
 	///    http://www.frijters.net/ikvmbin-7.4.5046.zip
 	/// </summary>
 
-	public partial class CdkMol // : IMolLibMx
+	public partial class CdkMol : IMolLib
 
 	{
 		public static IChemObjectBuilder DefaultChemObjectBuilder
