@@ -2,7 +2,6 @@
 using Mobius.Data;
 using Mobius.UAL;
 using Mobius.CdkMx;
-using Mobius.CdkMx;
 
 using Lucene.Net.Util;
 
@@ -114,8 +113,8 @@ namespace Mobius.CdkSearchMx
 		{
 			int fragCnt;
 
-			IAtomContainer query = CdkUtil.MolfileToAtomContainer(queryMolfile);
-			IAtomContainer largestFrag = CdkUtil.GetLargestMoleculeFragment(query, out fragCnt);
+			IAtomContainer query = CdkMol.MolfileToAtomContainer(queryMolfile);
+			IAtomContainer largestFrag = CdkMol.GetLargestMoleculeFragment(query, out fragCnt);
 
 			GetCorpSim = Lex.Contains(databases, "corp");
 
@@ -135,12 +134,20 @@ namespace Mobius.CdkSearchMx
 			return matches;
 		}
 
-		/// <summary>
-		/// ExecuteSearch
-		/// </summary>
-		/// <param name="queryMol"></param>
-
 		public List<StructSearchMatch> ExecuteSearch(
+			MoleculeMx queryMolMx)
+		{
+			CdkMol m2 = (CdkMol)queryMolMx.MolLib;
+			IAtomContainer queryMol = m2.NativeMol;
+			return ExecuteSearch(queryMol);
+		}
+
+			/// <summary>
+			/// ExecuteSearch
+			/// </summary>
+			/// <param name="queryMol"></param>
+
+			public List<StructSearchMatch> ExecuteSearch(
 			IAtomContainer queryMol)
 		{
 			AssertMx.IsTrue(FingerprintType == FingerprintType.MACCS || FingerprintType == FingerprintType.Circular, 
@@ -149,7 +156,7 @@ namespace Mobius.CdkSearchMx
 			QueryMol = queryMol;
 
 			BitSetFingerprint fp = // generate a fingerprint
-				CdkUtil.BuildBitSetFingerprintForLargestFragment(queryMol, FingerprintType);
+				CdkMol.BuildBitSetFingerprintForLargestFragment(queryMol, FingerprintType);
 
 			QueryFpCardinality = fp.cardinality();
 			QueryFpLongArray = fp.asBitSet().toLongArray();
@@ -549,12 +556,12 @@ namespace Mobius.CdkSearchMx
 			int smiLen = 40;
 
 			MoleculeMx s1 = MoleculeMx.SelectMoleculeForCid(cid1);
-			IAtomContainer mol = CdkUtil.MolfileToAtomContainer(s1.GetMolfileString());
+			IAtomContainer mol = CdkMol.MolfileToAtomContainer(s1.GetMolfileString());
 			UniChemData ucd1 = UniChemUtil.BuildUniChemData(mol);
 			List<FingerprintMx> fps1 = UniChemDataToFingerprintMxList(ucd1);
 
 			MoleculeMx s2 = MoleculeMx.SelectMoleculeForCid(cid2);
-			IAtomContainer mol2 = CdkUtil.MolfileToAtomContainer(s2.GetMolfileString());
+			IAtomContainer mol2 = CdkMol.MolfileToAtomContainer(s2.GetMolfileString());
 			UniChemData ucd2 = UniChemUtil.BuildUniChemData(mol2);
 			List<FingerprintMx> fps2 = UniChemDataToFingerprintMxList(ucd2);
 

@@ -29,9 +29,9 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			CdkMx.NativeMolecule molecule1 = new CdkMx.CdkMol().NativeMol;
+			//CdkMx.NativeMolecule molecule1 = new CdkMx.CdkMol().NativeMol;
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MoleculeControl));
-			this.MolLib1MoleculeControl = new Mobius.CdkMx.MoleculeControl();
+			this.MoleculeCtl = new Mobius.CdkMx.MoleculeControl();
 			this.ToolTipController = new DevExpress.Utils.ToolTipController(this.components);
 			this.RtClickContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.EditMoleculeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,15 +49,15 @@
 			// 
 			// RenditorControl
 			// 
-			this.MolLib1MoleculeControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.MoleculeCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.MolLib1MoleculeControl.Location = new System.Drawing.Point(29, 21);
-			this.MolLib1MoleculeControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.MolLib1MoleculeControl.MolfileString = "";
-			this.MolLib1MoleculeControl.Name = "MolLib1MoleculeControl";
-			this.MolLib1MoleculeControl.Size = new System.Drawing.Size(201, 97);
-			this.MolLib1MoleculeControl.TabIndex = 20;
+			this.MoleculeCtl.Location = new System.Drawing.Point(29, 21);
+			this.MoleculeCtl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.MoleculeCtl.MolfileString = "";
+			this.MoleculeCtl.Name = "MolLib1MoleculeControl";
+			this.MoleculeCtl.Size = new System.Drawing.Size(201, 97);
+			this.MoleculeCtl.TabIndex = 20;
 			// 
 			// ToolTipController
 			// 
@@ -181,7 +181,7 @@
 			this.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.Controls.Add(this.EnlargeStructureButton);
 			this.Controls.Add(this.HelmControl);
-			this.Controls.Add(this.MolLib1MoleculeControl);
+			this.Controls.Add(this.MoleculeCtl);
 			this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Name = "MoleculeControl";
 			this.Size = new System.Drawing.Size(521, 452);
@@ -193,7 +193,7 @@
 		#endregion
 
 		public Helm.HelmControl HelmControl;
-		public Mobius.CdkMx.MoleculeControl MolLib1MoleculeControl;
+		public Mobius.CdkMx.MoleculeControl MoleculeCtl;
 		private DevExpress.Utils.ToolTipController ToolTipController;
 		public System.Windows.Forms.ContextMenuStrip RtClickContextMenu;
 		public System.Windows.Forms.ToolStripMenuItem EditMoleculeMenuItem;

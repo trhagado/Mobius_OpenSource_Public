@@ -1,4 +1,5 @@
 ﻿using Mobius.ComOps;
+using Mobius.Data;
 
 using java.io;
 
@@ -122,7 +123,7 @@ namespace Mobius.CdkMx
 		/// <param name="molfile"></param>
 		/// <returns>Molfile of largest fragment</returns>
 
-		public string GetLargestMoleculeFragmentAsMolfile(
+		public string GetLargestMolfileMoleculeFragment(
 			string molfile)
 		{
 			IAtomContainer mol, mol2;
@@ -131,20 +132,20 @@ namespace Mobius.CdkMx
 			mol2 = GetLargestMoleculeFragment(mol);
 			if (mol2 != null)
 			{
-				string largestFrag = AtomContainerToMolFile(mol2);
-				return largestFrag;
+				string largestFragMolfile = AtomContainerToMolfile(mol2);
+				return largestFragMolfile;
 			}
 
 			else return "";
 		}
 
 		/// <summary>
-		/// GetLargestFragmentAsSmiles
+		/// Get the largest molecule fragment from supplied smiles
 		/// </summary>
 		/// <param name="smiles"></param>
-		/// <returns></returns>
+		/// <returns>Smiles of largest fragment</returns>
 
-		public static string GetLargestMoleculeFragmentAsSmiles(
+		public string GetLargestSmilesMoleculeFragment(
 			string smiles)
 		{
 			IAtomContainer mol, mol2;
@@ -153,8 +154,8 @@ namespace Mobius.CdkMx
 			mol2 = GetLargestMoleculeFragment(mol);
 			if (mol2 != null)
 			{
-				string largestFrag = AtomContainerToSmiles(mol2);
-				return largestFrag;
+				string largestFragSmiles = AtomContainerToSmiles(mol2);
+				return largestFragSmiles;
 			}
 
 			else return "";
@@ -412,7 +413,7 @@ namespace Mobius.CdkMx
 		/// <param name="mol"></param>
 		/// <returns></returns>
 
-		public static string AtomContainerToMolFile(IAtomContainer mol)
+		public static string AtomContainerToMolfile(IAtomContainer mol)
 		{
 			java.io.StringWriter sw = new java.io.StringWriter();
 
@@ -583,7 +584,7 @@ namespace Mobius.CdkMx
 		/// <param name="haCnt"></param>
 		/// <param name="hbCnt"></param>
 
-		public static void GetHeavyAtomBondCounts(
+		public void GetHeavyAtomBondCounts(
 			string smiles,
 			out int haCnt,
 			out int hbCnt)
@@ -712,7 +713,7 @@ namespace Mobius.CdkMx
 			IAtomContainer mol = SmilesToAtomContainer(smiles);
 			if (mol.getAtomCount() == 0) return "";
 
-			string molfile = AtomContainerToMolFile(mol);
+			string molfile = AtomContainerToMolfile(mol);
 			return molfile;
 		}
 

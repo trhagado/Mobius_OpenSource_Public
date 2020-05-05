@@ -649,7 +649,7 @@ namespace Mobius.UAL
 					Lex.Split(line, "\t", out s1, out s2, out smilesAndCorpId);
 					Lex.Split(smilesAndCorpId, " ", out smiles, out CorpId);
 
-					CdkUtil.GetHeavyAtomBondCounts(smiles, out haCnt, out hbCnt);
+					MolLibStatic.I.GetHeavyAtomBondCounts(smiles, out haCnt, out hbCnt);
 					if (hbCnt <= 0) throw new Exception("No bonds");
 					if (hbCnt <= 99)
 					{
@@ -718,7 +718,7 @@ namespace Mobius.UAL
 					Lex.Split(line, "\t", out s1, out s2, out smilesAndCorpId);
 					Lex.Split(smilesAndCorpId, " ", out smiles, out CorpId);
 
-					CdkUtil.GetHeavyAtomBondCounts(smiles, out haCnt, out hbCnt);
+					MolLibStatic.I.GetHeavyAtomBondCounts(smiles, out haCnt, out hbCnt);
 					if (hbCnt <= 0) throw new Exception("No bonds");
 
 					else if (hbCnt <= 99)
@@ -908,10 +908,10 @@ namespace Mobius.UAL
 
 				if (swp.Smiles.Contains(".")) // possible multiple fragments?
 				{
-					swp.Smiles = CdkUtil.GetLargestMoleculeFragmentAsSmiles(swp.Smiles);
+					swp.Smiles = MolLibStatic.I.GetLargestSmilesMoleculeFragment(swp.Smiles);
 				}
 
-				CdkUtil.GetHeavyAtomBondCounts(swp.Smiles, out HeavyAtomCount, out HeavyBondCount);
+				MolLibStatic.I.GetHeavyAtomBondCounts(swp.Smiles, out HeavyAtomCount, out HeavyBondCount);
 
 				if (Lex.IsUndefined(swp.Database)) throw new Exception("SmallWorld Database not defined");
 				if (swp.RootTable != null)

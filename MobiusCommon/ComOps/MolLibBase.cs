@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Mobius.ComOps;
+using Mobius.Data;
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -9,7 +12,7 @@ using System.Threading.Tasks;
 /// This file contains the base Interface and Enums to support specific Molecule Libraries (e.g. CDK)
 /// </summary>
 
-namespace Mobius.ComOps
+namespace Mobius.Data
 {
 	/// <summary>
 	/// Interface for a MoleculeMx object that is the parent of an IMolLib object
@@ -17,13 +20,17 @@ namespace Mobius.ComOps
 
 	public interface IMoleculeMx
 	{
-		MoleculeFormat PrimaryFormat { get; }
-		string  PrimaryValue { get; }
+		//MoleculeFormat PrimaryFormat { get; }
+		//string PrimaryValue { get; }
 	}
+
+	/// <summary>
+	/// Interface for factory that creates MolLib instances
+	/// </summary>
 
 	public interface IMolLibFactory
 	{
-		IMolLib CreateInstance(IMoleculeMx molMx);
+		IMolLib CreateInstance(object IMoleculeMx);
 	}
 
 	/// <summary>
@@ -113,12 +120,21 @@ namespace Mobius.ComOps
 			int pageHeight,
 			out Rectangle boundingRect);
 
-		public Metafile GetMetaFile(
+		Metafile GetMetafile(
 		 int width,
 		 int height);
-
 	}
 
+/// <summary>
+/// Interface for molecule renderer and editor
+/// </summary>
+
+	public interface IMolLibControl
+	{
+		void SetMolecule(MoleculeFormat format, string value); // set the structure
+
+		void SetTag(object tag);
+	}
 
 	/// <summary>
 	/// Structure search types

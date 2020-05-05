@@ -3121,7 +3121,7 @@ namespace Mobius.QueryEngineLibrary
 					if (o is MoleculeMx)
 						smiles = (o as MoleculeMx).GetSmilesString();
 					else smiles = o.ToString();
-					string molfile = CdkUtil.IntegrateAndHilightMmpStructure(smiles);
+					string molfile = MolLibStatic.I.IntegrateAndHilightMmpStructure(smiles);
 					o = new MoleculeMx(MoleculeFormat.Molfile, molfile);
 				}
 

@@ -292,7 +292,6 @@
     <Compile Include="MemoryInfo.cs" />
     <Compile Include="MetaFileMx.cs" />
     <Compile Include="MobiusClientUtil.cs" />
-    <Compile Include="MolLibBase.cs" />
     <Compile Include="NetworkResourceUtil.cs" />
     <Compile Include="GeometryMx.cs">
       <SubType>Code</SubType>

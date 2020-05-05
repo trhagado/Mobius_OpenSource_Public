@@ -171,12 +171,12 @@ namespace Mobius.ClientComponents
 			else if (Psc.SearchType == StructureSearchType.SmallWorld) // smallworld not allowed
 				Psc.SearchType = StructureSearchType.Unknown;
 
-			CdkMol.SetStandardDisplayPreferences(QueryMolCtl.MolLib1MoleculeControl.Preferences);
+			 DisplayPreferences.SetStandardDisplayPreferences(QueryMolCtl.MoleculeCtl.Preferences);
 
 			if (Psc.SearchType == StructureSearchType.Substructure)
 			{
 				SubStruct.Checked = true;
-				QueryMolCtl.MolLib1MoleculeControl.Preferences.HydrogenDisplayMode = HydrogenDisplayMode.Off; // no hydrogen display for SSS
+				QueryMolCtl.MoleculeCtl.Preferences.HydrogenDisplayMode = HydrogenDisplayMode.Off; // no hydrogen display for SSS
 			}
 
 			else if (Psc.SearchType == StructureSearchType.FullStructure)
@@ -385,7 +385,7 @@ namespace Mobius.ClientComponents
 		{
 			if (!SubStruct.Checked) return;
 
-			QueryMolCtl.MolLib1MoleculeControl.Preferences.HydrogenDisplayMode = HydrogenDisplayMode.Off; // no hydrogens for ss
+			QueryMolCtl.MoleculeCtl.Preferences.HydrogenDisplayMode = HydrogenDisplayMode.Off; // no hydrogens for ss
 			Psc.SearchType = StructureSearchType.Substructure;
 			SetupOptions();
 		}
@@ -394,7 +394,7 @@ namespace Mobius.ClientComponents
 		{
 			if (!Full.Checked) return;
 
-			QueryMolCtl.MolLib1MoleculeControl.Preferences.HydrogenDisplayMode = HydrogenDisplayMode.Hetero;
+			QueryMolCtl.MoleculeCtl.Preferences.HydrogenDisplayMode = HydrogenDisplayMode.Hetero;
 			Psc.SearchType = StructureSearchType.FullStructure;
 			SetupOptions();
 		}
@@ -403,7 +403,7 @@ namespace Mobius.ClientComponents
 		{
 			if (!Similarity.Checked) return;
 
-			QueryMolCtl.MolLib1MoleculeControl.Preferences.HydrogenDisplayMode = HydrogenDisplayMode.Hetero;
+			QueryMolCtl.MoleculeCtl.Preferences.HydrogenDisplayMode = HydrogenDisplayMode.Hetero;
 			Psc.SearchType = StructureSearchType.MolSim;
 			//CriteriaStructureSimOptions.InitSimOptionsIfUndefined(Psc);
 			SetupOptions();

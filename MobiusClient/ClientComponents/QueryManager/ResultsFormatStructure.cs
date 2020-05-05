@@ -220,7 +220,7 @@ namespace Mobius.ClientComponents
 					if (Rf.Grid) // special scale for grid
 					{
 						double scale = (float)width / MoleculeMx.StandardBoxWidth;
-						desiredBondLength = MoleculeMx.AdjustBondLengthToValidRange((int)(MoleculeMx.StandardBondLength * scale));
+						desiredBondLength = mol.MolLib.AdjustBondLengthToValidRange((int)(MoleculeMx.StandardBondLength * scale));
 						//desiredBondLength = (int)(ChemicalStructure.StandardBondLength * (Rf.PageScale / 100.0));
 						desiredBondLength = (int)(desiredBondLength * 90.0 / 100.0); // scale down a bit for grid
 						if (debug) DebugLog.StopwatchMessage("tAdjustBondLength1", sw);
@@ -229,7 +229,7 @@ namespace Mobius.ClientComponents
 					else // set desired bond length based on page scaling
 					{
 						float scale = (float)width / MoleculeMx.StandardBoxWidth;
-						desiredBondLength = MoleculeMx.AdjustBondLengthToValidRange((int)(MoleculeMx.StandardBondLength * scale));
+						desiredBondLength = mol.MolLib.AdjustBondLengthToValidRange((int)(MoleculeMx.StandardBondLength * scale));
 						//desiredBondLength = (int)(ChemicalStructure.StandardBondLength * (Rf.PageScale / 100.0));
 						if (debug) DebugLog.StopwatchMessage("tAdjustBondLength2", sw);
 					}
@@ -289,7 +289,7 @@ namespace Mobius.ClientComponents
 						DisplayPreferences dp = mol.GetDisplayPreferences();
 						if (debug) DebugLog.StopwatchMessage("tGetDisplayPreferences", sw);
 
-						desiredBondLength = MoleculeMx.AdjustBondLengthToValidRange(desiredBondLength); // be sure bond len within allowed range 
+						desiredBondLength = mol.MolLib.AdjustBondLengthToValidRange(desiredBondLength); // be sure bond len within allowed range 
 						if (debug) DebugLog.StopwatchMessage("tAdjustBondLengthToValidRange", sw);
 						dp.StandardBondLength = MoleculeMx.MilliinchesToDecipoints(desiredBondLength);
 						bm = mol.MolLib.GetFixedHeightMoleculeBitmap(pixWidth, pixHeight, dp, cellStyle, mol.Caption);
@@ -619,7 +619,7 @@ namespace Mobius.ClientComponents
 
 					if (pssc.SearchType == StructureSearchType.Substructure)
 					{
-						string chime = MoleculeMx.MolFileStringToChimeString(qc.MolString);
+						string chime = MoleculeMx.MolfileStringToChimeString(qc.MolString);
 						if (!String.IsNullOrEmpty(chime))
 						{
 							AlignStructureToQuery = Lex.Contains(psc.Value2, "Orient") || Lex.Contains(psc.Value2, "Align=True");
@@ -640,7 +640,7 @@ namespace Mobius.ClientComponents
 
 					else if (pssc.SearchType == StructureSearchType.Related) // 
 					{
-						string chime = MoleculeMx.MolFileStringToChimeString(qc.MolString);
+						string chime = MoleculeMx.MolfileStringToChimeString(qc.MolString);
 						if (!String.IsNullOrEmpty(chime))
 						{
 							AlignStructureToQuery = Lex.Contains(psc.Value2, "Orient") || Lex.Contains(psc.Value2, "Align=True");

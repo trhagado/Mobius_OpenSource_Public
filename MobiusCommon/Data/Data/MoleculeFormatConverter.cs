@@ -475,25 +475,9 @@ namespace Mobius.Data
 
 		public static bool IsValidMolfile(string molfile)
 		{
-			
 			if (Lex.IsUndefined(molfile)) return false;
-
-			xxx
-
-			try
-			{
-				 = MolLibFactory.CreateInstance(null).SmilesStringToMolfileString(smilesString);
-				IAtomContainer m = CdkUtil.MolfileToAtomContainer(molfile);
-				if (m != null) return true;
-				else return false;
-			}
-			catch (Exception ex)
-			{
-				return false;
-			}
-
+			return MolLibFactory.CreateInstance(null).IsValidMolfile(molfile);
 		}
-
 
 		/// <summary>
 		/// Check if a string is a valid Chime string

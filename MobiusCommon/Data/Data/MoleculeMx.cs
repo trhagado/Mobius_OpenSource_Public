@@ -44,7 +44,12 @@ namespace Mobius.Data
 		/// </summary>
 
 		//[DataMember]
-		public MoleculeFormat PrimaryFormat = MoleculeFormat.Unknown;
+		public MoleculeFormat PrimaryFormat
+		{
+			set => _primaryFormat = value;
+			get => _primaryFormat;
+		}
+		MoleculeFormat _primaryFormat = MoleculeFormat.Unknown;
 
 		public static IMolLibFactory MolLibFactory = null;
 
@@ -56,7 +61,7 @@ namespace Mobius.Data
 		/// </summary>
 		/// <returns></returns>
 
-    IMolLib GetMolLibInstance()
+    public IMolLib GetMolLibInstance()
     {
       if (_molLib == null)
       {
@@ -947,7 +952,7 @@ namespace Mobius.Data
 		public static string MolFileToSmilesString(
 			string molFile)
 		{
-			return MoleculeFormatConverter.MolfileStringToSmilesString(molFile);
+			return MolfileStringToSmilesString(molFile);
 		}
 
 		/// <summary>
@@ -959,7 +964,7 @@ namespace Mobius.Data
 		public static string SmilesStringToMolFile(
 			string smilesString)
 		{
-			return CdkMolsmil.StructureConverter.SmilesStringToMolfileString(smilesString);
+			return SmilesStringToMolfileString(smilesString);
 		}
 
 		/// <summary>
@@ -971,7 +976,7 @@ namespace Mobius.Data
 		public static string ChimeStringToSmilesString(
 			string chimeString)
 		{
-			return CdkMol.StructureConverter.ChimeStringToSmilesString(chimeString);
+			return ChimeStringToSmilesString(chimeString);
 		}
 
 		/// <summary>
@@ -983,7 +988,7 @@ namespace Mobius.Data
 		public static string SmilesStringToChimeString(
 			string smilesString)
 		{
-			return CdkMol.StructureConverter.SmilesStringToChimeString(smilesString);
+			return SmilesStringToChimeString(smilesString);
 		}
 
 		/// <summary>
@@ -995,7 +1000,7 @@ namespace Mobius.Data
 		/// <param name="cs"></param>
 
 		public static void SetRendererStructure(
-			CdkMolMxControl r,
+			IMolLibControl r,
 			MoleculeMx cs,
 			bool updateDisplayPreferences = true,
 			string name = "")
@@ -1015,13 +1020,13 @@ namespace Mobius.Data
 				}
 			}
 
-			r.MolfileString = molfile; // set the structure
+			r.SetMolecule(cs.PrimaryFormat, cs.PrimaryValue); // set the structure
 
-			// Set a temporary name for the structure in the renderer
-			// Used mostly for passing model names to the MRU and Favorites lists
-
+			string tag = "";
 			if (Lex.IsDefined(name))
-				r.Tag = name + "\t" + r.MolfileString; // used to hold associated name and to detect if molecule has beed edited since set here
+				tag = name + "\t" + cs?.PrimaryFormat + "=" + cs?.PrimaryValue; // used to hold associated name and to detect if molecule has beed edited since set here
+
+			r.SetTag(tag);
 
 			return;
 		}
@@ -1034,7 +1039,6 @@ namespace Mobius.Data
 		public DisplayPreferences GetDisplayPreferences()
 		{
 			DisplayPreferences dp = new DisplayPreferences();
-			CdkMol.SetStandardDisplayPreferences(dp);
 			return dp;
 		}
 
@@ -1057,7 +1061,7 @@ namespace Mobius.Data
 		}
 
 		public static void SetMoleculeControlStructure(
-			 MoleculeControl r,
+			 IMolLibControl r,
 			 MoleculeMx cs)
 		{
 			throw new NotImplementedException();
@@ -1114,11 +1118,15 @@ namespace Mobius.Data
 
 			if (cs2 == null)
 			{
-				if (String.IsNullOrEmpty(GetChimeString())) return 0; // say nulls are equal
-				else return 1; // cs is null so this is greater
+				if (Lex.IsDefined(this.PrimaryValue))
+					return 1; // say greater if this has a defined value
+
+				else return 0; // say equal if both null?
 			}
 
-			return CdkMol.CompareMolWeight(this.GetMolfileString(), cs2.GetMolfileString());
+			double mw1 = MolLibFactory.CreateInstance(this).MolWeight;
+			double mw2 = MolLibFactory.CreateInstance(cs2).MolWeight;
+			return mw1.CompareTo(mw2);
 		}
 
 		/// <summary>
@@ -1126,15 +1134,7 @@ namespace Mobius.Data
 		/// </summary>
 
 		[XmlIgnore]
-		public override bool IsNull
-		{
-			get
-			{
-				if (PrimaryValue == null || PrimaryValue.Trim() == "")
-					return true;
-				else return false;
-			}
-		}
+		public override bool IsNull => IsUndefined(this);
 
 		/// <summary>
 		/// Return true if column is sortable
@@ -1331,6 +1331,29 @@ namespace Mobius.Data
 		{
 			return "Type=" + PrimaryFormat + ", Value=" + (PrimaryValue != null ? PrimaryValue : "");
 		}
+	}
+
+/// <summary>
+/// Class to provide access to a static MolLib class
+/// </summary>
+
+	public class MolLibStatic
+	{
+
+		public static IMolLib I => GetMolLibInstance();
+
+		static IMolLib GetMolLibInstance()
+		{
+			if (i == null)
+			{
+				i = new MoleculeMx().GetMolLibInstance();
+			}
+
+			return i;
+		}
+
+		static IMolLib i = null;
+
 	}
 
 	/// <summary>

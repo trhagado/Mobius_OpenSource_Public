@@ -119,12 +119,12 @@ namespace Mobius.Data
 				int stdBitmapBoxWidth = MoleculeMx.MilliinchesToPixels(MoleculeMx.StandardBoxWidth);
 				float scale = (float)bitmapWidth / stdBitmapBoxWidth;
 				int desiredBondLength = (int)(MoleculeMx.StandardBondLength * scale); // in milliinches
-				desiredBondLength = MoleculeMx.AdjustBondLengthToValidRange(desiredBondLength); // be sure bond len within allowed range 
+				desiredBondLength = MolLib.AdjustBondLengthToValidRange(desiredBondLength); // be sure bond len within allowed range 
 
 				DisplayPreferences dp = mol.GetDisplayPreferences();
 				dp.StandardBondLength = MoleculeMx.MilliinchesToDecipoints(desiredBondLength);
 
-				CdkMol ml1Mol = mol.FitStructureIntoRectangle // scale and translate structure into supplied rectangle.
+				mol.MolLib.FitStructureIntoRectangle // scale and translate structure into supplied rectangle.
 					(ref destRect, desiredBondLength, translateType, fixedHeight, markBoundaries, pageHeight, out boundingRect);
 
 				int pixWidth = MoleculeMx.MilliinchesToPixels(destRect.Width);
@@ -133,7 +133,7 @@ namespace Mobius.Data
 				Font font = new Font("Tahoma", 8.25f);
 				CellStyleMx cellStyle = new CellStyleMx(font, Color.Black, Color.Empty);
 
-				bm = MoleculeMx.GetFixedHeightMoleculeBitmap(ml1Mol, pixWidth, pixHeigth, dp, cellStyle, (string)mol.Caption);
+				bm = mol.MolLib.GetFixedHeightMoleculeBitmap(pixWidth, pixHeigth, dp, cellStyle, (string)mol.Caption);
 			}
 
 			else if (mol.IsBiopolymerFormat) // Output HELM image for biopolymer
@@ -155,18 +155,9 @@ namespace Mobius.Data
 		public void CreateStructureCaption(
 			string caption)
 		{
-			CdkMol mol = new CdkMol(GetMolfileString());
-			CdkMol.CreateStructureCaption(caption);
+			if (!IsChemStructureFormat) return;
 
-			if (PrimaryFormat == MoleculeFormat.Chime)
-				ChimeString = mol.ChimeString;
-
-			else
-			{
-				PrimaryFormat = MoleculeFormat.Molfile;
-				MolfileString = mol.MolfileString;
-			}
-
+			MolLib.CreateStructureCaption(caption);
 			return;
 		}
 
@@ -180,18 +171,7 @@ namespace Mobius.Data
 
 			try
 			{
-
-				CdkMol mol = new CdkMol(GetMolfileString());
-				mol.RemoveStructureCaption();
-
-				if (PrimaryFormat == MoleculeFormat.Chime)
-					ChimeString = mol.ChimeString;
-
-				else
-				{
-					PrimaryFormat = MoleculeFormat.Molfile;
-					MolfileString = mol.MolfileString;
-				}
+				MolLib.RemoveStructureCaption();
 
 				return;
 			}
@@ -208,9 +188,9 @@ namespace Mobius.Data
 		/// <param name="bondLen"></param>
 		/// <returns></returns>
 
-		public static int AdjustBondLengthToValidRange(int bondLen)
+		public int AdjustBondLengthToValidRange(int bondLen)
 		{
-			return CdkMol.AdjustBondLengthToValidRange(bondLen);
+			return MolLib.AdjustBondLengthToValidRange(bondLen);
 		}
 
 		// Conversions
@@ -304,16 +284,9 @@ namespace Mobius.Data
 			MoleculeTransformationFlags flags,
 			string name)
 		{
-			MoleculeMx cs2;
+			MoleculeMx cs2 = this.Clone();
 
-			CdkMol mol = new CdkMol(GetMolfileString());
-			CdkMol mol2 = mol.Convert((int)flags, name);
-
-			if (PrimaryFormat == MoleculeFormat.Chime)
-				cs2 = new MoleculeMx(MoleculeFormat.Chime, mol2.ChimeString);
-
-			else
-				cs2 = new MoleculeMx(MoleculeFormat.Molfile, mol2.MolfileString);
+			cs2.MolLib.TransformMolecule(flags, name);
 
 			return cs2;
 		}
@@ -333,11 +306,13 @@ namespace Mobius.Data
 			fs.Read(ba, 0, ba.Length);
 			fs.Close();
 
-			CdkMol.StructureConverter sc = new CdkMol.StructureConverter();
-			sc.SketchData = ba;
-			string molFile = sc.MolfileString;
-			MoleculeMx cs = new MoleculeMx(MoleculeFormat.Molfile, molFile);
-			return cs;
+			throw new NotImplementedException();
+
+			//CdkMol.StructureConverter sc = new CdkMol.StructureConverter();
+			//sc.SketchData = ba;
+			//string molFile = sc.MolfileString;
+			//MoleculeMx cs = new MoleculeMx(MoleculeFormat.Molfile, molFile);
+			//return cs;
 		}
 
 		/// <summary>
@@ -707,7 +682,7 @@ namespace Mobius.Data
 
 		public static string StructureAccessNotAuthorizedChimeString
 		{
-			get { return CdkMol.StructureConverter.MolfileStringToChimeString(StructureAccessNotAuthorizedMolfile); }
+			get { return MolfileStringToChimeString(StructureAccessNotAuthorizedMolfile); }
 		}
 
 		/// <summary>

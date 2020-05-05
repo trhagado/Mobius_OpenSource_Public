@@ -1,6 +1,4 @@
 ﻿using Mobius.ComOps;
-using Mobius.CdkMx;
-using Mobius.MolLib2;
 
 using System;
 using System.Collections.Generic;
@@ -22,11 +20,9 @@ namespace Mobius.Data
 			int fpSubtype = -1,
 			int fpLen = -1)
 		{
-			if (CdkMol.StructureConverter.ICdkUtil == null) DebugMx.Exception("StructureConversion.ICdkUtil is null");
-
 			string molfile = GetMolfileString();
 
-			object fp = CdkMol.StructureConverter.ICdkUtil.BuildBitSetFingerprint(molfile, (int)fpType, fpSubtype, fpLen);
+			object fp = MolLibStatic.I.BuildBitSetFingerprint(molfile, fpType, fpSubtype, fpLen);
 			return fp;
 		}
 
@@ -41,7 +37,7 @@ namespace Mobius.Data
 			object queryFingerprint,
 			object targetFingerprint)
 		{
-			double score = CdkMol.StructureConverter.ICdkUtil.CalculateBitSetFingerprintSimilarity(queryFingerprint, targetFingerprint);
+			double score = MolLibStatic.I.CalculateBitSetFingerprintSimilarity(queryFingerprint, targetFingerprint);
 			return score;
 		}
 
@@ -55,10 +51,11 @@ namespace Mobius.Data
 			out SortedDictionary<int, int> rgCounts,
 			out int totalRgCount)
 		{
-			Molecule m = new Molecule(GetMolfileString());
+			//Molecule m = new Molecule(GetMolfileString());
+			//m.GetCoreRGroupInfo(out rgCounts, out totalRgCount);
+			//return;
 
-			m.GetCoreRGroupInfo(out rgCounts, out totalRgCount);
-			return;
+			throw new NotImplementedException();
 		}
 
 

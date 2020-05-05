@@ -1,4 +1,5 @@
 ﻿using Mobius.ComOps;
+using Mobius.Data;
 
 using java.io;
 
@@ -113,7 +114,7 @@ public class UniChemUtil
 			if (!IsAcceptableInchiStatus(ig))
 			{
 				string errMsg = "InChI generation " + ig.getReturnStatus() + ": " + ig.getMessage();
-				molFile = CdkMol.AtomContainerToMolFile(mol); // debug
+				molFile = CdkMol.AtomContainerToMolfile(mol); // debug
 				throw new Exception(errMsg);
 			}
 

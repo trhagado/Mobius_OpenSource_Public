@@ -101,7 +101,7 @@ namespace Mobius.CdkSearchMx
 		static public string Update(
 			string argString)
 		{
-			IAtomContainer mol;
+			MoleculeMx mol;
 			double mw;
 			string chime, smiles, molString, molFile = "";
 			string msg = "", sql = "", chemblId, cid = "", maxCorpIdSql, maxIdSql2, mf, missingFixCriteria = "", CorpIdList = "";
@@ -450,8 +450,8 @@ namespace Mobius.CdkSearchMx
 										chime = rdr.GetClob(1);
 										if (Lex.IsDefined(chime))
 										{
-											molFile = CdkMx.StructureConverter.ChimeStringToMolfileString(chime); // convert Chime to MolFile
-											mol = CdkUtil.MolfileToAtomContainer(molFile);
+											molFile = MoleculeMx.ChimeStringToMolfileString(chime); // convert Chime to MolFile
+											mol = new MoleculeMx(MoleculeFormat.Molfile, molFile);
 										}
 									}
 
@@ -468,10 +468,10 @@ namespace Mobius.CdkSearchMx
 									cid = chemblId = rdr.GetString(1);
 									smiles = rdr.GetString(2);
 									if (Lex.IsDefined(smiles))
-										mol = CdkUtil.SmilesToAtomContainer(smiles);
+										mol = new MoleculeMx(MoleculeFormat.Smiles, smiles);
 								}
 
-								if (mol == null || mol.isEmpty() || mol.getAtomCount() <= 1)
+								if (MoleculeMx.IsUndefined(mol) || mol.AtomCount <= 1)
 								{
 									NewUndefinedStructureCids.Add(cid);
 									continue;
@@ -479,7 +479,7 @@ namespace Mobius.CdkSearchMx
 								}
 
 								bool includeOverallFingerprint = true;
-								List<BitSetFingerprint> fps = CdkUtil.BuildBitSetFingerprints(mol, includeOverallFingerprint, FingerprintType);
+								List<BitSetFingerprint> fps = new CdkMol().BuildBitSetFingerprints(mol.MolfileString, includeOverallFingerprint, FingerprintType);
 
 								//t3 = TimeOfDay.Delta(ref t0);
 

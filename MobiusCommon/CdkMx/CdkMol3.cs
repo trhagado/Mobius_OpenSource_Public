@@ -1,4 +1,5 @@
 ﻿using Mobius.ComOps;
+using Mobius.Data;
 
 using java.io;
 
@@ -220,7 +221,7 @@ namespace Mobius.CdkMx
 		/// <param name="smilesFrags"></param>
 		/// <returns>Molfile of integrated mol with difference fragment hilighted via special atom isotope values </returns>
 
-		public static string IntegrateAndHilightMmpStructure(
+		public string IntegrateAndHilightMmpStructure(
 			string smilesFrags)
 		{
 			IAtomContainer mol;
@@ -458,7 +459,7 @@ namespace Mobius.CdkMx
 
 			if (Lex.IsUndefined(molfile2)) // couldn't convert to v3000, just return unhilighted v2000 file
 			{
-				molfile2 = AtomContainerToMolFile(mol);
+				molfile2 = AtomContainerToMolfile(mol);
 				return molfile2;
 			}
 
@@ -848,9 +849,6 @@ namespace Mobius.CdkMx
 			return new java.lang.Integer(i);
 		}
 
-		/////////////////////////////////////////
-		// public interface ICdkUtil methods
-		/////////////////////////////////////////
 		/// <summary>
 		/// Convert an Inchi string to a molfile
 		/// </summary>
@@ -870,18 +868,11 @@ namespace Mobius.CdkMx
 
 		public object BuildBitSetFingerprint(
 			string molfile,
-			int fpTypeInt,
+			FingerprintType fpType,
 			int fpSubtype = -1,
 			int fpLen = -1)
 		{
-			FingerprintType fpType = FingerprintType.Undefined;
-
 			IAtomContainer mol = MolfileToAtomContainer(molfile);
-
-			if (fpTypeInt > 0 && Enum.IsDefined(typeof(FingerprintType), fpTypeInt))
-				fpType = (FingerprintType)fpTypeInt;
-
-			else throw new Exception("Invalid FingerprintType: " + fpTypeInt);
 
 			BitSetFingerprint bfp = BuildBitSetFingerprintForLargestFragment(
 				mol,
@@ -896,14 +887,14 @@ namespace Mobius.CdkMx
 		/// Build CDK BitSetFingerprints from an AtomContainer 
 		/// including the overall fingerprint and a fingerprint for each fragment
 		/// </summary>
-		/// <param name="mol"></param>
+		/// <param name="molfile"></param>
 		/// <param name="fpTypeInt"></param>
 		/// <param name="fpSubtype"></param>
 		/// <param name="fpLen"></param>
 		/// <returns></returns>
 
-		public static List<BitSetFingerprint> BuildBitSetFingerprints(
-			IAtomContainer mol,
+		public List<BitSetFingerprint> BuildBitSetFingerprints(
+			string molfile,
 			bool includeOverallFingerprint,
 			FingerprintType fpType,
 			int fpSubtype = -1,
@@ -913,6 +904,8 @@ namespace Mobius.CdkMx
 			BitSetFingerprint fp;
 			string smiles;
 			int fi, fi2;
+
+			IAtomContainer mol = MolfileToAtomContainer(molfile);
 
 			List<BitSetFingerprint> fpList = new List<BitSetFingerprint>();
 
@@ -1105,13 +1098,13 @@ namespace Mobius.CdkMx
 
 			// Mol object to V2000 & back
 
-			string v2000 = AtomContainerToMolFile(mol1); // obj to molfile
+			string v2000 = AtomContainerToMolfile(mol1); // obj to molfile
 			msg += "Obj -> CDK V2000\r\n==================================\r\n " + v2000 + "\r\n\r\n";
 
 			IAtomContainer molV2000 = MolfileToAtomContainer(v2000); // molfile to obj
 			int isotopeV2 = molV2000.getAtom(0).getMassNumber().intValue();
 			msg += "V2000 -> Obj isotope: " + isotopeV2 + "\r\n\r\n";
-			string v2000b = AtomContainerToMolFile(molV2000); // obj back to molfile
+			string v2000b = AtomContainerToMolfile(molV2000); // obj back to molfile
 
 			// Mol object to V3000 & back
 

@@ -1,4 +1,5 @@
 ﻿using Mobius.ComOps;
+using Mobius.Data;
 
 using cdk = org.openscience.cdk;
 using org.openscience.cdk;
@@ -32,11 +33,26 @@ namespace Mobius.CdkMx
 		/// Wrapper for native CDK Molecule class
 		/// </summary>
 
-	public partial class CdkMol // : IMolLibMx
+	public partial class CdkMol : DevExpress.XtraEditors.XtraUserControl 
 	{
-		public String MolfileString;
 		public IAtomContainer NativeMol = null; // native format library molecule
 		public IMoleculeMx Parent; // Parent IMoleculeMx that we are supporting
+
+		public String MolfileString
+		{
+			get => GetMolfileString();
+			set => SetMolfileString(value);
+		}
+
+		public string GetMolfileString()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void SetMolfileString(string molfileString)
+		{
+			throw new NotImplementedException();
+		}
 
 		/// <summary>
 		/// Basic constructor
@@ -93,10 +109,13 @@ namespace Mobius.CdkMx
 
 		public void UpdateNativeMolecule()
 		{
-			if (Parent != null)
-			{
-				NativeMol = MolfileToAtomContainer(Parent.Molfile);
-			}
+			if (Parent == null) throw new Exception("Parent not defined");
+
+			string primaryValue = Parent.PrimaryValue;
+			MoleculeFormat format = Parent.PrimaryFormat;
+
+			// todo: setup NativeMol to match parent
+
 			throw new NotImplementedException();
 		}
 
@@ -121,18 +140,6 @@ namespace Mobius.CdkMx
 				return false;
 			}
 
-		}
-
-
-		/// <summary>
-		/// Compare "molweight" of two structures
-		/// </summary>
-		/// <param name="o"></param>
-		/// <returns></returns>
-
-		public static int CompareMolWeight(string molfile1, string molfile2)
-		{
-			throw new NotImplementedException();
 		}
 
 		/// <summary>
@@ -188,9 +195,11 @@ namespace Mobius.CdkMx
 		/// <param name="bondLen"></param>
 		/// <returns></returns>
 
-		public static int AdjustBondLengthToValidRange(int bondLen)
+		public int AdjustBondLengthToValidRange(int bondLen)
 		{
-			return bondLen; // todo - throw new NotImplementedException();
+			throw new NotImplementedException();
+
+			//return bondLen; 
 		}
 
 		/// <summary>
@@ -202,21 +211,6 @@ namespace Mobius.CdkMx
 		public int FixSingleAtomHydrogens()
 		{
 			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// Contract all abbreviations in a molecule
-		/// </summary>
-		/// <param name="skid"></param>
-
-		static void ContractAbbreviations()
-		{
-			throw new Exception("Not implemented");
-
-			//int oldMode = SetSketchMode(skid, SKMODE_CHEM); // must be in chem mode
-			//Ol.CollectAllSkObj(skid, 1); // put all objects in collection 1
-			//Ol.ContractMapAbbrevs(skid, false, 0, 0, 0, 1); // contract abbrvs
-			//SetSketchMode(skid, oldMode);
 		}
 
 		/// <summary>
@@ -262,6 +256,16 @@ namespace Mobius.CdkMx
 			int removedCnt = 0;
 			int sgi = 0;
 
+
+			//if (PrimaryFormat == MoleculeFormat.Chime)
+			//	ChimeString = mol.ChimeString;
+
+			//else
+			//{
+			//	PrimaryFormat = MoleculeFormat.Molfile;
+			//	MolfileString = mol.MolfileString;
+			//}
+
 			throw new NotImplementedException();
 		}
 
@@ -278,21 +282,16 @@ namespace Mobius.CdkMx
 		}
 
 		/// <summary>
-		/// Convert structure according to flag settings
+		/// Transform molecule according to flag settings
 		/// </summary>
-		/// <param name="molfile"></param>
 		/// <param name="flags"></param>
 		/// <param name="name">Name to go in first line</param>
 		/// <returns></returns>
 
-		public CdkMol Convert(
-			int intFlags,
+		public void TransformMolecule(
+			MoleculeTransformationFlags flags,
 			string name)
 		{
-			int i1, i2, optionsProcessed = 0;
-
-			MoleculeTransformationFlags flags = (MoleculeTransformationFlags)intFlags;
-
 			throw new NotImplementedException();
 		}
 
@@ -397,7 +396,7 @@ namespace Mobius.CdkMx
 	/// Native molecule control class
 	/// </summary>
 
-	public class MoleculeControl : System.Windows.Forms.ContainerControl
+	public class MoleculeControl : DevExpress.XtraEditors.XtraUserControl, IMolLibControl
 	{
 		public DisplayPreferences Preferences = null;
 
@@ -410,7 +409,22 @@ namespace Mobius.CdkMx
 		/// </summary>
 		/// <param name="mol"></param>
 
-		public void SetMolecule(CdkMol mol)
+		public void SetMolecule(MoleculeFormat format, string value)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void GetMolecule(out MoleculeFormat format, out string value)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void SetTag(object tag)
+		{
+			throw new NotImplementedException();
+		}
+
+		public object GetTag()
 		{
 			throw new NotImplementedException();
 		}

@@ -2,7 +2,6 @@
 using Mobius.Data;
 using Mobius.UAL;
 using Mobius.CdkSearchMx;
-using Mobius.CdkMx;
 
 using org.openscience.cdk;
 using org.openscience.cdk.interfaces;
@@ -358,17 +357,9 @@ namespace Mobius.QueryEngineLibrary
 					if (Lex.IsUndefined(QueryChimeString)) throw new Exception("QueryChimeString not defined");
 
 					MoleculeMx cs = new MoleculeMx(MoleculeFormat.Chime, QueryChimeString);
-					string smiles = cs.GetSmilesString();
-					FragmentList = CdkUtil.FragmentAndCanonicalizeSmiles(smiles, true); // get list of fragments (largest to smallest) with small and common fragments removed
-					if (FragmentList.Count == 0) return; // nothing to search
-
-					string smilesQuery = FragmentList[0].Key; // just do largest structure
-					IAtomContainer mol = FragmentList[0].Value;
-
-					CdkUtil.ConfigureAtomContainer(mol);
-					mol = CdkUtil.GenerateCoordinates(mol); // need coords for proper stereo identification
-					string molFile = CdkUtil.AtomContainerToMolFile(mol);
-					LargestFragmentChimeString = MoleculeMx.MolFileStringToChimeString(molFile); // get chime string
+					string molfile = cs.GetMolfileString();
+					molfile = MolLibStatic.I.GetLargestMolfileMoleculeFragment(molfile);
+					LargestFragmentChimeString = MoleculeMx.MolfileStringToChimeString(molfile); // get chime string
 				}
 
 				if (UseMultipleThreads)
@@ -1115,7 +1106,8 @@ namespace Mobius.QueryEngineLibrary
 				}
 
 				string smilesQuery = FragmentList[0].Key; // just do largest structure
-				IAtomContainer queryMol = CdkUtil.SmilesToAtomContainer(smilesQuery);
+
+				MoleculeMx queryMol = new MoleculeMx(MoleculeFormat.Smiles, smilesQuery);
 
 				CdkSimSearchMx simSrch = new CdkSimSearchMx();
 				simSrch.KeysToExclude = KeysToExclude;
@@ -1227,8 +1219,8 @@ namespace Mobius.QueryEngineLibrary
 						sm.MolString = structSmiR;
 						sm.MolStringFormat = MoleculeFormat.Smiles; // smiles (in 3 pieces)
 
-						string molfile = CdkUtil.IntegrateAndHilightMmpStructure(sm.MolString);
-						string chime = MoleculeMx.MolFileStringToChimeString(molfile);
+						string molfile = MoleculeMx.MolLibFactory.CreateInstance(sm).IntegrateAndHilightMmpStructure(sm.MolString);
+						string chime = MoleculeMx.MolfileStringToChimeString(molfile);
 						sm.MolString = chime;
 						sm.MolStringFormat = MoleculeFormat.Chime;
 

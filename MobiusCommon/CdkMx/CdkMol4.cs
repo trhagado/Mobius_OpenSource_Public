@@ -1,5 +1,6 @@
 ﻿
 using Mobius.ComOps;
+using Mobius.Data;
 
 using java.io;
 
@@ -89,20 +90,6 @@ namespace Mobius.CdkMx
 		}
 
 		/// <summary>
-		/// Render molecule into bitmap of specified size with standard display preferences
-		/// </summary>
-		/// <param name="bitmapWidth"></param>
-		/// <param name="bitmapHeight"></param>
-		/// <returns></returns>
-
-		public Bitmap GetMoleculeBitmap(
-			int bitmapWidth,
-			int bitmapHeight)
-		{
-			return GetMoleculeBitmap(bitmapWidth, bitmapHeight, null);
-		}
-
-		/// <summary>
 		/// Render molecule into bitmap of specified size.
 		/// </summary>
 		/// <param name="bitmapWidth"></param>
@@ -113,7 +100,7 @@ namespace Mobius.CdkMx
 		public Bitmap GetMoleculeBitmap(
 			int bitmapWidth,
 			int bitmapHeight,
-			DisplayPreferences dp)
+			DisplayPreferences dp = null)
 		{
 			byte[] ba;
 			FileStream fs;
@@ -122,6 +109,8 @@ namespace Mobius.CdkMx
 			int txtLen;
 			Bitmap bm;
 
+
+
 			throw new NotImplementedException();
 		}
 
@@ -129,14 +118,12 @@ namespace Mobius.CdkMx
 		/// Convert to Metafile 
 		/// </summary>
 		/// <returns></returns>
-		public Metafile GetMetaFile(
+		public Metafile GetMetafile(
 			int width,
 			int height)
 		{
 			throw new NotImplementedException();
 		}
 
-
-
-	}
+	} // CdkMol
 }

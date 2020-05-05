@@ -1,4 +1,5 @@
 ﻿using Mobius.ComOps;
+using Mobius.Data;
 using Mobius.Helm;
 
 using DevExpress.XtraEditors;
@@ -16,8 +17,12 @@ using System.ComponentModel;
 
 namespace Mobius.CdkMx
 {
-	public partial class CdkMolControl : DevExpress.XtraEditors.XtraUserControl
+	public partial class CdkMolControl : DevExpress.XtraEditors.XtraUserControl, IMolLibControl
 	{
+
+		public string PrimaryValue = "";
+		public MoleculeFormat PrimaryFormat = MoleculeFormat.Unknown;
+
 		[DefaultValue(MolLib1ControlMode.BrowserViewOnly)]
 		public MolLib1ControlMode HelmMode { get => _helmMode; set => _helmMode = value; }
 		MolLib1ControlMode _helmMode = MolLib1ControlMode.BrowserViewOnly;
@@ -33,7 +38,7 @@ namespace Mobius.CdkMx
 		public WindowsMessageFilter WindowsMessageFilter;
 
 		public HelmOffScreenBrowser OffScreenBrowserMx = null; // used to generate OffScreen image for use as bitmap or SVG
-			 
+
 		public PictureBox OnScreenImageCtl = null; // used to display OffScreen renderer bitmap
 
 		public string Helm = null; // most-recently rendered helm
@@ -112,6 +117,33 @@ namespace Mobius.CdkMx
 			if (Debug) DebugLog.Message("MolLib1Control initialized for Mode: " + HelmMode + IdText);
 			return;
 		}
+
+		public void SetMolecule(MoleculeFormat format, string value)
+		{
+			PrimaryFormat = format;
+			PrimaryValue = value;
+		}
+
+		public void GetMolecule(out MoleculeFormat format, out string value)
+		{
+			format = PrimaryFormat;
+			value = PrimaryValue;
+			return;
+		}
+
+
+		public void SetTag(object tag)
+		{
+			this.Tag = tag;
+			return;
+		}
+
+		public object GetTag()
+		{
+			return this.Tag;
+		}
+
+
 
 		/// <summary>
 		/// SetupOnScreenImageControl for displaying bitmap image of Helm

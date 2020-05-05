@@ -90,9 +90,9 @@ namespace Mobius.ClientComponents
 
 			try
 			{
-				MolLib1MoleculeControl.Dock = DockStyle.Fill;
-				//MolLib1MoleculeControl.BorderStyle = BorderStyle.None;
-				CdkMx.MoleculeControl.SetStandardDisplayPreferences(MolLib1MoleculeControl);
+				MoleculeCtl.Dock = DockStyle.Fill;
+				//MoleculeCtl.BorderStyle = BorderStyle.None;
+				//DisplayPreferences.SetStandardDisplayPreferences(MoleculeCtl);
 
 				HelmControl.HelmMode = Helm.HelmControlMode.BrowserViewOnly; // setup with rendering directly from Chrome browser (not just a bitmap)
 				HelmControl.Dock = DockStyle.Fill;
@@ -121,7 +121,7 @@ namespace Mobius.ClientComponents
 			if (Controls.Contains(HelmControl))
 				return MoleculeRendererType.Helm;
 
-			else if (Controls.Contains(MolLib1MoleculeControl))
+			else if (Controls.Contains(MoleculeCtl))
 				return MoleculeRendererType.Chemistry;
 
 			else return MoleculeRendererType.Unknown;
@@ -137,8 +137,8 @@ namespace Mobius.ClientComponents
 			if (Controls.Contains(HelmControl))
 				return HelmControl;
 
-			else if (Controls.Contains(MolLib1MoleculeControl))
-				return MolLib1MoleculeControl;
+			else if (Controls.Contains(MoleculeCtl))
+				return MoleculeCtl;
 
 			else return null;
 		}
@@ -219,9 +219,9 @@ namespace Mobius.ClientComponents
 
 			if (newRenderer == MoleculeRendererType.Chemistry)
 			{
-				Controls.Add(MolLib1MoleculeControl);
+				Controls.Add(MoleculeCtl);
 				RenditorRtClickMessageFilter = // capture rt-click for Renditor
-					WindowsMessageFilter.CreateRightClickMessageFilter(MolLib1MoleculeControl, MoleculeControlRightMouseButtonMessageReceived);
+					WindowsMessageFilter.CreateRightClickMessageFilter(MoleculeCtl, MoleculeControlRightMouseButtonMessageReceived);
 			}
 
 			else if (newRenderer == MoleculeRendererType.Helm)
@@ -241,8 +241,8 @@ namespace Mobius.ClientComponents
 			if (Controls.Contains(HelmControl))
 				Controls.Remove(HelmControl);
 
-			if (Controls.Contains(MolLib1MoleculeControl))
-				Controls.Remove(MolLib1MoleculeControl);
+			if (Controls.Contains(MoleculeCtl))
+				Controls.Remove(MoleculeCtl);
 
 			return;
 		}
@@ -262,7 +262,7 @@ namespace Mobius.ClientComponents
 				else if (Molecule.IsChemStructureFormat)
 				{
 					string molfile = Molecule.GetMolfileString();
-					MolLib1MoleculeControl.MolfileString = molfile;
+					MoleculeCtl.MolfileString = molfile;
 				}
 
 				else if (Molecule.IsBiopolymerFormat)
@@ -307,7 +307,7 @@ namespace Mobius.ClientComponents
 				Molecule = new MoleculeMx(MoleculeMx.PreferredMoleculeFormat);
 
 			if (DisplayChem)
-				CdkMx.MoleculeControl.EditStructure(MolLib1MoleculeControl);
+				CdkMx.MoleculeControl.EditStructure(MoleculeCtl);
 
 			else if (DisplayHelm)
 				HelmControl.EditMolecule();
@@ -412,12 +412,12 @@ namespace Mobius.ClientComponents
 		{
 			try
 			{
-				if (MolLib1MoleculeControl.CanPaste)
+				if (MoleculeCtl.CanPaste)
 				{
 					SetupRendererControl(MoleculeRendererType.Chemistry);
-					MolLib1MoleculeControl.PasteFromClipboard();
+					MoleculeCtl.PasteFromClipboard();
 
-					SetPrimaryTypeAndValue(MoleculeFormat.Molfile, MolLib1MoleculeControl.MolfileString);
+					SetPrimaryTypeAndValue(MoleculeFormat.Molfile, MoleculeCtl.MolfileString);
 					return true;
 				}
 
@@ -451,8 +451,8 @@ namespace Mobius.ClientComponents
 
 			if (mol.IsChemStructureFormat)
 			{
-				if (MolLib1MoleculeControl.CanCopy)
-					MolLib1MoleculeControl.CopyToClipboard();
+				if (MoleculeCtl.CanCopy)
+					MoleculeCtl.CopyToClipboard();
 				return;
 			}
 
@@ -481,10 +481,10 @@ namespace Mobius.ClientComponents
 				lock (StaticChemCopyPasteMoleculeControl) // non-reentrant
 				{
 					MoleculeControl ctl = StaticChemCopyPasteMoleculeControl;
-					ctl.MolLib1MoleculeControl.MolfileString = mol.GetMolfileString(); // set and render the molecule
+					ctl.MoleculeCtl.MolfileString = mol.GetMolfileString(); // set and render the molecule
 
-					if (ctl.MolLib1MoleculeControl.CanCopy)
-						ctl.MolLib1MoleculeControl.CopyToClipboard();
+					if (ctl.MoleculeCtl.CanCopy)
+						ctl.MoleculeCtl.CopyToClipboard();
 				}
 				return;
 			}

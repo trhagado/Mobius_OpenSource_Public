@@ -207,12 +207,6 @@ namespace Mobius.UAL
 			//						mailClient.DeliveryMethod = SmtpDeliveryMethod.PickupDirectoryFromIis;
 			mailClient.Send(mail);
 		}
-
-		public static string GetCdkJavaVersion()
-		{
-			return Mobius.CdkMx.CdkUtil.GetJavaVersion();
-		}
-
 	}
 
 }
