@@ -140,6 +140,8 @@ namespace Mobius.QueryEngineLibrary
 
 		private static List<RelatedStructureSearch> SearchHistory = new List<RelatedStructureSearch>();
 
+		static IMolLib MolLibUtil => StaticMolLib.I; // static molecule shortcut for utility methods
+
 		private static string LogFileName { get { return ServicesDirs.LogDir + @"\RelatedStructureSearch - [Date].log"; } } // Allow logging to RelatedStructureSearch-specific file
 
 		/// <summary>
@@ -358,7 +360,7 @@ namespace Mobius.QueryEngineLibrary
 
 					MoleculeMx cs = new MoleculeMx(MoleculeFormat.Chime, QueryChimeString);
 					string molfile = cs.GetMolfileString();
-					molfile = MolLibStatic.I.GetLargestMolfileMoleculeFragment(molfile);
+					molfile = MolLibUtil.GetLargestMolfileMoleculeFragment(molfile);
 					LargestFragmentChimeString = MoleculeMx.MolfileStringToChimeString(molfile); // get chime string
 				}
 
@@ -1219,7 +1221,7 @@ namespace Mobius.QueryEngineLibrary
 						sm.MolString = structSmiR;
 						sm.MolStringFormat = MoleculeFormat.Smiles; // smiles (in 3 pieces)
 
-						string molfile = MoleculeMx.MolLibFactory.CreateInstance(sm).IntegrateAndHilightMmpStructure(sm.MolString);
+						string molfile = MolLibUtil.IntegrateAndHilightMmpStructure(sm.MolString);
 						string chime = MoleculeMx.MolfileStringToChimeString(molfile);
 						sm.MolString = chime;
 						sm.MolStringFormat = MoleculeFormat.Chime;

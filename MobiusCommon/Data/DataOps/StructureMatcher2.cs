@@ -1,5 +1,4 @@
 ﻿using Mobius.ComOps;
-using Mobius.MolLib2;
 
 using System;
 using System.Collections.Generic;
@@ -16,11 +15,13 @@ namespace Mobius.Data
 
 	public partial class StructureMatcher
 	{
-		static MolLib2.Molecule FSSQueryMol = null;
-		static MolLib2.Molecule FSSTargetMol = null;
+		static IMolLib FSSQueryMol = null;
+		static IMolLib FSSTargetMol = null;
 
-		static MolLib2.Molecule SSSQueryMol = null;
-		static MolLib2.Molecule SSSTargetMol = null;
+		static IMolLib SSSQueryMol = null;
+		static IMolLib SSSTargetMol = null;
+
+		IMolLib MolLibUtil => StaticMolLib.I;
 
 		/// <summary>
 		/// Perform a full structure search of query molecule against target molecule
@@ -64,8 +65,9 @@ namespace Mobius.Data
 			}
 
 			QueryMol = cs.Clone();
-			FSSQueryMol = MolLib2.Util.ChimeStringToMolecule(cs.GetChimeString());
-			MolLib2.Util.SetFSSQueryMolecule(FSSQueryMol);
+
+			FSSQueryMol = MolLibFactory.NewMolLib(cs);
+			MolLibUtil.SetFSSQueryMolecule(FSSQueryMol);
 
 			return;
 		}
@@ -86,8 +88,8 @@ namespace Mobius.Data
 			}
 
 			TargetMol = cs;
-			FSSTargetMol = MolLib2.Util.ChimeStringToMolecule(cs.GetChimeString());
-			bool b = MolLib2.Util.IsFSSMatch(FSSTargetMol);
+			FSSTargetMol = MolLibFactory.NewMolLib(cs);
+			bool b = MolLibUtil.IsFSSMatch(FSSTargetMol);
 			return b;
 		}
 
@@ -106,9 +108,9 @@ namespace Mobius.Data
 				return false;
 
 			QueryMol = query;
-			SSSQueryMol = MolLib2.Util.ChimeStringToMolecule(query.GetChimeString());
-			SSSTargetMol = MolLib2.Util.ChimeStringToMolecule(target.GetChimeString());
-			bool b = MolLib2.Util.IsSSSMatch(SSSQueryMol, SSSTargetMol);
+			SSSQueryMol = MolLibFactory.NewMolLib(query);
+			SSSTargetMol = MolLibFactory.NewMolLib(target);
+			bool b = MolLibUtil.IsSSSMatch(SSSQueryMol, SSSTargetMol);
 			return b;
 		}
 
@@ -121,8 +123,8 @@ namespace Mobius.Data
 			MoleculeMx cs)
 		{
 			QueryMol = cs.Clone();
-			SSSQueryMol = MolLib2.Util.ChimeStringToMolecule(cs.GetChimeString());
-			MolLib2.Util.SetSSSQueryMolecule(SSSQueryMol);
+			SSSQueryMol = MolLibFactory.NewMolLib(cs);
+			MolLibUtil.SetSSSQueryMolecule(SSSQueryMol);
 
 			return;
 		}
@@ -138,8 +140,8 @@ namespace Mobius.Data
 				return false;
 
 			TargetMol = cs;
-			SSSTargetMol = MolLib2.Util.ChimeStringToMolecule(cs.GetChimeString());
-			bool b = MolLib2.Util.IsSSSMatch(SSSTargetMol);
+			SSSTargetMol = MolLibFactory.NewMolLib(cs);
+			bool b = MolLibUtil.IsSSSMatch(SSSTargetMol);
 			return b;
 		}
 
@@ -158,7 +160,7 @@ namespace Mobius.Data
 			MoleculeMx cs2 = null;
 			PerformanceTimer pt = PT.Start("HighlightMatchingSubstructure");
 
-			string molfile = MolLib2.Util.HilightSSSMatch(cs.GetMolfileString());
+			string molfile = MolLibUtil.HilightSSSMatch(cs.GetMolfileString());
 			cs2 = new MoleculeMx(MoleculeFormat.Molfile, molfile);
 
 			pt.Update();
@@ -181,7 +183,7 @@ namespace Mobius.Data
 			PerformanceTimer pt = PT.Start("AlignToMatchingSubstructure");
 			Stopwatch sw = Stopwatch.StartNew();
 
-			string molfile = MolLib2.Util.OrientToMatchingSubstructure(target.GetMolfileString());
+			string molfile = MolLibUtil.OrientToMatchingSubstructure(target.GetMolfileString());
 			cs2 = new MoleculeMx(MoleculeFormat.Molfile, molfile);
 
 			pt.Update();

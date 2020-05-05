@@ -893,7 +893,7 @@ namespace Mobius.CdkMx
 		/// <param name="fpLen"></param>
 		/// <returns></returns>
 
-		public List<BitSetFingerprint> BuildBitSetFingerprints(
+		public static List<BitSetFingerprint> BuildBitSetFingerprints(
 			string molfile,
 			bool includeOverallFingerprint,
 			FingerprintType fpType,

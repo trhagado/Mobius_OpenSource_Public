@@ -51,10 +51,12 @@ namespace Mobius.Data
 		}
 		MoleculeFormat _primaryFormat = MoleculeFormat.Unknown;
 
-		public static IMolLibFactory MolLibFactory = null;
+
+		/// <summary>
+		/// Create/Get associated lower level molecule MolLib instance
+		/// </summary>
 
 		public IMolLib MolLib => GetMolLibInstance(); // link to low level object implementation
-
 
 		/// <summary>
 		/// Get or create associated IMolLib instance
@@ -64,24 +66,23 @@ namespace Mobius.Data
     public IMolLib GetMolLibInstance()
     {
       if (_molLib == null)
-      {
-				AssertMx.IsNotNull(MolLibFactory);
-				_molLib = MolLibFactory.CreateInstance(this);
-			}
+				_molLib = MolLibFactory.NewMolLib(this);
 
       return _molLib;
     }
     private IMolLib _molLib;
 
-    ///////////////////////////////////////////////////////
-    // String format molecule definitions
-    // The MoleculeFormat Type determins the primary type
-    // for the molecule. Values in other formats
-    // indicate the results of runtime conversions
-    // or multiple type values from a data source
-    ///////////////////////////////////////////////////////
+		static IMolLib MolLibUtil => StaticMolLib.I; // static molecule shortcut for utility methods
 
-    public string MolfileString = null;
+		///////////////////////////////////////////////////////
+		// String format molecule definitions
+		// The MoleculeFormat Type determins the primary type
+		// for the molecule. Values in other formats
+		// indicate the results of runtime conversions
+		// or multiple type values from a data source
+		///////////////////////////////////////////////////////
+
+		public string MolfileString = null;
 
 		public string ChimeString = null;
 
@@ -1124,8 +1125,8 @@ namespace Mobius.Data
 				else return 0; // say equal if both null?
 			}
 
-			double mw1 = MolLibFactory.CreateInstance(this).MolWeight;
-			double mw2 = MolLibFactory.CreateInstance(cs2).MolWeight;
+			double mw1 = MolLibFactory.NewMolLib(this).MolWeight;
+			double mw2 = MolLibFactory.NewMolLib(cs2).MolWeight;
 			return mw1.CompareTo(mw2);
 		}
 
@@ -1331,29 +1332,6 @@ namespace Mobius.Data
 		{
 			return "Type=" + PrimaryFormat + ", Value=" + (PrimaryValue != null ? PrimaryValue : "");
 		}
-	}
-
-/// <summary>
-/// Class to provide access to a static MolLib class
-/// </summary>
-
-	public class MolLibStatic
-	{
-
-		public static IMolLib I => GetMolLibInstance();
-
-		static IMolLib GetMolLibInstance()
-		{
-			if (i == null)
-			{
-				i = new MoleculeMx().GetMolLibInstance();
-			}
-
-			return i;
-		}
-
-		static IMolLib i = null;
-
 	}
 
 	/// <summary>

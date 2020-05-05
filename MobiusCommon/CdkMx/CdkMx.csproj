@@ -94,24 +94,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CdkFingerprint.cs" />
-    <Compile Include="CdkMol.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CdkMol4.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="CdkMol.cs" />
+    <Compile Include="CdkMol4.cs" />
     <Compile Include="CdkMolControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="CdkMolControl.Designer.cs">
       <DependentUpon>CdkMolControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="CdkMol2.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CdkMol3.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="CdkMol2.cs" />
+    <Compile Include="CdkMol3.cs" />
+    <Compile Include="CdkMolFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UniChemUtil.cs" />
   </ItemGroup>

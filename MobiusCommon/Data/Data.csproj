@@ -212,7 +212,7 @@
     <Compile Include="DataOps\StructureMatcher2.cs" />
     <Compile Include="DataOps\TargetAssayUtil.cs" />
     <Compile Include="Data\HelmConverter.cs" />
-    <Compile Include="Data\MoleculeFormatConverter.cs" />
+    <Compile Include="Data\MoleculeMx4.cs" />
     <Compile Include="Data\MoleculeList.cs" />
     <Compile Include="Data\MoleculeMx3.cs" />
     <Compile Include="Data\CidList.cs" />
@@ -314,10 +314,6 @@
     <ProjectReference Include="..\HelmWebServices\HelmWebServices.csproj">
       <Project>{f8fefca4-b843-4cbc-bef4-d182e259b3ad}</Project>
       <Name>HelmWebServices</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MolLib2Mx\MolLib2Mx.csproj">
-      <Project>{e9e3b546-1b9f-44e0-8d75-f9dc31b51c43}</Project>
-      <Name>MolLib2Mx</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

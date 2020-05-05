@@ -1,7 +1,6 @@
 ﻿using Mobius.ComOps;
 using Mobius.Data;
 using Mobius.UAL;
-using Mobius.CdkSearchMx;
 using Mobius.CdkMx;
 
 using cdk = org.openscience.cdk;
@@ -72,6 +71,8 @@ namespace Mobius.CdkSearchMx
 				else throw new InvalidDataException();
 			}
 		}
+
+		static IMolLib MolLibUtil => StaticMolLib.I; // static molecule shortcut for utility methods
 
 		/// <summary>
 		/// UpdateCorpFingerprintDatabaseMx
@@ -479,7 +480,7 @@ namespace Mobius.CdkSearchMx
 								}
 
 								bool includeOverallFingerprint = true;
-								List<BitSetFingerprint> fps = new CdkMol().BuildBitSetFingerprints(mol.MolfileString, includeOverallFingerprint, FingerprintType);
+								List<BitSetFingerprint> fps = CdkMol.BuildBitSetFingerprints(mol.MolfileString, includeOverallFingerprint, FingerprintType);
 
 								//t3 = TimeOfDay.Delta(ref t0);
 

@@ -29,7 +29,7 @@ namespace Mobius.ClientComponents
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.StructureRenditor = new Mobius.CdkMx.MoleculeControl();
+			this.StructureRenditor = new Mobius.CdkMx.CdkMolControl();
 			this.Timer = new System.Windows.Forms.Timer(this.components);
 			this.SuspendLayout();
 			// 
@@ -65,7 +65,7 @@ namespace Mobius.ClientComponents
 
 		#endregion
 
-		internal CdkMx.MoleculeControl StructureRenditor;
+		internal CdkMx.CdkMolControl StructureRenditor;
 		private System.Windows.Forms.Timer Timer;
 
 	}

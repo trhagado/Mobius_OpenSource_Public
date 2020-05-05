@@ -23,6 +23,67 @@ namespace Mobius.Data
     string PrimaryValue { get; }
   }
 
+/// <summary>
+/// Class containing injected public static instance of MolLibFactory used to create MolLib instances
+/// 
+/// </summary>
+
+  public class MolLibFactory
+  {
+    /// <summary>
+    /// Create basic MolLib instance
+    /// </summary>
+    /// <returns></returns>
+    /// 
+    public static IMolLib NewMolLib()
+    {
+      return I.NewMolLib();
+    }
+
+    /// <summary>
+    /// Create MolLib instance from MoleculeMx
+    /// </summary>
+    /// <param name="molMx"></param>
+    /// <returns></returns>
+
+    public static IMolLib NewMolLib(IMoleculeMx molMx)
+    {
+      return I.NewMolLib(molMx);
+    }
+
+    /// <summary>
+    /// Construct from mol format and string
+    /// </summary>
+    /// <param name="molFormat"></param>
+    /// <param name="molString"></param>
+    /// <returns></returns>
+
+    public static IMolLib NewMolLib(
+      MoleculeFormat molFormat,
+      string molString)
+    {
+      return I.NewMolLib(molFormat, molString);
+    }
+
+
+    /// <summary>
+    /// Injected instance of MolLibFactory
+    /// </summary>
+
+    public static IMolLibFactory I 
+    {
+      get 
+      {
+        if (i != null) return i;
+        throw new NullReferenceException("MolLibFactory instance not defined");
+      }
+
+      set => i = value;
+    
+    }
+    static IMolLibFactory i = null; 
+  }
+
   /// <summary>
   /// Interface for factory that creates MolLib instances
   /// </summary>
@@ -30,19 +91,51 @@ namespace Mobius.Data
   public interface IMolLibFactory
   {
     /// <summary>
-    /// Create MolLib instance from MoleculeMx
+    /// Create basic MolLib instance
     /// </summary>
-    /// <param name="IMoleculeMx"></param>
     /// <returns></returns>
-
-    IMolLib CreateInstance(object IMoleculeMx);
+    
+    IMolLib NewMolLib();
 
     /// <summary>
-    /// Create MolLib instance
+    /// Create MolLib instance from MoleculeMx
     /// </summary>
+    /// <param name="molMx"></param>
     /// <returns></returns>
 
-    IMolLib CreateInstance();
+    IMolLib NewMolLib(IMoleculeMx molMx);
+
+    /// <summary>
+    /// Construct from mol format and string
+    /// </summary>
+    /// <param name="molFormat"></param>
+    /// <param name="molString"></param>
+    /// <returns></returns>
+
+    IMolLib NewMolLib(
+      MoleculeFormat molFormat,
+      string molString);
+
+  }
+
+  /// <summary>
+  /// Class to provide access to a static MolLib class
+  /// </summary>
+
+  public class StaticMolLib
+  {
+
+    public static IMolLib I => GetMolLibInstance();
+
+    static IMolLib GetMolLibInstance()
+    {
+      if (i == null) // get instance if not done yet
+        i = MolLibFactory.NewMolLib();
+
+      return i;
+    }
+
+    static IMolLib i = null;
   }
 
   /// <summary>
@@ -109,23 +202,6 @@ namespace Mobius.Data
       FingerprintType fpType,
       int fpSubtype,
       int fpLen);
-
-    /// <summary>
-    /// Build CDK BitSetFingerprints from an AtomContainer 
-    /// including the overall fingerprint and a fingerprint for each fragment
-    /// </summary>
-    /// <param name="molfile"></param>
-    /// <param name="fpTypeInt"></param>
-    /// <param name="fpSubtype"></param>
-    /// <param name="fpLen"></param>
-    /// <returns></returns>
-
-    //List<object> BuildBitSetFingerprints(
-    //  string molfile,
-    //  bool includeOverallFingerprint,
-    //  FingerprintType fpType,
-    //  int fpSubtype = -1,
-    //  int fpLen = -1);
 
     /// <summary>
     /// Get the largest molecule fragment from supplied molfile
@@ -254,6 +330,134 @@ namespace Mobius.Data
     string IntegrateAndHilightMmpStructure(
       string smilesFrags);
 
+    ///////////// From Pipeline Pilot //////////////
+
+    /// <summary>
+    /// Check if substructure query matches target molecule
+    /// </summary>
+    /// <param name="queryMol"></param>
+    /// <param name="targetMol"></param>
+    /// <returns></returns>
+
+    bool IsSSSMatch(
+      IMolLib queryMol,
+      IMolLib targetMol);
+
+    /// <summary>
+    /// Prepare for SSS matching of supplied query molecule
+    /// </summary>
+    /// <param name="queryMol"></param>
+
+    void SetSSSQueryMolecule(
+      IMolLib queryMol);
+
+    /// <summary>
+    /// Map current query against supplied target molecule
+    /// </summary>
+    /// <param name="targetMol"></param>
+    /// <returns></returns>
+
+    bool IsSSSMatch(
+      IMolLib targetMol);
+
+    /// <summary>
+    /// Get mapping of current query against supplied target
+    /// </summary>
+    /// <param name="targetMol"></param>
+    /// <param name="queryIndex"></param>
+    /// <param name="mappedAtoms"></param>
+    /// <param name="mappedBonds"></param>
+    /// <returns></returns>
+
+    bool GetSSSMapping(
+      IMolLib targetMol,
+      out int queryIndex,
+      out int[] mappedAtoms,
+      out int[] mappedBonds);
+
+    /// <summary>
+    /// GetNextSGMapping
+    /// </summary>
+    /// <param name="queryIndex"></param>
+    /// <param name="mappedAtoms"></param>
+    /// <param name="mappedBonds"></param>
+    /// <returns></returns>
+
+    bool GetNextSSSMapping(
+      out int queryIndex,
+      out int[] mappedAtoms,
+      out int[] mappedBonds);
+
+    /// <summary>
+    /// Map and hilight a substructure match
+    /// </summary>
+    /// <param name="molfile"></param>
+    /// <returns></returns>
+
+    string HilightSSSMatch(string molfile);
+
+    /// <summary>
+    /// Hilight a target molecule using mapped atoms and bonds
+    /// </summary>
+    /// <param name="targetMol"></param>
+    /// <param name="mappedAtoms"></param>
+    /// <param name="mappedBonds"></param>
+    /// <returns></returns>
+
+    IMolLib HilightSSSMatchGMap(
+      IMolLib targetMol,
+      int[] mappedAtoms,
+      int[] mappedBonds);
+
+    /// <summary>
+    /// Map current query against structure & return oriented match
+    /// </summary>
+    /// <param name="target molfile"></param>
+    /// <returns></returns>
+
+    string OrientToMatchingSubstructure(
+      string targetMolfile);
+
+    /// <summary>
+    /// Set substructure search option
+    /// </summary>
+    /// <param name="option"></param>
+
+    void SetSSSOption(
+      //SGMap.SearchOption option, 
+      bool value);
+
+    /// <summary>
+    /// Perform a full structure search
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="target"></param>
+    /// <param name="switches"></param>
+    /// <returns></returns>
+
+    bool FullStructureMatch(
+      IMolLib query,
+      IMolLib target,
+      string FullStructureSearchType = null);
+
+    /// <summary>
+    /// Prepare for FSS matching of supplied query molecule
+    /// </summary>
+    /// <param name="queryMol"></param>
+
+    void SetFSSQueryMolecule(
+      IMolLib queryMol,
+      string FullStructureSearchType = null);
+
+    /// <summary>
+    /// Map current query against supplied target molecule
+    /// </summary>
+    /// <param name="targetMol"></param>
+    /// <returns></returns>
+
+    bool IsFSSMatch(
+      IMolLib targetMol);
+
   }
 
   /// <summary>
@@ -270,7 +474,17 @@ namespace Mobius.Data
 
     object GetTag();
 
+    MolEditorReturnedHandler EditorReturnedHandler { get;  set; }
   }
+
+  public delegate void MolEditorReturnedHandler(object sender, MolEditorReturnedEventArgs e);
+
+  public class MolEditorReturnedEventArgs : EventArgs
+  {
+    public bool Validated;
+  }
+
+
 
   /// <summary>
   /// Structure search types
@@ -400,19 +614,6 @@ namespace Mobius.Data
     RemoveHydrogens = 16, // remove explicit non-stereo h atoms
     RemoveStructureCaption = 32, // remove any caption (usually stereo comment)
     RemoveStereochemistry = 64 // remove any stereocenter information
-  }
-
-
-  /// <summary>
-  /// StructureFormat
-  /// </summary>
-
-  public enum StructureType
-  {
-    Unknown = 0,
-    MolFile = 1,
-    Smiles = 2,
-    Chime = 3
   }
 
   public enum HPositionEnum

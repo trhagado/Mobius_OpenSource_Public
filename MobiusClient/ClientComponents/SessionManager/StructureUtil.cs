@@ -1,7 +1,6 @@
 using Mobius.ComOps;
 using Mobius.Data;
 using Mobius.ServiceFacade;
-using Mobius.CdkMx;
 
 using System;
 using System.IO;
@@ -44,11 +43,11 @@ namespace Mobius.ClientComponents
 			fs.Read(ba, 0, ba.Length);
 			fs.Close();
 
-			CdkMx.StructureConverter sc = new CdkMx.StructureConverter();
-			sc.SketchData = ba;
-			string molFile = sc.MolfileString;
-			MoleculeMx cs = new MoleculeMx(MoleculeFormat.Molfile, molFile);
-			return cs;
+			throw new NotImplementedException();
+
+			//string molFile = sc.MolfileString;
+			//MoleculeMx cs = new MoleculeMx(MoleculeFormat.Molfile, molFile);
+			//return cs;
 		}
 
 /// <summary>

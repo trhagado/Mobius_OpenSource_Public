@@ -31,7 +31,7 @@ namespace Mobius.MolLib2
 			throw new NotImplementedException();
 		}
 
-		public static void SetSlignStructuresToCore (bool b)
+		public static void SetAlignStructuresToCore (bool b)
 		{
 			throw new NotImplementedException();
 		}

@@ -20,6 +20,129 @@ namespace Mobius.CdkMx
 	public partial class CdkMolControl : DevExpress.XtraEditors.XtraUserControl, IMolLibControl
 	{
 
+
+		public DisplayPreferences Preferences = null;
+
+		public event EventHandler StructureChanged;
+
+		public MolEditorReturnedHandler EditorReturnedHandler
+		{
+			get => _editorReturnedHandler;
+			set => value = _editorReturnedHandler;
+		}
+		MolEditorReturnedHandler _editorReturnedHandler;
+
+
+		// public event MolEditorReturnedHandler EditorReturnedHandler
+		// {
+		//add	{	_editorReturnedHandler += value; }
+		//remove { _editorReturnedHandler -= value;	}
+		// }
+		// event MolEditorReturnedHandler _editorReturnedHandler;
+
+		public void SetMolecule(MoleculeFormat format, string value)
+		{
+			PrimaryFormat = format;
+			PrimaryValue = value;
+		}
+
+		public void GetMolecule(out MoleculeFormat format, out string value)
+		{
+			format = PrimaryFormat;
+			value = PrimaryValue;
+			return;
+		}
+
+
+		public void SetTag(object tag)
+		{
+			this.Tag = tag;
+			return;
+		}
+
+		public object GetTag()
+		{
+			return this.Tag;
+		}
+
+		/// <summary>
+		/// Set control molecule from molfile string
+		/// </summary>
+
+		public string MolfileString
+		{
+			get
+			{
+				return ""; // throw new NotImplementedException();
+			}
+
+			set
+			{
+				return; // throw new NotImplementedException();
+			}
+		}
+
+		public DisplayPreferences DisplayPreferences;
+
+		public bool CanPaste => throw new NotImplementedException();
+
+		public bool CanCopy => throw new NotImplementedException();
+
+		public void PasteFromClipboard()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void CopyToClipboard()
+		{
+			throw new NotImplementedException();
+		}
+
+		public Bitmap PaintMolecule(MoleculeFormat molFormat, string molString, int width, int height)
+		{
+			throw new NotImplementedException();
+		}
+
+
+		/// <summary>
+		/// Get current version
+		/// </summary>
+		/// <returns></returns>
+		public static string GetVersion()
+		{
+			throw new NotImplementedException();
+			//Renderer hr = new Renderer(); // causes exception if not installed
+			//Assembly a = hr.GetType().Assembly;
+			//string codeBase = a.CodeBase; // needed in html references
+			//string version = a.GetName().Version.ToString();
+			//return version;
+		}
+
+		/// <summary>
+		/// Edit the structure in the specified Renditor
+		/// </summary>
+		/// <param name="renditor"></param>
+
+		public static void EditStructure(
+			CdkMolControl renditor)
+		{
+			AssertMx.IsNotNull(renditor, "renditor");
+
+			try
+			{
+				throw new NotImplementedException();
+			}
+
+			catch (Exception ex)
+			{
+				string msg =
+					"An error has occurred starting the molecule editor";
+
+				DialogResult dr = MessageBox.Show(msg, "Error starting molecule editor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+		}
+		// Stub class based on HelmControl
+
 		public string PrimaryValue = "";
 		public MoleculeFormat PrimaryFormat = MoleculeFormat.Unknown;
 
@@ -52,6 +175,8 @@ namespace Mobius.CdkMx
 
 		ManualResetEvent BrowserInitializedEvent = new ManualResetEvent(false);
 		ManualResetEvent PageLoadedEvent = new ManualResetEvent(false);
+
+		//MolEditorReturnedHandler EditorReturnedHandler { get; set; }
 
 		public event EventHandler MoleculeChanged; // caller-set event to fire when edit value changes
 
@@ -117,33 +242,6 @@ namespace Mobius.CdkMx
 			if (Debug) DebugLog.Message("MolLib1Control initialized for Mode: " + HelmMode + IdText);
 			return;
 		}
-
-		public void SetMolecule(MoleculeFormat format, string value)
-		{
-			PrimaryFormat = format;
-			PrimaryValue = value;
-		}
-
-		public void GetMolecule(out MoleculeFormat format, out string value)
-		{
-			format = PrimaryFormat;
-			value = PrimaryValue;
-			return;
-		}
-
-
-		public void SetTag(object tag)
-		{
-			this.Tag = tag;
-			return;
-		}
-
-		public object GetTag()
-		{
-			return this.Tag;
-		}
-
-
 
 		/// <summary>
 		/// SetupOnScreenImageControl for displaying bitmap image of Helm

@@ -1,5 +1,4 @@
 ﻿using Mobius.ComOps;
-using Mobius.MolLib2;
 
 using System;
 using System.Collections.Generic;
@@ -114,14 +113,15 @@ namespace Mobius.Data
 			string switches)
 		{
 			bool newQuery = (QueryMol == null || QueryMol.PrimaryValue != query.PrimaryValue);
-			if (newQuery) 
-				QueryMol = query.Clone();
-			
 			if (newQuery)
-				SSSQueryMol = MolLib2.Util.ChimeStringToMolecule(query.GetChimeString());
+			{
+				QueryMol = query.Clone();
 
-			SSSTargetMol = MolLib2.Util.ChimeStringToMolecule(target.GetChimeString());
-			bool b = MolLib2.Util.FullStructureMatch(SSSQueryMol, SSSTargetMol, switches);
+				SSSQueryMol = MolLibFactory.NewMolLib(query);
+			}
+
+			SSSTargetMol = MolLibFactory.NewMolLib(target);
+			bool b = MolLibUtil.FullStructureMatch(SSSQueryMol, SSSTargetMol, switches);
 			return b;
 		}
 

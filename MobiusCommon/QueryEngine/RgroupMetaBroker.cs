@@ -2,8 +2,6 @@ using Mobius.ComOps;
 using Mobius.Data;
 using Mobius.UAL;
 
-using Mobius.MolLib2;
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,11 +17,11 @@ namespace Mobius.QueryEngineLibrary
 
 	public class RgroupMetaBroker : GenericMetaBroker
 	{
-		Molecule CoreMolecule = null; // single core molecule
+		IMolLib CoreMolecule = null; // single core molecule
 		MoleculeMx CoreChemicalStructure = null;
 		StructureMatcher StrMatcher = null; // structure matcher
 
-		Molecule[] Substituents = new Molecule[32 + 1]; // substituents for current mapping 0 - 32
+		IMolLib[] Substituents = new IMolLib[32 + 1]; // substituents for current mapping 0 - 32
 
 		int[] CoreRNumbers;
 		int RgTotalCount; // total number of RGroup atoms in the core
@@ -35,6 +33,8 @@ namespace Mobius.QueryEngineLibrary
 		int KeyListPos; // position in key subset we are currently at
 		int MapCount = -1;
 		int MapPos = -1; // position in set of maps for current key
+
+		static IMolLib MolLibUtil => StaticMolLib.I; // static molecule shortcut for utility methods
 
 		// Constructor
 
@@ -133,7 +133,7 @@ namespace Mobius.QueryEngineLibrary
 			SetRnToMatchR1(qt, "SubstNo");
 
 			int msTime = (int)sw.ElapsedMilliseconds;
-			if (RGroupDecomp.Debug) DebugLog.Message("Time(ms): " + msTime);
+			//if (RGroupDecomp.Debug) DebugLog.Message("Time(ms): " + msTime);
 
 			return;
 		}
@@ -181,6 +181,8 @@ namespace Mobius.QueryEngineLibrary
 			QueryTable qt,
 			Query q)
 		{
+			throw new NotImplementedException();
+#if false
 			Stopwatch sw = Stopwatch.StartNew();
 
 			MetaTable mt = qt.MetaTable;
@@ -226,7 +228,7 @@ namespace Mobius.QueryEngineLibrary
 
 			RGroupDecomp.Initialize();
 
-			RGroupDecomp.SetSlignStructuresToCore(true);
+			RGroupDecomp.SetAlignStructuresToCore(true);
 			RGroupDecomp.SetAllowMultipleCoreMappings(allowMultipleCoreMappings);
 			RGroupDecomp.SetIncludeHydrogenFragments(allowHydrogenSubstituents);
 
@@ -234,9 +236,9 @@ namespace Mobius.QueryEngineLibrary
 			{
 				String coreSmiles = "[R1]c1cn2c3c(c1= O)cc(c(c3SC(C2)[R4])[R3])[R2]";
 				string coreChime = "CYAAFQwAUewQeV58YHemfM^EQqPRfIYlJGEkx6M7e4db95jjK5HrNFVP2e1qHphWPL98KvcvrsF7bP9bRcW4QH$si9PXkkuwre6Q5UkHZjciQqeAKVLSHNAeQTAMlkiXEBD$BePpbNQCPD3BkklFEaQqwokeI$FwUoS5cAixQXkMbLTWDaAK7t7cOkSmt3RhwQedbrba6OHKBq3OF4Dhlz$0BfLeKCUUo8ixle176M2aIzXUccTOU8Xy8ARwE3bTyMfjuI3UunZceJf4iZELvsj3PX2MHZG73baUvQGS4DaxUaBGps81PPiDljfvxwFv8OfdOyIRlOBeuEAvk2rT9SRT6oMZIV6UtLFvmCHdwKnu9WtrfV1rEctydNUVxW4qKVlV0rZtpK1oZXuKcv6WVdl6r2hrjVLxBhblTVKO7w1qGRoziquOnPQkKd9H4EQfV0rP6mzI8Au8ulti2fu3YKB94lPXftPGbwr5yA";
-				Molecule coreMol = MolLib2.Util.MolfileStringToMolecule(molfile);
-				coreChime = MolLib2.Util.MoleculeToChimeString(coreMol);
-				molfile = MolLib2.Util.MoleculeTofMolfileString(MolLib2.Util.ChimeStringToMolecule(coreChime));
+				IMolLib coreMol = MolLibFactory.NewMolLib(MoleculeFormat.Molfile, molfile);
+				coreChime = MoleculeMx.MolfileStringToChimeString(molfile);
+				molfile = coreMol.MolfileString;
 			}
 
 			CoreMolecule = MolLib2.Util.MolfileStringToMolecule(molfile);
@@ -249,6 +251,7 @@ namespace Mobius.QueryEngineLibrary
 			if (RGroupDecomp.Debug) DebugLog.Message("Time(ms): " + msTime);
 
 			return;
+#endif
 		}
 
 		/// <summary>
@@ -295,6 +298,8 @@ namespace Mobius.QueryEngineLibrary
 
 		public override Object[] NextRow()
 		{
+			throw new NotImplementedException();
+#if false
 			string cid = "";
 			Molecule substituent = null;
 
@@ -485,6 +490,7 @@ namespace Mobius.QueryEngineLibrary
 
 				return vo;
 			}
+#endif
 		}
 
 		/// <summary>
@@ -559,7 +565,7 @@ namespace Mobius.QueryEngineLibrary
 	public class RgroupSubstituent
 	{
 		public double Mw; // mol weight, used for sorting & speeding match identity
-		Molecule fragMol = null; // matching mol
+		IMolLib fragMol = null; // matching mol
 
 		/// <summary>
 		/// Get substituent for a decomposition rgroup & map position & store in list

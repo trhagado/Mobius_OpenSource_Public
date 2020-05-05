@@ -1,6 +1,5 @@
 ﻿using Mobius.ComOps;
 using Mobius.Data;
-using Mobius.CdkMx;
 using Mobius.ServiceFacade;
 
 using DevExpress.XtraEditors;
@@ -231,7 +230,7 @@ namespace Mobius.ClientComponents
 			return;
 		}
 
-		private void SQuery_EditorReturned(object sender, EditorReturnedEventArgs e)
+		private void SQuery_EditorReturned(object sender, MolEditorReturnedEventArgs e)
 		{
 			if (InSetup) return;
 			return;

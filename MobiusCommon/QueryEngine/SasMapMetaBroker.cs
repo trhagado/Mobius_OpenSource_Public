@@ -2,10 +2,6 @@
 using Mobius.Data;
 using Mobius.UAL;
 
-using Mobius.CdkMx;
-using Mobius.MolLib2;
-using Mobius.CdkMx;
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +18,8 @@ namespace Mobius.QueryEngineLibrary
 		int VoListPos = -1; // current position in Vo
 
 		string LastCriteriaString = "";
+
+		static IMolLib MolLibUtil => StaticMolLib.I; // static molecule shortcut for utility methods
 
 		bool Debug = false;
 
@@ -523,7 +521,7 @@ namespace Mobius.QueryEngineLibrary
 				cd.BitsetFingerprint = cs.BuildBitSetFingerprint(fpType, fpSubtype);
 				if (cd.BitsetFingerprint == null) continue; // couldn't build fingerprint (e.g. no structure)
 
-				if (Debug) DebugLog.Message(cd.Cid + ": " + Lex.Join(MolLibStatic.I.GetBitSet(cd.BitsetFingerprint), ", "));
+				if (Debug) DebugLog.Message(cd.Cid + ": " + Lex.Join(MolLibUtil.GetBitSet(cd.BitsetFingerprint), ", "));
 			}
 
 			return data;
@@ -550,8 +548,8 @@ namespace Mobius.QueryEngineLibrary
 				if ((cd1.Cid == "111" && cd2.Cid == "222") ||
 				 (cd2.Cid == "222" && cd1.Cid == "111"))
 				{
-					DebugLog.Message("Before: " + cd1.Cid + ": " + String.Join(", ", MolLibStatic.I.GetBitSet(cd1.BitsetFingerprint)));
-					DebugLog.Message("Before: " + cd2.Cid + ": " + String.Join(", ", MolLibStatic.I.GetBitSet(cd2.BitsetFingerprint)));
+					DebugLog.Message("Before: " + cd1.Cid + ": " + String.Join(", ", MolLibUtil.GetBitSet(cd1.BitsetFingerprint)));
+					DebugLog.Message("Before: " + cd2.Cid + ": " + String.Join(", ", MolLibUtil.GetBitSet(cd2.BitsetFingerprint)));
 				}
 			}
 
@@ -562,8 +560,8 @@ namespace Mobius.QueryEngineLibrary
 				if ((cd1.Cid == "111" && cd2.Cid == "222") ||
 				 (cd2.Cid == "222" && cd1.Cid == "111"))
 				{
-					DebugLog.Message(cd1.Cid + ": " + String.Join(", ", MolLibStatic.I.GetBitSet(cd1.BitsetFingerprint)));
-					DebugLog.Message(cd2.Cid + ": " + String.Join(", ", MolLibStatic.I.GetBitSet(cd2.BitsetFingerprint)));
+					DebugLog.Message(cd1.Cid + ": " + String.Join(", ", MolLibUtil.GetBitSet(cd1.BitsetFingerprint)));
+					DebugLog.Message(cd2.Cid + ": " + String.Join(", ", MolLibUtil.GetBitSet(cd2.BitsetFingerprint)));
 					DebugLog.Message(cd1.Cid + ", " + cd2.Cid + " Similarity: " + sim);
 				}
 			}

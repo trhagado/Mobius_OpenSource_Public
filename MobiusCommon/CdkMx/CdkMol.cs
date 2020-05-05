@@ -33,10 +33,10 @@ namespace Mobius.CdkMx
 		/// Wrapper for native CDK Molecule class
 		/// </summary>
 
-	public partial class CdkMol : DevExpress.XtraEditors.XtraUserControl 
+	public partial class CdkMol : IMolLib
 	{
 		public IAtomContainer NativeMol = null; // native format library molecule
-		public IMoleculeMx Parent; // Parent IMoleculeMx that we are supporting
+		public IMoleculeMx MoleculeMx; // Parent IMoleculeMx that we are supporting
 
 		public String MolfileString
 		{
@@ -70,35 +70,24 @@ namespace Mobius.CdkMx
 
 		public CdkMol(IMoleculeMx parent)
 		{
-			Parent = parent;
+			MoleculeMx = parent;
 			return;
 		}
 
 		/// <summary>
-		/// Construct from Molfile
+		/// Construct from mol format and string
 		/// </summary>
-		/// <param name="molfile"></param>
-
-		public CdkMol(string molfile)
-		{
-			MolfileString = molfile;
-		}
-
-		/// <summary>
-		/// Construct from Molfile or ChimeString
-		/// </summary>
-		/// <param name="molfile"></param>
 
 		public CdkMol(
-			StructureType structureType,
+			MoleculeFormat molFormat,
 			string molString)
 		{
 			if (Lex.IsUndefined(molString)) return; // create new structure
 
-			else if (structureType == StructureType.MolFile)
+			else if (molFormat == MoleculeFormat.Molfile)
 				MolfileString = molString;
 
-			else throw new ArgumentException("Unsupported StructureFormat: " + structureType);
+			else throw new ArgumentException("Unsupported molecule format: " + molFormat);
 
 			return;
 		}
@@ -109,10 +98,10 @@ namespace Mobius.CdkMx
 
 		public void UpdateNativeMolecule()
 		{
-			if (Parent == null) throw new Exception("Parent not defined");
+			if (MoleculeMx == null) throw new Exception("Parent not defined");
 
-			string primaryValue = Parent.PrimaryValue;
-			MoleculeFormat format = Parent.PrimaryFormat;
+			string primaryValue = MoleculeMx.PrimaryValue;
+			MoleculeFormat format = MoleculeMx.PrimaryFormat;
 
 			// todo: setup NativeMol to match parent
 
@@ -197,9 +186,9 @@ namespace Mobius.CdkMx
 
 		public int AdjustBondLengthToValidRange(int bondLen)
 		{
-			throw new NotImplementedException();
-
-			//return bondLen; 
+			//throw new NotImplementedException();
+			// todo
+			return bondLen; 
 		}
 
 		/// <summary>
@@ -388,129 +377,6 @@ namespace Mobius.CdkMx
 			return (int)(milliinches / 1000.0 * 96.0); // assume 96 pixels/inch
 		}
 
-	}
-
-	public delegate void EditorReturnedHandler(object sender, EditorReturnedEventArgs e);
-
-	/// <summary>
-	/// Native molecule control class
-	/// </summary>
-
-	public class MoleculeControl : DevExpress.XtraEditors.XtraUserControl, IMolLibControl
-	{
-		public DisplayPreferences Preferences = null;
-
-		public event EventHandler StructureChanged;
-
-		public event EditorReturnedHandler EditorReturned;
-
-		/// <summary>
-		/// Set control molecule
-		/// </summary>
-		/// <param name="mol"></param>
-
-		public void SetMolecule(MoleculeFormat format, string value)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void GetMolecule(out MoleculeFormat format, out string value)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void SetTag(object tag)
-		{
-			throw new NotImplementedException();
-		}
-
-		public object GetTag()
-		{
-			throw new NotImplementedException();
-		}
-
-/// <summary>
-/// Set control molecule from molfile string
-/// </summary>
-
-		public string MolfileString
-		{
-			get	
-			{
-				return ""; // throw new NotImplementedException();
-			}
-
-			set 
-			{
-				return; // throw new NotImplementedException();
-			}
-		}
-
-		public DisplayPreferences DisplayPreferences;
-
-		public bool CanPaste => throw new NotImplementedException();
-
-		public bool CanCopy => throw new NotImplementedException();
-
-		public void PasteFromClipboard()
-		{
-			throw new NotImplementedException();
-		}
-
-		public void CopyToClipboard()
-		{
-			throw new NotImplementedException();
-		}
-
-		public Bitmap PaintMolecule(object d, StructureType structureType, int width, int height)
-		{
-			throw new NotImplementedException();
-		}
-
-
-		/// <summary>
-		/// Get current version
-		/// </summary>
-		/// <returns></returns>
-		public static string GetVersion()
-		{
-			throw new NotImplementedException();
-			//Renderer hr = new Renderer(); // causes exception if not installed
-			//Assembly a = hr.GetType().Assembly;
-			//string codeBase = a.CodeBase; // needed in html references
-			//string version = a.GetName().Version.ToString();
-			//return version;
-		}
-
-		/// <summary>
-		/// Edit the structure in the specified Renditor
-		/// </summary>
-		/// <param name="renditor"></param>
-
-		public static void EditStructure(
-			MoleculeControl renditor)
-		{
-			AssertMx.IsNotNull(renditor, "renditor");
-
-			try
-			{
-				throw new NotImplementedException();
-			}
-
-			catch (Exception ex)
-			{
-				string msg =
-					"An error has occurred starting the molecule editor";
-
-				DialogResult dr = MessageBox.Show(msg, "Error starting molecule editor", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-		}
-
-	}
-
-	public class EditorReturnedEventArgs : EventArgs
-	{
-		public bool Validated;
 	}
 
 }

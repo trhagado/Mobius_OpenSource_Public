@@ -31,7 +31,7 @@
 			this.components = new System.ComponentModel.Container();
 			//CdkMx.NativeMolecule molecule1 = new CdkMx.CdkMol().NativeMol;
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MoleculeControl));
-			this.MoleculeCtl = new Mobius.CdkMx.MoleculeControl();
+			this.MoleculeCtl = new Mobius.CdkMx.CdkMolControl();
 			this.ToolTipController = new DevExpress.Utils.ToolTipController(this.components);
 			this.RtClickContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.EditMoleculeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -193,7 +193,7 @@
 		#endregion
 
 		public Helm.HelmControl HelmControl;
-		public Mobius.CdkMx.MoleculeControl MoleculeCtl;
+		public Mobius.CdkMx.CdkMolControl MoleculeCtl;
 		private DevExpress.Utils.ToolTipController ToolTipController;
 		public System.Windows.Forms.ContextMenuStrip RtClickContextMenu;
 		public System.Windows.Forms.ToolStripMenuItem EditMoleculeMenuItem;

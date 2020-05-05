@@ -1,7 +1,6 @@
 ﻿
 using Mobius.ComOps;
 using Mobius.CdkMx;
-using Mobius.MolLib2;
 using Mobius.Helm;
 using Mobius.Data;
 
@@ -307,7 +306,7 @@ namespace Mobius.ClientComponents
 				Molecule = new MoleculeMx(MoleculeMx.PreferredMoleculeFormat);
 
 			if (DisplayChem)
-				CdkMx.MoleculeControl.EditStructure(MoleculeCtl);
+				CdkMx.CdkMolControl.EditStructure(MoleculeCtl);
 
 			else if (DisplayHelm)
 				HelmControl.EditMolecule();

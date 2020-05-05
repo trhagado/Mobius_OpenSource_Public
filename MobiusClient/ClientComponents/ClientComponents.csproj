@@ -1785,10 +1785,6 @@
       <Project>{f8fefca4-b843-4cbc-bef4-d182e259b3ad}</Project>
       <Name>HelmWebServices</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\MobiusCommon\MolLib2Mx\MolLib2Mx.csproj">
-      <Project>{e9e3b546-1b9f-44e0-8d75-f9dc31b51c43}</Project>
-      <Name>MolLib2Mx</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\MobiusServices\NativeSessionClient\NativeSessionClient.csproj">
       <Project>{EC0203FD-D464-4BA0-A088-B87C31139F47}</Project>
       <Name>NativeSessionClient</Name>

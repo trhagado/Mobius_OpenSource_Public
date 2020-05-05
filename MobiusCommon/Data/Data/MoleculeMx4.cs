@@ -476,7 +476,7 @@ namespace Mobius.Data
 		public static bool IsValidMolfile(string molfile)
 		{
 			if (Lex.IsUndefined(molfile)) return false;
-			return MolLibFactory.CreateInstance(null).IsValidMolfile(molfile);
+			return MolLibUtil.IsValidMolfile(molfile);
 		}
 
 		/// <summary>
@@ -541,13 +541,13 @@ namespace Mobius.Data
 
 		public static string SmilesStringToMolfileString(string smilesString)
 		{
-			string molFile = MolLibFactory.CreateInstance(null).SmilesStringToMolfileString(smilesString);
+			string molFile = MolLibUtil.SmilesStringToMolfileString(smilesString);
 			return molFile;
 		}
 
 		public static string MolfileStringToSmilesString(string molfileString)
 		{
-			string smiles = MolLibFactory.CreateInstance(null).MolfileStringToSmilesString(molfileString);
+			string smiles = MolLibUtil.MolfileStringToSmilesString(molfileString);
 			return smiles;
 		}
 

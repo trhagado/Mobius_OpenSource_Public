@@ -148,7 +148,9 @@ namespace Mobius.QueryEngineLibrary
 		public static bool LogDetail = false;
 		public static bool LogDataRows = false;
 
-		public static bool InitializedForSession = false; 
+		public static bool InitializedForSession = false;
+
+		static IMolLib MolLibUtil => StaticMolLib.I; // static molecule shortcut for utility methods
 
 		ICheckForCancel _checkForCancel; // ref to this Qe class instance to call to check for cancel
 		public ICheckForCancel CheckForCancel

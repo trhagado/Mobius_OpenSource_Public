@@ -1,7 +1,5 @@
 using Mobius.ComOps;
 using Mobius.Data;
-using Mobius.Helm;
-using Mobius.CdkMx;
 using Mobius.ServiceFacade;
 
 using DevExpress.XtraEditors;
@@ -2170,7 +2168,7 @@ namespace Mobius.ClientComponents
 			MoleculeMx mol = ci.Rfld.Header as MoleculeMx;
 			if (MoleculeMx.IsUndefined(mol)) return;
 
-			CdkMx.MoleculeControl hr = new CdkMx.MoleculeControl();
+			CdkMx.CdkMolControl hr = new CdkMx.CdkMolControl();
 			hr.Preferences = mol.GetDisplayPreferences();
 			hr.Preferences.BackColor = Color.Transparent;
 			hr.Preferences.HydrogenDisplayMode = HydrogenDisplayMode.Off;
@@ -2181,7 +2179,7 @@ namespace Mobius.ClientComponents
 			if (width < 166) // get better separation of atoms for small structures in narrow columns
 				hr.Preferences.StandardBondLength = sbl * 166 * 1.5 / width;
 			Point location = e.Info.TopLeft;
-			Bitmap bm = hr.PaintMolecule(mol.GetMolfileString(), StructureType.MolFile, size.Width, size.Height);
+			Bitmap bm = hr.PaintMolecule(MoleculeFormat.Molfile, mol.GetMolfileString(), size.Width, size.Height);
 
 			e.Graphics.DrawImage(bm, e.Bounds);
 

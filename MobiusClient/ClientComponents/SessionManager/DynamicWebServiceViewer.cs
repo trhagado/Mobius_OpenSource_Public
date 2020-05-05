@@ -1,4 +1,4 @@
-﻿using Mobius.CdkMx;
+﻿using Mobius.Data;
 
 using System;
 using System.Data;
@@ -49,7 +49,7 @@ namespace Mobius.ClientComponents.Dialogs
 
 				int rowsadded = 0;
 				int totalRows = rootObject.returnValue.rows.Length;
-				CdkMx.MoleculeControl hr = new CdkMx.MoleculeControl();
+				CdkMx.CdkMolControl hr = new CdkMx.CdkMolControl();
 				hr.Preferences.BackColor = Color.Transparent;
 
 				int MaxDisplayRows = 100;
@@ -86,7 +86,7 @@ namespace Mobius.ClientComponents.Dialogs
 								//double sbl = hr.Preferences.StandardBondLength;
 								try
 								{
-									Bitmap bm = hr.PaintMolecule(smiles, StructureType.Smiles, 200, 200);
+									Bitmap bm = hr.PaintMolecule(MoleculeFormat.Smiles, smiles, 200, 200);
 									dr[index] = bm;
 								}
 								catch (Exception ex)

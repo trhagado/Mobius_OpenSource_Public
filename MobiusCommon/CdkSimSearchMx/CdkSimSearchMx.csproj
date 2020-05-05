@@ -63,6 +63,7 @@
       <HintPath>..\..\MobiusCommon\ExternalLibraries\CDK.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="DevExpress.Utils.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="IKVM.OpenJDK.Core, Version=7.4.5196.2030, Culture=neutral, PublicKeyToken=d25ce09139c726a9, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\MobiusCommon\ExternalLibraries\IKVM.OpenJDK.Core.dll</HintPath>
@@ -86,6 +87,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -119,10 +121,6 @@
       <Project>{203d17b0-f97c-4c9b-b406-cae30dad3241}</Project>
       <Name>CdkMx</Name>
       <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\MolLib2Mx\MolLib2Mx.csproj">
-      <Project>{e9e3b546-1b9f-44e0-8d75-f9dc31b51c43}</Project>
-      <Name>MolLib2Mx</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
