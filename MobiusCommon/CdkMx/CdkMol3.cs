@@ -30,7 +30,7 @@ using System.Text;
 namespace Mobius.CdkMx
 {
 
-	public partial class CdkMol : IMolLib
+	public partial class CdkMol : ICdkMol
 	{
 		static int hilightIsotopeValue = -100;
 

@@ -15,13 +15,13 @@ namespace Mobius.Data
 
 	public partial class StructureMatcher
 	{
-		static IMolLib FSSQueryMol = null;
-		static IMolLib FSSTargetMol = null;
+		static ICdkMol FSSQueryMol = null;
+		static ICdkMol FSSTargetMol = null;
 
-		static IMolLib SSSQueryMol = null;
-		static IMolLib SSSTargetMol = null;
+		static ICdkMol SSSQueryMol = null;
+		static ICdkMol SSSTargetMol = null;
 
-		IMolLib MolLibUtil => StaticMolLib.I;
+		ICdkMol MolLibUtil => StaticCdkMol.I;
 
 		/// <summary>
 		/// Perform a full structure search of query molecule against target molecule
@@ -66,7 +66,7 @@ namespace Mobius.Data
 
 			QueryMol = cs.Clone();
 
-			FSSQueryMol = MolLibFactory.NewMolLib(cs);
+			FSSQueryMol = CdkMolFactory.NewCdkMol(cs);
 			MolLibUtil.SetFSSQueryMolecule(FSSQueryMol);
 
 			return;
@@ -88,7 +88,7 @@ namespace Mobius.Data
 			}
 
 			TargetMol = cs;
-			FSSTargetMol = MolLibFactory.NewMolLib(cs);
+			FSSTargetMol = CdkMolFactory.NewCdkMol(cs);
 			bool b = MolLibUtil.IsFSSMatch(FSSTargetMol);
 			return b;
 		}
@@ -108,8 +108,8 @@ namespace Mobius.Data
 				return false;
 
 			QueryMol = query;
-			SSSQueryMol = MolLibFactory.NewMolLib(query);
-			SSSTargetMol = MolLibFactory.NewMolLib(target);
+			SSSQueryMol = CdkMolFactory.NewCdkMol(query);
+			SSSTargetMol = CdkMolFactory.NewCdkMol(target);
 			bool b = MolLibUtil.IsSSSMatch(SSSQueryMol, SSSTargetMol);
 			return b;
 		}
@@ -123,7 +123,7 @@ namespace Mobius.Data
 			MoleculeMx cs)
 		{
 			QueryMol = cs.Clone();
-			SSSQueryMol = MolLibFactory.NewMolLib(cs);
+			SSSQueryMol = CdkMolFactory.NewCdkMol(cs);
 			MolLibUtil.SetSSSQueryMolecule(SSSQueryMol);
 
 			return;
@@ -140,7 +140,7 @@ namespace Mobius.Data
 				return false;
 
 			TargetMol = cs;
-			SSSTargetMol = MolLibFactory.NewMolLib(cs);
+			SSSTargetMol = CdkMolFactory.NewCdkMol(cs);
 			bool b = MolLibUtil.IsSSSMatch(SSSTargetMol);
 			return b;
 		}

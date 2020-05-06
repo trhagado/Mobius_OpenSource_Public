@@ -56,23 +56,23 @@ namespace Mobius.Data
 		/// Create/Get associated lower level molecule MolLib instance
 		/// </summary>
 
-		public IMolLib MolLib => GetMolLibInstance(); // link to low level object implementation
+		public ICdkMol MolLib => GetMolLibInstance(); // link to low level object implementation
 
 		/// <summary>
 		/// Get or create associated IMolLib instance
 		/// </summary>
 		/// <returns></returns>
 
-    public IMolLib GetMolLibInstance()
+    public ICdkMol GetMolLibInstance()
     {
       if (_molLib == null)
-				_molLib = MolLibFactory.NewMolLib(this);
+				_molLib = CdkMolFactory.NewCdkMol(this);
 
       return _molLib;
     }
-    private IMolLib _molLib;
+    private ICdkMol _molLib;
 
-		static IMolLib MolLibUtil => StaticMolLib.I; // static molecule shortcut for utility methods
+		static ICdkMol MolLibUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
 
 		///////////////////////////////////////////////////////
 		// String format molecule definitions
@@ -1001,7 +1001,7 @@ namespace Mobius.Data
 		/// <param name="cs"></param>
 
 		public static void SetRendererStructure(
-			IMolLibControl r,
+			ICdkMolControl r,
 			MoleculeMx cs,
 			bool updateDisplayPreferences = true,
 			string name = "")
@@ -1062,7 +1062,7 @@ namespace Mobius.Data
 		}
 
 		public static void SetMoleculeControlStructure(
-			 IMolLibControl r,
+			 ICdkMolControl r,
 			 MoleculeMx cs)
 		{
 			throw new NotImplementedException();
@@ -1125,8 +1125,8 @@ namespace Mobius.Data
 				else return 0; // say equal if both null?
 			}
 
-			double mw1 = MolLibFactory.NewMolLib(this).MolWeight;
-			double mw2 = MolLibFactory.NewMolLib(cs2).MolWeight;
+			double mw1 = CdkMolFactory.NewCdkMol(this).MolWeight;
+			double mw2 = CdkMolFactory.NewCdkMol(cs2).MolWeight;
 			return mw1.CompareTo(mw2);
 		}
 

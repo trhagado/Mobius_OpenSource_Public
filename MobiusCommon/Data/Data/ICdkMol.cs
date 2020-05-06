@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace Mobius.Data
 {
   /// <summary>
-  /// Interface for a MoleculeMx object that is the parent of an IMolLib object
+  /// Interface for a MoleculeMx object that is the parent of an ICdkMol object
   /// </summary>
 
   public interface IMoleculeMx
@@ -24,31 +24,31 @@ namespace Mobius.Data
   }
 
 /// <summary>
-/// Class containing injected public static instance of MolLibFactory used to create MolLib instances
+/// Class containing injected public static instance of CdkMolFactory used to create CdkMol instances
 /// 
 /// </summary>
 
-  public class MolLibFactory
+  public class CdkMolFactory
   {
     /// <summary>
-    /// Create basic MolLib instance
+    /// Create basic CdkMol instance
     /// </summary>
     /// <returns></returns>
     /// 
-    public static IMolLib NewMolLib()
+    public static ICdkMol NewCdkMol()
     {
-      return I.NewMolLib();
+      return I.NewCdkMol();
     }
 
     /// <summary>
-    /// Create MolLib instance from MoleculeMx
+    /// Create CdkMol instance from MoleculeMx
     /// </summary>
     /// <param name="molMx"></param>
     /// <returns></returns>
 
-    public static IMolLib NewMolLib(IMoleculeMx molMx)
+    public static ICdkMol NewCdkMol(IMoleculeMx molMx)
     {
-      return I.NewMolLib(molMx);
+      return I.NewCdkMol(molMx);
     }
 
     /// <summary>
@@ -58,52 +58,52 @@ namespace Mobius.Data
     /// <param name="molString"></param>
     /// <returns></returns>
 
-    public static IMolLib NewMolLib(
+    public static ICdkMol NewCdkMol(
       MoleculeFormat molFormat,
       string molString)
     {
-      return I.NewMolLib(molFormat, molString);
+      return I.NewCdkMol(molFormat, molString);
     }
 
 
     /// <summary>
-    /// Injected instance of MolLibFactory
+    /// Injected instance of CdkMolFactory
     /// </summary>
 
-    public static IMolLibFactory I 
+    public static ICdkMolFactory I 
     {
       get 
       {
         if (i != null) return i;
-        throw new NullReferenceException("MolLibFactory instance not defined");
+        throw new NullReferenceException("CdkMolFactory instance not defined");
       }
 
       set => i = value;
     
     }
-    static IMolLibFactory i = null; 
+    static ICdkMolFactory i = null; 
   }
 
   /// <summary>
-  /// Interface for factory that creates MolLib instances
+  /// Interface for factory that creates CdkMol instances
   /// </summary>
 
-  public interface IMolLibFactory
+  public interface ICdkMolFactory
   {
     /// <summary>
-    /// Create basic MolLib instance
+    /// Create basic CdkMol instance
     /// </summary>
     /// <returns></returns>
     
-    IMolLib NewMolLib();
+    ICdkMol NewCdkMol();
 
     /// <summary>
-    /// Create MolLib instance from MoleculeMx
+    /// Create CdkMol instance from MoleculeMx
     /// </summary>
     /// <param name="molMx"></param>
     /// <returns></returns>
 
-    IMolLib NewMolLib(IMoleculeMx molMx);
+    ICdkMol NewCdkMol(IMoleculeMx molMx);
 
     /// <summary>
     /// Construct from mol format and string
@@ -112,37 +112,37 @@ namespace Mobius.Data
     /// <param name="molString"></param>
     /// <returns></returns>
 
-    IMolLib NewMolLib(
+    ICdkMol NewCdkMol(
       MoleculeFormat molFormat,
       string molString);
 
   }
 
   /// <summary>
-  /// Class to provide access to a static MolLib class
+  /// Class to provide access to a static CdkMol class
   /// </summary>
 
-  public class StaticMolLib
+  public class StaticCdkMol
   {
 
-    public static IMolLib I => GetMolLibInstance();
+    public static ICdkMol I => GetCdkMolInstance();
 
-    static IMolLib GetMolLibInstance()
+    static ICdkMol GetCdkMolInstance()
     {
       if (i == null) // get instance if not done yet
-        i = MolLibFactory.NewMolLib();
+        i = CdkMolFactory.NewCdkMol();
 
       return i;
     }
 
-    static IMolLib i = null;
+    static ICdkMol i = null;
   }
 
   /// <summary>
   /// Interface to MoleculeLibrary (e.g. Cdk) functionality for MoleculeMx Class
   /// </summary>
 
-  public interface IMolLib
+  public interface ICdkMol
   {
 
     void UpdateNativeMolecule(); // update native molecule to 
@@ -340,8 +340,8 @@ namespace Mobius.Data
     /// <returns></returns>
 
     bool IsSSSMatch(
-      IMolLib queryMol,
-      IMolLib targetMol);
+      ICdkMol queryMol,
+      ICdkMol targetMol);
 
     /// <summary>
     /// Prepare for SSS matching of supplied query molecule
@@ -349,7 +349,7 @@ namespace Mobius.Data
     /// <param name="queryMol"></param>
 
     void SetSSSQueryMolecule(
-      IMolLib queryMol);
+      ICdkMol queryMol);
 
     /// <summary>
     /// Map current query against supplied target molecule
@@ -358,7 +358,7 @@ namespace Mobius.Data
     /// <returns></returns>
 
     bool IsSSSMatch(
-      IMolLib targetMol);
+      ICdkMol targetMol);
 
     /// <summary>
     /// Get mapping of current query against supplied target
@@ -370,7 +370,7 @@ namespace Mobius.Data
     /// <returns></returns>
 
     bool GetSSSMapping(
-      IMolLib targetMol,
+      ICdkMol targetMol,
       out int queryIndex,
       out int[] mappedAtoms,
       out int[] mappedBonds);
@@ -404,8 +404,8 @@ namespace Mobius.Data
     /// <param name="mappedBonds"></param>
     /// <returns></returns>
 
-    IMolLib HilightSSSMatchGMap(
-      IMolLib targetMol,
+    ICdkMol HilightSSSMatchGMap(
+      ICdkMol targetMol,
       int[] mappedAtoms,
       int[] mappedBonds);
 
@@ -436,8 +436,8 @@ namespace Mobius.Data
     /// <returns></returns>
 
     bool FullStructureMatch(
-      IMolLib query,
-      IMolLib target,
+      ICdkMol query,
+      ICdkMol target,
       string FullStructureSearchType = null);
 
     /// <summary>
@@ -446,7 +446,7 @@ namespace Mobius.Data
     /// <param name="queryMol"></param>
 
     void SetFSSQueryMolecule(
-      IMolLib queryMol,
+      ICdkMol queryMol,
       string FullStructureSearchType = null);
 
     /// <summary>
@@ -456,7 +456,7 @@ namespace Mobius.Data
     /// <returns></returns>
 
     bool IsFSSMatch(
-      IMolLib targetMol);
+      ICdkMol targetMol);
 
   }
 
@@ -464,7 +464,7 @@ namespace Mobius.Data
   /// Interface for molecule renderer and editor
   /// </summary>
 
-  public interface IMolLibControl
+  public interface ICdkMolControl
   {
     void SetMolecule(MoleculeFormat format, string value); // set the structure
 

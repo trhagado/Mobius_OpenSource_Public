@@ -32,7 +32,7 @@ using System.Text;
 namespace Mobius.CdkMx
 {
 
-  public partial class CdkMol : IMolLib
+  public partial class CdkMol : ICdkMol
   {
     /// <summary>
     /// Get structure bitmap with optional caption
@@ -133,8 +133,8 @@ namespace Mobius.CdkMx
     /// <returns></returns>
 
     public bool IsSSSMatch(
-      IMolLib queryMol,
-      IMolLib targetMol)
+      ICdkMol queryMol,
+      ICdkMol targetMol)
     {
       SetSSSQueryMolecule(queryMol as CdkMol);
       return IsSSSMatch(targetMol as CdkMol);
@@ -146,7 +146,7 @@ namespace Mobius.CdkMx
     /// <param name="queryMol"></param>
 
     public void SetSSSQueryMolecule(
-    IMolLib queryMol)
+    ICdkMol queryMol)
     {
       try
       {
@@ -165,7 +165,7 @@ namespace Mobius.CdkMx
     /// <returns></returns>
 
     public bool IsSSSMatch(
-      IMolLib targetMol)
+      ICdkMol targetMol)
     {
       throw new NotImplementedException();
     }
@@ -180,7 +180,7 @@ namespace Mobius.CdkMx
     /// <returns></returns>
 
     public bool GetSSSMapping(
-      IMolLib targetMol,
+      ICdkMol targetMol,
       out int queryIndex,
       out int[] mappedAtoms,
       out int[] mappedBonds)
@@ -263,8 +263,8 @@ namespace Mobius.CdkMx
     /// <param name="mappedBonds"></param>
     /// <returns></returns>
 
-    public IMolLib HilightSSSMatchGMap(
-      IMolLib targetMol,
+    public ICdkMol HilightSSSMatchGMap(
+      ICdkMol targetMol,
       int[] mappedAtoms,
       int[] mappedBonds)
     {
@@ -304,8 +304,8 @@ namespace Mobius.CdkMx
     /// <returns></returns>
 
     public bool FullStructureMatch(
-      IMolLib query,
-      IMolLib target,
+      ICdkMol query,
+      ICdkMol target,
       string FullStructureSearchType = null)
     {
       throw new NotImplementedException();
@@ -317,7 +317,7 @@ namespace Mobius.CdkMx
     /// <param name="queryMol"></param>
 
     public void SetFSSQueryMolecule(
-      IMolLib queryMol,
+      ICdkMol queryMol,
       string FullStructureSearchType = null)
     {
       throw new NotImplementedException();
@@ -330,7 +330,7 @@ namespace Mobius.CdkMx
     /// <returns></returns>
 
     public bool IsFSSMatch(
-      IMolLib targetMol)
+      ICdkMol targetMol)
     {
       throw new NotImplementedException();
     }
@@ -344,7 +344,7 @@ namespace Mobius.CdkMx
     public string GetMolFormulaDotDisconnect(
       string molfile)
     {
-      IMolLib mol = new CdkMol(MoleculeFormat.Molfile, molfile);
+      ICdkMol mol = new CdkMol(MoleculeFormat.Molfile, molfile);
       string mf = GetMolFormulaDotDisconnect(mol as CdkMol);
       return mf;
     }
@@ -356,7 +356,7 @@ namespace Mobius.CdkMx
     /// <returns></returns>
 
     public String GetMolFormulaDotDisconnect(
-      IMolLib mol)
+      ICdkMol mol)
     {
       string mf = GetMolFormula(mol as CdkMol, includeSpaces: false, separateFragments: true);
       return mf;
@@ -373,7 +373,7 @@ namespace Mobius.CdkMx
     /// <returns></returns>
 
     public String GetMolFormula(
-      IMolLib mol,
+      ICdkMol mol,
       bool includeSpaces = false,
       bool separateFragments = false,
       bool use2Hand3HforHydrogenIsotopes = false,
@@ -391,7 +391,7 @@ namespace Mobius.CdkMx
     public double GetMolWeight(
       string molfile)
     {
-      IMolLib mol = new CdkMol(MoleculeFormat.Molfile, molfile);
+      ICdkMol mol = new CdkMol(MoleculeFormat.Molfile, molfile);
       double mw = GetMolWeight(mol as CdkMol);
       return mw;
     }
@@ -403,7 +403,7 @@ namespace Mobius.CdkMx
     /// <returns></returns>
 
     public double GetMolWeight(
-      IMolLib mol)
+      ICdkMol mol)
     {
       throw new NotImplementedException();
     }
@@ -417,7 +417,7 @@ namespace Mobius.CdkMx
     /// <param name="rgBufferStartingPos"></param>
 
     public void GetCoreRGroupInfo(
-      IMolLib mol,
+      ICdkMol mol,
       out SortedDictionary<int, int> rgCounts,
       out SortedDictionary<int, int> rgBufferStartingPos)
     {
@@ -431,7 +431,7 @@ namespace Mobius.CdkMx
     /// <returns></returns>
 
     public int GetFragmentRGroupAssignment(
-      IMolLib fragment)
+      ICdkMol fragment)
     {
       throw new NotImplementedException();
     }

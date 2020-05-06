@@ -117,10 +117,10 @@ namespace Mobius.Data
 			{
 				QueryMol = query.Clone();
 
-				SSSQueryMol = MolLibFactory.NewMolLib(query);
+				SSSQueryMol = CdkMolFactory.NewCdkMol(query);
 			}
 
-			SSSTargetMol = MolLibFactory.NewMolLib(target);
+			SSSTargetMol = CdkMolFactory.NewCdkMol(target);
 			bool b = MolLibUtil.FullStructureMatch(SSSQueryMol, SSSTargetMol, switches);
 			return b;
 		}

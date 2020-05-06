@@ -19,7 +19,7 @@ namespace Mobius.QueryEngineLibrary
 
 		string LastCriteriaString = "";
 
-		static IMolLib MolLibUtil => StaticMolLib.I; // static molecule shortcut for utility methods
+		static ICdkMol MolLibUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
 
 		bool Debug = false;
 

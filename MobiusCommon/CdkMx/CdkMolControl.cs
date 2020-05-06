@@ -17,7 +17,7 @@ using System.ComponentModel;
 
 namespace Mobius.CdkMx
 {
-	public partial class CdkMolControl : DevExpress.XtraEditors.XtraUserControl, IMolLibControl
+	public partial class CdkMolControl : DevExpress.XtraEditors.XtraUserControl, ICdkMolControl
 	{
 
 

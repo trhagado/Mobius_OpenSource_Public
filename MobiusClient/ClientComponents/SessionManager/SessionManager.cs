@@ -956,7 +956,7 @@ namespace Mobius.ClientComponents
 			Mobius.Data.InterfaceRefs.IUserObjectIUD = new Mobius.ClientComponents.IUserObjectIUDMethods();
 			Mobius.Data.InterfaceRefs.IUserObjectTree = new Mobius.ClientComponents.IUserObjectTreeMethods();
 
-			Mobius.Data.MolLibFactory.I = new CdkMolFactory();
+      Mobius.Data.CdkMolFactory.I = new CdkMx.CdkMolFactory();
 		}
 
 		/// <summary>

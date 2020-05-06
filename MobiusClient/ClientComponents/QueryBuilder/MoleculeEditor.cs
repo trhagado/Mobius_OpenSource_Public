@@ -123,7 +123,7 @@ namespace Mobius.ClientComponents
 			try
 			{
 				Instance.MoleculeCtl.Molecule = mol;
-				IMolLibControl molCtl = Instance.MoleculeCtl.MoleculeCtl;
+				ICdkMolControl molCtl = Instance.MoleculeCtl.MoleculeCtl;
 				molCtl.EditorReturnedHandler = new MolEditorReturnedHandler(Instance.MolLibEditorReturned);
 
 				Instance.Text = title;

@@ -217,7 +217,7 @@
     <Compile Include="Data\MoleculeMx3.cs" />
     <Compile Include="Data\CidList.cs" />
     <Compile Include="Data\CidListElement.cs" />
-    <Compile Include="Data\IMolLib.cs" />
+    <Compile Include="Data\ICdkMol.cs" />
     <Compile Include="Data\VoArrayList.cs" />
     <Compile Include="Data\QueryResultsVoMap.cs" />
     <Compile Include="Data\MobiusDataType2.cs" />

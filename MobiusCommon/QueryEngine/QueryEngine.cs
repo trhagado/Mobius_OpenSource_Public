@@ -150,7 +150,7 @@ namespace Mobius.QueryEngineLibrary
 
 		public static bool InitializedForSession = false;
 
-		static IMolLib MolLibUtil => StaticMolLib.I; // static molecule shortcut for utility methods
+		static ICdkMol MolLibUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
 
 		ICheckForCancel _checkForCancel; // ref to this Qe class instance to call to check for cancel
 		public ICheckForCancel CheckForCancel

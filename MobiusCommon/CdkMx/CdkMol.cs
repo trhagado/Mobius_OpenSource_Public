@@ -33,7 +33,7 @@ namespace Mobius.CdkMx
 		/// Wrapper for native CDK Molecule class
 		/// </summary>
 
-	public partial class CdkMol : IMolLib
+	public partial class CdkMol : ICdkMol
 	{
 		public IAtomContainer NativeMol = null; // native format library molecule
 		public IMoleculeMx MoleculeMx; // Parent IMoleculeMx that we are supporting
