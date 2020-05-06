@@ -784,12 +784,12 @@ namespace Mobius.ClientComponents
 				int miWidth = MoleculeMx.PixelsToMilliinches(pixWidth);
 
 				Rectangle destRect = new Rectangle(0, 0, miWidth, 10000);
-				mol.MolLib.FitStructureIntoRectangle(ref destRect, MoleculeMx.StandardBondLength, 0, 0, false, 11000, out boundingRect);
+				mol.CdkMol.FitStructureIntoRectangle(ref destRect, MoleculeMx.StandardBondLength, 0, 0, false, 11000, out boundingRect);
 				int pixHeight = MoleculeMx.MilliinchesToPixels(destRect.Height);
 				DisplayPreferences dp = new DisplayPreferences();
 				if (Lex.Contains(qc.Criteria, "SSS")) // no H display if SS query
 					dp.HydrogenDisplayMode = HydrogenDisplayMode.Off;
-				bm = mol.MolLib.GetMoleculeBitmap(pixWidth, pixHeight + 20, dp); // get image with a bit of extra height for text
+				bm = mol.CdkMol.GetMoleculeBitmap(pixWidth, pixHeight + 20, dp); // get image with a bit of extra height for text
 
 				Rectangle r = new Rectangle(2, 0, pixWidth, pixHeight); // show the text part
 				Graphics g = Graphics.FromImage(bm);

@@ -241,7 +241,7 @@ namespace Mobius.QueryEngineLibrary
 				molfile = coreMol.MolfileString;
 			}
 
-			CoreMolecule = MolLib2.Util.MolfileStringToMolecule(molfile);
+			CoreMolecule = CdkMol.Util.MolfileStringToMolecule(molfile);
 			RGroupDecomp.SetCoreStructure(CoreMolecule, false);
 
 			CoreChemicalStructure = new MoleculeMx(MoleculeFormat.Molfile, molfile);
@@ -341,10 +341,10 @@ namespace Mobius.QueryEngineLibrary
 						//molFile = FileUtil.ReadFile(@"C:\Downloads\RGroupTarget.mol"); 
 						string targetSmiles = "CC1Cn2cc(c(= O)c3c2c(c(c(c3)F)Cl)S1)C(= O)O";
 						string targetChime = "CYAAFQwADfwQ19aXPcZERR45lQkn08$hZNXzeJ2yaAhDnxxJou4Gq9od8VG1ykiO63fQpvM8W4C6MR$O3VaZjQwrGr5weW3y^BeUEezndoIivvAbQN58EEHVMAsdPaF4LIsqsf$OCBUPHI5njBB2LIBy3i2cwbrD8T8kFVBVWkTCfIUFUtblI0G7vYiEL^svUWCT^m6tF18I7ISJUp^7WkuzpT9LrBSJLmMl5hHXog$68Q6YPb0^Xp0ftxmy7FDSF^sWib6^JrUMhrHtLfJ3yVMTm9RIrvvKMRQvKqq4G1Ooze5pdlpSdzp7MFl0K1zx4tdnNFoUO1kRPpyZks61qbBz2tU0L$svvojoU4yUlf$^MFF0nqSfGVW2PKv9TReb$knLXffdAAhqBN310WUfdJDoQBNX1a5L2uj9ybNNRLYpaZN1p6WYp2WI^ntQEVTBaJF1Uu28N4o2xudURpVITTKO7omUtpgLoaoOQHazmZG3k^aHPUOQfE0d27eAbE^uxcQUAB";
-						molFile = MolLib2.Util.MoleculeTofMolfileString(MolLib2.Util.ChimeStringToMolecule(targetChime));
+						molFile = CdkMol.Util.MoleculeTofMolfileString(CdkMol.Util.ChimeStringToMolecule(targetChime));
 					}
 
-					Molecule target = MolLib2.Util.MolfileStringToMolecule(molFile);
+					Molecule target = CdkMol.Util.MolfileStringToMolecule(molFile);
 					if (RGroupDecomp.Debug) DebugLog.StopwatchMessage("t2", sw);
 
 					MapCount = RGroupDecomp.ProcessTargetMolecule(target); // process & get number of maps
@@ -368,7 +368,7 @@ namespace Mobius.QueryEngineLibrary
 
 					if (RGroupDecomp.Debug) DebugLog.StopwatchMessage("t4", sw);
 					
-					int ri = MolLib2.Util.GetFragmentRGroupAssignment(fragment);
+					int ri = CdkMol.Util.GetFragmentRGroupAssignment(fragment);
 
 					if (ri >= 0 && ri < Substituents.Length)
 						Substituents[ri] = fragment;
@@ -409,7 +409,7 @@ namespace Mobius.QueryEngineLibrary
 							if (StrMatcher == null) // initialize matcher with core structure if not done yet
 							{
 								StrMatcher = new StructureMatcher();
-								string molfile2 = MolLib2.Util.RemoveRGroupAttachmentPointAtoms(CoreChemicalStructure.GetMolfileString());
+								string molfile2 = CdkMol.Util.RemoveRGroupAttachmentPointAtoms(CoreChemicalStructure.GetMolfileString());
 								if (RGroupDecomp.Debug) DebugLog.StopwatchMessage("t7", sw);
 
 								MoleculeMx cs2 = new MoleculeMx(MoleculeFormat.Molfile, molfile2);
@@ -420,7 +420,7 @@ namespace Mobius.QueryEngineLibrary
 							Molecule alignedTarget = RGroupDecomp.GetAlignedTargetForMapping(MapPos);
 							if (RGroupDecomp.Debug) DebugLog.StopwatchMessage("t9", sw);
 
-							string chime = MolLib2.Util.MoleculeToChimeString(alignedTarget);
+							string chime = CdkMol.Util.MoleculeToChimeString(alignedTarget);
 							if (RGroupDecomp.Debug) DebugLog.StopwatchMessage("t10", sw);
 
 							cs = new MoleculeMx(MoleculeFormat.Chime, chime);
@@ -457,25 +457,25 @@ namespace Mobius.QueryEngineLibrary
 
 						if (name.EndsWith("_structure"))
 						{
-							string chime = MolLib2.Util.MoleculeToChimeString(substituent);
+							string chime = CdkMol.Util.MoleculeToChimeString(substituent);
 							MoleculeMx cs = new MoleculeMx(MoleculeFormat.Chime, chime);
 							vo[ci] = cs;
 						}
 
 						else if (name.EndsWith("_smiles"))
 						{
-							string smiles = MolLib2.Util.MoleculeToSmilesString(substituent);
+							string smiles = CdkMol.Util.MoleculeToSmilesString(substituent);
 							vo[ci] = smiles;
 						}
 
 						else if (name.EndsWith("_formula"))
 						{
-							string mf = MolLib2.Util.GetMolFormulaDotDisconnect(substituent);
+							string mf = CdkMol.Util.GetMolFormulaDotDisconnect(substituent);
 							vo[ci] = mf;
 						}
 
 						else if (name.EndsWith("_weight"))
-							vo[ci] = MolLib2.Util.GetMolWeight(substituent);
+							vo[ci] = CdkMol.Util.GetMolWeight(substituent);
 
 						else if (name.EndsWith("_substno"))
 							vo[ci] = ri;

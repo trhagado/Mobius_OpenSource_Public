@@ -672,7 +672,7 @@ namespace Mobius.ClientComponents
 											{
 												int width = cg.Width; // GraphicsMx.PointsToPixels(cg.Width);
 												int height = 10000; // GraphicsMx.PointsToPixels(10000);
-												Metafile mf = mol.MolLib.GetMetafile(width, height);
+												Metafile mf = mol.CdkMol.GetMetafile(width, height);
 												if (mf == null) continue;
 
 												string tempFileName = TempFile.GetTempFileName(".wmf");

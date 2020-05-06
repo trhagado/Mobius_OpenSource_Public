@@ -55,7 +55,7 @@
 			this.MoleculeCtl.Location = new System.Drawing.Point(29, 21);
 			this.MoleculeCtl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.MoleculeCtl.MolfileString = "";
-			this.MoleculeCtl.Name = "MolLib1MoleculeControl";
+			this.MoleculeCtl.Name = "CdkMolMoleculeControl";
 			this.MoleculeCtl.Size = new System.Drawing.Size(201, 97);
 			this.MoleculeCtl.TabIndex = 20;
 			// 

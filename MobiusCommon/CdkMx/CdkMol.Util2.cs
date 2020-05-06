@@ -883,7 +883,6 @@ namespace Mobius.CdkMx
 		// Note that isotope values are handled in different ways based on the form (molfile vs internal mol object)
 		// and the software doing the conversion. 
 		// For CDK, the molfile value and the internal object value are the same value, i.e. the total mass (number of protons & neutrons)
-		// For MolLib1 the internal value is the normal current mass minus the normal mass. e.g. a carbon with mass = 1 will have an atom.Isotope value of -15;
 
 		public string ConvertIsotopeValuesToHilighting(
 			string molfile)

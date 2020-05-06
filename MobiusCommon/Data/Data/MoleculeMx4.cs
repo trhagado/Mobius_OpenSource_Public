@@ -130,10 +130,10 @@ namespace Mobius.Data
 				molfile = ChimeStringToMolfileString(ChimeString);
 
 			else if (Lex.IsDefined(SmilesString))
-				molfile = MolLib.SmilesStringToMolfileString(SmilesString);
+				molfile = CdkMol.SmilesStringToMolfileString(SmilesString);
 
 			else if (Lex.IsDefined(InchiString))
-				molfile = MolLib.InChIStringToMolfileString(PrimaryValue.ToString());
+				molfile = CdkMol.InChIStringToMolfileString(PrimaryValue.ToString());
 
 			else if (Lex.IsDefined(HelmString))
 			{
@@ -194,7 +194,7 @@ namespace Mobius.Data
 				return SmilesString;
 
 			molfile = GetMolfileString();
-			smiles = MolLib.MolfileStringToSmilesString(molfile);
+			smiles = CdkMol.MolfileStringToSmilesString(molfile);
 
 			SmilesString = smiles;
 			return smiles;

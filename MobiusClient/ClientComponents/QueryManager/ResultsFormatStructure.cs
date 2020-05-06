@@ -219,7 +219,7 @@ namespace Mobius.ClientComponents
 					if (Rf.Grid) // special scale for grid
 					{
 						double scale = (float)width / MoleculeMx.StandardBoxWidth;
-						desiredBondLength = mol.MolLib.AdjustBondLengthToValidRange((int)(MoleculeMx.StandardBondLength * scale));
+						desiredBondLength = mol.CdkMol.AdjustBondLengthToValidRange((int)(MoleculeMx.StandardBondLength * scale));
 						//desiredBondLength = (int)(ChemicalStructure.StandardBondLength * (Rf.PageScale / 100.0));
 						desiredBondLength = (int)(desiredBondLength * 90.0 / 100.0); // scale down a bit for grid
 						if (debug) DebugLog.StopwatchMessage("tAdjustBondLength1", sw);
@@ -228,7 +228,7 @@ namespace Mobius.ClientComponents
 					else // set desired bond length based on page scaling
 					{
 						float scale = (float)width / MoleculeMx.StandardBoxWidth;
-						desiredBondLength = mol.MolLib.AdjustBondLengthToValidRange((int)(MoleculeMx.StandardBondLength * scale));
+						desiredBondLength = mol.CdkMol.AdjustBondLengthToValidRange((int)(MoleculeMx.StandardBondLength * scale));
 						//desiredBondLength = (int)(ChemicalStructure.StandardBondLength * (Rf.PageScale / 100.0));
 						if (debug) DebugLog.StopwatchMessage("tAdjustBondLength2", sw);
 					}
@@ -238,7 +238,7 @@ namespace Mobius.ClientComponents
 
 					if (fitStructure)
 					{
-						mol.MolLib.FitStructureIntoRectangle // scale and translate structure into supplied rectangle.
+						mol.CdkMol.FitStructureIntoRectangle // scale and translate structure into supplied rectangle.
 						(ref destRect, desiredBondLength, translateType, fixedHeight, markBoundaries, pageHeight, out boundingRect);
 					}
 
@@ -288,10 +288,10 @@ namespace Mobius.ClientComponents
 						DisplayPreferences dp = mol.GetDisplayPreferences();
 						if (debug) DebugLog.StopwatchMessage("tGetDisplayPreferences", sw);
 
-						desiredBondLength = mol.MolLib.AdjustBondLengthToValidRange(desiredBondLength); // be sure bond len within allowed range 
+						desiredBondLength = mol.CdkMol.AdjustBondLengthToValidRange(desiredBondLength); // be sure bond len within allowed range 
 						if (debug) DebugLog.StopwatchMessage("tAdjustBondLengthToValidRange", sw);
 						dp.StandardBondLength = MoleculeMx.MilliinchesToDecipoints(desiredBondLength);
-						bm = mol.MolLib.GetFixedHeightMoleculeBitmap(pixWidth, pixHeight, dp, cellStyle, mol.Caption);
+						bm = mol.CdkMol.GetFixedHeightMoleculeBitmap(pixWidth, pixHeight, dp, cellStyle, mol.Caption);
 						if (debug) DebugLog.StopwatchMessage("tGetBitmap", sw);
 					}
 

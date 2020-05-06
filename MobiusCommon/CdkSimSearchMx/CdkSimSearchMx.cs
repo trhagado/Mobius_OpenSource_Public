@@ -137,7 +137,7 @@ namespace Mobius.CdkSearchMx
 		public List<StructSearchMatch> ExecuteSearch(
 			MoleculeMx queryMolMx)
 		{
-			CdkMol m2 = (CdkMol)queryMolMx.MolLib;
+			CdkMol m2 = (CdkMol)queryMolMx.CdkMol;
 			IAtomContainer queryMol = m2.NativeMol;
 			return ExecuteSearch(queryMol);
 		}

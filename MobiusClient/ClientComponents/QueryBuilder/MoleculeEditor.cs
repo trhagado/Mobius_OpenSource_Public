@@ -88,7 +88,7 @@ namespace Mobius.ClientComponents
 				if (useChemEditor)
 				{
 					mol2 = mol.ConvertTo(MoleculeFormat.Molfile);
-					return EditMolLib1Molecule(mol2, title);
+					return EditCdkMolMolecule(mol2, title);
 				}
 
 				else // use Helm editor
@@ -112,7 +112,7 @@ namespace Mobius.ClientComponents
 		/// <param name="mol"></param>
 		/// <returns></returns>
 
-		public static MoleculeMx EditMolLib1Molecule(
+		public static MoleculeMx EditCdkMolMolecule(
 			MoleculeMx mol,
 			string title = "")
 		{
@@ -160,10 +160,10 @@ namespace Mobius.ClientComponents
 
 		private void MoleculeEditor_Shown(object sender, EventArgs e)
 		{
-			DelayedCallback.Schedule(Call_MolLib1_EditStructure); // delay so this form has time to render and we exit event
+			DelayedCallback.Schedule(Call_CdkMol_EditStructure); // delay so this form has time to render and we exit event
 		}
 
-		private void Call_MolLib1_EditStructure()
+		private void Call_CdkMol_EditStructure()
 		{
 			CdkMx.CdkMolControl.EditStructure(Instance.MoleculeCtl.MoleculeCtl);
 			return;

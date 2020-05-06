@@ -39,9 +39,9 @@
 			this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.Name = "HelmControl";
 			this.Size = new System.Drawing.Size(361, 267);
-			this.SizeChanged += new System.EventHandler(this.MolLib1Control_SizeChanged);
-			this.Click += new System.EventHandler(this.MolLib1Control_Click);
-			this.DoubleClick += new System.EventHandler(this.MolLib1Control_DoubleClick);
+			this.SizeChanged += new System.EventHandler(this.CdkMolControl_SizeChanged);
+			this.Click += new System.EventHandler(this.CdkMolControl_Click);
+			this.DoubleClick += new System.EventHandler(this.CdkMolControl_DoubleClick);
 			this.ResumeLayout(false);
 
 		}

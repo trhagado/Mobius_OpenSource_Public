@@ -146,14 +146,14 @@ namespace Mobius.CdkMx
 		public string PrimaryValue = "";
 		public MoleculeFormat PrimaryFormat = MoleculeFormat.Unknown;
 
-		[DefaultValue(MolLib1ControlMode.BrowserViewOnly)]
-		public MolLib1ControlMode HelmMode { get => _helmMode; set => _helmMode = value; }
-		MolLib1ControlMode _helmMode = MolLib1ControlMode.BrowserViewOnly;
+		[DefaultValue(CdkMolControlMode.BrowserViewOnly)]
+		public CdkMolControlMode HelmMode { get => _helmMode; set => _helmMode = value; }
+		CdkMolControlMode _helmMode = CdkMolControlMode.BrowserViewOnly;
 
-		public bool BitmapMode => (_helmMode == MolLib1ControlMode.OffScreenBitmap); // rendered off-screen and returned as a bitmap that can then be used anywhere
-		public bool SvgMode => (_helmMode == MolLib1ControlMode.OffScreenSvg); // rendered off-screen and returned as SVG that can be used anywhere 
-		public bool ViewMode => (_helmMode == MolLib1ControlMode.BrowserViewOnly); // view helm in browser without edit controls
-		public bool EditMode => (HelmMode == MolLib1ControlMode.BrowserEditor); // show helm in editor
+		public bool BitmapMode => (_helmMode == CdkMolControlMode.OffScreenBitmap); // rendered off-screen and returned as a bitmap that can then be used anywhere
+		public bool SvgMode => (_helmMode == CdkMolControlMode.OffScreenSvg); // rendered off-screen and returned as SVG that can be used anywhere 
+		public bool ViewMode => (_helmMode == CdkMolControlMode.BrowserViewOnly); // view helm in browser without edit controls
+		public bool EditMode => (HelmMode == CdkMolControlMode.BrowserEditor); // show helm in editor
 
 		public HelmWinFormsBrowser WinFormsBrowserMx = null; // underlying Mobius browser wrapper for view-only and editor modes
 
@@ -192,18 +192,18 @@ namespace Mobius.CdkMx
 		{
 			InitializeComponent();
 
-			if (Debug) DebugLog.Message("MolLib1Control instance created" + IdText); // + "\r\n" + (new StackTrace(true)).ToString());
+			if (Debug) DebugLog.Message("CdkMolControl instance created" + IdText); // + "\r\n" + (new StackTrace(true)).ToString());
 			return;
 		}
 
 		/// <summary>
-		/// Initialize the on-screen and/or off-screen rendering controls based on the selected MolLib1ControlMode
+		/// Initialize the on-screen and/or off-screen rendering controls based on the selected CdkMolControlMode
 		/// </summary>
 
 		public void InitializeControl()
 		{
 #if false
-			if (HelmMode == MolLib1ControlMode.OffScreenBitmap)
+			if (HelmMode == CdkMolControlMode.OffScreenBitmap)
 			{
 				if (OffScreenBrowserMx != null) return;
 
@@ -213,7 +213,7 @@ namespace Mobius.CdkMx
 				SetupOnScreenBitmapImageControl();
 			}
 
-			else if (HelmMode == MolLib1ControlMode.OffScreenSvg)
+			else if (HelmMode == CdkMolControlMode.OffScreenSvg)
 			{
 				if (OffScreenBrowserMx != null) return;
 
@@ -239,7 +239,7 @@ namespace Mobius.CdkMx
 			}
 
 #endif
-			if (Debug) DebugLog.Message("MolLib1Control initialized for Mode: " + HelmMode + IdText);
+			if (Debug) DebugLog.Message("CdkMolControl initialized for Mode: " + HelmMode + IdText);
 			return;
 		}
 
@@ -265,8 +265,8 @@ namespace Mobius.CdkMx
 
 			OnScreenImageCtl.Dock = DockStyle.Fill;
 
-			OnScreenImageCtl.Click += new EventHandler(MolLib1Control_Click); // allow edit of controls contents
-			OnScreenImageCtl.DoubleClick += new EventHandler(MolLib1Control_DoubleClick);
+			OnScreenImageCtl.Click += new EventHandler(CdkMolControl_Click); // allow edit of controls contents
+			OnScreenImageCtl.DoubleClick += new EventHandler(CdkMolControl_DoubleClick);
 
 			return;
 		}
@@ -483,8 +483,8 @@ namespace Mobius.CdkMx
 			if (OffScreenBrowserMx == null)
 				throw new ArgumentNullException("OffScreenBrowserMx is null");
 
-			if (HelmMode != MolLib1ControlMode.OffScreenSvg)
-				throw new Exception("Expected HelmMode == MolLib1ControlMode.OffScreenSvgMolLib1ControlMode but HelmMode is " + HelmMode);
+			if (HelmMode != CdkMolControlMode.OffScreenSvg)
+				throw new Exception("Expected HelmMode == CdkMolControlMode.OffScreenSvg CdkMolControlMode but HelmMode is " + HelmMode);
 
 			string svg = OffScreenBrowserMx.GetSvg(this.Helm, this.Size);
 			return svg;
@@ -502,8 +502,8 @@ namespace Mobius.CdkMx
 			string helm,
 			Size size)
 		{
-			if (HelmMode != MolLib1ControlMode.OffScreenSvg)
-				throw new Exception("Expected HelmMode == MolLib1ControlMode.OffScreenSvgMolLib1ControlMode but HelmMode is " + HelmMode);
+			if (HelmMode != CdkMolControlMode.OffScreenSvg)
+				throw new Exception("Expected HelmMode == CdkMolControlMode.OffScreenSvg CdkMolControlMode but HelmMode is " + HelmMode);
 
 			InitializeControl(); // be sure initial page is loaded into browser
 
@@ -520,7 +520,7 @@ namespace Mobius.CdkMx
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 
-		private void MolLib1Control_Click(object sender, EventArgs e)
+		private void CdkMolControl_Click(object sender, EventArgs e)
 		{
 			DelayedCallback.Schedule(EditMolecule);
 			return;
@@ -552,7 +552,7 @@ namespace Mobius.CdkMx
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 
-		private void MolLib1Control_DoubleClick(object sender, EventArgs e)
+		private void CdkMolControl_DoubleClick(object sender, EventArgs e)
 		{
 			return;
 		}
@@ -563,11 +563,11 @@ namespace Mobius.CdkMx
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 
-		private void MolLib1Control_SizeChanged(object sender, EventArgs e)
+		private void CdkMolControl_SizeChanged(object sender, EventArgs e)
 		{
 			if (WinFormsBrowserMx == null && OffScreenBrowserMx == null) return; // just return if nothing in HELM control yet
 
-			if (Debug) DebugLog.Message("MolLib1Control_SizeChanged: " + this.Size.Width + ", " + this.Size.Height);
+			if (Debug) DebugLog.Message("CdkMolControl_SizeChanged: " + this.Size.Width + ", " + this.Size.Height);
 
 			//ResizeRendering(); // redraw the helm at the proper size (being done at browser level now)
 
@@ -587,7 +587,7 @@ namespace Mobius.CdkMx
 	/// Helm renderer/editor mode
 	/// </summary>
 
-	public enum MolLib1ControlMode
+	public enum CdkMolControlMode
 	{
 		OffScreenBitmap = 0, // rendered off-screen and returned as a bitmap that can then be used anywhere
 		OffScreenSvg = 1, // rendered off-screen and returned as SVG that can be used anywhere 

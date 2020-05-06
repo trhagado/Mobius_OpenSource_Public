@@ -119,12 +119,12 @@ namespace Mobius.Data
 				int stdBitmapBoxWidth = MoleculeMx.MilliinchesToPixels(MoleculeMx.StandardBoxWidth);
 				float scale = (float)bitmapWidth / stdBitmapBoxWidth;
 				int desiredBondLength = (int)(MoleculeMx.StandardBondLength * scale); // in milliinches
-				desiredBondLength = MolLib.AdjustBondLengthToValidRange(desiredBondLength); // be sure bond len within allowed range 
+				desiredBondLength = CdkMol.AdjustBondLengthToValidRange(desiredBondLength); // be sure bond len within allowed range 
 
 				DisplayPreferences dp = mol.GetDisplayPreferences();
 				dp.StandardBondLength = MoleculeMx.MilliinchesToDecipoints(desiredBondLength);
 
-				mol.MolLib.FitStructureIntoRectangle // scale and translate structure into supplied rectangle.
+				mol.CdkMol.FitStructureIntoRectangle // scale and translate structure into supplied rectangle.
 					(ref destRect, desiredBondLength, translateType, fixedHeight, markBoundaries, pageHeight, out boundingRect);
 
 				int pixWidth = MoleculeMx.MilliinchesToPixels(destRect.Width);
@@ -133,7 +133,7 @@ namespace Mobius.Data
 				Font font = new Font("Tahoma", 8.25f);
 				CellStyleMx cellStyle = new CellStyleMx(font, Color.Black, Color.Empty);
 
-				bm = mol.MolLib.GetFixedHeightMoleculeBitmap(pixWidth, pixHeigth, dp, cellStyle, (string)mol.Caption);
+				bm = mol.CdkMol.GetFixedHeightMoleculeBitmap(pixWidth, pixHeigth, dp, cellStyle, (string)mol.Caption);
 			}
 
 			else if (mol.IsBiopolymerFormat) // Output HELM image for biopolymer
@@ -157,7 +157,7 @@ namespace Mobius.Data
 		{
 			if (!IsChemStructureFormat) return;
 
-			MolLib.CreateStructureCaption(caption);
+			CdkMol.CreateStructureCaption(caption);
 			return;
 		}
 
@@ -171,7 +171,7 @@ namespace Mobius.Data
 
 			try
 			{
-				MolLib.RemoveStructureCaption();
+				CdkMol.RemoveStructureCaption();
 
 				return;
 			}
@@ -190,7 +190,7 @@ namespace Mobius.Data
 
 		public int AdjustBondLengthToValidRange(int bondLen)
 		{
-			return MolLib.AdjustBondLengthToValidRange(bondLen);
+			return CdkMol.AdjustBondLengthToValidRange(bondLen);
 		}
 
 		// Conversions
@@ -286,7 +286,7 @@ namespace Mobius.Data
 		{
 			MoleculeMx cs2 = this.Clone();
 
-			cs2.MolLib.TransformMolecule(flags, name);
+			cs2.CdkMol.TransformMolecule(flags, name);
 
 			return cs2;
 		}

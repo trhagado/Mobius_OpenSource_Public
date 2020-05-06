@@ -56,21 +56,21 @@ namespace Mobius.Data
 		/// Create/Get associated lower level molecule MolLib instance
 		/// </summary>
 
-		public ICdkMol MolLib => GetMolLibInstance(); // link to low level object implementation
+		public ICdkMol CdkMol => GetCdkMolInstance(); // link to low level object implementation
 
 		/// <summary>
 		/// Get or create associated IMolLib instance
 		/// </summary>
 		/// <returns></returns>
 
-    public ICdkMol GetMolLibInstance()
+    public ICdkMol GetCdkMolInstance()
     {
-      if (_molLib == null)
-				_molLib = CdkMolFactory.NewCdkMol(this);
+      if (_cdkMol == null)
+				_cdkMol = CdkMolFactory.NewCdkMol(this);
 
-      return _molLib;
+      return _cdkMol;
     }
-    private ICdkMol _molLib;
+    private ICdkMol _cdkMol;
 
 		static ICdkMol CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
 
@@ -454,7 +454,7 @@ namespace Mobius.Data
 				this.ChimeString = molString;
 			}
 
-			else if (!String.IsNullOrEmpty(MolLib.SmilesStringToMolfileString(molString)))
+			else if (!String.IsNullOrEmpty(CdkMol.SmilesStringToMolfileString(molString)))
 			{ // see if a Smiles string without a qualifying prefix
 				this.PrimaryFormat = MoleculeFormat.Smiles;
 				this.SmilesString = molString;
@@ -636,15 +636,15 @@ namespace Mobius.Data
 			return !IsDefined(mol);
 		}
 
-		public int AtomCount => MolLib.AtomCount; // Get atom count for molecule
+		public int AtomCount => CdkMol.AtomCount; // Get atom count for molecule
 
-		public int HeavyAtomCount => MolLib.HeavyAtomCount; // Get heavy atom count
+		public int HeavyAtomCount => CdkMol.HeavyAtomCount; // Get heavy atom count
 
-		public bool ContainsQueryFeature => MolLib.ContainsQueryFeature; // Return true if mol contains a query feature
+		public bool ContainsQueryFeature => CdkMol.ContainsQueryFeature; // Return true if mol contains a query feature
 
-		public double MolWeight => MolLib.MolWeight; // Get mol weight for a molecule 
+		public double MolWeight => CdkMol.MolWeight; // Get mol weight for a molecule 
 
-		public string MolFormula => MolLib.MolFormula; //Get mol formula
+		public string MolFormula => CdkMol.MolFormula; //Get mol formula
 
 		/// <summary>
 		/// Get molecule name from molFile

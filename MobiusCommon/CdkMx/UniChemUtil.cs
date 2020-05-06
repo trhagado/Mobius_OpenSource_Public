@@ -279,8 +279,8 @@ public class UniChemUtil
 
 		//static string SimplifyMolfileForInChIGeneration(string molfile)
 		//{
-		//	string smiles = MolLib1.StructureConverter.MolfileStringToSmilesString(molfile); // convert to smiles
-		//	string molfile2 = MolLib1.StructureConverter.SmilesStringToMolfileString(smiles); // and back to V2000 molfile without Sgroups
+		//	string smiles = CdkMol.StructureConverter.MolfileStringToSmilesString(molfile); // convert to smiles
+		//	string molfile2 = CdkMol.StructureConverter.SmilesStringToMolfileString(smiles); // and back to V2000 molfile without Sgroups
 		//	return molfile2;
 		//}
 
