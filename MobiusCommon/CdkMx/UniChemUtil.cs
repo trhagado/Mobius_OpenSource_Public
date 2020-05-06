@@ -52,6 +52,8 @@ public class UniChemUtil
 
 		public static int AtomContainerToSmilesAndBackErrorCount = 0;
 
+		static ICdkMol CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
+
 		/// <summary>
 		/// Build UniChem Data 
 		/// Note that this routine takes about 14 secs the first time it's called, faster thereafter.

@@ -26,6 +26,32 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Forms;
 
+/// <summary>
+/// -------------------------- Namespace Mobius.CdkMx --------------------------------------
+/// 
+/// This code uses the cdk-2.3.jar (Aug 9, 2019) (https://github.com/cdk/cdk)
+/// converted for C#.Net use via IKVM 8.6.5.1 (Jan 12, 2020) (https://github.com/jessielesbian/ikvm)
+/// 
+/// -------------------------- Notes on older version below ---------------------------------
+///  
+///  Start a Cmd window and CD to the directory containing the .jar files.
+///  
+/* CdkIkvmBuildForMobius.txt
+
+; Combine CDK/Ambit jars into a single DLL. Note that the final dll must be named CDK.dll to link properly with 
+; the INCHI JNI library (jni-inchi-0.7-jar-with-dependencies.dll)
+
+cd \CDK\IkvmBuildForMobius
+
+C:\ikvm-7.4.5046\bin\ikvmc -out:CDK.dll cdk-bundle-1.5.12.jar ambit2-base-2.6.0-SNAPSHOT.jar ambit2-core-2.6.0-SNAPSHOT.jar ambit2-smarts-2.6.0-SNAPSHOT.jar ambit2-tautomers-2.6.0-SNAPSHOT.jar jchempaint-hotfix-3.4.jar jmol-10.jar 
+
+*/
+
+///  The current production version is 7.2.4650 (2/26/16).
+///  However, the following bug-fix version (7.2.4650) is used because it takes care of a null reference exception:
+///    http://www.frijters.net/ikvmbin-7.4.5046.zip
+/// </summary>
+
 namespace Mobius.CdkMx
 {
 
@@ -300,29 +326,6 @@ namespace Mobius.CdkMx
 		/// <returns></returns>
 
 		bool RemoveHydrogens()
-		{
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// Get list of RNumbers and a count of instances for each
-		/// </summary>
-		/// <param name="rgCounts"></param>
-		/// <param name="totalRgCount"></param>
-
-		public void GetCoreRGroupInfo(
-			out SortedDictionary<int, int> rgCounts,
-			out int totalRgCount)
-		{
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// Remove RGroup attachment point atoms (code is incomplete)
-		/// </summary>
-		/// <returns></returns>
-
-		public CdkMol RemoveRGroupAttachmentPointAtoms()
 		{
 			throw new NotImplementedException();
 		}

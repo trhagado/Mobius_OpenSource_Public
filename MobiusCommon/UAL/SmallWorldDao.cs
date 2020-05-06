@@ -59,7 +59,7 @@ namespace Mobius.UAL
 
 		public static int SvgDepictionCount = 0; // number of GetDepiction calls for the current query
 
-		static ICdkMol MolLibUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
+		static ICdkMol CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
 
 		internal static bool Debug = false;
 
@@ -651,7 +651,7 @@ namespace Mobius.UAL
 					Lex.Split(line, "\t", out s1, out s2, out smilesAndCorpId);
 					Lex.Split(smilesAndCorpId, " ", out smiles, out CorpId);
 
-					MolLibUtil.GetHeavyAtomBondCounts(smiles, out haCnt, out hbCnt);
+					CdkMolUtil.GetHeavyAtomBondCounts(smiles, out haCnt, out hbCnt);
 					if (hbCnt <= 0) throw new Exception("No bonds");
 					if (hbCnt <= 99)
 					{
@@ -720,7 +720,7 @@ namespace Mobius.UAL
 					Lex.Split(line, "\t", out s1, out s2, out smilesAndCorpId);
 					Lex.Split(smilesAndCorpId, " ", out smiles, out CorpId);
 
-					MolLibUtil.GetHeavyAtomBondCounts(smiles, out haCnt, out hbCnt);
+					CdkMolUtil.GetHeavyAtomBondCounts(smiles, out haCnt, out hbCnt);
 					if (hbCnt <= 0) throw new Exception("No bonds");
 
 					else if (hbCnt <= 99)
@@ -831,7 +831,7 @@ namespace Mobius.UAL
 		static string LastCheckResponse; // response from check
 		static Exception LastCheckException; // any exception that appears during check
 
-		static ICdkMol MolLibUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
+		static ICdkMol CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
 
 		static object DepictLock = new object();
 
@@ -912,10 +912,10 @@ namespace Mobius.UAL
 
 				if (swp.Smiles.Contains(".")) // possible multiple fragments?
 				{
-					swp.Smiles = MolLibUtil.GetLargestSmilesMoleculeFragment(swp.Smiles);
+					swp.Smiles = CdkMolUtil.GetLargestSmilesMoleculeFragment(swp.Smiles);
 				}
 
-				MolLibUtil.GetHeavyAtomBondCounts(swp.Smiles, out HeavyAtomCount, out HeavyBondCount);
+				CdkMolUtil.GetHeavyAtomBondCounts(swp.Smiles, out HeavyAtomCount, out HeavyBondCount);
 
 				if (Lex.IsUndefined(swp.Database)) throw new Exception("SmallWorld Database not defined");
 				if (swp.RootTable != null)

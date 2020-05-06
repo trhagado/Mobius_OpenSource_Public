@@ -24,6 +24,180 @@ using System.IO;
 namespace Mobius.CdkMx
 {
 
+/// <summary>
+/// Fingerprint methods
+/// </summary>
+
+	public partial class CdkMol : ICdkMol
+	{
+		/// <summary>
+		/// Build a CDK BitSetFingerprint from a molfile
+		/// </summary>
+		/// <param name="molfile"></param>
+		/// <returns></returns>
+
+		public object BuildBitSetFingerprint(
+			string molfile,
+			FingerprintType fpType,
+			int fpSubtype = -1,
+			int fpLen = -1)
+		{
+			IAtomContainer mol = MolfileToAtomContainer(molfile);
+
+			BitSetFingerprint bfp = BuildBitSetFingerprintForLargestFragment(
+				mol,
+				fpType,
+				fpSubtype,
+				fpLen);
+
+			return bfp;
+		}
+
+		/// <summary>
+		/// Build CDK BitSetFingerprints from an AtomContainer 
+		/// including the overall fingerprint and a fingerprint for each fragment
+		/// </summary>
+		/// <param name="molfile"></param>
+		/// <param name="fpTypeInt"></param>
+		/// <param name="fpSubtype"></param>
+		/// <param name="fpLen"></param>
+		/// <returns></returns>
+
+		public static List<BitSetFingerprint> BuildBitSetFingerprints(
+			string molfile,
+			bool includeOverallFingerprint,
+			FingerprintType fpType,
+			int fpSubtype = -1,
+			int fpLen = -1)
+		{
+			IAtomContainer mol2;
+			BitSetFingerprint fp;
+			string smiles;
+			int fi, fi2;
+
+			IAtomContainer mol = MolfileToAtomContainer(molfile);
+
+			List<BitSetFingerprint> fpList = new List<BitSetFingerprint>();
+
+			int pseudoCount = RemovePseudoAtoms(mol);
+
+			//mol = AtomContainerToSmilesAndBack(mol, out smiles); // need this for kekulization?
+
+			mol = RemoveIsotopesStereoExplicitHydrogens(mol); // additional normalization for fingerprint
+
+			List<IAtomContainer> frags = FragmentMolecule(mol, true); // get fragments filtering out small and common frags
+
+			if (includeOverallFingerprint && frags.Count > 1) // include overall fingerprint for multiple fragments
+			{
+				fp = // generate a fingerprint
+					CdkFingerprint.BuildBitSetFingerprint(mol, fpType, fpSubtype, fpLen);
+
+				fpList.Add(fp);
+			}
+
+			for (fi = 0; fi < frags.Count; fi++)
+			{
+				mol2 = frags[fi];
+
+				fp = CdkFingerprint.BuildBitSetFingerprint(
+					mol2,
+					fpType,
+					fpSubtype,
+					fpLen);
+
+				for (fi2 = 0; fi2 < fpList.Count; fi2++) // see if a dup fp
+				{
+					if (fp.equals(fpList[fi2])) break;
+				}
+				if (fi2 < fpList.Count) continue; // skip if dup
+
+				fpList.Add(fp);
+			}
+
+			return fpList;
+		}
+
+		/// <summary>
+		/// Build a CDK BitSetFingerprint for the largest fragment in an AtomContainer
+		/// </summary>
+		/// <param name="mol"></param>
+		/// <param name="fpTypeInt"></param>
+		/// <param name="fpSubtype"></param>
+		/// <param name="fpLen"></param>
+		/// <returns></returns>
+
+		public static BitSetFingerprint BuildBitSetFingerprintForLargestFragment(
+			IAtomContainer mol,
+			FingerprintType fpType,
+			int fpSubtype = -1,
+			int fpLen = -1)
+		{
+			string smiles;
+
+			mol = GetLargestMoleculeFragment(mol);
+
+			int pseudoCount = RemovePseudoAtoms(mol);
+
+			//mol = AtomContainerToSmilesAndBack(mol, out smiles); // need this for kekulization
+
+			mol = RemoveIsotopesStereoExplicitHydrogens(mol); // additional normalization for fingerprint
+
+			BitSetFingerprint bfp = CdkFingerprint.BuildBitSetFingerprint(
+				mol,
+				fpType,
+				fpSubtype,
+				fpLen);
+
+			return bfp;
+		}
+
+		/// <summary>
+		/// Calculate similarity of two Bitsetfingerprints
+		/// </summary>
+		/// <param name="queryFingerprint"></param>
+		/// <param name="targetFingerprint"></param>
+		/// <returns></returns>
+
+		public double CalculateBitSetFingerprintSimilarity(object queryFingerprint, object targetFingerprint)
+		{
+			BitSetFingerprint qfp = queryFingerprint as BitSetFingerprint;
+			if (qfp == null) throw new Exception("Query Fingerprint is not a defined CdkFingerprint");
+
+			BitSetFingerprint tfp = targetFingerprint as BitSetFingerprint;
+			if (tfp == null) throw new Exception("Target Fingerprint is not a defined CdkFingerprint");
+
+			int qCard = qfp.cardinality();
+			int tCard = tfp.cardinality();
+
+			BitSetFingerprint tfp2 = new BitSetFingerprint(tfp); // must make copy of target that can be modified
+			tfp2.and(qfp); // and target copy and query into target copy
+			int commonCnt = tfp2.cardinality();
+
+			float simScore = commonCnt / (float)(tCard + qCard - commonCnt);
+
+			if (qfp.cardinality() != qCard || tfp.cardinality() != tCard) // debug
+				throw new Exception("Cardinality changed");
+
+			return simScore;
+		}
+
+		/// <summary>
+		/// Get array of set bits
+		/// </summary>
+		/// <param name="fingerprint"></param>
+		/// <returns></returns>
+
+		public int[] GetBitSet(object fingerprint)
+		{
+			BitSetFingerprint fp = fingerprint as BitSetFingerprint;
+			if (fp == null) throw new Exception("Fingerprint is not a defined CdkFingerprint");
+
+			int[] setBits = fp.getSetbits();
+
+			return setBits;
+		}
+	}
+
 	/// <summary>
 	/// Generate CDK Fingerprints 
 	/// </summary>

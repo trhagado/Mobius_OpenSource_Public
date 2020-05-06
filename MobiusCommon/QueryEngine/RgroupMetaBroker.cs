@@ -34,7 +34,7 @@ namespace Mobius.QueryEngineLibrary
 		int MapCount = -1;
 		int MapPos = -1; // position in set of maps for current key
 
-		static ICdkMol MolLibUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
+		static ICdkMol CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
 
 		// Constructor
 

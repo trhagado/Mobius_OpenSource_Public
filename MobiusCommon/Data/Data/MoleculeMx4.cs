@@ -476,7 +476,7 @@ namespace Mobius.Data
 		public static bool IsValidMolfile(string molfile)
 		{
 			if (Lex.IsUndefined(molfile)) return false;
-			return MolLibUtil.IsValidMolfile(molfile);
+			return CdkMolUtil.IsValidMolfile(molfile);
 		}
 
 		/// <summary>
@@ -541,13 +541,13 @@ namespace Mobius.Data
 
 		public static string SmilesStringToMolfileString(string smilesString)
 		{
-			string molFile = MolLibUtil.SmilesStringToMolfileString(smilesString);
+			string molFile = CdkMolUtil.SmilesStringToMolfileString(smilesString);
 			return molFile;
 		}
 
 		public static string MolfileStringToSmilesString(string molfileString)
 		{
-			string smiles = MolLibUtil.MolfileStringToSmilesString(molfileString);
+			string smiles = CdkMolUtil.MolfileStringToSmilesString(molfileString);
 			return smiles;
 		}
 

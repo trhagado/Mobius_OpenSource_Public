@@ -19,7 +19,7 @@ namespace Mobius.QueryEngineLibrary
 
 		string LastCriteriaString = "";
 
-		static ICdkMol MolLibUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
+		static ICdkMol CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
 
 		bool Debug = false;
 
@@ -521,7 +521,7 @@ namespace Mobius.QueryEngineLibrary
 				cd.BitsetFingerprint = cs.BuildBitSetFingerprint(fpType, fpSubtype);
 				if (cd.BitsetFingerprint == null) continue; // couldn't build fingerprint (e.g. no structure)
 
-				if (Debug) DebugLog.Message(cd.Cid + ": " + Lex.Join(MolLibUtil.GetBitSet(cd.BitsetFingerprint), ", "));
+				if (Debug) DebugLog.Message(cd.Cid + ": " + Lex.Join(CdkMolUtil.GetBitSet(cd.BitsetFingerprint), ", "));
 			}
 
 			return data;
@@ -548,8 +548,8 @@ namespace Mobius.QueryEngineLibrary
 				if ((cd1.Cid == "111" && cd2.Cid == "222") ||
 				 (cd2.Cid == "222" && cd1.Cid == "111"))
 				{
-					DebugLog.Message("Before: " + cd1.Cid + ": " + String.Join(", ", MolLibUtil.GetBitSet(cd1.BitsetFingerprint)));
-					DebugLog.Message("Before: " + cd2.Cid + ": " + String.Join(", ", MolLibUtil.GetBitSet(cd2.BitsetFingerprint)));
+					DebugLog.Message("Before: " + cd1.Cid + ": " + String.Join(", ", CdkMolUtil.GetBitSet(cd1.BitsetFingerprint)));
+					DebugLog.Message("Before: " + cd2.Cid + ": " + String.Join(", ", CdkMolUtil.GetBitSet(cd2.BitsetFingerprint)));
 				}
 			}
 
@@ -560,8 +560,8 @@ namespace Mobius.QueryEngineLibrary
 				if ((cd1.Cid == "111" && cd2.Cid == "222") ||
 				 (cd2.Cid == "222" && cd1.Cid == "111"))
 				{
-					DebugLog.Message(cd1.Cid + ": " + String.Join(", ", MolLibUtil.GetBitSet(cd1.BitsetFingerprint)));
-					DebugLog.Message(cd2.Cid + ": " + String.Join(", ", MolLibUtil.GetBitSet(cd2.BitsetFingerprint)));
+					DebugLog.Message(cd1.Cid + ": " + String.Join(", ", CdkMolUtil.GetBitSet(cd1.BitsetFingerprint)));
+					DebugLog.Message(cd2.Cid + ": " + String.Join(", ", CdkMolUtil.GetBitSet(cd2.BitsetFingerprint)));
 					DebugLog.Message(cd1.Cid + ", " + cd2.Cid + " Similarity: " + sim);
 				}
 			}

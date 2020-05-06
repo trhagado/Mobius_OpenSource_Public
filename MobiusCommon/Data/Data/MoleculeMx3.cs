@@ -22,7 +22,7 @@ namespace Mobius.Data
 		{
 			string molfile = GetMolfileString();
 
-			object fp = MolLibUtil.BuildBitSetFingerprint(molfile, fpType, fpSubtype, fpLen);
+			object fp = CdkMolUtil.BuildBitSetFingerprint(molfile, fpType, fpSubtype, fpLen);
 			return fp;
 		}
 
@@ -37,7 +37,7 @@ namespace Mobius.Data
 			object queryFingerprint,
 			object targetFingerprint)
 		{
-			double score = MolLibUtil.CalculateBitSetFingerprintSimilarity(queryFingerprint, targetFingerprint);
+			double score = CdkMolUtil.CalculateBitSetFingerprintSimilarity(queryFingerprint, targetFingerprint);
 			return score;
 		}
 

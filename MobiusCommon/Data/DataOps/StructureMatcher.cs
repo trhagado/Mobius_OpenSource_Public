@@ -121,7 +121,7 @@ namespace Mobius.Data
 			}
 
 			SSSTargetMol = CdkMolFactory.NewCdkMol(target);
-			bool b = MolLibUtil.FullStructureMatch(SSSQueryMol, SSSTargetMol, switches);
+			bool b = CdkMolUtil.FullStructureMatch(SSSQueryMol, SSSTargetMol, switches);
 			return b;
 		}
 

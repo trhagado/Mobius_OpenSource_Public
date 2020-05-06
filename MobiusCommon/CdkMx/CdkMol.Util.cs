@@ -1,240 +1,907 @@
 ﻿using Mobius.ComOps;
+using Mobius.Data;
+
+using java.io;
+
+using cdk = org.openscience.cdk;
+using org.openscience.cdk;
+using org.openscience.cdk.inchi;
+using org.openscience.cdk.interfaces;
+using org.openscience.cdk.fingerprint;
+using org.openscience.cdk.smiles;
+using org.openscience.cdk.tools.manipulator;
+using org.openscience.cdk.aromaticity;
+using org.openscience.cdk.graph;
+using org.openscience.cdk.qsar.result;
+using org.openscience.cdk.io;
+using org.openscience.cdk.io.iterator;
+using org.openscience.cdk.tools;
+
+using net.sf.jniinchi; // low level IUPAC interface, needed for access to some enumerations
 
 using System;
-using System.IO;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
+using System.IO;
+using System.Text;
 
-namespace Mobius.CdkMolMx
+namespace Mobius.CdkMx
 {
-	public class MolLib1Util
+
+	public partial class CdkMol : ICdkMol
+
 	{
-		/// <summary>
-		/// Convert special atom isotope values to MDL V3000-type hilighting
-		/// Add hilight collection to V3000 mol file resulting in a molfile 
-		/// with a form like the following:
-		///
-		///M  V30 END BOND
-		///M  V30 BEGIN COLLECTION
-		///M  V30 MDLV30 / STEABS ATOMS = (1 4)
-		///M  V30 MDLV30 / HILITE ATOMS = (13 10 11 12 34 35 36 37 38 39 40 41 42 43) -
-		///M  V30 BONDS = (13 11 12 37 38 39 40 41 42 43 44 45 46 47)
-		///M  V30 END COLLECTION
-		///M  V30 END CTAB
-		///M  END
-		/// </summary>
-		/// <param name="molfile"></param>
-		/// <param name="hilightIsotopeValue"></param>
-		/// <returns></returns>
-		/// 
-
-		// Note that isotope values are handled in different ways based on the form (molfile vs internal mol object)
-		// and the software doing the conversion. 
-		// For CDK, the molfile value and the internal object value are the same value, i.e. the total mass (number of protons & neutrons)
-		// For MolLib1 the internal value is the normal current mass minus the normal mass. e.g. a carbon with mass = 1 will have an atom.Isotope value of -15;
-
-		public static string ConvertIsotopeValuesToHilighting(
-			string molfile)
+		public static IChemObjectBuilder DefaultChemObjectBuilder
 		{
-			bool hilight;
-			int hilightIsotopeValue = 100;
-			string molfile2 = "";
-			bool clearAttachmentPointLabels = true;
-			bool hilightAttachmentBond = true;
+			get
+			{
+				if (_defaultChemObjectBuilder == null)
+					_defaultChemObjectBuilder = org.openscience.cdk.DefaultChemObjectBuilder.getInstance();
 
-			throw new NotImplementedException();
+				return _defaultChemObjectBuilder;
+			}
+		}
+		static IChemObjectBuilder _defaultChemObjectBuilder = null;
+
+		public static int ParseSmilesErrorCount = 0;
+		public static string LastParseSmilesError = "";
+
+		/// <summary>
+		/// Get the version of Java that was used to build the CDK .jar file
+		/// </summary>
+		/// <returns></returns>
+
+		public static string GetJavaVersion()
+		{
+			string version = java.lang.Package.getPackage("java.lang").getImplementationVersion();
+			return version;
 		}
 
 		/// <summary>
-		/// GetNormalizedIsotope
-		/// The isotope value is difference from the normal mass, e.g. Carbon 14 has a value of 2.
-		/// This method (which is a bit of a hack) returns the the mass unless it is normal in which case it returns 0.
+		/// GetHydrogenAdder
 		/// </summary>
-		/// <param name="a"></param>
-		/// <returns></returns>
-		static int GetNormalizedIsotope(
-			object a)
-		{
-			throw new NotImplementedException();
-		}
-
-
-		/// <summary>
-		/// Returns standard mass for specified element no, as integer
-		/// </summary>
-		/// <param name="atomicNumber"></param>
 		/// <returns></returns>
 
-		public static int GetMajorIsotopeMassNumber(int atomicNumber)
+		static CDKHydrogenAdder GetHydrogenAdder()
 		{
-			if (atomicNumber < 1 || atomicNumber >= MajorIsotopeMassNumber.Length)
-				throw new Exception("Invalid atomic number: " + atomicNumber);
-
-			int mass = MajorIsotopeMassNumber[atomicNumber];
-			return mass;
+			if (_hydrogenAdder == null)
+				_hydrogenAdder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder);
+			return _hydrogenAdder;
 		}
+		static CDKHydrogenAdder _hydrogenAdder = null;
 
 		/// <summary>
-		/// Isotope Conversion Test
+		/// CanonicalizeSmiles
 		/// </summary>
 		/// <param name="smiles"></param>
 		/// <returns></returns>
 
-		public static string IsotopeConversionTest(
-			string smiles)
+		public static string CanonicalizeSmiles(string smiles)
 		{
-			// Initial mol object creation from Smiles
+			SmilesGeneratorType smiGenFlags = SmilesGeneratorType.Unique | SmilesGeneratorType.Aromatic;
+			return CanonicalizeSmiles(smiles, smiGenFlags);
+		}
 
-			string msg =
-				"MolLib1 Conversion Test, Smiles: " + smiles + "\r\n\r\n";
-
-			throw new NotImplementedException();
-
-			//string molfile1 = MolLib1StructureConverter.SmilesStringToMolfileString(smiles);
-			//msg += "Smiles -> MoleLib1 V2000\r\n==================================\r\n " + molfile1 + "\r\n\r\n";
-
-			//NativeMolecule mol1 = MolLib1StructureConverter.MolfileStringToMolecule(molfile1);
-
-			////mol1.GetAtom(0).Isotope = -1; // try neg value
-			//int isotope1 = mol1.GetAtom(0).Isotope;
-			//msg += "Smiles -> Obj isotope: " + isotope1 + "\r\n\r\n";
-
-			//// Mol object to V2000 & back
-
-			//string v2000 = MolLib1StructureConverter.MoleculeToMolfileString(mol1); // obj to molfile
-			//msg += "Obj -> MoleLib1 V2000\r\n==================================\r\n " + v2000 + "\r\n\r\n";
-
-			//NativeMolecule molV2000 = MolLib1StructureConverter.MolfileStringToMolecule(v2000); // molfile to obj
-			//int isotopeV2 = molV2000.GetAtom(0).Isotope;
-			//msg += "V2000 -> Obj isotope: " + isotopeV2 + "\r\n\r\n";
-			//string v2000b = MolLib1StructureConverter.MoleculeToMolfileString(molV2000); // obj back to molfile
-
-			//// Mol object to V3000 & back
-
-			//mol1.HighlightChildren = "1;"; // force V3000
-			//string v3000 = MolLib1StructureConverter.MoleculeToMolfileString(mol1); // obj to molfile
-			//msg += "Obj -> MoleLib1 V3000\r\n==================================\r\n " + v3000 + "\r\n\r\n";
-
-			//NativeMolecule molV3000 = MolLib1StructureConverter.MolfileStringToMolecule(v3000); // molfile to obj
-			//int isotopeV3 = molV3000.GetAtom(0).Isotope;
-			//msg += "V3000 -> Obj isotope: " + isotopeV3 + "\r\n\r\n";
-			//string v3000b = MolLib1StructureConverter.MoleculeToMolfileString(molV3000); // obj back to molfile
-
-			//return msg;
+		public static string CanonicalizeSmiles(
+			string smiles,
+			SmilesGeneratorType smiGenFlags)
+		{
+			IAtomContainer mol = SmilesToAtomContainer(smiles);
+			if (mol.getAtomCount() == 0) return "";
+			else
+			{
+				string smiles2 = AtomContainerToSmiles(mol, smiGenFlags);
+				return smiles2;
+			}
 		}
 
 		/// <summary>
-		/// Table of major isotope mass numbers indexed by atomic number
+		/// Get the largest molecule fragment from supplied molfile
+		/// </summary>
+		/// <param name="molfile"></param>
+		/// <returns>Molfile of largest fragment</returns>
+
+		public string GetLargestMolfileMoleculeFragment(
+			string molfile)
+		{
+			IAtomContainer mol, mol2;
+
+			mol = MolfileToAtomContainer(molfile);
+			mol2 = GetLargestMoleculeFragment(mol);
+			if (mol2 != null)
+			{
+				string largestFragMolfile = AtomContainerToMolfile(mol2);
+				return largestFragMolfile;
+			}
+
+			else return "";
+		}
+
+		/// <summary>
+		/// Get the largest molecule fragment from supplied smiles
+		/// </summary>
+		/// <param name="smiles"></param>
+		/// <returns>Smiles of largest fragment</returns>
+
+		public string GetLargestSmilesMoleculeFragment(
+			string smiles)
+		{
+			IAtomContainer mol, mol2;
+
+			mol = SmilesToAtomContainer(smiles);
+			mol2 = GetLargestMoleculeFragment(mol);
+			if (mol2 != null)
+			{
+				string largestFragSmiles = AtomContainerToSmiles(mol2);
+				return largestFragSmiles;
+			}
+
+			else return "";
+		}
+
+		/// <summary>
+		/// Fragment a smiles string
+		/// </summary>
+		/// <param name="smiles"></param>
+		/// <param name="filterOutCommonCounterIons"></param>
+		/// <returns></returns>
+
+		public static List<KeyValuePair<string, IAtomContainer>> FragmentAndCanonicalizeSmiles(
+			string smiles,
+			bool filterOutCommonCounterIons)
+		{
+			IAtomContainer mol = SmilesToAtomContainer(smiles);
+			List<KeyValuePair<string, IAtomContainer>> frags = FragmentMoleculeAndCanonicalizeSmiles(mol, filterOutCommonCounterIons);
+			return frags;
+		}
+
+		/// <summary>
+		/// Fragment a molecule
+		/// </summary>
+		/// <param name="mol"></param>
+		/// <param name="filterOutCommonCounterIons"></param>
+		/// <returns></returns>
+		public static List<IAtomContainer> FragmentMolecule(
+			IAtomContainer mol,
+			bool filterOutCommonCounterIons = true)
+		{
+			List<KeyValuePair<string, IAtomContainer>> fragSmiList = FragmentMoleculeAndCanonicalizeSmiles(mol, filterOutCommonCounterIons);
+
+			List<IAtomContainer> fragList = new List<IAtomContainer>();
+			foreach (KeyValuePair<string, IAtomContainer> kvp in fragSmiList)
+				fragList.Add(kvp.Value);
+
+			return fragList;
+		}
+
+		/// <summary>
+		/// Fragment a molecule
+		/// </summary>
+		/// <param name="mol"></param>
+		/// <returns></returns>
+
+		public static List<KeyValuePair<string, IAtomContainer>> FragmentMoleculeAndCanonicalizeSmiles(
+			IAtomContainer mol,
+			bool filterOutCommonCounterIons)
+		{
+			int aci, fi, i1;
+
+			KeyValuePair<string, IAtomContainer> kvp;
+			List<KeyValuePair<string, IAtomContainer>> frags = new List<KeyValuePair<string, IAtomContainer>>();
+
+			AtomContainerSet acs = (AtomContainerSet)ConnectivityChecker.partitionIntoMolecules(mol);
+
+			int acc = acs.getAtomContainerCount();
+			for (aci = 0; aci < acc; aci++)
+			{
+				IAtomContainer fragMol = acs.getAtomContainer(aci);
+				string fragSmiles = AtomContainerToSmiles(fragMol);
+				if (filterOutCommonCounterIons)
+				{
+					if (CommonSmallFragments.Contains(fragSmiles) ||
+					 GetHeavyAtomCount(fragMol) <= 6)
+						continue;
+				}
+
+				kvp = new KeyValuePair<string, IAtomContainer>(fragSmiles, fragMol);
+
+				int ac = fragMol.getAtomCount();
+
+				for (fi = frags.Count - 1; fi >= 0; fi--) // insert into list so that fragments are ordered largest to smallest
+				{
+					if (frags[fi].Value.getAtomCount() >= ac) break;
+				}
+				frags.Insert(fi + 1, kvp);
+			}
+
+			return frags;
+		}
+
+		/// <summary>
+		/// Convert a Molfile into a CDK AtomContainer (e.g. Molecule)
+		/// </summary>
+		/// <param name="molfile"></param>
+		/// <returns></returns>
+
+		public static IAtomContainer MolfileToAtomContainer(string molfile)
+		{
+
+			// Do basic read step
+
+			if (Lex.Contains(molfile, "V2000"))
+			{
+				cdk.io.DefaultChemObjectReader cor;
+
+				java.io.StringReader sr = new java.io.StringReader(molfile);
+				cor = new MDLV2000Reader(sr);
+				cor.setReaderMode(IChemObjectReader.Mode.RELAXED);
+
+				IAtomContainer mol = (IAtomContainer)cor.read(new AtomContainer());
+
+				ConfigureAtomContainer(mol);
+				return mol;
+			}
+
+
+			else if (Lex.Contains(molfile, "V3000"))
+				return MolfileV3000ToAtomContainer(molfile);
+
+			else throw new Exception("Unrecognized molfile format");
+
+		}
+
+		/// <summary>
+		/// MolfileV3000ToAtomContainer
+		/// </summary>
+		/// <param name="molfile"></param>
+		/// <returns></returns>
+		public static IAtomContainer MolfileV3000ToAtomContainer(string molfile)
+		{
+			// Extract any mass info before conversion to avoid losing our custom info in conversion
+			Dictionary<int, int> map = new Dictionary<int, int>();
+			if (molfile.Contains(" MASS="))
+			{
+				map = ExtractMassAttributes(ref molfile);
+			}
+
+			cdk.io.DefaultChemObjectReader cor;
+			java.io.StringReader sr = new java.io.StringReader(molfile);
+			cor = new MDLV3000Reader(sr);
+			cor.setReaderMode(IChemObjectReader.Mode.RELAXED);
+
+			IAtomContainer mol = (IAtomContainer)cor.read(new AtomContainer());
+
+			for (int ai = 0; ai < mol.getAtomCount(); ai++)
+			{
+				IAtom a = mol.getAtom(ai);
+				if (map.ContainsKey(ai + 1))
+					a.setMassNumber(new java.lang.Integer(map[ai + 1]));
+				else a.setMassNumber(null);
+			}
+
+			ConfigureAtomContainer(mol);
+			return mol;
+		}
+
+		/// <summary>
+		/// Hack to extract MASS= attributes from a V3000 file because CDK has an issue reading these
+		/// </summary>
+		/// <param name="molfile"></param>
+		/// <returns></returns>
+		static Dictionary<int, int> ExtractMassAttributes(ref string molfile)
+		{
+			Dictionary<int, int> map = new Dictionary<int, int>();
+
+			string molfile2 = molfile.Replace("\r", "");
+			molfile2 = molfile2.Replace("\n", " ");
+			string[] sa = molfile2.Split(' ');
+			for (int si = 0; si < sa.Length; si++)
+			{
+				if (Lex.Contains(sa[si], "MASS="))
+				{
+					int mass = int.Parse(sa[si].Substring(5));
+					molfile = molfile.Replace(" " + sa[si], "");
+					for (int si2 = si - 1; si2 >= 0; si2--)
+					{
+						if (Lex.Eq(sa[si2], "V30"))
+						{
+							int ai = int.Parse(sa[si2 + 1]);
+							map[ai] = mass;
+							break;
+						}
+					}
+				}
+			}
+
+			return map;
+		}
+
+		public static void ConfigureAtomContainer(IAtomContainer mol)
+		{
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol); // Perceive Configure atoms
+
+			GetHydrogenAdder().addImplicitHydrogens(mol); // Be sure implicit hydrogens have been added
+
+			ApplyAromaticity(mol);
+
+			//// If bond order 4 was present, deduce bond orders
+
+			//      DeduceBondSystemTool dbst = new DeduceBondSystemTool();
+			//      mol = dbst.fixAromaticBondOrders(mol);
+
+			return;
+		}
+
+		/// <summary>
+		/// Apply an aromaticity model to a molecule and set the aromatic flags
+		/// </summary>
+		/// <param name="mol"></param>
+		/// <returns></returns>
+
+		public static bool ApplyAromaticity(
+			IAtomContainer mol)
+		{
+			bool isAromatic = ApplyAromaticity(mol, ElectronDonation.cdk(), Cycles.cdkAromaticSet());
+			return isAromatic;
+		}
+
+		/// <summary>
+		/// ApplyAromaticity
+		/// 
+		/// Mimics the CDKHuckelAromaticityDetector
+		///  Aromaticity aromaticity = new Aromaticity(ElectronDonation.cdk(),	Cycles.cdkAromaticSet());
+		///
+		/// Mimics the DoubleBondAcceptingAromaticityDetector
+		///  Aromaticity aromaticity = new Aromaticity(ElectronDonation.cdkAllowingExocyclic(), Cycles.cdkAromaticSet());
+		///
+		/// A good model for writing SMILES
+		///  Aromaticity aromaticity = new Aromaticity(ElectronDonation.daylight(), Cycles.all());
+		///
+		/// A good model for writing MDL/Mol2
+		///  Aromaticity aromaticity = new Aromaticity(ElectronDonation.piBonds(), Cycles.all());
+		///
+		/// </summary>
+		/// <param name="mol"></param>
+		/// <param name="electronDonation"></param>
+		/// <param name="cycleFinder"></param>
+		/// <returns></returns>
+
+		public static bool ApplyAromaticity(
+			IAtomContainer mol,
+			ElectronDonation electronDonation,
+			CycleFinder cycleFinder)
+		{
+			Aromaticity aromaticity = new Aromaticity(electronDonation, cycleFinder);
+
+			try
+			{
+				bool isAromatic = aromaticity.apply(mol);
+				return isAromatic;
+			}
+			catch (Exception e)
+			{
+				string msg = e.Message; // cycle computation was intractable
+				return false;
+			}
+		}
+
+		/// <summary>
+		/// Convert mol to V2000 Molfile
+		/// </summary>
+		/// <param name="mol"></param>
+		/// <returns></returns>
+
+		public static string AtomContainerToMolfile(IAtomContainer mol)
+		{
+			java.io.StringWriter sw = new java.io.StringWriter();
+
+			MDLV2000Writer writer = new MDLV2000Writer(sw);
+			writer.write(mol);
+			writer.close();
+			sw.close();
+
+			string molFile = sw.toString();
+			return molFile;
+		}
+
+		/// <summary>
+		/// Convert mol to V3000 Molfile
+		/// </summary>
+		/// <param name="mol"></param>
+		/// <returns></returns>
+
+		public static string AtomContainerToMolFileV3000(IAtomContainer mol)
+		{
+			java.io.StringWriter sw = new java.io.StringWriter();
+
+			MDLV3000Writer writer = new MDLV3000Writer(sw);
+			writer.write(mol);
+			writer.close();
+			sw.close();
+
+			string molFile = sw.toString();
+			return molFile;
+		}
+
+
+		/// <summary>
+		/// Convert molecule to Smiles and then back to a molecule for normalization purposes
+		/// </summary>
+		/// <param name="mol"></param>
+		/// <returns></returns>
+
+		public static IAtomContainer AtomContainerToSmilesAndBack(
+			IAtomContainer mol)
+		{
+			string smiles;
+
+			IAtomContainer mol2 = AtomContainerToSmilesAndBack(mol, out smiles);
+			return mol2;
+		}
+
+		/// <summary>
+		/// Convert molecule to Smiles and then back to a molecule for normalization purposes
+		/// </summary>
+		/// <param name="mol"></param>
+		/// <param name="flags"></param>
+		/// <param name="smiles"></param>
+		/// <returns></returns>
+
+		public static IAtomContainer AtomContainerToSmilesAndBack(
+			IAtomContainer mol,
+			out string smiles)
+		{
+			smiles = // convert to smiles with stereo and isotopes
+				AtomContainerToSmiles(mol, SmilesGeneratorType.CanonicalWithoutIsotopesAndStereo | SmilesGeneratorType.Aromatic);
+			IAtomContainer mol2 = SmilesToAtomContainer(smiles);
+			return mol2;
+		}
+
+		/// <summary>
+		/// Generate Smiles - Canonical, stereo/isomers, aromatic bonds
+		/// </summary>
+		/// <param name="mol"></param>
+		/// <returns></returns>
+
+		public static String AtomContainerToSmiles(IAtomContainer mol)
+		{
+			string smiles = AtomContainerToSmiles(mol, SmilesGeneratorType.CanonicalWithIsotopesAndStereo | SmilesGeneratorType.Aromatic);
+
+			return smiles;
+		}
+
+		/// <summary>
+		/// Generate Smiles
+		/// </summary>
+		/// <param name="mol"></param>
+		/// <param name="flags"></param>
+		/// <returns></returns>
+		public static String AtomContainerToSmiles(
+			IAtomContainer mol,
+			SmilesGeneratorType flags)
+		{
+			ApplyAromaticity(mol);
+
+			SmilesGenerator sg = null;
+
+			if ((flags & SmilesGeneratorType.Generic) != 0)
+				sg = SmilesGenerator.generic();
+
+			else if ((flags & SmilesGeneratorType.Isomeric) != 0)
+				sg = SmilesGenerator.isomeric();
+
+			else if ((flags & SmilesGeneratorType.Unique) != 0)
+				sg = SmilesGenerator.unique();
+
+			else if ((flags & SmilesGeneratorType.Absolute) != 0)
+				sg = SmilesGenerator.unique();
+
+			else throw new Exception("Canonical/Stereo/Isotop types not defined");
+
+			if ((flags & SmilesGeneratorType.NotAromatic) != 0) { } // not aromatic
+			else sg = sg.aromatic(); // aromatic by default even if not specified
+
+			if ((flags & SmilesGeneratorType.WithAtomClasses) != 0)
+				sg = sg.withAtomClasses();
+
+			string smiles = sg.create(mol);
+			return smiles;
+		}
+
+		/// <summary>
+		/// Get atom count for structure
+		/// </summary>
+		/// <returns></returns>
+
+		public int AtomCount => NativeMol.getAtomCount();
+
+		/// <summary>
+		/// Get heavy atom count
 		/// </summary>
 
-		public static int[] MajorIsotopeMassNumber = {
-			/* 0 */ 0,
-			/* 1 */ 1,
-			/* 2 */ 4,
-			/* 3 */ 7,
-			/* 4 */ 9,
-			/* 5 */ 11,
-			/* 6 */ 12,
-			/* 7 */ 14,
-			/* 8 */ 16,
-			/* 9 */ 19,
-			/* 10 */ 20,
-			/* 11 */ 23,
-			/* 12 */ 24,
-			/* 13 */ 27,
-			/* 14 */ 28,
-			/* 15 */ 31,
-			/* 16 */ 32,
-			/* 17 */ 35,
-			/* 18 */ 40,
-			/* 19 */ 39,
-			/* 20 */ 40,
-			/* 21 */ 45,
-			/* 22 */ 48,
-			/* 23 */ 51,
-			/* 24 */ 52,
-			/* 25 */ 55,
-			/* 26 */ 56,
-			/* 27 */ 59,
-			/* 28 */ 58,
-			/* 29 */ 63,
-			/* 30 */ 64,
-			/* 31 */ 69,
-			/* 32 */ 74,
-			/* 33 */ 75,
-			/* 34 */ 80,
-			/* 35 */ 79,
-			/* 36 */ 84,
-			/* 37 */ 85,
-			/* 38 */ 88,
-			/* 39 */ 89,
-			/* 40 */ 90,
-			/* 41 */ 93,
-			/* 42 */ 98,
-			/* 43 */ 85,
-			/* 44 */ 102,
-			/* 45 */ 103,
-			/* 46 */ 106,
-			/* 47 */ 107,
-			/* 48 */ 114,
-			/* 49 */ 115,
-			/* 50 */ 120,
-			/* 51 */ 121,
-			/* 52 */ 130,
-			/* 53 */ 127,
-			/* 54 */ 132,
-			/* 55 */ 133,
-			/* 56 */ 138,
-			/* 57 */ 139,
-			/* 58 */ 140,
-			/* 59 */ 141,
-			/* 60 */ 142,
-			/* 61 */ 126,
-			/* 62 */ 152,
-			/* 63 */ 153,
-			/* 64 */ 158,
-			/* 65 */ 159,
-			/* 66 */ 164,
-			/* 67 */ 165,
-			/* 68 */ 166,
-			/* 69 */ 169,
-			/* 70 */ 174,
-			/* 71 */ 175,
-			/* 72 */ 180,
-			/* 73 */ 181,
-			/* 74 */ 184,
-			/* 75 */ 187,
-			/* 76 */ 192,
-			/* 77 */ 193,
-			/* 78 */ 195,
-			/* 79 */ 197,
-			/* 80 */ 202,
-			/* 81 */ 205,
-			/* 82 */ 208,
-			/* 83 */ 209,
-			/* 84 */ 188,
-			/* 85 */ 193,
-			/* 86 */ 195,
-			/* 87 */ 199,
-			/* 88 */ 202,
-			/* 89 */ 206,
-			/* 90 */ 232,
-			/* 91 */ 231,
-			/* 92 */ 238,
-			/* 93 */ 225,
-			/* 94 */ 228,
-			/* 95 */ 231,
-			/* 96 */ 233,
-			/* 97 */ 235,
-			/* 98 */ 237,
-			/* 99 */ 240,
-			/* 100 */ 242,
-			/* 101 */ 245,
-			/* 102 */ 248,
-			/* 103 */ 251 };
+		public int HeavyAtomCount => GetHeavyAtomCount(NativeMol);
+
+		/// <summary>
+		/// Return true if mol contains a query feature
+		/// </summary>
+
+		public bool ContainsQueryFeature
+		{
+			get { throw new NotImplementedException(); }
+		}
+
+		/// <summary>
+		/// Get mol weight for a molfile
+		/// </summary>
+		/// <param name="molfile"></param>
+		/// <returns></returns>
+
+		public double GetMolWeight(
+			string molfile)
+		{
+			CdkMol mol = new CdkMol(MoleculeFormat.Molfile, molfile);
+			double mw = mol.MolWeight;
+			return mw;
+		}
+
+
+		public double MolWeight // get mol weight
+		{
+			get
+			{
+			IMolecularFormula mfm = MolecularFormulaManipulator.getMolecularFormula(NativeMol);
+				return MolecularFormulaManipulator.getMass(mfm, MolecularFormulaManipulator.MolWeight);
+			}
+		}
+
+		public string MolFormula =>	GetMolecularFormula(NativeMol);// get mol formula
+
+		/// <summary>
+		/// GetMolecularFormula
+		/// </summary>
+		/// <param name="mol"></param>
+		/// <returns></returns>
+
+		public static string GetMolecularFormula(IAtomContainer mol)
+		{
+			IMolecularFormula moleculeFormula = MolecularFormulaManipulator.getMolecularFormula(mol);
+			String formula = MolecularFormulaManipulator.getString(moleculeFormula);
+			return formula;
+		}
+
+		/// <summary>
+		/// GetMolFormulaDotDisconnect
+		/// </summary>
+		/// <param name="molfile"></param>
+		/// <returns></returns>
+
+		public string GetMolFormulaDotDisconnect(
+			string molfile)
+		{
+			ICdkMol mol = new CdkMol(MoleculeFormat.Molfile, molfile);
+			string mf = GetMolFormulaDotDisconnect(mol as CdkMol);
+			return mf;
+		}
+
+		/// <summary>
+		/// GetMolFormulaDotDisconnect
+		/// </summary>
+		/// <param name="mol"></param>
+		/// <returns></returns>
+
+		public String GetMolFormulaDotDisconnect(
+			ICdkMol mol)
+		{
+			string mf = GetMolFormula(mol as CdkMol, includeSpaces: false, separateFragments: true);
+			return mf;
+		}
+
+		/// <summary>
+		/// GetFolFormula
+		/// </summary>
+		/// <param name="mol"></param>
+		/// <param name="includeSpaces"></param>
+		/// <param name="separateFragments"></param>
+		/// <param name="use2Hand3HforHydrogenIsotopes"></param>
+		/// <param name="ignoreIsotopes"></param>
+		/// <returns></returns>
+
+		public String GetMolFormula(
+			ICdkMol mol,
+			bool includeSpaces = false,
+			bool separateFragments = false,
+			bool use2Hand3HforHydrogenIsotopes = false,
+			bool ignoreIsotopes = false)
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		///  Get the sum of the heavy atom and bond counts for a smiles string
+		/// </summary>
+		/// <param name="smiles"></param>
+		/// <param name="haCnt"></param>
+		/// <param name="hbCnt"></param>
+
+		public void GetHeavyAtomBondCounts(
+			string smiles,
+			out int haCnt,
+			out int hbCnt)
+		{
+			IAtomContainer mol = SmilesToAtomContainer(smiles);
+			haCnt = GetHeavyAtomCount(mol);
+			hbCnt = GetHeavyBondCount(mol);
+			return;
+		}
+
+		/// <summary>
+		/// GetHeavyAtomCount
+		/// </summary>
+		/// <param name="mol"></param>
+		/// <returns></returns>
+
+		public static int GetHeavyAtomCount(IAtomContainer mol)
+		{
+			int haCnt = 0;
+
+			for (int ai = 0; ai < mol.getAtomCount(); ai++)
+			{
+				IAtom atom = mol.getAtom(ai);
+				if (atom.getAtomicNumber().intValue() == 1 ||  // do not count hydrogens
+						atom.getSymbol().Equals("H"))
+				{
+					continue;
+				}
+				else
+				{
+					haCnt++;
+				}
+			}
+
+			return haCnt;
+		}
+
+		/// <summary>
+		/// Count bonds connecting two heavy atoms
+		/// </summary>
+		/// <param name="mol"></param>
+		/// <returns></returns>
+
+		public static int GetHeavyBondCount(IAtomContainer mol)
+		{
+			int hbCnt = 0;
+
+			for (int bi = 0; bi < mol.getBondCount(); bi++)
+			{
+				IBond b = mol.getBond(bi);
+				if (b.getAtomCount() != 2) continue;
+
+				IAtom a = b.getAtom(0); // first atom
+				if (a.getAtomicNumber().intValue() == 1 ||  // do not count hydrogens
+					a.getSymbol().Equals("H"))
+
+					a = b.getAtom(1); // second atom
+				if (a.getAtomicNumber().intValue() == 1 ||  // do not count hydrogens
+					a.getSymbol().Equals("H"))
+					continue;
+
+				hbCnt++;
+			}
+
+			return hbCnt;
+		}
+
+
+
+		/// <summary>
+		/// Get largest fragment of a molecule
+		/// </summary>
+		/// <param name="mol"></param>
+		/// <returns></returns>
+
+		public static IAtomContainer GetLargestMoleculeFragment(
+			IAtomContainer mol)
+		{
+			int acc;
+			IAtomContainer largestFrag = GetLargestMoleculeFragment(mol, out acc);
+			return largestFrag;
+		}
+
+		public static IAtomContainer GetLargestMoleculeFragment(
+			IAtomContainer mol,
+			out int acc)
+		{
+			AtomContainerSet acs;
+			IAtomContainer mol2, molMain = null;
+			acs = null;
+
+			if (ConnectivityChecker.isConnected(mol))
+			{
+				acc = 1;
+				return mol;
+			}
+
+			acs = (AtomContainerSet)ConnectivityChecker.partitionIntoMolecules(mol);
+			int largestAc = -1;
+
+			acc = acs.getAtomContainerCount();
+			for (int aci = 0; aci < acc; aci++)
+			{
+				mol2 = acs.getAtomContainer(aci);
+				int ac2 = mol2.getAtomCount();
+				if (ac2 > largestAc)
+				{
+					largestAc = mol2.getAtomCount();
+					molMain = mol2;
+				}
+			}
+
+			return molMain;
+		}
+
+		/// <summary>
+		/// Convert SmilesToMolfile
+		/// </summary>
+		/// <param name="smiles"></param>
+		/// <returns></returns>
+
+		public string SmilesStringToMolfileString(string smiles)
+		{
+			if (Lex.IsUndefined(smiles)) return "";
+
+			IAtomContainer mol = SmilesToAtomContainer(smiles);
+			if (mol.getAtomCount() == 0) return "";
+
+			string molfile = AtomContainerToMolfile(mol);
+			return molfile;
+		}
+
+		/// <summary>
+		/// Convert molfile to Smiles
+		/// </summary>
+		/// <param name="molfile"></param>
+		/// <returns></returns>
+
+		public string MolfileStringToSmilesString(string molfile)
+		{
+			if (Lex.IsUndefined(molfile)) return "";
+
+			IAtomContainer mol = MolfileToAtomContainer(molfile);
+			if (mol.getAtomCount() == 0) return "";
+
+			string smiles = AtomContainerToSmiles(mol);
+			return smiles;
+		}
+
+
+		/// <summary>
+		/// SmilesToAtomContainer
+		/// </summary>
+		/// <param name="smiles"></param>
+		/// <returns></returns>
+
+		public static IAtomContainer SmilesToAtomContainer(string smiles)
+		{
+			try
+			{
+				SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder);
+
+				IAtomContainer mol = sp.parseSmiles(smiles); // may get "could not parse error" for some CorpIds, e.g.: 3401013, 3418008, 3428937
+
+				ConfigureAtomContainer(mol);
+
+				return mol;
+			}
+
+			catch (Exception ex)
+			{
+				ParseSmilesErrorCount++;
+				LastParseSmilesError = ex.Message;
+				throw new Exception(ex.Message, ex);
+			}
+		}
+
+
+		/// <summary>
+		/// Convert an InChI string to an IAtomContainer
+		/// </summary>
+		/// <param name="inchiString"></param>
+		/// <returns></returns>
+
+		public static IAtomContainer InChIToAtomContainer(string inchiString)
+		{
+			string warningMsg, errorMsg;
+
+			InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
+			InChIToStructure intostruct = factory.getInChIToStructure(inchiString, DefaultChemObjectBuilder);
+
+			INCHI_RET ret = intostruct.getReturnStatus();
+			if (ret == INCHI_RET.WARNING) // Structure generated, but with warning message
+			{
+				warningMsg = "InChI warning: " + intostruct.getMessage();
+			}
+
+			else if (ret != INCHI_RET.OKAY)  // Structure generation failed
+			{
+				errorMsg = "Structure generation failed failed: " + ret.toString() + " [" + intostruct.getMessage() + "]";
+				throw new Exception(errorMsg);
+			}
+
+			IAtomContainer mol = intostruct.getAtomContainer();
+
+
+			return mol;
+		}
+
+		/// <summary>
+		/// Common small fragments, Canonical Smiles, first block of Inchi Key, formula
+		/// </summary>
+
+		public static HashSet<string> CommonSmallFragments = new HashSet<string>
+		{
+		"[B-](F)(F)(F)F", // "ODGCEQLVLXJUCC", // BF4
+		"C(=O)(C(=O)[O-])O", //"MUBZPKHOEPUJKR", // C2H2O4
+		"CC(=O)O", // "QTBSBXVTEAMEQO", // C2H4O2
+		"C(=O)(C(F)(F)F)O", // "DTQVDTLACAAQTR", // C2HF3O2
+
+		"C(CC(=O)O)C(=O)O", // "VZCYOOQTPOCHFL", // C4H4O4
+		"C(=CC(=O)[O-])C(=O)[O-]", // "VZCYOOQTPOCHFL", // C4H4O4
+
+		"C(CC(=O)O)C(=O)O", // "KDYFGRWQOYBRFD", // C4H6O4
+		"C(CC(=O)[O-])C(=O)[O-]", // "KDYFGRWQOYBRFD", // C4H6O4
+		
+		"C(C(C(=O)O)O)(C(=O)O)O", // "FEWJPZIEWOKRBE", // C4H6O6
+		"C(C(C(=O)[O-])O)(C(=O)[O-])O", // "FEWJPZIEWOKRBE", // C4H6O6
+
+		"C(=O)O", // "BDAGIHXWWSANSR", // CH2O2
+		"C(=O)[O-]", // "BDAGIHXWWSANSR", // CH2O2
+
+		"C(=O)(O)[O-]", // "BVKZGUZCCUSVTD", // CH2O3
+		"C(=O)([O-])[O-]", // "BVKZGUZCCUSVTD", // CH2O3
+
+		"OCl(=O)(=O)=O", // "VLTRZXGMWDSKGL", // ClHO4
+		"[O-]Cl(=O)(=O)=O", // "VLTRZXGMWDSKGL", // ClHO4
+
+		"OS(=O)(=O)O", // "[O-]S(=O)(=O)[O-]", // H2O4S
+		"[O-]S(=O)(=O)[O-]", // "[O-]S(=O)(=O)[O-]", // H2O4S
+
+		"ON(=O)=O", // "GRYLNZFGIOXLOG", // HNO3
+		"[N+](=O)(O)[O-]", // "GRYLNZFGIOXLOG", // HNO3
+
+		"O", // "XLYOFNOQVPJJNP", // H2O	Water
+		"N", // "QGZKDVFQNNGYKY", // H3N
+		"Br", // "CPELXLSAUQHCOX", // HBr	Hydrogen Bromide
+		"Cl", // VEXZGXHMUGYJMC", // HCl	Hydrogen Chloride
+		"I", // "XMBWDFGMSWQBCA", // HI
+		"K", // "NPYPAHLBTDXSSS", // K	Potassium
+		"Mg", // "XYAGEBWLYIDCRX", // Mg	Magnesium
+		"Na", // "FKNQFGJONOIPTF"  // Na	Sodium
+		};
 
 	}
+
+	/// <summary>
+	/// SmilesGeneratorType
+	/// </summary>
+	public enum SmilesGeneratorType
+	{
+		NonCanonicalWithoutIsotopesAndStereo = 1,
+		NonCanonicalWithIsotopesAndStereo = 2,
+		CanonicalWithoutIsotopesAndStereo = 4,
+		CanonicalWithIsotopesAndStereo = 8,
+
+		Generic = 1, // non-canonical without isotopes / stereo 
+		Isomeric = 2, // non-canonical with isotopes / stereo 
+		Unique = 4, // canonical without isotopes / stereo 
+		Absolute = 8, // canonical with isotopes / stereo 
+
+		Aromatic = 16, // aromatic (lower-case) SMILES (default, unless NotAromatic specified)
+		NotAromatic = 32, // aromatic (lower-case) SMILES.
+		WithAtomClasses = 62 // include atom classes
+	}
+
+	//		                   non-canonical canonical
+	//                       ------------- ---------			 
+	// no isotopes / stereo     generic    unique
+	// with isotopes / stereo   isomeric   absolute
+
 }

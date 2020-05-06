@@ -21,7 +21,7 @@ namespace Mobius.Data
 		static ICdkMol SSSQueryMol = null;
 		static ICdkMol SSSTargetMol = null;
 
-		ICdkMol MolLibUtil => StaticCdkMol.I;
+		ICdkMol CdkMolUtil => StaticCdkMol.I;
 
 		/// <summary>
 		/// Perform a full structure search of query molecule against target molecule
@@ -67,7 +67,7 @@ namespace Mobius.Data
 			QueryMol = cs.Clone();
 
 			FSSQueryMol = CdkMolFactory.NewCdkMol(cs);
-			MolLibUtil.SetFSSQueryMolecule(FSSQueryMol);
+			CdkMolUtil.SetFSSQueryMolecule(FSSQueryMol);
 
 			return;
 		}
@@ -89,7 +89,7 @@ namespace Mobius.Data
 
 			TargetMol = cs;
 			FSSTargetMol = CdkMolFactory.NewCdkMol(cs);
-			bool b = MolLibUtil.IsFSSMatch(FSSTargetMol);
+			bool b = CdkMolUtil.IsFSSMatch(FSSTargetMol);
 			return b;
 		}
 
@@ -110,7 +110,7 @@ namespace Mobius.Data
 			QueryMol = query;
 			SSSQueryMol = CdkMolFactory.NewCdkMol(query);
 			SSSTargetMol = CdkMolFactory.NewCdkMol(target);
-			bool b = MolLibUtil.IsSSSMatch(SSSQueryMol, SSSTargetMol);
+			bool b = CdkMolUtil.IsSSSMatch(SSSQueryMol, SSSTargetMol);
 			return b;
 		}
 
@@ -124,7 +124,7 @@ namespace Mobius.Data
 		{
 			QueryMol = cs.Clone();
 			SSSQueryMol = CdkMolFactory.NewCdkMol(cs);
-			MolLibUtil.SetSSSQueryMolecule(SSSQueryMol);
+			CdkMolUtil.SetSSSQueryMolecule(SSSQueryMol);
 
 			return;
 		}
@@ -141,7 +141,7 @@ namespace Mobius.Data
 
 			TargetMol = cs;
 			SSSTargetMol = CdkMolFactory.NewCdkMol(cs);
-			bool b = MolLibUtil.IsSSSMatch(SSSTargetMol);
+			bool b = CdkMolUtil.IsSSSMatch(SSSTargetMol);
 			return b;
 		}
 
@@ -160,7 +160,7 @@ namespace Mobius.Data
 			MoleculeMx cs2 = null;
 			PerformanceTimer pt = PT.Start("HighlightMatchingSubstructure");
 
-			string molfile = MolLibUtil.HilightSSSMatch(cs.GetMolfileString());
+			string molfile = CdkMolUtil.HilightSSSMatch(cs.GetMolfileString());
 			cs2 = new MoleculeMx(MoleculeFormat.Molfile, molfile);
 
 			pt.Update();
@@ -183,7 +183,7 @@ namespace Mobius.Data
 			PerformanceTimer pt = PT.Start("AlignToMatchingSubstructure");
 			Stopwatch sw = Stopwatch.StartNew();
 
-			string molfile = MolLibUtil.OrientToMatchingSubstructure(target.GetMolfileString());
+			string molfile = CdkMolUtil.OrientToMatchingSubstructure(target.GetMolfileString());
 			cs2 = new MoleculeMx(MoleculeFormat.Molfile, molfile);
 
 			pt.Update();

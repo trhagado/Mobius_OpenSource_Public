@@ -72,7 +72,7 @@ namespace Mobius.Data
     }
     private ICdkMol _molLib;
 
-		static ICdkMol MolLibUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
+		static ICdkMol CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
 
 		///////////////////////////////////////////////////////
 		// String format molecule definitions
