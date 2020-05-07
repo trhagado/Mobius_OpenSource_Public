@@ -1,4 +1,20 @@
-﻿using Mobius.ComOps; 
+﻿using cdk = org.openscience.cdk;
+using org.openscience.cdk;
+using org.openscience.cdk.interfaces;
+using org.openscience.cdk.inchi;
+using org.openscience.cdk.fingerprint;
+using org.openscience.cdk.smiles;
+using org.openscience.cdk.tools.manipulator;
+using org.openscience.cdk.aromaticity;
+using org.openscience.cdk.graph;
+using org.openscience.cdk.qsar.result;
+using org.openscience.cdk.io;
+using org.openscience.cdk.io.iterator;
+using org.openscience.cdk.tools;
+
+using java.io;
+
+using Mobius.ComOps; 
 using Mobius.Data;
 using Mobius.CdkMx;
 using Mobius.Helm;
@@ -37,6 +53,14 @@ namespace Mobius.Client
 		[STAThread]
 		static void Main(string[] args)
 		{
+			string version = java.lang.Package.getPackage("java.lang").getImplementationVersion();
+
+			StreamReader sr = new StreamReader(@"c:\downloads\aspirin.mol");
+			string molfile = sr.ReadToEnd();
+			sr.Close();
+
+			IAtomContainer ac = CdkMol.MolfileToAtomContainer(molfile);
+
 			Splash splash = null;
 			bool unattended = false;
 			bool startedByMobiusClientStart = false;
@@ -291,7 +315,7 @@ namespace Mobius.Client
 				try
 				{
 					string localMobiusClientStartPath = MobiusClientUtil.GetMobiusBaseDirectoryFilePath("MobiusClientStart.exe");
-					if (!File.Exists(localMobiusClientStartPath)) return;
+					if (!System.IO.File.Exists(localMobiusClientStartPath)) return;
 
 					Process.Start(localMobiusClientStartPath);
 					Thread.Sleep(1 * 1000);

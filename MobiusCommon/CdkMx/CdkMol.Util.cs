@@ -236,6 +236,7 @@ namespace Mobius.CdkMx
 				cor.setReaderMode(IChemObjectReader.Mode.RELAXED);
 
 				IAtomContainer mol = (IAtomContainer)cor.read(new AtomContainer());
+				cor.close();
 
 				ConfigureAtomContainer(mol);
 				return mol;
@@ -269,6 +270,7 @@ namespace Mobius.CdkMx
 			cor.setReaderMode(IChemObjectReader.Mode.RELAXED);
 
 			IAtomContainer mol = (IAtomContainer)cor.read(new AtomContainer());
+			cor.close();
 
 			for (int ai = 0; ai < mol.getAtomCount(); ai++)
 			{
@@ -317,7 +319,15 @@ namespace Mobius.CdkMx
 
 		public static void ConfigureAtomContainer(IAtomContainer mol)
 		{
-			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol); // Perceive Configure atoms
+			//SystemUtil.LoadAssembly(@"C:\Mobius_OpenSource\MobiusClient\Client\bin\Debug\IKVM.OpenJDK.XML.Parse.dll");
+			//var s = new com.sun.org.apache.xerces.@internal.jaxp.SAXParserFactoryImpl();
+			//var t = new com.sun.org.apache.xalan.@internal.xsltc.trax.TransformerFactoryImpl();
+
+			try // Throws “Provider com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl not found” 
+			{
+				AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol); // Perceive Configure atoms
+			}
+			catch (Exception ex) { ex = ex; }
 
 			GetHydrogenAdder().addImplicitHydrogens(mol); // Be sure implicit hydrogens have been added
 

@@ -26,7 +26,7 @@ namespace Mobius.CdkMx
 		/// </summary>
 		/// <param name="parent"></param>
 
-		public ICdkMol NewCdkMol (IMoleculeMx parent)
+		public ICdkMol NewCdkMol (MoleculeMx parent)
 		{
 			return new CdkMol(parent);
 		}

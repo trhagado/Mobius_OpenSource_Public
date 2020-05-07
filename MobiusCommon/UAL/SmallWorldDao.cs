@@ -2,9 +2,6 @@
 using Mobius.Data;
 using Mobius.CdkMx;
 
-using org.openscience.cdk;
-using org.openscience.cdk.interfaces;
-
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Converters;

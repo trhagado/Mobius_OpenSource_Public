@@ -46,7 +46,7 @@ namespace Mobius.Data
     /// <param name="molMx"></param>
     /// <returns></returns>
 
-    public static ICdkMol NewCdkMol(IMoleculeMx molMx)
+    public static ICdkMol NewCdkMol(MoleculeMx molMx)
     {
       return I.NewCdkMol(molMx);
     }
@@ -103,7 +103,7 @@ namespace Mobius.Data
     /// <param name="molMx"></param>
     /// <returns></returns>
 
-    ICdkMol NewCdkMol(IMoleculeMx molMx);
+    ICdkMol NewCdkMol(MoleculeMx molMx);
 
     /// <summary>
     /// Construct from mol format and string
@@ -149,7 +149,32 @@ namespace Mobius.Data
 
     bool IsValidMolfile(string molfile);
 
-    string MolfileString { get; set; } // Get the molecule as a molfile
+    /// <summary>
+    /// Get molecule
+    /// </summary>
+    /// <returns></returns>
+
+    CompactMolecule GetMolecule();
+
+    /// <summary>
+    /// Get molecule
+    /// </summary>
+    /// <param name="molFormat"></param>
+    /// <param name="molString"></param>
+
+    void GetMolecule(
+      out MoleculeFormat molFormat,
+      out string molString);
+
+    /// <summary>
+    /// Set molecule value including the associated native CDK IAtomContainer
+    /// </summary>
+    /// <param name="molFormat"></param>
+    /// <param name="molString"></param>
+
+    void SetMolecule(
+      MoleculeFormat molFormat,
+      string molString);
 
     int AtomCount { get; } // Get atom count for molecule
 

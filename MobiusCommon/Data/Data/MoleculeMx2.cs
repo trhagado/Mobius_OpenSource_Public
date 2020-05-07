@@ -788,7 +788,7 @@ M  END
 
 			if (CacheMx<CompactMolecule>.TryGetValue(GetKey(cid), out cm))
 			{
-				MoleculeMx mol = new MoleculeMx(cm.Format, cm.Value);
+				MoleculeMx mol = new MoleculeMx(cm.MolFormat, cm.MolString);
 				return mol;
 			}
 
@@ -813,27 +813,27 @@ M  END
 
 	public class CompactMolecule
 	{
-		public MoleculeFormat Format = MoleculeFormat.Unknown;
-		public string Value = null;
+		public MoleculeFormat MolFormat = MoleculeFormat.Unknown;
+		public string MolString = null;
 
 		public CompactMolecule(MoleculeFormat format, string value)
 		{
-			Format = format;
-			Value = value;
+			MolFormat = format;
+			MolString = value;
 			return;
 		}
 
 		public CompactMolecule(MoleculeMx mol)
 		{
 			AssertMx.IsNotNull(mol, "MoleculeMx");
-			Format = mol.PrimaryFormat;
-			Value = mol.PrimaryValue;
+			MolFormat = mol.PrimaryFormat;
+			MolString = mol.PrimaryValue;
 			return;
 		}
 
 		public string Serialize()
 		{
-			string s = Format.ToString() + "=" + Value;
+			string s = MolFormat.ToString() + "=" + MolString;
 			return s;
 		}
 

@@ -443,6 +443,7 @@ namespace Mobius.CdkMx
 			//cor.setReaderMode(IChemObjectReader.Mode.RELAXED);
 
 			//ac = (IAtomContainer)cor.read(new AtomContainer()); 
+			//cor.close();
 
 			FpClass = CircularFingerprinter.CLASS_ECFP4; // debug
 

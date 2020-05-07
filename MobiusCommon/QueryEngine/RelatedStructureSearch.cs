@@ -3,8 +3,6 @@ using Mobius.Data;
 using Mobius.UAL;
 using Mobius.CdkSearchMx;
 
-using org.openscience.cdk;
-using org.openscience.cdk.interfaces;
 
 using System;
 using System.IO;
@@ -53,7 +51,7 @@ namespace Mobius.QueryEngineLibrary
 // Internal fields
 
 		string LargestFragmentChimeString = "";
-		List<KeyValuePair<string, IAtomContainer>> FragmentList = null; // list of fragments (largest to smallest) with small and common fragments removed
+		List<KeyValuePair<string, object>> FragmentList = null; // list of fragments (largest to smallest) with small and common fragments removed
 
 		Dictionary<string, Subsearch> FssSubsearches; // individual FssSubsearches that are combined
 
@@ -1116,7 +1114,7 @@ namespace Mobius.QueryEngineLibrary
 				simSrch.GetCorpSim = (SearchCorp && RSSConfig.SearchCorpSimEnabled);
 				simSrch.GetChemblSim = (SearchChembl && RSSConfig.SearchChemblSimEnabled);
 				simSrch.FingerprintType = FingerprintType.Circular;
-				SimMatches = simSrch.ExecuteSearch(queryMol);
+				SimMatches = simSrch.ExecuteSearch(queryMol);  
 
 				if (Debug)
 					DebugLogTimeMessage(SearchId.ToString() + ". Completed Similarity Searches, Count: " + SimMatches.Count + ", Time: ", t0);
@@ -1493,8 +1491,8 @@ namespace Mobius.QueryEngineLibrary
 				if (structDict.ContainsKey(ssm.SrcCid))
 				{
 					cm = structDict[ssm.SrcCid];
-					ssm.MolString = cm.Value;
-					ssm.MolStringFormat = cm.Format;
+					ssm.MolString = cm.MolString;
+					ssm.MolStringFormat = cm.MolFormat;
 				}
 
 				else ssmNotFound = ssm; // shouldn't happen

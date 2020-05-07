@@ -161,10 +161,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CDK">
-      <HintPath>..\ExternalLibraries\CDK.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="DevExpress.Utils.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="LumenWorks.Framework.IO">
       <HintPath>..\ExternalLibraries\LumenWorks.Framework.IO.dll</HintPath>

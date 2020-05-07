@@ -59,20 +59,27 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CDK">
-      <HintPath>..\..\MobiusCommon\ExternalLibraries\CDK.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="CDK-2.3">
+      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\CDK-2.3.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.Utils.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="IKVM.OpenJDK.Core, Version=7.4.5196.2030, Culture=neutral, PublicKeyToken=d25ce09139c726a9, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\MobiusCommon\ExternalLibraries\IKVM.OpenJDK.Core.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="IKVM.AWT.WinForms">
+      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\IKVM.AWT.WinForms.dll</HintPath>
     </Reference>
-    <Reference Include="IKVM.Runtime, Version=7.4.5196.2030, Culture=neutral, PublicKeyToken=d25ce09139c726a9, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\MobiusCommon\ExternalLibraries\IKVM.Runtime.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="IKVM.OpenJDK.Core">
+      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\IKVM.OpenJDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.SwingAWT">
+      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\IKVM.OpenJDK.SwingAWT.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.Reflection">
+      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\IKVM.Reflection.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.Runtime">
+      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\IKVM.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.Runtime.JNI">
+      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\IKVM.Runtime.JNI.dll</HintPath>
     </Reference>
     <Reference Include="Lucene.Net">
       <HintPath>..\..\MobiusCommon\ExternalLibraries\Lucene.Net.dll</HintPath>

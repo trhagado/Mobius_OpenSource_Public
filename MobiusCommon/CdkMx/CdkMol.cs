@@ -32,6 +32,12 @@ using System.Windows.Forms;
 /// This code uses the cdk-2.3.jar (Aug 9, 2019) (https://github.com/cdk/cdk)
 /// converted for C#.Net use via IKVM 8.6.5.1 (Jan 12, 2020) (https://github.com/jessielesbian/ikvm)
 /// 
+/// 1. Download and copy CDK-2.3.jar to C:\CDK-IKVM\ikvm_8.6.5.1_bin_windows
+/// 2. cd C:\CDK-IKVM\ikvm_8.6.5.1_bin_windows
+/// 3. ikvmc -target:library -out:CDK-2.3.dll CDK-2.3.jar
+/// 
+/// ikvmc -target:library -out:CDK.dll CDK.jar
+/// 
 /// -------------------------- Notes on older version below ---------------------------------
 ///  
 ///  Start a Cmd window and CD to the directory containing the .jar files.
@@ -61,24 +67,80 @@ namespace Mobius.CdkMx
 
 	public partial class CdkMol : ICdkMol
 	{
-		public IAtomContainer NativeMol = null; // native format library molecule
-		public IMoleculeMx MoleculeMx; // Parent IMoleculeMx that we are supporting
+		public MoleculeMx MoleculeMx; // Parent MoleculeMx that we are supporting (if any)
+		public IAtomContainer NativeMol = null; // native format library molecule that matches the current mol
 
-		public String MolfileString
+		internal int Id = InstanceCount++; // id of this instance
+		internal static int InstanceCount = 0; // instance count
+
+/// <summary>
+/// Get molecule
+/// </summary>
+/// <returns></returns>
+
+		public CompactMolecule GetMolecule()
 		{
-			get => GetMolfileString();
-			set => SetMolfileString(value);
+			return new CompactMolecule(_molFormat, _molString);
 		}
 
-		public string GetMolfileString()
+/// <summary>
+/// Get molecule
+/// </summary>
+/// <param name="molFormat"></param>
+/// <param name="molString"></param>
+
+		public void GetMolecule(
+			out MoleculeFormat molFormat,
+			out string molString)
 		{
-			throw new NotImplementedException();
+			molFormat = _molFormat;
+			molString = _molString;
 		}
 
-		public void SetMolfileString(string molfileString)
+		/// <summary>
+		/// Set molecule value including the associated native CDK IAtomContainer
+		/// </summary>
+		/// <param name="molFormat"></param>
+		/// <param name="molString"></param>
+
+		public void SetMolecule(
+			MoleculeFormat molFormat,
+			string molString)
 		{
-			throw new NotImplementedException();
+			if (molFormat == _molFormat && Lex.Eq(molString, _molString))
+				return; // no change
+
+			if (molFormat == MoleculeFormat.Molfile)
+			{
+				NativeMol = MolfileToAtomContainer(molString);
+			}
+
+			else if (molFormat == MoleculeFormat.Chime)
+			{
+				string molfile = MoleculeMx.ChimeStringToMolfileString(molString);
+				NativeMol = MolfileToAtomContainer(molfile);
+			}
+
+			else if (molFormat == MoleculeFormat.Smiles)
+			{
+				NativeMol = SmilesToAtomContainer(molString);
+			}
+
+			else if (molFormat == MoleculeFormat.Unknown)
+			{
+				NativeMol = null;
+			}
+
+			_molFormat = molFormat;
+			_molString = molString;
 		}
+
+		/// <summary>
+		/// Internal molecule, should be reflected in native CDK IAtomContainer
+		/// </summary>
+
+		private MoleculeFormat _molFormat = MoleculeFormat.Unknown; // internal mol format
+		private string _molString = null; // internal mol string
 
 		/// <summary>
 		/// Basic constructor
@@ -94,7 +156,7 @@ namespace Mobius.CdkMx
 /// </summary>
 /// <param name="parent"></param>
 
-		public CdkMol(IMoleculeMx parent)
+		public CdkMol(MoleculeMx parent)
 		{
 			MoleculeMx = parent;
 			return;
@@ -110,28 +172,21 @@ namespace Mobius.CdkMx
 		{
 			if (Lex.IsUndefined(molString)) return; // create new structure
 
-			else if (molFormat == MoleculeFormat.Molfile)
-				MolfileString = molString;
-
-			else throw new ArgumentException("Unsupported molecule format: " + molFormat);
+			SetMolecule(molFormat, molString);
 
 			return;
 		}
 
 		/// <summary>
-		/// update native molecule to match parent molecule
+		/// Update native molecule to match parent MoleculeMx
 		/// </summary>
 
 		public void UpdateNativeMolecule()
 		{
-			if (MoleculeMx == null) throw new Exception("Parent not defined");
+			if (MoleculeMx == null) return;
 
-			string primaryValue = MoleculeMx.PrimaryValue;
-			MoleculeFormat format = MoleculeMx.PrimaryFormat;
-
-			// todo: setup NativeMol to match parent
-
-			throw new NotImplementedException();
+			SetMolecule(MoleculeMx.PrimaryFormat, MoleculeMx.PrimaryValue);
+			return;
 		}
 
 		/// <summary>
