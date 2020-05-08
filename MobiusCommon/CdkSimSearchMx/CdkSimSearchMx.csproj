@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Mobius.CdkSimSearchMx</RootNamespace>
     <AssemblyName>CdkSimSearchMx</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
@@ -59,28 +59,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CDK-2.3">
-      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\CDK-2.3.dll</HintPath>
-    </Reference>
     <Reference Include="DevExpress.Utils.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="IKVM.AWT.WinForms">
-      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\IKVM.AWT.WinForms.dll</HintPath>
-    </Reference>
-    <Reference Include="IKVM.OpenJDK.Core">
-      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\IKVM.OpenJDK.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="IKVM.OpenJDK.SwingAWT">
-      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\IKVM.OpenJDK.SwingAWT.dll</HintPath>
-    </Reference>
-    <Reference Include="IKVM.Reflection">
-      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\IKVM.Reflection.dll</HintPath>
-    </Reference>
-    <Reference Include="IKVM.Runtime">
-      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\IKVM.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="IKVM.Runtime.JNI">
-      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\IKVM.Runtime.JNI.dll</HintPath>
-    </Reference>
     <Reference Include="Lucene.Net">
       <HintPath>..\..\MobiusCommon\ExternalLibraries\Lucene.Net.dll</HintPath>
       <Private>False</Private>

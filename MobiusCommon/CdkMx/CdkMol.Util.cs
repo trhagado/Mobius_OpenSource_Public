@@ -2,9 +2,19 @@
 using Mobius.Data;
 
 using NCDK;
-using NCDK.Depict;
 using NCDK.Aromaticities;
+using NCDK.Default;
+using NCDK.Depict;
+using NCDK.Fingerprints;
+using NCDK.Graphs;
+using NCDK.Graphs.InChI;
+using NCDK.Isomorphisms;
+using NCDK.Isomorphisms.Matchers;
+using NCDK.IO;
+using NCDK.IO.Iterator;
+//using NCDK.Silent;
 using NCDK.Smiles;
+using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 
 using System;
@@ -17,21 +27,6 @@ namespace Mobius.CdkMx
 
 	public partial class CdkMol : ICdkMol
 	{
-
-		//public virtual IChemObject RootObject { get; }
-		IChemObject RootObject = null; // { get; } = new ChemObject
-
-		public static IChemObjectBuilder DefaultChemObjectBuilder
-		{
-			get
-			{
-				if (_defaultChemObjectBuilder == null)
-					_defaultChemObjectBuilder = null; // todo: fix this -> RootObject.Builder.Builder;
-
-				return _defaultChemObjectBuilder;
-			}
-		}
-		static IChemObjectBuilder _defaultChemObjectBuilder = null;
 
 		public static int ParseSmilesErrorCount = 0;
 		public static string LastParseSmilesError = "";
@@ -46,11 +41,11 @@ namespace Mobius.CdkMx
 		/// </summary>
 		/// <returns></returns>
 
-		static Chem.HydrogenAdder GetHydrogenAdder()
+		static CDKHydrogenAdder GetHydrogenAdder()
 		{
 
 			if (_hydrogenAdder == null)
-				_hydrogenAdder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder);
+				_hydrogenAdder = CDKHydrogenAdder.GetInstance();
 			return _hydrogenAdder;
 		}
 		static CDKHydrogenAdder _hydrogenAdder = null;
@@ -72,7 +67,7 @@ namespace Mobius.CdkMx
 			SmilesGeneratorType smiGenFlags)
 		{
 			IAtomContainer mol = SmilesToAtomContainer(smiles);
-			if (mol.getAtomCount() == 0) return "";
+			if (mol.Atoms.Count == 0) return "";
 			else
 			{
 				string smiles2 = AtomContainerToSmiles(mol, smiGenFlags);
@@ -174,12 +169,12 @@ namespace Mobius.CdkMx
 			KeyValuePair<string, IAtomContainer> kvp;
 			List<KeyValuePair<string, IAtomContainer>> frags = new List<KeyValuePair<string, IAtomContainer>>();
 
-			AtomContainerSet acs = (AtomContainerSet)ConnectivityChecker.partitionIntoMolecules(mol);
+			IReadOnlyList<IAtomContainer> acs = ConnectivityChecker.PartitionIntoMolecules(mol);
 
-			int acc = acs.getAtomContainerCount();
+			int acc = acs.Count;
 			for (aci = 0; aci < acc; aci++)
 			{
-				IAtomContainer fragMol = acs.getAtomContainer(aci);
+				IAtomContainer fragMol = acs[aci];
 				string fragSmiles = AtomContainerToSmiles(fragMol);
 				if (filterOutCommonCounterIons)
 				{
@@ -190,11 +185,11 @@ namespace Mobius.CdkMx
 
 				kvp = new KeyValuePair<string, IAtomContainer>(fragSmiles, fragMol);
 
-				int ac = fragMol.getAtomCount();
+				int ac = fragMol.Atoms.Count;
 
 				for (fi = frags.Count - 1; fi >= 0; fi--) // insert into list so that fragments are ordered largest to smallest
 				{
-					if (frags[fi].Value.getAtomCount() >= ac) break;
+					if (frags[fi].Value.Atoms.Count >= ac) break;
 				}
 				frags.Insert(fi + 1, kvp);
 			}
@@ -215,14 +210,14 @@ namespace Mobius.CdkMx
 
 			if (Lex.Contains(molfile, "V2000"))
 			{
-				cdk.io.DefaultChemObjectReader cor;
+				DefaultChemObjectReader cor;
 
-				java.io.StringReader sr = new java.io.StringReader(molfile);
+				StringReader sr = new StringReader(molfile);
 				cor = new MDLV2000Reader(sr);
-				cor.setReaderMode(IChemObjectReader.Mode.RELAXED);
+				cor.ReaderMode = ChemObjectReaderMode.Relaxed;
 
-				IAtomContainer mol = (IAtomContainer)cor.read(new AtomContainer());
-				cor.close();
+				IAtomContainer mol = (IAtomContainer)cor.Read(new AtomContainer());
+				cor.Close();
 
 				ConfigureAtomContainer(mol);
 				return mol;
@@ -250,20 +245,21 @@ namespace Mobius.CdkMx
 				map = ExtractMassAttributes(ref molfile);
 			}
 
-			cdk.io.DefaultChemObjectReader cor;
-			java.io.StringReader sr = new java.io.StringReader(molfile);
+			DefaultChemObjectReader cor;
+			StringReader sr = new StringReader(molfile);
 			cor = new MDLV3000Reader(sr);
-			cor.setReaderMode(IChemObjectReader.Mode.RELAXED);
+			cor.ReaderMode = ChemObjectReaderMode.Relaxed;
 
-			IAtomContainer mol = (IAtomContainer)cor.read(new AtomContainer());
-			cor.close();
+			IAtomContainer mol = cor.Read(new AtomContainer());
+			cor.Close();
 
-			for (int ai = 0; ai < mol.getAtomCount(); ai++)
+			for (int ai = 0; ai < mol.Atoms.Count; ai++)
 			{
-				IAtom a = mol.getAtom(ai);
+				IAtom a = mol.Atoms[ai];
 				if (map.ContainsKey(ai + 1))
-					a.setMassNumber(new java.lang.Integer(map[ai + 1]));
-				else a.setMassNumber(null);
+					a.MassNumber = map[ai + 1];
+				//a.setMassNumber(new java.lang.Integer(map[ai + 1]));
+				else a.MassNumber = null;
 			}
 
 			ConfigureAtomContainer(mol);
@@ -311,11 +307,11 @@ namespace Mobius.CdkMx
 
 			try // Throws “Provider com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl not found” 
 			{
-				AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol); // Perceive Configure atoms
+				AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol); // Perceive Configure atoms
 			}
 			catch (Exception ex) { ex = ex; }
 
-			GetHydrogenAdder().addImplicitHydrogens(mol); // Be sure implicit hydrogens have been added
+			GetHydrogenAdder().AddImplicitHydrogens(mol); // Be sure implicit hydrogens have been added
 
 			ApplyAromaticity(mol);
 
@@ -336,7 +332,7 @@ namespace Mobius.CdkMx
 		public static bool ApplyAromaticity(
 			IAtomContainer mol)
 		{
-			bool isAromatic = ApplyAromaticity(mol, ElectronDonation.cdk(), Cycles.cdkAromaticSet());
+			bool isAromatic = ApplyAromaticity(mol, ElectronDonation.CDKModel, Cycles.CDKAromaticSetFinder);
 			return isAromatic;
 		}
 
@@ -364,13 +360,13 @@ namespace Mobius.CdkMx
 		public static bool ApplyAromaticity(
 			IAtomContainer mol,
 			ElectronDonation electronDonation,
-			CycleFinder cycleFinder)
+			ICycleFinder cycleFinder)
 		{
 			Aromaticity aromaticity = new Aromaticity(electronDonation, cycleFinder);
 
 			try
 			{
-				bool isAromatic = aromaticity.apply(mol);
+				bool isAromatic = aromaticity.Apply(mol);
 				return isAromatic;
 			}
 			catch (Exception e)
@@ -388,14 +384,14 @@ namespace Mobius.CdkMx
 
 		public static string AtomContainerToMolfile(IAtomContainer mol)
 		{
-			java.io.StringWriter sw = new java.io.StringWriter();
+			StringWriter sw = new StringWriter();
 
 			MDLV2000Writer writer = new MDLV2000Writer(sw);
-			writer.write(mol);
-			writer.close();
-			sw.close();
+			writer.Write(mol);
+			writer.Close();
+			sw.Close();
 
-			string molFile = sw.toString();
+			string molFile = sw.ToString();
 			return molFile;
 		}
 
@@ -407,14 +403,14 @@ namespace Mobius.CdkMx
 
 		public static string AtomContainerToMolFileV3000(IAtomContainer mol)
 		{
-			java.io.StringWriter sw = new java.io.StringWriter();
+			StringWriter sw = new StringWriter();
 
 			MDLV3000Writer writer = new MDLV3000Writer(sw);
-			writer.write(mol);
-			writer.close();
-			sw.close();
+			writer.Write(mol);
+			writer.Close();
+			sw.Close();
 
-			string molFile = sw.toString();
+			string molFile = sw.ToString();
 			return molFile;
 		}
 
@@ -480,26 +476,26 @@ namespace Mobius.CdkMx
 			SmilesGenerator sg = null;
 
 			if ((flags & SmilesGeneratorType.Generic) != 0)
-				sg = SmilesGenerator.generic();
+				sg = SmilesGenerator.Generic;
 
 			else if ((flags & SmilesGeneratorType.Isomeric) != 0)
-				sg = SmilesGenerator.isomeric();
+				sg = SmilesGenerator.Isomeric;
 
 			else if ((flags & SmilesGeneratorType.Unique) != 0)
-				sg = SmilesGenerator.unique();
+				sg = SmilesGenerator.Unique;
 
 			else if ((flags & SmilesGeneratorType.Absolute) != 0)
-				sg = SmilesGenerator.unique();
+				sg = SmilesGenerator.Unique;
 
 			else throw new Exception("Canonical/Stereo/Isotop types not defined");
 
 			if ((flags & SmilesGeneratorType.NotAromatic) != 0) { } // not aromatic
-			else sg = sg.aromatic(); // aromatic by default even if not specified
+			else sg = new SmilesGenerator(SmiFlavors.UseAromaticSymbols); // aromatic by default even if not specified
 
 			if ((flags & SmilesGeneratorType.WithAtomClasses) != 0)
-				sg = sg.withAtomClasses();
+				sg = new SmilesGenerator(SmiFlavors.AtomAtomMap);
 
-			string smiles = sg.create(mol);
+			string smiles = sg.Create(mol);
 			return smiles;
 		}
 
@@ -508,7 +504,7 @@ namespace Mobius.CdkMx
 		/// </summary>
 		/// <returns></returns>
 
-		public int AtomCount => NativeMol.getAtomCount();
+		public int AtomCount => NativeMol.Atoms.Count;
 
 		/// <summary>
 		/// Get heavy atom count
@@ -544,8 +540,8 @@ namespace Mobius.CdkMx
 		{
 			get
 			{
-			IMolecularFormula mfm = MolecularFormulaManipulator.getMolecularFormula(NativeMol);
-				return MolecularFormulaManipulator.getMass(mfm, MolecularFormulaManipulator.MolWeight);
+			IMolecularFormula mfm = MolecularFormulaManipulator.GetMolecularFormula(NativeMol);
+				return MolecularFormulaManipulator.GetMass(mfm);
 			}
 		}
 
@@ -559,8 +555,8 @@ namespace Mobius.CdkMx
 
 		public static string GetMolecularFormula(IAtomContainer mol)
 		{
-			IMolecularFormula moleculeFormula = MolecularFormulaManipulator.getMolecularFormula(mol);
-			String formula = MolecularFormulaManipulator.getString(moleculeFormula);
+			IMolecularFormula moleculeFormula = MolecularFormulaManipulator.GetMolecularFormula(mol);
+			String formula = MolecularFormulaManipulator.GetString(moleculeFormula);
 			return formula;
 		}
 
@@ -639,11 +635,11 @@ namespace Mobius.CdkMx
 		{
 			int haCnt = 0;
 
-			for (int ai = 0; ai < mol.getAtomCount(); ai++)
+			for (int ai = 0; ai < mol.Atoms.Count; ai++)
 			{
-				IAtom atom = mol.getAtom(ai);
-				if (atom.getAtomicNumber().intValue() == 1 ||  // do not count hydrogens
-						atom.getSymbol().Equals("H"))
+				IAtom atom = mol.Atoms[ai];
+				if (atom.AtomicNumber == 1 ||  // do not count hydrogens
+						atom.Symbol.Equals("H"))
 				{
 					continue;
 				}
@@ -666,18 +662,18 @@ namespace Mobius.CdkMx
 		{
 			int hbCnt = 0;
 
-			for (int bi = 0; bi < mol.getBondCount(); bi++)
+			for (int bi = 0; bi < mol.Bonds.Count; bi++)
 			{
-				IBond b = mol.getBond(bi);
-				if (b.getAtomCount() != 2) continue;
+				IBond b = mol.Bonds[bi]; // was molmol.Bonds[bi];
+				if (b.Atoms.Count != 2) continue;
 
-				IAtom a = b.getAtom(0); // first atom
-				if (a.getAtomicNumber().intValue() == 1 ||  // do not count hydrogens
-					a.getSymbol().Equals("H"))
+				IAtom a = b.Atoms[0]; // first atom
+				if (a.AtomicNumber == 1 ||  // do not count hydrogens
+					a.Symbol.Equals("H"))
 
-					a = b.getAtom(1); // second atom
-				if (a.getAtomicNumber().intValue() == 1 ||  // do not count hydrogens
-					a.getSymbol().Equals("H"))
+					a = b.Atoms[1]; // second atom
+				if (a.AtomicNumber == 1 ||  // do not count hydrogens
+					a.Symbol.Equals("H"))
 					continue;
 
 				hbCnt++;
@@ -706,27 +702,25 @@ namespace Mobius.CdkMx
 			IAtomContainer mol,
 			out int acc)
 		{
-			AtomContainerSet acs;
 			IAtomContainer mol2, molMain = null;
-			acs = null;
 
-			if (ConnectivityChecker.isConnected(mol))
+			if (ConnectivityChecker.IsConnected(mol))
 			{
 				acc = 1;
 				return mol;
 			}
 
-			acs = (AtomContainerSet)ConnectivityChecker.partitionIntoMolecules(mol);
+			IReadOnlyList<IAtomContainer> acs = ConnectivityChecker.PartitionIntoMolecules(mol);
 			int largestAc = -1;
 
-			acc = acs.getAtomContainerCount();
+			acc = acs.Count;
 			for (int aci = 0; aci < acc; aci++)
 			{
-				mol2 = acs.getAtomContainer(aci);
-				int ac2 = mol2.getAtomCount();
+				mol2 = acs[aci];
+				int ac2 = mol2.Atoms.Count;
 				if (ac2 > largestAc)
 				{
-					largestAc = mol2.getAtomCount();
+					largestAc = mol2.Atoms.Count;
 					molMain = mol2;
 				}
 			}
@@ -745,7 +739,7 @@ namespace Mobius.CdkMx
 			if (Lex.IsUndefined(smiles)) return "";
 
 			IAtomContainer mol = SmilesToAtomContainer(smiles);
-			if (mol.getAtomCount() == 0) return "";
+			if (mol.Atoms.Count == 0) return "";
 
 			string molfile = AtomContainerToMolfile(mol);
 			return molfile;
@@ -762,7 +756,7 @@ namespace Mobius.CdkMx
 			if (Lex.IsUndefined(molfile)) return "";
 
 			IAtomContainer mol = MolfileToAtomContainer(molfile);
-			if (mol.getAtomCount() == 0) return "";
+			if (mol.Atoms.Count == 0) return "";
 
 			string smiles = AtomContainerToSmiles(mol);
 			return smiles;
@@ -779,9 +773,9 @@ namespace Mobius.CdkMx
 		{
 			try
 			{
-				SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder);
+				SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
 
-				IAtomContainer mol = sp.parseSmiles(smiles); // may get "could not parse error" for some CorpIds, e.g.: 3401013, 3418008, 3428937
+				IAtomContainer mol = sp.ParseSmiles(smiles); // may get "could not parse error" for some CorpIds, e.g.: 111, 222, 333
 
 				ConfigureAtomContainer(mol);
 
@@ -807,22 +801,22 @@ namespace Mobius.CdkMx
 		{
 			string warningMsg, errorMsg;
 
-			InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
-			InChIToStructure intostruct = factory.getInChIToStructure(inchiString, DefaultChemObjectBuilder);
+			InChIGeneratorFactory factory = InChIGeneratorFactory.Instance;
+			InChIToStructure intostruct = factory.GetInChIToStructure(inchiString, ChemObjectBuilder.Instance);
 
-			INCHI_RET ret = intostruct.getReturnStatus();
-			if (ret == INCHI_RET.WARNING) // Structure generated, but with warning message
+			InChIReturnCode ret = intostruct.ReturnStatus;
+			if (ret == InChIReturnCode.Warning) // Structure generated, but with warning message
 			{
-				warningMsg = "InChI warning: " + intostruct.getMessage();
+				warningMsg = "InChI warning: " + intostruct.Message;
 			}
 
-			else if (ret != INCHI_RET.OKAY)  // Structure generation failed
+			else if (ret != InChIReturnCode.Ok)  // Structure generation failed
 			{
-				errorMsg = "Structure generation failed failed: " + ret.toString() + " [" + intostruct.getMessage() + "]";
+				errorMsg = "Structure generation failed failed: " + ret.ToString() + " [" + intostruct.Message + "]";
 				throw new Exception(errorMsg);
 			}
 
-			IAtomContainer mol = intostruct.getAtomContainer();
+			IAtomContainer mol = intostruct.AtomContainer;
 
 
 			return mol;

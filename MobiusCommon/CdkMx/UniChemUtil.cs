@@ -4,9 +4,24 @@ using Mobius.Data;
 using java.io;
 
 using NCDK;
+using NCDK.Aromaticities;
+using NCDK.Config;
+using NCDK.Default;
 using NCDK.Depict;
+using NCDK.Fingerprints;
+using NCDK.Graphs;
+using NCDK.Graphs.InChI;
+using NCDK.Isomorphisms;
+using NCDK.Isomorphisms.Matchers;
+using NCDK.IO;
+using NCDK.IO.Iterator;
+using NCDK.Layout;
+//using NCDK.Silent;
+using NCDK.Smiles;
+using NCDK.Tools;
+using NCDK.Tools.Manipulator;
 
-using net.sf.jniinchi; // low level IUPAC interface, needed for access to some enumerations
+//using net.sf.jniinchi; // low level IUPAC interface, needed for access to some enumerations
 
 // JNI-InChI is a library intented for use by developers of other projects. Sam Adams - 31 October 2010
 // It does not enable users to generate InChIs from molecule file formats such as .mol, .cml, .mol2, or SMILES strings.
@@ -72,16 +87,16 @@ public class UniChemUtil
 			//	mol = CdkMol.MolfileToAtomContainer(molfile);
 			//}
 
-			if (mol.getAtomCount() <= 1) throw new Exception("Atom count <= 1");
+			if (mol.Atoms.Count <= 1) throw new Exception("Atom count <= 1");
 
 			int pseudoCount = CdkMol.RemovePseudoAtoms(mol);
 			mol = CdkMol.AtomContainerToSmilesAndBack(mol, out molSmiles);
 
-			InChIGeneratorFactory igf = InChIGeneratorFactory.getInstance();
+			InChIGeneratorFactory igf = InChIGeneratorFactory.Instance;
 			try
 			{
 				//string options = "/KET /15T"; // options to include keto-enol and 1,5-tautomerism (not recognized by CDK)
-				ig = igf.getInChIGenerator(mol); //, options);
+				ig = igf.GetInChIGenerator(mol); //, options);
 			}
 
 			catch (Exception ex) // may fail for some complex mols (e.g. CorpId 12345, a MDL V3000 mol with a CF3 Sgroup/alias)
@@ -106,7 +121,7 @@ public class UniChemUtil
 
 			if (!IsAcceptableInchiStatus(ig))
 			{
-				string errMsg = "InChI generation " + ig.getReturnStatus() + ": " + ig.getMessage();
+				string errMsg = "InChI generation " + ig.ReturnStatus + ": " + ig.Message;
 				molFile = CdkMol.AtomContainerToMolfile(mol); // debug
 				throw new Exception(errMsg);
 			}
@@ -116,8 +131,8 @@ public class UniChemUtil
 			UniChemData icd = new UniChemData();
 			//icd.Molfile = molfile;
 			icd.AtomContainer = mol;
-			icd.InChIString = ig.getInchi();
-			icd.InChIKey = ig.getInchiKey();
+			icd.InChIString = ig.InChI;
+			icd.InChIKey = ig.GetInChIKey();
 			icd.CanonSmiles = molSmiles;
 
 			// Build and store fingerprint
@@ -132,7 +147,7 @@ public class UniChemUtil
 
 			icd.Fingerprint = fp;
 
-			if (ConnectivityChecker.isConnected(mol)) return icd; // single fragment
+			if (ConnectivityChecker.IsConnected(mol)) return icd; // single fragment
 
 			//string mf = CdkMol.GetMolecularFormula(mol);
 
@@ -143,7 +158,7 @@ public class UniChemUtil
 			{
 				mol2 = frags[fi];
 
-				int atomCnt = mol2.getAtomCount();
+				int atomCnt = mol2.Atoms.Count;
 				if (atomCnt <= 1) continue;
 
 				try
@@ -155,11 +170,11 @@ public class UniChemUtil
 					AtomContainerToSmilesAndBackErrorCount++; // just count error and ignore
 				}
 
-				ig = igf.getInChIGenerator(mol2);
+				ig = igf.GetInChIGenerator(mol2);
 				if (!IsAcceptableInchiStatus(ig)) continue;
 
-				string childInChIString = ig.getInchi();
-				string childInChIKey = ig.getInchiKey();
+				string childInChIString = ig.InChI;
+				string childInChIKey = ig.GetInChIKey();
 				string childFIKHB = UniChemUtil.GetFIKHB(childInChIKey);
 
 				mol2 = CdkMol.InChIToAtomContainer(childInChIString); // convert from inchi
@@ -217,24 +232,24 @@ public class UniChemUtil
 
 			icd.Fingerprint = fp;
 
-			if (ConnectivityChecker.isConnected(mol)) return; // single fragment
+			if (ConnectivityChecker.IsConnected(mol)) return; // single fragment
 
-			InChIGeneratorFactory igf = InChIGeneratorFactory.getInstance();
+			InChIGeneratorFactory igf = InChIGeneratorFactory.Instance;
 
-			AtomContainerSet acs = (AtomContainerSet)ConnectivityChecker.partitionIntoMolecules(mol);
+			AtomContainerSet acs = (AtomContainerSet)ConnectivityChecker.PartitionIntoMolecules(mol);
 			PartitionIntoMoleculesTime += TimeOfDay.Delta(ref t0);
 
-			acc = acs.getAtomContainerCount();
+			acc = acs.Count;
 
 			for (aci = 0; aci < acc; aci++)
 			{
-				mol2 = acs.getAtomContainer(aci);
+				mol2 = acs[aci];
 				GetAtomContainerTime += TimeOfDay.Delta(ref t0);
 
-				ig = igf.getInChIGenerator(mol2);
+				ig = igf.GetInChIGenerator(mol2);
 				if (!IsAcceptableInchiStatus(ig)) continue;
 
-				string childKey = ig.getInchiKey();
+				string childKey = ig.GetInChIKey();
 				string childFIKHB = UniChemUtil.GetFIKHB(childKey);
 				InChIGeneratorTime += TimeOfDay.Delta(ref t0);
 
@@ -283,13 +298,13 @@ public class UniChemUtil
 
 		static bool IsAcceptableInchiStatus(InChIGenerator ig)
 		{
-			INCHI_RET inchiStatus = ig.getReturnStatus();
-			if (inchiStatus == INCHI_RET.OKAY) return true;
+			InChIReturnCode inchiStatus = ig.ReturnStatus;
+			if (inchiStatus == InChIReturnCode.Ok) return true;
 
-			string msg = ig.getMessage();
-			string log = ig.getLog();
-			string auxInfo = ig.getAuxInfo();
-			if (inchiStatus == INCHI_RET.WARNING)
+			string msg = ig.Message;
+			string log = ig.Log;
+			string auxInfo = ig.AuxInfo;
+			if (inchiStatus == InChIReturnCode.Warning)
 				return true;
 
 			else return false;

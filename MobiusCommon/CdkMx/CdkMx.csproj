@@ -60,27 +60,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ComOps">
-      <HintPath>..\ComOps\bin\Debug\ComOps.dll</HintPath>
-    </Reference>
-    <Reference Include="Data">
-      <HintPath>..\Data\bin\Debug\Data.dll</HintPath>
-    </Reference>
     <Reference Include="DevExpress.Data.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Utils.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="Fizzler">
-      <HintPath>..\ComOps\bin\Debug\Fizzler.dll</HintPath>
-    </Reference>
-    <Reference Include="HelmWebEditor">
-      <HintPath>..\Data\bin\Debug\HelmWebEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="HelmWebServices">
-      <HintPath>..\Data\bin\Debug\HelmWebServices.dll</HintPath>
-    </Reference>
-    <Reference Include="LazyCache">
-      <HintPath>..\ComOps\bin\Debug\LazyCache.dll</HintPath>
-    </Reference>
     <Reference Include="MathNet.Numerics">
       <HintPath>..\ExternalLibraries\MathNet.Numerics.dll</HintPath>
       <Private>False</Private>
@@ -95,9 +77,6 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Svg">
-      <HintPath>..\ComOps\bin\Debug\Svg.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -107,6 +86,7 @@
       <HintPath>..\ComOps\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Xml.Linq" />
@@ -144,6 +124,27 @@
     <EmbeddedResource Include="CdkMolControl.resx">
       <DependentUpon>CdkMolControl.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ComOps\ComOps.csproj">
+      <Project>{6e5dcba5-7804-42e2-b7ae-ec0f718621c9}</Project>
+      <Name>ComOps</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{d4397193-c9db-4a7f-a047-98d40ac12647}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HelmWebEditor\HelmWebEditor.csproj">
+      <Project>{6e5a710d-d31a-4a3e-bb3b-e4212921261a}</Project>
+      <Name>HelmWebEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HelmWebServices\HelmWebServices.csproj">
+      <Project>{f8fefca4-b843-4cbc-bef4-d182e259b3ad}</Project>
+      <Name>HelmWebServices</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

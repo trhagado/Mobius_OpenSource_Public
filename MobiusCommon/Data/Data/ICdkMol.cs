@@ -260,7 +260,7 @@ namespace Mobius.Data
     /// <param name="fingerprint"></param>
     /// <returns></returns>
 
-    int[] GetBitSet(object fingerprint);
+    IEnumerable<int> GetBitSet(object fingerprint);
 
     void FitStructureIntoRectangle(
       ref Rectangle destRect,

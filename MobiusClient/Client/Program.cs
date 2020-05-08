@@ -1,26 +1,12 @@
-﻿using cdk = org.openscience.cdk;
-using org.openscience.cdk;
-using org.openscience.cdk.interfaces;
-using org.openscience.cdk.inchi;
-using org.openscience.cdk.fingerprint;
-using org.openscience.cdk.smiles;
-using org.openscience.cdk.tools.manipulator;
-using org.openscience.cdk.aromaticity;
-using org.openscience.cdk.graph;
-using org.openscience.cdk.qsar.result;
-using org.openscience.cdk.io;
-using org.openscience.cdk.io.iterator;
-using org.openscience.cdk.tools;
-
-using java.io;
-
-using Mobius.ComOps; 
+﻿using Mobius.ComOps; 
 using Mobius.Data;
 using Mobius.CdkMx;
 using Mobius.Helm;
 using Mobius.SpotfireClient;
 using Mobius.ClientComponents;
 using Mobius.ToolServices;
+
+using java.io;
 
 using System;
 using System.Collections; 

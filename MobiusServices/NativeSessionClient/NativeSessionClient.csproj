@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Mobius.NativeSessionClient</RootNamespace>
     <AssemblyName>NativeSessionClient</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -99,9 +99,6 @@
     <None Include="Properties\DataSources\Mobius.Services.Types.SessionInfo.datasource" />
     <None Include="Service References\MobiusSessionService\Arrays.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\MobiusSessionService\Mobius.NativeSessionClient.MobiusSessionService.Session.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\MobiusSessionService\Mobius.Services.Types.Internal.wsdl" />
     <None Include="Service References\MobiusSessionService\Mobius.Services.Types.Internal.xsd">

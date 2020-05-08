@@ -2,7 +2,21 @@
 using Mobius.Data;
 
 using NCDK;
+using NCDK.Aromaticities;
+using NCDK.Config;
+using NCDK.Default;
 using NCDK.Depict;
+using NCDK.Fingerprints;
+using NCDK.Graphs;
+using NCDK.Isomorphisms;
+using NCDK.Isomorphisms.Matchers;
+using NCDK.IO;
+using NCDK.IO.Iterator;
+using NCDK.Layout;
+//using NCDK.Silent;
+using NCDK.Smiles;
+using NCDK.Tools;
+using NCDK.Tools.Manipulator;
 
 using System;
 using System.Drawing;
@@ -33,19 +47,19 @@ namespace Mobius.CdkMx
 
 			HashSet<IAtom> atomsToRemove = new HashSet<IAtom>();
 			HashSet<IBond> bondsToRemove = new HashSet<IBond>();
-			int nOrgAtoms = org.getAtomCount();
-			int nOrgBonds = org.getBondCount();
+			int nOrgAtoms = org.Atoms.Count;
+			int nOrgBonds = org.Bonds.Count;
 
 			// Get H atoms and their bonds to pos-charged Nitrogen, adjusting charge
 
-			for (int bi = 0; bi < org.getBondCount(); bi++)
+			for (int bi = 0; bi < org.Bonds.Count; bi++)
 			{
-				IBond bond = org.getBond(bi);
-				if (bond.getAtomCount() != 2) continue;
+				IBond bond = org.Bonds[bi];
+				if (bond.Atoms.Count != 2) continue;
 
-				IAtom a1 = bond.getAtom(0);
-				IAtom a2 = bond.getAtom(1);
-				if (a1.getSymbol() == "H" && a2.getSymbol() == "N" && GetFormalCharge(a2) > 0)
+				IAtom a1 = bond.Atoms[0];
+				IAtom a2 = bond.Atoms[1];
+				if (a1.Symbol == "H" && a2.Symbol == "N" && GetFormalCharge(a2) > 0)
 				{
 					chg = GetFormalCharge(a2) - 1;
 					SetFormalCharge(a2, chg);
@@ -53,7 +67,7 @@ namespace Mobius.CdkMx
 					bondsToRemove.Add(bond);
 				}
 
-				else if (a2.getSymbol() == "H" && a1.getSymbol() == "N" && GetFormalCharge(a1) > 0)
+				else if (a2.Symbol == "H" && a1.Symbol == "N" && GetFormalCharge(a1) > 0)
 				{
 					chg = GetFormalCharge(a1) - 1;
 					SetFormalCharge(a1, chg);
@@ -66,8 +80,8 @@ namespace Mobius.CdkMx
 
 			for (int ai = 0; ai < nOrgAtoms; ai++)
 			{
-				IAtom a = org.getAtom(ai);
-				if (a.getSymbol() == "N" && GetFormalCharge(a) > 0 && GetImplicitHydrogenCount(a) > 0)
+				IAtom a = org.Atoms[ai];
+				if (a.Symbol == "N" && GetFormalCharge(a) > 0 && GetImplicitHydrogenCount(a) > 0)
 				{
 					chg = GetFormalCharge(a) - 1;
 					SetFormalCharge(a, chg);
@@ -89,26 +103,26 @@ namespace Mobius.CdkMx
 
 			for (int ai = 0; ai < nOrgAtoms; ai++)
 			{
-				IAtom atom = org.getAtom(ai);
+				IAtom atom = org.Atoms[ai];
 				if (!atomsToRemove.Contains(atom))
 					cpyAtoms[nCpyAtoms++] = atom;
 			}
 
-			org.setAtoms(cpyAtoms);
+			org.SetAtoms(cpyAtoms);
 
 			// Get list of bonds to keep
 
 			IBond[] cpyBonds = new IBond[nOrgBonds - bondsToRemove.Count];
 			int nCpyBonds = 0;
 
-			for (int bi = 0; bi < org.getBondCount(); bi++)
+			for (int bi = 0; bi < org.Bonds.Count; bi++)
 			{
-				IBond bond = org.getBond(bi);
+				IBond bond = org.Bonds[bi];
 				if (!bondsToRemove.Contains(bond))
 					cpyBonds[nCpyBonds++] = bond;
 			}
 
-			org.setBonds(cpyBonds);
+			org.SetBonds(cpyBonds);
 
 			return atomsToRemove.Count + implicitHydRemoved;
 		}
@@ -125,45 +139,46 @@ namespace Mobius.CdkMx
 		public static IAtomContainer RemoveIsotopesStereoExplicitHydrogens(
 			IAtomContainer src)
 		{
-			IAtom[] atoms = new IAtom[src.getAtomCount()];
-			IBond[] bonds = new IBond[src.getBondCount()];
+			IAtom[] atoms = new IAtom[src.Atoms.Count];
+			IBond[] bonds = new IBond[src.Bonds.Count];
 
-			IChemObjectBuilder builder = src.getBuilder();
+			IChemObjectBuilder builder = src.Builder;
 
 			for (int i = 0; i < atoms.Length; i++)
 			{
-				IAtom atom = src.getAtom(i);
-				IAtom atom2 = (IAtom)builder.newInstance(typeof(IAtom), atom.getSymbol());
+				IAtom atom = src.Atoms[i];
+				IAtom atom2 = builder.NewAtom(atom.Symbol);
 				SetImplicitHydrogenCount(atom2, GetImplicitHydrogenCount(atom));
-				atom2.setPoint2d(atom.getPoint2d());
+				atom2.Point2D = atom.Point2D;
 				atoms[i] = atom2;
 			}
 
 			for (int i = 0; i < bonds.Length; i++)
 			{
-				IBond bond = src.getBond(i);
+				IBond bond = src.Bonds[i];
 
-				int u = src.getAtomNumber(bond.getAtom(0));
-				int v = src.getAtomNumber(bond.getAtom(1));
-				IBond bond2 = (IBond)builder.newInstance(typeof(IBond), atoms[u], atoms[v]);
+				int u = bond.Atoms[0].Index;
+				int v = bond.Atoms[1].Index;
 
-				bond2.setIsAromatic(bond.isAromatic());
-				bond2.setIsInRing(bond.isInRing());
-				bond2.setOrder(bond.getOrder());
+				IBond bond2 = builder.NewBond(atoms[u], atoms[v]);
 
-				bond2.setFlag(CDKConstants.ISAROMATIC, bond.getFlag(CDKConstants.ISAROMATIC));
-				bond2.setFlag(CDKConstants.SINGLE_OR_DOUBLE, bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+				bond2.IsAromatic = bond.IsAromatic;
+				bond2.IsInRing = bond.IsInRing;
+				bond2.Order = bond.Order;
+
+				bond2.IsAromatic = bond.IsAromatic;
+				bond2.IsSingleOrDouble = bond.IsSingleOrDouble;
 
 				bonds[i] = bond2;
 			}
 
-			IAtomContainer dest = (IAtomContainer)builder.newInstance(typeof(IAtomContainer));
-			dest.setAtoms(atoms);
-			dest.setBonds(bonds);
+			IAtomContainer dest = ChemObjectBuilder.Instance.NewAtomContainer();
+			dest.SetAtoms(atoms);
+			dest.SetBonds(bonds);
 
-			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(dest);
-			dest = AtomContainerManipulator.suppressHydrogens(dest);
-			GetHydrogenAdder().addImplicitHydrogens(dest);
+			AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(dest);
+			dest = AtomContainerManipulator.SuppressHydrogens(dest);
+			GetHydrogenAdder().AddImplicitHydrogens(dest);
 
 			return dest;
 		}
@@ -177,9 +192,9 @@ namespace Mobius.CdkMx
 		public static int RemovePseudoAtoms(IAtomContainer mol)
 		{
 			List<IAtom> pseudoAtoms = new List<IAtom>();
-			for (int ai = 0; ai < mol.getAtomCount(); ai++)
+			for (int ai = 0; ai < mol.Atoms.Count; ai++)
 			{
-				IAtom atom = mol.getAtom(ai);
+				IAtom atom = mol.Atoms[ai];
 				if (atom is IPseudoAtom)
 					pseudoAtoms.Add(atom);
 			}
@@ -188,12 +203,12 @@ namespace Mobius.CdkMx
 
 			foreach (IAtom atom in pseudoAtoms)
 			{
-				mol.removeAtomAndConnectedElectronContainers(atom);
+				mol.RemoveAtom(atom);
 			}
 
-			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-			mol = AtomContainerManipulator.suppressHydrogens(mol);
-			GetHydrogenAdder().addImplicitHydrogens(mol);
+			AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
+			mol = AtomContainerManipulator.SuppressHydrogens(mol);
+			GetHydrogenAdder().AddImplicitHydrogens(mol);
 
 			return pseudoAtoms.Count;
 		}
@@ -222,10 +237,10 @@ namespace Mobius.CdkMx
 
 				mol = SmilesToAtomContainer(frag);
 
-				atomCount = mol.getAtomCount();
+				atomCount = mol.Atoms.Count;
 				for (ai = 0; ai < atomCount; ai++) // set isotope labels to mark difference frag
 				{
-					atom = mol.getAtom(ai);
+					atom = mol.Atoms[ai];
 					int mn = GetMassNumber(atom);
 					if (mn == 0)
 						SetMassNumber(atom, hilightIsotopeValue); // mark with special value
@@ -236,34 +251,34 @@ namespace Mobius.CdkMx
 				if (Lex.IsDefined(context1))
 				{
 					JoinMmpFragments(mol, context1, 1);
-					atomCount = mol.getAtomCount();
+					atomCount = mol.Atoms.Count;
 				}
 
 				if (Lex.IsDefined(context2))
 				{
 					JoinMmpFragments(mol, context2, 2);
-					atomCount = mol.getAtomCount();
+					atomCount = mol.Atoms.Count;
 				}
 
-				mol = AtomContainerManipulator.suppressHydrogens(mol); // fix potential valency issues
-				atomCount = mol.getAtomCount();
+				mol = AtomContainerManipulator.SuppressHydrogens(mol); // fix potential valency issues
+				atomCount = mol.Atoms.Count;
 
 				for (ai = 0; ai < atomCount; ai++) // clean up structure for good display
 				{
-					atom = mol.getAtom(ai);
+					atom = mol.Atoms[ai];
 
-					if (atom.getValency() != null && atom.getValency().intValue() != 0)
-						atom.setValency(new java.lang.Integer(0));
+					if (atom.Valency != null && atom.Valency.Value != 0)
+						atom.Valency = 0;
 
 					if (GetImplicitHydrogenCount(atom) != 0)
 						SetImplicitHydrogenCount(atom, 0);
 				}
 
-				AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-				mol = AtomContainerManipulator.suppressHydrogens(mol);
-				GetHydrogenAdder().addImplicitHydrogens(mol);
+				AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
+				mol = AtomContainerManipulator.SuppressHydrogens(mol);
+				GetHydrogenAdder().AddImplicitHydrogens(mol);
 				mol = GenerateCoordinates(mol);
-				atomCount = mol.getAtomCount();
+				atomCount = mol.Atoms.Count;
 
 				molfile = ConvertIsotopeValuesToHilighting(mol); // about 3.0 ms per IntegrateAndHilightMmpStructure call
 
@@ -292,8 +307,8 @@ namespace Mobius.CdkMx
 
 		public static int GetMassNumber(IAtom atom)
 		{
-			if (atom.getMassNumber() == null) return 0;
-			else return atom.getMassNumber().intValue();
+			if (atom.MassNumber == null) return 0;
+			else return (int)atom.MassNumber;
 		}
 
 		/// <summary>
@@ -304,10 +319,14 @@ namespace Mobius.CdkMx
 
 		public static int GetMajorIsotopeMassNumber(int atomicNumber)
 		{
-			Isotopes factory = Isotopes.getInstance();
-			IIsotope major = factory.getMajorIsotope(atomicNumber);
-			int mass = major.getMassNumber().intValue();
-			return mass;
+			int mass = 0;
+
+			IsotopeFactory factory = XMLIsotopeFactory.Instance;
+			IIsotope major = factory.GetMajorIsotope(atomicNumber);
+			if (major.MassNumber != null)
+				return (int)major.MassNumber;
+
+			else return 0;
 		}
 
 		/// <summary>
@@ -320,7 +339,7 @@ namespace Mobius.CdkMx
 			IAtom atom,
 			int mass)
 		{
-			atom.setMassNumber(new java.lang.Integer(mass));
+			atom.MassNumber =  mass;
 			return;
 		}
 
@@ -332,8 +351,8 @@ namespace Mobius.CdkMx
 
 		public static int GetFormalCharge(IAtom atom)
 		{
-			if (atom.getFormalCharge() == null) return 0;
-			else return atom.getFormalCharge().intValue();
+			if (atom.FormalCharge == null) return 0;
+			else return (int)atom.FormalCharge;
 		}
 
 		/// <summary>
@@ -346,7 +365,7 @@ namespace Mobius.CdkMx
 			IAtom atom,
 			int charge)
 		{
-			atom.setFormalCharge(new java.lang.Integer(charge));
+			atom.FormalCharge = charge;
 			return;
 		}
 
@@ -358,8 +377,8 @@ namespace Mobius.CdkMx
 
 		public static int GetImplicitHydrogenCount(IAtom atom)
 		{
-			if (atom.getImplicitHydrogenCount() == null) return 0;
-			else return atom.getImplicitHydrogenCount().intValue();
+			if (atom.ImplicitHydrogenCount == null) return 0;
+			else return (int)atom.ImplicitHydrogenCount;
 		}
 
 		/// <summary>
@@ -372,7 +391,11 @@ namespace Mobius.CdkMx
 			IAtom atom,
 			int hcnt)
 		{
-			atom.setImplicitHydrogenCount(new java.lang.Integer(hcnt));
+			if (hcnt >= 0)
+				atom.ImplicitHydrogenCount = hcnt;
+
+			else atom.ImplicitHydrogenCount = null;
+
 			return;
 		}
 
@@ -393,13 +416,13 @@ namespace Mobius.CdkMx
 			List<int> atomSet = new List<int>();
 			List<int> bondSet = new List<int>();
 
-			for (int bi = 0; bi < mol.getBondCount(); bi++)
+			for (int bi = 0; bi < mol.Bonds.Count; bi++)
 			{
-				IBond b = mol.getBond(bi);
-				if (b.getAtomCount() != 2) continue;
+				IBond b = mol.Bonds[bi];
+				if (b.Atoms.Count != 2) continue;
 
-				IAtom a1 = b.getAtom(0);
-				IAtom a2 = b.getAtom(1);
+				IAtom a1 = b.Atoms[0];
+				IAtom a2 = b.Atoms[1];
 
 				if (hilightAttachmentBond)
 					hilight = (GetMassNumber(a1) != 0 && GetMassNumber(a2) != 0);
@@ -411,9 +434,9 @@ namespace Mobius.CdkMx
 			}
 
 			//String posMap = ""; // debug (note that hydrogens can get repositioned)
-			for (int ai = 0; ai < mol.getAtomCount(); ai++) // scan atoms for hilighting and reset isotope values
+			for (int ai = 0; ai < mol.Atoms.Count; ai++) // scan atoms for hilighting and reset isotope values
 			{
-				IAtom a = mol.getAtom(ai);
+				IAtom a = mol.Atoms[ai];
 
 				hilight = GetMassNumber(a) < 0;
 				if (hilight)
@@ -421,15 +444,15 @@ namespace Mobius.CdkMx
 					atomSet.Add(ai);
 				}
 
-				//posMap += ai.ToString() + ", " + a.getSymbol() + ", " + hilight + "\r\n"; // debug 
+				//posMap += ai.ToString() + ", " + a.Symbol + ", " + hilight + "\r\n"; // debug 
 
 				int massNo = GetMassNumber(a);
 				if (massNo == hilightIsotopeValue)
-					a.setMassNumber(null); // set back to original value
+					a.MassNumber = null; // set back to original value
 				else if (massNo < 0)
 				{
 					if (clearAttachmentPointLabels)
-						a.setMassNumber(null);
+						a.MassNumber =  null;
 
 					else SetMassNumber(a, -massNo); // set back to positive
 				}
@@ -541,9 +564,9 @@ namespace Mobius.CdkMx
 		IAtomContainer mol)
 		{
 			StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-			sdg.setMolecule(mol);
-			sdg.generateCoordinates();
-			IAtomContainer mol2 = sdg.getMolecule();
+			sdg.Molecule = mol;
+			sdg.GenerateCoordinates();
+			IAtomContainer mol2 = sdg.Molecule;
 			return mol2;
 		}
 
@@ -555,13 +578,13 @@ namespace Mobius.CdkMx
 			IAtomContainer cfMol = SmilesToAtomContainer(commonFragSmiles);
 			//AtomContainerManipulator.removeHydrogens(cfMol);
 
-			mol.add(cfMol);
+			mol.Add(cfMol);
 
 			List<IAtom> atoms = GetAttachmentAtoms(mol, attachmentNo);
 			if (atoms.Count != 2) return false;
 
-			Bond b = new Bond(atoms[0], atoms[1], IBond.Order.SINGLE);
-			mol.addBond(b);
+			Bond b = new Bond(atoms[0], atoms[1], BondOrder.Single);
+			mol.Bonds.Add(b);
 
 			return true;
 		}
@@ -571,9 +594,9 @@ namespace Mobius.CdkMx
 			int attachmentNo)
 		{
 			List<IAtom> atoms = new List<IAtom>();
-			for (int ai = 0; ai < mol.getAtomCount(); ai++)
+			for (int ai = 0; ai < mol.Atoms.Count; ai++)
 			{
-				IAtom atom = mol.getAtom(ai);
+				IAtom atom = mol.Atoms[ai];
 				int massNo = Math.Abs(GetMassNumber(atom));
 				if (massNo == attachmentNo || massNo == 12 || massNo == 21) // 12 & 21 values occur at atoms with two attachments
 				{
@@ -600,10 +623,10 @@ namespace Mobius.CdkMx
 		public IAtomContainer suppressHydrogens(IAtomContainer org)
 		{
 			bool anyHydrogenPresent = false;
-			for (int ai = 0; ai < org.getAtomCount(); ai++)
+			for (int ai = 0; ai < org.Atoms.Count; ai++)
 			{
-				IAtom atom = org.getAtom(ai);
-				if ("H".Equals(atom.getSymbol()))
+				IAtom atom = org.Atoms[ai];
+				if ("H".Equals(atom.Symbol))
 				{
 					anyHydrogenPresent = true;
 					break;
@@ -617,10 +640,10 @@ namespace Mobius.CdkMx
 
 			// we need fast adjacency checks (to check for suppression and
 			// update hydrogen counts)
-			int[][] graph = GraphUtil.toAdjList(org);
+			int[][] graph = GraphUtil.ToAdjList(org);
 
-			int nOrgAtoms = org.getAtomCount();
-			int nOrgBonds = org.getBondCount();
+			int nOrgAtoms = org.Atoms.Count;
+			int nOrgBonds = org.Bonds.Count;
 
 			int nCpyAtoms = 0;
 			int nCpyBonds = 0;
@@ -632,11 +655,11 @@ namespace Mobius.CdkMx
 			// be suppressed
 			for (int v = 0; v < nOrgAtoms; v++)
 			{
-				IAtom atom = org.getAtom(v);
+				IAtom atom = org.Atoms[v];
 				if (suppressibleHydrogen(org, graph, v))
 				{
 					hydrogens.Add(atom);
-					incrementImplHydrogenCount(org.getAtom(graph[v][0]));
+					incrementImplHydrogenCount(org.Atoms[graph[v][0]]);
 				}
 				else
 				{
@@ -650,17 +673,17 @@ namespace Mobius.CdkMx
 				return org;
 			}
 
-			org.setAtoms(cpyAtoms);
+			org.SetAtoms(cpyAtoms);
 
 			// we now update the bonds - we have auxiliary variable remaining that
 			// bypasses the set membership checks if all suppressed bonds are found
 			IBond[] cpyBonds = new IBond[nOrgBonds - hydrogens.Count];
 			int remaining = hydrogens.Count;
 
-			for (int bi = 0; bi < org.getBondCount(); bi++)
+			for (int bi = 0; bi < org.Bonds.Count; bi++)
 			{
-				IBond bond = org.getBond(bi);
-				if (remaining > 0 && (hydrogens.Contains(bond.getAtom(0)) || hydrogens.Contains(bond.getAtom(1))))
+				IBond bond = org.Bonds[bi];
+				if (remaining > 0 && (hydrogens.Contains(bond.Atoms[0]) || hydrogens.Contains(bond.Atoms[1])))
 				{
 					remaining--;
 					continue;
@@ -675,7 +698,7 @@ namespace Mobius.CdkMx
 				throw new System.ArgumentException("number of removed bonds was less than the number of removed hydrogens");
 			}
 
-			org.setBonds(cpyBonds);
+			org.SetBonds(cpyBonds);
 
 			return org;
 		}
@@ -692,7 +715,7 @@ namespace Mobius.CdkMx
 		private static bool suppressibleHydrogen(IAtomContainer container, IAtom atom)
 		{
 			// is the atom a hydrogen
-			if (!"H".Equals(atom.getSymbol()))
+			if (!"H".Equals(atom.Symbol))
 			{
 				return false;
 			}
@@ -707,13 +730,13 @@ namespace Mobius.CdkMx
 				return false;
 			}
 			// molecule hydrogen with implicit H?
-			if (atom.getImplicitHydrogenCount() != null && atom.getImplicitHydrogenCount().intValue() != 0)
+			if (atom.ImplicitHydrogenCount != null && (int)atom.ImplicitHydrogenCount != 0)
 			{
 				return false;
 			}
 			// molecule hydrogen
-			List<IAtom> neighbors = container.getConnectedAtomsList(atom) as List<IAtom>;
-			if (neighbors.Count == 1 && neighbors[0].getSymbol().Equals("H"))
+			List<IAtom> neighbors = container.GetConnectedAtoms(atom) as List<IAtom>;
+			if (neighbors.Count == 1 && neighbors[0].Symbol.Equals("H"))
 			{
 				return false;
 			}
@@ -730,7 +753,7 @@ namespace Mobius.CdkMx
 		/// <param name="atom"> an atom to increment the hydrogen count of </param>
 		private static void incrementImplHydrogenCount(IAtom atom)
 		{
-			int? hCount = atom.getImplicitHydrogenCount().intValue();
+			int? hCount = atom.ImplicitHydrogenCount;
 
 			if (hCount == null)
 			{
@@ -741,7 +764,7 @@ namespace Mobius.CdkMx
 				hCount = 0;
 			}
 
-			atom.setImplicitHydrogenCount(new java.lang.Integer((int)hCount + 1));
+			atom.ImplicitHydrogenCount = hCount + 1;
 		}
 
 		/// <summary>
@@ -757,10 +780,10 @@ namespace Mobius.CdkMx
 		private static bool suppressibleHydrogen(IAtomContainer container, int[][] graph, int v)
 		{
 
-			IAtom atom = container.getAtom(v);
+			IAtom atom = container.Atoms[v];
 
 			// is the atom a hydrogen
-			if (!"H".Equals(atom.getSymbol()))
+			if (!"H".Equals(atom.Symbol))
 			{
 				return false;
 			}
@@ -782,7 +805,7 @@ namespace Mobius.CdkMx
 
 			// okay the hydrogen has one neighbor, if that neighbor is not a
 			// hydrogen (i.e. molecular hydrogen) then we can suppress it
-			return !"H".Equals(container.getAtom(graph[v][0]).getSymbol());
+			return !"H".Equals(container.Atoms[graph[v][0]].Symbol);
 		}
 
 		/// <summary>
@@ -796,7 +819,7 @@ namespace Mobius.CdkMx
 		/// <returns> a neighbor of 'atom', null if not found </returns>
 		private static IAtom findOther(IAtomContainer container, IAtom atom, IAtom exclude1, IAtom exclude2)
 		{
-			foreach (IAtom neighbor in container.getConnectedAtomsList(atom) as List<IAtom>)
+			foreach (IAtom neighbor in container.GetConnectedAtoms(atom) as List<IAtom>)
 			{
 				if (neighbor != exclude1 && neighbor != exclude2)
 				{
@@ -908,8 +931,8 @@ namespace Mobius.CdkMx
 				"CDK Conversion Test, Smiles: " + smiles + "\r\n\r\n";
 
 			IAtomContainer mol1 = SmilesToAtomContainer(smiles);
-			mol1.getAtom(0).setMassNumber(new java.lang.Integer(-1)); // try neg value
-			int isotope1 = mol1.getAtom(0).getMassNumber().intValue();
+			mol1.Atoms[0].MassNumber = -1; // try neg value
+			int isotope1 = (int)mol1.Atoms[0].MassNumber;
 			msg += "Smiles -> Obj isotope: " + isotope1 + "\r\n\r\n";
 
 			// Mol object to V2000 & back
@@ -918,7 +941,7 @@ namespace Mobius.CdkMx
 			msg += "Obj -> CDK V2000\r\n==================================\r\n " + v2000 + "\r\n\r\n";
 
 			IAtomContainer molV2000 = MolfileToAtomContainer(v2000); // molfile to obj
-			int isotopeV2 = molV2000.getAtom(0).getMassNumber().intValue();
+			int isotopeV2 = (int)molV2000.Atoms[0].MassNumber;
 			msg += "V2000 -> Obj isotope: " + isotopeV2 + "\r\n\r\n";
 			string v2000b = AtomContainerToMolfile(molV2000); // obj back to molfile
 
@@ -928,7 +951,7 @@ namespace Mobius.CdkMx
 			msg += "Obj -> CDK V3000\r\n==================================\r\n " + v3000 + "\r\n\r\n";
 
 			IAtomContainer molV3000 = MolfileToAtomContainer(v3000); // molfile to obj
-			int isotopeV3 = mol1.getAtom(0).getMassNumber().intValue();
+			int isotopeV3 = (int)mol1.Atoms[0].MassNumber;
 			msg += "V3000 -> Obj isotope: " + isotopeV3 + "\r\n\r\n";
 			string v3000b = AtomContainerToMolFileV3000(molV3000); // obj back to molfile
 

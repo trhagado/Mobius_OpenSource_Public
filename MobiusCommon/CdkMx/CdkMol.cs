@@ -3,13 +3,20 @@ using Mobius.Data;
 
 using NCDK;
 using NCDK.Aromaticities;
+using NCDK.Config;
+using NCDK.Default;
 using NCDK.Depict;
 using NCDK.Fingerprints;
+using NCDK.Graphs;
+using NCDK.Graphs.InChI;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
+using NCDK.IO;
 using NCDK.IO.Iterator;
-using NCDK.Silent;
+using NCDK.Layout;
+//using NCDK.Silent;
 using NCDK.Smiles;
+using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 
 using System;

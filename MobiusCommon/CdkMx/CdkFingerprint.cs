@@ -2,7 +2,9 @@
 using Mobius.Data;
 
 using NCDK;
+using NCDK.Default;
 using NCDK.Depict;
+using NCDK.IO;
 using NCDK.IO.Iterator;
 using NCDK.Fingerprints;
 
@@ -217,17 +219,18 @@ namespace Mobius.CdkMx
 			long length = bsfp.Length;
 			int card = bsfp.Cardinality;
 
-			BitArray bs = bsfp.AsBitSet();
-			byte[] ba = bs.ToByteArray(); // no trailing zero bytes
+			BitArray bitArray = bsfp.AsBitSet();
+			byte[] byteArray= new byte[(bitArray.Length + 7) / 8];
+			bitArray.CopyTo(byteArray, 0);
 
 			if (zeroPad)
 			{
 				byte[] ba2 = new byte[length / 8]; // alloc full size
-				Array.Copy(ba, ba2, ba.Length); // and copy truncated to full size
-				ba = ba2;
+				Array.Copy(byteArray, ba2, byteArray.Length); // and copy truncated to full size
+				byteArray = ba2;
 			}
 
-			return ba;
+			return byteArray;
 		}
 
 		/// <summary>
@@ -376,7 +379,7 @@ namespace Mobius.CdkMx
 
 		public static string CircularFpToString(CircularFingerprinter cfp)
 		{
-			CircularFingerprinter.FP fp = null;
+			CircularFingerprint fp = null;
 
 			string s = "fp\thashCode\titeration\tatoms\r\n";
 
@@ -384,7 +387,7 @@ namespace Mobius.CdkMx
 			for (int fpi = 0; fpi < fpCount; fpi++)
 			{
 				fp = cfp.GetFP(fpi);
-				s += fpi.ToString() + "\t" + fp.hashCode + "\t" + fp.iteration + "\t(" + string.Join(", ", fp.atoms) + ")\r\n";
+				s += fpi.ToString() + "\t" + fp.Hash + "\t" + fp.Iteration + "\t(" + string.Join(", ", fp.Atoms) + ")\r\n";
 			}
 
 			return s;
@@ -438,15 +441,16 @@ namespace Mobius.CdkMx
 
 			cfp = new CircularFingerprinter(FpClass, FpLen);
 
-			FileReader FileReader = new FileReader(@"C:\Download\CorpId-12345.mol");
+			StreamReader reader = new StreamReader(@"C:\Download\CorpId-12345.mol");
 			//FileReader FileReader = new FileReader(@"C:\Download\V3000 Mols.sdf");
 
-			IteratingSDFReader rdr = new IteratingSDFReader(FileReader, DefaultChemObjectBuilder.getInstance());
-			rdr.setReaderMode(IChemObjectReader.Mode.RELAXED);
+			EnumerableSDFReader rdr = new EnumerableSDFReader(reader.BaseStream, ChemObjectBuilder.Instance);
+			rdr.ReaderMode = ChemObjectReaderMode.Relaxed;
+			IEnumerator<IAtomContainer> cursor = rdr.GetEnumerator();
 
-			while (rdr.hasNext())
+			while (cursor.MoveNext())
 			{
-				mol = (IAtomContainer)rdr.next();
+				mol = cursor.Current;
 
 				mol = CdkMol.GetLargestMoleculeFragment(mol);
 
@@ -456,7 +460,7 @@ namespace Mobius.CdkMx
 				int fpCount = cfp.FPCount;
 				for (int fpi = 0; fpi < fpCount; fpi++) // gets 
 				{
-					CircularFingerprinter.FP cfp2 = cfp.getFP(fpi); // gets hash, iteration and lists of atoms (dups appear multiple times)
+					CircularFingerprint cfp2 = cfp.GetFP(fpi); // gets hash, iteration and lists of atoms (dups appear multiple times)
 				}
 
 				IBitFingerprint bfp = cfp.GetBitFingerprint(mol);
@@ -466,7 +470,7 @@ namespace Mobius.CdkMx
 				continue;
 			}
 
-			FileReader.Close();
+			reader.Close();
 
 			return;
 
