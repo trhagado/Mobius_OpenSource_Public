@@ -1,14 +1,26 @@
 ﻿using Mobius.ComOps;
 using Mobius.Data;
 
-using NCDK;
-using NCDK.Aromaticities;
-using NCDK.Depict;
-using NCDK.Isomorphisms;
-using NCDK.Isomorphisms.Matchers;
-using NCDK.Silent;
-using NCDK.Smiles;
-using NCDK.Tools.Manipulator;
+using java.io;
+
+using cdk = org.openscience.cdk;
+using org.openscience.cdk;
+using org.openscience.cdk.inchi;
+using org.openscience.cdk.interfaces;
+using org.openscience.cdk.fingerprint;
+using org.openscience.cdk.smiles;
+using org.openscience.cdk.tools.manipulator;
+using org.openscience.cdk.graph;
+using org.openscience.cdk.depict;
+using org.openscience.cdk.qsar.result;
+using org.openscience.cdk.io;
+using org.openscience.cdk.io.iterator;
+using org.openscience.cdk.tools;
+using org.openscience.cdk.layout;
+using org.openscience.cdk.config;
+using org.openscience.cdk.config.isotopes;
+
+using net.sf.jniinchi; // low level IUPAC interface, needed for access to some enumerations
 
 using System;
 using System.Drawing;
@@ -102,19 +114,52 @@ namespace Mobius.CdkMx
 
       UpdateNativeMolecule();
 
-      if (NativeMol == null || NativeMol.Atoms.Count == 0) return null;
+      if (NativeMol == null || NativeMol.getAtomCount() == 0) return null;
 
       //NativeMol.setProperty(CDKConstants.TITLE, "caffeine"); // title already set from input!
 
+      sun.awt.Win32FontManager w32Font = new sun.awt.Win32FontManager(); // need this for class to be found
+
+      Environment.SetEnvironmentVariable("CLASSPATH", ".", EnvironmentVariableTarget.Process);
+      Environment.SetEnvironmentVariable("JAVA_HOME", @"C:\Mobius_OpenSource\MobiusCommon\CdkMx\bin\Debug", EnvironmentVariableTarget.Process);
+      Environment.SetEnvironmentVariable("Path", @"%JAVA_HOME%", EnvironmentVariableTarget.Process);
+      /* Need following?
+       * CLASSPATH=.; / JAVA_HOME=C:\Program Files\Java\jdk1.6.0_21 / Path=%JAVA_HOME%\bin;
+       */
+
+      //DecimalFormatSymbols.getInstance(Local.ENGLISH);
+
+      //Locale.forLanguageTag("en-US")
+
       DepictionGenerator dptgen = new DepictionGenerator();
-      dptgen.Size = new System.Windows.Size(bitmapWidth, bitmapHeight);              // px (raster) or mm (vector)
+      dptgen.withSize(bitmapWidth, bitmapHeight);              // px (raster) or mm (vector)
       //dptgen.withMolTitle();
       //dptgen.withTitleColor(Color.DarkGray); // annotations are red by default
-      Depiction d = dptgen.Depict(NativeMol);
+      Depiction d = dptgen.depict(NativeMol);
 
-      string path = @"c:\downloads\CdkDepictionTempBitmap.jpg";
-      d.WriteTo("jpg", path);
-      bm = new Bitmap(path);
+      /* 
+
+      public const string SVG_FMT = "svg";
+      public const string PS_FMT = "ps";
+      public const string EPS_FMT = "eps";
+      public const string PDF_FMT = "pdf";
+      public const string JPG_FMT = "jpg";
+      public const string PNG_FMT = "png";
+      public const string GIF_FMT = "gif";
+
+      public const string UNITS_MM = "mm";
+      public const string UNITS_PX = "px";
+      */
+      java.util.List formats = d.listFormats();
+      java.io.File file = new java.io.File(@"c:\downloads\test.jpg");
+      bool b = file.canWrite();
+      string s = d.toSvgStr();
+      d.writeTo("jpg", file);
+      //d.writeTo("svg", @"c:\downloads\test.svg");
+
+      //string svg = d.toSvgStr();
+      //bm = SvgUtil.GetBitmapFromSvgXml(svg, bitmapWidth);
+      bm = new Bitmap(@"c:\downloads\test.jpg");
       return bm;
     }
 

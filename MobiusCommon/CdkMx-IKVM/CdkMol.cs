@@ -1,16 +1,20 @@
 ﻿using Mobius.ComOps;
 using Mobius.Data;
 
-using NCDK;
-using NCDK.Aromaticities;
-using NCDK.Depict;
-using NCDK.Fingerprints;
-using NCDK.Isomorphisms;
-using NCDK.Isomorphisms.Matchers;
-using NCDK.IO.Iterator;
-using NCDK.Silent;
-using NCDK.Smiles;
-using NCDK.Tools.Manipulator;
+using cdk = org.openscience.cdk;
+using org.openscience.cdk;
+using org.openscience.cdk.inchi;
+using org.openscience.cdk.interfaces;
+using org.openscience.cdk.fingerprint;
+using org.openscience.cdk.smiles;
+using org.openscience.cdk.tools.manipulator;
+using org.openscience.cdk.aromaticity;
+using org.openscience.cdk.graph;
+using org.openscience.cdk.qsar.result;
+using org.openscience.cdk.io;
+using org.openscience.cdk.io.iterator;
+using org.openscience.cdk.tools;
+
 
 using System;
 using System.IO;
@@ -21,6 +25,38 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Forms;
+
+/// <summary>
+/// -------------------------- Namespace Mobius.CdkMx --------------------------------------
+/// 
+/// This code uses the cdk-2.3.jar (Aug 9, 2019) (https://github.com/cdk/cdk)
+/// converted for C#.Net use via IKVM 8.6.5.1 (Jan 12, 2020) (https://github.com/jessielesbian/ikvm)
+/// 
+/// 1. Download and copy CDK-2.3.jar to C:\CDK-IKVM\ikvm_8.6.5.1_bin_windows
+/// 2. cd C:\CDK-IKVM\ikvm_8.6.5.1_bin_windows
+/// 3. ikvmc -target:library -out:CDK-2.3.dll CDK-2.3.jar
+/// 
+/// ikvmc -target:library -out:CDK.dll CDK.jar
+/// 
+/// -------------------------- Notes on older version below ---------------------------------
+///  
+///  Start a Cmd window and CD to the directory containing the .jar files.
+///  
+/* CdkIkvmBuildForMobius.txt
+
+; Combine CDK/Ambit jars into a single DLL. Note that the final dll must be named CDK.dll to link properly with 
+; the INCHI JNI library (jni-inchi-0.7-jar-with-dependencies.dll)
+
+cd \CDK\IkvmBuildForMobius
+
+C:\ikvm-7.4.5046\bin\ikvmc -out:CDK.dll cdk-bundle-1.5.12.jar ambit2-base-2.6.0-SNAPSHOT.jar ambit2-core-2.6.0-SNAPSHOT.jar ambit2-smarts-2.6.0-SNAPSHOT.jar ambit2-tautomers-2.6.0-SNAPSHOT.jar jchempaint-hotfix-3.4.jar jmol-10.jar 
+
+*/
+
+///  The current production version is 7.2.4650 (2/26/16).
+///  However, the following bug-fix version (7.2.4650) is used because it takes care of a null reference exception:
+///    http://www.frijters.net/ikvmbin-7.4.5046.zip
+/// </summary>
 
 namespace Mobius.CdkMx
 {

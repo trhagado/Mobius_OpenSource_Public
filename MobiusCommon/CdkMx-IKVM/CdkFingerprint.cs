@@ -1,10 +1,19 @@
 ﻿using Mobius.ComOps;
 using Mobius.Data;
 
-using NCDK;
-using NCDK.Depict;
-using NCDK.IO.Iterator;
-using NCDK.Fingerprints;
+using java.io;
+using java.util;
+
+using cdk = org.openscience.cdk;
+using org.openscience.cdk;
+using org.openscience.cdk.inchi;
+using org.openscience.cdk.interfaces;
+using org.openscience.cdk.fingerprint;
+using org.openscience.cdk.tools.manipulator;
+using org.openscience.cdk.graph;
+using org.openscience.cdk.qsar.result;
+using org.openscience.cdk.io;
+using org.openscience.cdk.io.iterator;
 
 using System;
 using System.Collections;
@@ -98,7 +107,7 @@ namespace Mobius.CdkMx
 
 				for (fi2 = 0; fi2 < fpList.Count; fi2++) // see if a dup fp
 				{
-					if (fp.Equals(fpList[fi2])) break;
+					if (fp.equals(fpList[fi2])) break;
 				}
 				if (fi2 < fpList.Count) continue; // skip if dup
 
@@ -157,16 +166,16 @@ namespace Mobius.CdkMx
 			BitSetFingerprint tfp = targetFingerprint as BitSetFingerprint;
 			if (tfp == null) throw new Exception("Target Fingerprint is not a defined CdkFingerprint");
 
-			int qCard = qfp.Cardinality;
-			int tCard = tfp.Cardinality;
+			int qCard = qfp.cardinality();
+			int tCard = tfp.cardinality();
 
 			BitSetFingerprint tfp2 = new BitSetFingerprint(tfp); // must make copy of target that can be modified
-			tfp2.And(qfp); // and target copy and query into target copy
-			int commonCnt = tfp2.Cardinality;
+			tfp2.and(qfp); // and target copy and query into target copy
+			int commonCnt = tfp2.cardinality();
 
 			float simScore = commonCnt / (float)(tCard + qCard - commonCnt);
 
-			if (qfp.Cardinality != qCard || tfp.Cardinality != tCard) // debug
+			if (qfp.cardinality() != qCard || tfp.cardinality() != tCard) // debug
 				throw new Exception("Cardinality changed");
 
 			return simScore;
@@ -178,12 +187,12 @@ namespace Mobius.CdkMx
 		/// <param name="fingerprint"></param>
 		/// <returns></returns>
 
-		public IEnumerable<int> GetBitSet(object fingerprint)
+		public int[] GetBitSet(object fingerprint)
 		{
 			BitSetFingerprint fp = fingerprint as BitSetFingerprint;
 			if (fp == null) throw new Exception("Fingerprint is not a defined CdkFingerprint");
 
-			IEnumerable<int> setBits = fp.GetSetBits();
+			int[] setBits = fp.getSetbits();
 
 			return setBits;
 		}
@@ -214,15 +223,15 @@ namespace Mobius.CdkMx
 			bool zeroPad)
 		{
 			BitSetFingerprint bsfp = BuildBitSetFingerprint(mol, fpType, fpSubtype, fpLen);
-			long length = bsfp.Length;
-			int card = bsfp.Cardinality;
+			long size = bsfp.size();
+			int card = bsfp.cardinality();
 
-			BitArray bs = bsfp.AsBitSet();
-			byte[] ba = bs.ToByteArray(); // no trailing zero bytes
+			BitSet bs = bsfp.asBitSet();
+			byte[] ba = bs.toByteArray(); // no trailing zero bytes
 
 			if (zeroPad)
 			{
-				byte[] ba2 = new byte[length / 8]; // alloc full size
+				byte[] ba2 = new byte[size / 8]; // alloc full size
 				Array.Copy(ba, ba2, ba.Length); // and copy truncated to full size
 				ba = ba2;
 			}
@@ -294,6 +303,7 @@ namespace Mobius.CdkMx
 			IFingerprinter ifptr = null;
 			IBitFingerprint ibfp = null;
 			BitSetFingerprint bfp = null;
+			BitSet bs;
 			IAtomContainer mol2;
 			string s = "";
 
@@ -308,9 +318,9 @@ namespace Mobius.CdkMx
 			else if (fpType == FingerprintType.Circular) // size variable
 			{
 
-				CircularFingerprinterClass cfpClass = (CircularFingerprinterClass)fpSubtype;
-				if (cfpClass < CircularFingerprinterClass.ECFP0 || cfpClass > CircularFingerprinterClass.ECFP6)
-					cfpClass = (CircularFingerprinterClass)CircularFingerprintType.DefaultCircularClass; // default class
+				int cfpClass = fpSubtype;
+				if (cfpClass < CircularFingerprinter.CLASS_ECFP0 || cfpClass > CircularFingerprinter.CLASS_ECFP6)
+					cfpClass = CircularFingerprintType.DefaultCircularClass; // default class
 
 				if (fpLen < 0) fpLen = CircularFingerprintType.DefaultCircularLength; // default length
 
@@ -341,8 +351,8 @@ namespace Mobius.CdkMx
 
 			else if (fpType == FingerprintType.PubChem) // size = 896
 			{
-				//IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-				ifptr = new PubchemFingerprinter();
+				IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+				ifptr = new PubchemFingerprinter(builder);
 			}
 
 			else if (fpType == FingerprintType.ShortestPath) // size =
@@ -364,13 +374,13 @@ namespace Mobius.CdkMx
 
 			getFptrTime = TimeOfDay.Delta(ref t0);
 
-			ibfp = ifptr.GetBitFingerprint(mol);
+			ibfp = ifptr.getBitFingerprint(mol);
 			bfp = (BitSetFingerprint)ibfp;
 
 			buildFpTime = TimeOfDay.Delta(ref t0);
 
 			//long size = bfp.size();
-			//int card = bfp.Cardinality;
+			//int card = bfp.cardinality();
 			return bfp;
 		}
 
@@ -380,10 +390,10 @@ namespace Mobius.CdkMx
 
 			string s = "fp\thashCode\titeration\tatoms\r\n";
 
-			int fpCount = cfp.FPCount;
+			int fpCount = cfp.getFPCount();
 			for (int fpi = 0; fpi < fpCount; fpi++)
 			{
-				fp = cfp.GetFP(fpi);
+				fp = cfp.getFP(fpi);
 				s += fpi.ToString() + "\t" + fp.hashCode + "\t" + fp.iteration + "\t(" + string.Join(", ", fp.atoms) + ")\r\n";
 			}
 
@@ -404,7 +414,7 @@ namespace Mobius.CdkMx
 			//string molfile = FileUtil.ReadFile();
 			IAtomContainer mol = CdkMol.MolfileToAtomContainer(molfile);
 
-			//int fpClass = CircularFingerprinterClass.ECFP6; // FP diameter
+			//int fpClass = CircularFingerprinter.CLASS_ECFP6; // FP diameter
 			//int fpLen = 2048; // folded binary fp length
 			//ba = CdkFingerprint.BuildBoolArray(mol, fpClass, fpLen, true);
 
@@ -417,9 +427,10 @@ namespace Mobius.CdkMx
 		public static void BuildTest()
 		{
 			CircularFingerprinter cfp = null;
-			CircularFingerprinterClass FpClass = CircularFingerprinterClass.ECFP6; // FP diameter
+			int FpClass = CircularFingerprinter.CLASS_ECFP6; // FP diameter
 			int FpLen = 2048; // folded binary fp length
 
+			DefaultChemObjectReader cor;
 			IAtomContainer mol, mol2;
 
 			//string molfile = FileUtil.ReadFile(@"C:\Download\CorpId-12345.mol");
@@ -434,7 +445,7 @@ namespace Mobius.CdkMx
 			//ac = (IAtomContainer)cor.read(new AtomContainer()); 
 			//cor.close();
 
-			FpClass = CircularFingerprinterClass.ECFP4; // debug
+			FpClass = CircularFingerprinter.CLASS_ECFP4; // debug
 
 			cfp = new CircularFingerprinter(FpClass, FpLen);
 
@@ -450,23 +461,23 @@ namespace Mobius.CdkMx
 
 				mol = CdkMol.GetLargestMoleculeFragment(mol);
 
-				ICountFingerprint cfp1 = cfp.GetCountFingerprint(mol); // get hash values and counts for each
+				ICountFingerprint cfp1 = cfp.getCountFingerprint(mol); // get hash values and counts for each
 
-				cfp.Calculate(mol);
-				int fpCount = cfp.FPCount;
+				cfp.calculate(mol);
+				int fpCount = cfp.getFPCount();
 				for (int fpi = 0; fpi < fpCount; fpi++) // gets 
 				{
 					CircularFingerprinter.FP cfp2 = cfp.getFP(fpi); // gets hash, iteration and lists of atoms (dups appear multiple times)
 				}
 
-				IBitFingerprint bfp = cfp.GetBitFingerprint(mol);
-				BitArray bs = bfp.AsBitSet();
-				int bsCard = bfp.Cardinality;
-				long bsSize = bfp.Length;
+				IBitFingerprint bfp = cfp.getBitFingerprint(mol);
+				java.util.BitSet bs = bfp.asBitSet();
+				int bsCard = bfp.cardinality();
+				long bsSize = bfp.size();
 				continue;
 			}
 
-			FileReader.Close();
+			FileReader.close();
 
 			return;
 

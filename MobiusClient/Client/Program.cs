@@ -53,13 +53,15 @@ namespace Mobius.Client
 		[STAThread]
 		static void Main(string[] args)
 		{
-			string version = java.lang.Package.getPackage("java.lang").getImplementationVersion();
+			//NCDK_Example.DepictionGenerator_Example.Run();
 
-			StreamReader sr = new StreamReader(@"c:\downloads\aspirin.mol");
-			string molfile = sr.ReadToEnd();
-			sr.Close();
+			//string version = java.lang.Package.getPackage("java.lang").getImplementationVersion();
 
-			IAtomContainer ac = CdkMol.MolfileToAtomContainer(molfile);
+			//StreamReader sr = new StreamReader(@"c:\downloads\aspirin.mol");
+			//string molfile = sr.ReadToEnd();
+			//sr.Close();
+
+			//IAtomContainer ac = CdkMol.MolfileToAtomContainer(molfile);
 
 			Splash splash = null;
 			bool unattended = false;

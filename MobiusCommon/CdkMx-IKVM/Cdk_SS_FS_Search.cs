@@ -4,11 +4,26 @@ using Mobius.Data;
 
 using java.io;
 
-using NCDK;
-using NCDK.Depict;
-using NCDK.Isomorphisms;
-using NCDK.Isomorphisms.Matchers;
-using NCDK.Silent;
+using cdk = org.openscience.cdk;
+using org.openscience.cdk;
+using org.openscience.cdk.inchi;
+using org.openscience.cdk.interfaces;
+using org.openscience.cdk.fingerprint;
+using org.openscience.cdk.smiles;
+using org.openscience.cdk.tools.manipulator;
+using org.openscience.cdk.graph;
+using org.openscience.cdk.qsar.result;
+using org.openscience.cdk.io;
+using org.openscience.cdk.io.iterator;
+using org.openscience.cdk.tools;
+using org.openscience.cdk.layout;
+using org.openscience.cdk.config;
+using org.openscience.cdk.config.isotopes;
+using org.openscience.cdk.templates;
+using org.openscience.cdk.isomorphism;
+
+
+using net.sf.jniinchi; // low level IUPAC interface, needed for access to some enumerations
 
 using System;
 using System.Drawing;
@@ -217,7 +232,7 @@ namespace Mobius.CdkMx
 
       var fs = new UniversalIsomorphismTester();
 
-      if (fs.IsIsomorph(q.NativeMol, t.NativeMol))
+      if (fs.isIsomorph(q.NativeMol, t.NativeMol))
         return true;
       else return false;
     }

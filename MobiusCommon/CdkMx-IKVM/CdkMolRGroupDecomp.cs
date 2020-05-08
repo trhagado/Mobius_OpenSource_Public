@@ -1,6 +1,20 @@
 ﻿using Mobius.ComOps;
 using Mobius.Data;
 
+using cdk = org.openscience.cdk;
+using org.openscience.cdk;
+using org.openscience.cdk.inchi;
+using org.openscience.cdk.interfaces;
+using org.openscience.cdk.fingerprint;
+using org.openscience.cdk.smiles;
+using org.openscience.cdk.tools.manipulator;
+using org.openscience.cdk.aromaticity;
+using org.openscience.cdk.graph;
+using org.openscience.cdk.qsar.result;
+using org.openscience.cdk.io;
+using org.openscience.cdk.io.iterator;
+using org.openscience.cdk.tools;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

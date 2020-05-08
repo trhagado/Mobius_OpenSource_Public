@@ -1,11 +1,23 @@
 ﻿using Mobius.ComOps;
 using Mobius.Data;
 
-using NCDK;
-using NCDK.Depict;
-using NCDK.Aromaticities;
-using NCDK.Smiles;
-using NCDK.Tools.Manipulator;
+using java.io;
+
+using cdk = org.openscience.cdk;
+using org.openscience.cdk;
+using org.openscience.cdk.inchi;
+using org.openscience.cdk.interfaces;
+using org.openscience.cdk.fingerprint;
+using org.openscience.cdk.smiles;
+using org.openscience.cdk.tools.manipulator;
+using org.openscience.cdk.aromaticity;
+using org.openscience.cdk.graph;
+using org.openscience.cdk.qsar.result;
+using org.openscience.cdk.io;
+using org.openscience.cdk.io.iterator;
+using org.openscience.cdk.tools;
+
+using net.sf.jniinchi; // low level IUPAC interface, needed for access to some enumerations
 
 using System;
 using System.Collections.Generic;
@@ -16,17 +28,14 @@ namespace Mobius.CdkMx
 {
 
 	public partial class CdkMol : ICdkMol
+
 	{
-
-		//public virtual IChemObject RootObject { get; }
-		IChemObject RootObject = null; // { get; } = new ChemObject
-
 		public static IChemObjectBuilder DefaultChemObjectBuilder
 		{
 			get
 			{
 				if (_defaultChemObjectBuilder == null)
-					_defaultChemObjectBuilder = null; // todo: fix this -> RootObject.Builder.Builder;
+					_defaultChemObjectBuilder = org.openscience.cdk.DefaultChemObjectBuilder.getInstance();
 
 				return _defaultChemObjectBuilder;
 			}
@@ -41,14 +50,19 @@ namespace Mobius.CdkMx
 		/// </summary>
 		/// <returns></returns>
 
+		public static string GetJavaVersion()
+		{
+			string version = java.lang.Package.getPackage("java.lang").getImplementationVersion();
+			return version;
+		}
+
 		/// <summary>
 		/// GetHydrogenAdder
 		/// </summary>
 		/// <returns></returns>
 
-		static Chem.HydrogenAdder GetHydrogenAdder()
+		static CDKHydrogenAdder GetHydrogenAdder()
 		{
-
 			if (_hydrogenAdder == null)
 				_hydrogenAdder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder);
 			return _hydrogenAdder;

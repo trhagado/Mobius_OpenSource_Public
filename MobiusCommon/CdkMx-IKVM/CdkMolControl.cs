@@ -2,9 +2,6 @@
 using Mobius.Data;
 using Mobius.Helm;
 
-using NCDK;
-using NCDK.Depict;
-
 using DevExpress.XtraEditors;
 using DevExpress.Utils;
 using DevExpress.Data;

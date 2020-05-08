@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{203D17B0-F97C-4C9B-B406-CAE30DAD3241}</ProjectGuid>
+    <ProjectGuid>{47EF0025-D6A9-4AA8-9FAE-E99ED47D5F85}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mobius.CdkMx</RootNamespace>
-    <AssemblyName>CdkMx</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <RootNamespace>Mobius.CdkSimSearchMx</RootNamespace>
+    <AssemblyName>CdkSimSearchMx</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>2</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>x86</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -39,11 +40,12 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <WarningLevel>2</WarningLevel>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <WarningLevel>2</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
@@ -56,94 +58,80 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ComOps">
-      <HintPath>..\ComOps\bin\Debug\ComOps.dll</HintPath>
+    <Reference Include="CDK-2.3">
+      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\CDK-2.3.dll</HintPath>
     </Reference>
-    <Reference Include="Data">
-      <HintPath>..\Data\bin\Debug\Data.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Data.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Utils.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraEditors.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="Fizzler">
-      <HintPath>..\ComOps\bin\Debug\Fizzler.dll</HintPath>
+    <Reference Include="IKVM.AWT.WinForms">
+      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\IKVM.AWT.WinForms.dll</HintPath>
     </Reference>
-    <Reference Include="HelmWebEditor">
-      <HintPath>..\Data\bin\Debug\HelmWebEditor.dll</HintPath>
+    <Reference Include="IKVM.OpenJDK.Core">
+      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\IKVM.OpenJDK.Core.dll</HintPath>
     </Reference>
-    <Reference Include="HelmWebServices">
-      <HintPath>..\Data\bin\Debug\HelmWebServices.dll</HintPath>
+    <Reference Include="IKVM.OpenJDK.SwingAWT">
+      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\IKVM.OpenJDK.SwingAWT.dll</HintPath>
     </Reference>
-    <Reference Include="LazyCache">
-      <HintPath>..\ComOps\bin\Debug\LazyCache.dll</HintPath>
+    <Reference Include="IKVM.Reflection">
+      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\IKVM.Reflection.dll</HintPath>
     </Reference>
-    <Reference Include="MathNet.Numerics">
-      <HintPath>..\ExternalLibraries\MathNet.Numerics.dll</HintPath>
+    <Reference Include="IKVM.Runtime">
+      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\IKVM.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.Runtime.JNI">
+      <HintPath>..\..\..\CDK-IKVM\ikvm_8.6.5.1_bin_windows\IKVM.Runtime.JNI.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net">
+      <HintPath>..\..\MobiusCommon\ExternalLibraries\Lucene.Net.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="NCDK">
-      <HintPath>..\ExternalLibraries\NCDK.dll</HintPath>
+    <Reference Include="Oracle.DataAccess, Version=4.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExternalLibraries\Oracle.DataAccess.dll</HintPath>
       <Private>False</Private>
-    </Reference>
-    <Reference Include="NCDK.Display">
-      <HintPath>..\ExternalLibraries\NCDK.Display.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="Svg">
-      <HintPath>..\ComOps\bin\Debug\Svg.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
-    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ComOps\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="vjscor">
-      <HintPath>..\ComOps\bin\Debug\vjscor.dll</HintPath>
-    </Reference>
-    <Reference Include="vjslib">
-      <HintPath>..\ComOps\bin\Debug\vjslib.dll</HintPath>
-    </Reference>
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CdkDepiction.cs" />
-    <Compile Include="CdkFingerprint.cs" />
-    <Compile Include="CdkMol.cs" />
-    <Compile Include="CdkMolRGroupDecomp.cs" />
-    <Compile Include="Cdk_SS_FS_Search.cs" />
-    <Compile Include="CdkMolControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CdkMolControl.Designer.cs">
-      <DependentUpon>CdkMolControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CdkMol.Util.cs" />
-    <Compile Include="CdkMol.Util2.cs" />
-    <Compile Include="CdkMolFactory.cs" />
+    <Compile Include="FingerprintDao.cs" />
+    <Compile Include="FingerprintMx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UniChemUtil.cs" />
+    <Compile Include="CdkSimSearchMx.cs" />
+    <Compile Include="FingerprintDbMx.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CdkMolControl.resx">
-      <DependentUpon>CdkMolControl.cs</DependentUpon>
-    </EmbeddedResource>
+    <ProjectReference Include="..\..\MobiusCommon\ComOps\ComOps.csproj">
+      <Project>{6e5dcba5-7804-42e2-b7ae-ec0f718621c9}</Project>
+      <Name>ComOps</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\Data\Data.csproj">
+      <Project>{d4397193-c9db-4a7f-a047-98d40ac12647}</Project>
+      <Name>Data</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\UAL\UAL.csproj">
+      <Project>{480c5ada-d9b9-4a63-a828-be406c5c76fe}</Project>
+      <Name>UAL</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\CdkMx\CdkMx.csproj">
+      <Project>{203d17b0-f97c-4c9b-b406-cae30dad3241}</Project>
+      <Name>CdkMx</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
