@@ -91,6 +91,12 @@
     <Reference Include="Fizzler, Version=1.2.0.0, Culture=neutral, PublicKeyToken=4ebff4844e382110, processorArchitecture=MSIL">
       <HintPath>..\packages\Fizzler.1.2.0\lib\netstandard1.0\Fizzler.dll</HintPath>
     </Reference>
+    <Reference Include="NCDK">
+      <HintPath>..\..\MobiusCommon\ExternalLibraries\NCDK.dll</HintPath>
+    </Reference>
+    <Reference Include="NCDK.Display">
+      <HintPath>..\..\MobiusCommon\ExternalLibraries\NCDK.Display.dll</HintPath>
+    </Reference>
     <Reference Include="Svg, Version=3.0.0.0, Culture=neutral, PublicKeyToken=12a0bac221edeae2, processorArchitecture=MSIL">
       <HintPath>..\packages\Svg.3.0.102\lib\net452\Svg.dll</HintPath>
     </Reference>

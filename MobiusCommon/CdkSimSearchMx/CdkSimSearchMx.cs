@@ -3,22 +3,27 @@ using Mobius.Data;
 using Mobius.UAL;
 using Mobius.CdkMx;
 
+using NCDK;
+using NCDK.Aromaticities;
+using NCDK.Config;
+using NCDK.Default;
+using NCDK.Depict;
+using NCDK.Fingerprints;
+using NCDK.Graphs;
+using NCDK.Isomorphisms;
+using NCDK.Isomorphisms.Matchers;
+using NCDK.IO;
+using NCDK.IO.Iterator;
+using NCDK.Layout;
+//using NCDK.Silent;
+using NCDK.Smiles;
+using NCDK.Tools;
+using NCDK.Tools.Manipulator;
+
 using Lucene.Net.Util;
 
-using cdk = org.openscience.cdk;
-using org.openscience.cdk;
-using org.openscience.cdk.inchi;
-using org.openscience.cdk.interfaces;
-using org.openscience.cdk.fingerprint;
-using org.openscience.cdk.smiles;
-using org.openscience.cdk.tools.manipulator;
-using org.openscience.cdk.graph;
-using org.openscience.cdk.qsar.result;
-using org.openscience.cdk.io;
-using org.openscience.cdk.io.iterator;
-using org.openscience.cdk.tools;
-
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -158,8 +163,9 @@ namespace Mobius.CdkSearchMx
 			BitSetFingerprint fp = // generate a fingerprint
 				CdkMol.BuildBitSetFingerprintForLargestFragment(queryMol, FingerprintType);
 
-			QueryFpCardinality = fp.cardinality();
-			QueryFpLongArray = fp.asBitSet().toLongArray();
+			QueryFpCardinality = fp.Cardinality;
+
+			QueryFpLongArray = CdkFingerprint.BitSetFingerprintToLongArray(fp);
 
 			MatchList = new List<StructSearchMatch>();
 			ThreadException = null;
@@ -461,11 +467,11 @@ namespace Mobius.CdkSearchMx
 			FingerprintMx fp1,
 			FingerprintMx fp2)
 		{
-			long[] fp1Array = fp1.ToLongArray();
+			long[] fp1Array = CdkFingerprint.BitSetFingerprintToLongArray(fp1.CdkFp);
 			OpenBitSet fp1BitSet = new OpenBitSet(fp1Array, fp1Array.Length);
 			int fp1Card = (int)fp1BitSet.Cardinality();
 
-			long[] fp2Array = fp2.ToLongArray();
+			long[] fp2Array = CdkFingerprint.BitSetFingerprintToLongArray(fp2.CdkFp);
 			OpenBitSet fp2BitSet = new OpenBitSet(fp2Array, fp2Array.Length);
 			int fp2Card = (int)fp2BitSet.Cardinality();
 

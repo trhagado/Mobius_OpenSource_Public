@@ -3,6 +3,7 @@ using Mobius.Data;
 using Mobius.UAL;
 using Mobius.CdkSearchMx;
 
+using NCDK;
 
 using System;
 using System.IO;

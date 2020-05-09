@@ -112,9 +112,15 @@ namespace Mobius.CdkMx
       //dptgen.withTitleColor(Color.DarkGray); // annotations are red by default
       Depiction d = dptgen.Depict(NativeMol);
 
-      string path = @"c:\downloads\CdkDepictionTempBitmap.jpg";
+      //string svg = d.ToSvgString();
+      //bm = SvgUtil.GetBitmapFromSvgXml(svg, bitmapWidth);
+
+      //System.Windows.Media.Imaging.RenderTargetBitmap rtBm = d.ToBitmap();
+
+      string path = TempFile.GetTempFileName(ClientDirs.TempDir, "jpg", true); 
       d.WriteTo("jpg", path);
       bm = new Bitmap(path);
+
       return bm;
     }
 

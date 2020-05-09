@@ -215,22 +215,48 @@ namespace Mobius.CdkMx
 			int fpLen,
 			bool zeroPad)
 		{
-			BitSetFingerprint bsfp = BuildBitSetFingerprint(mol, fpType, fpSubtype, fpLen);
-			long length = bsfp.Length;
-			int card = bsfp.Cardinality;
+			byte[] byteArray = null;
 
-			BitArray bitArray = bsfp.AsBitSet();
-			byte[] byteArray= new byte[(bitArray.Length + 7) / 8];
-			bitArray.CopyTo(byteArray, 0);
+			BitSetFingerprint bsfp = BuildBitSetFingerprint(mol, fpType, fpSubtype, fpLen);
 
 			if (zeroPad)
-			{
-				byte[] ba2 = new byte[length / 8]; // alloc full size
-				Array.Copy(byteArray, ba2, byteArray.Length); // and copy truncated to full size
-				byteArray = ba2;
-			}
+				byteArray = BitSetFingerprintToPaddedByteArray(bsfp);
+
+			else byteArray = BitSetFingerprintToByteArray(bsfp);
 
 			return byteArray;
+		}
+
+		public static byte[] BitSetFingerprintToByteArray(BitSetFingerprint bsfp)
+		{
+			BitArray bitArray = bsfp.AsBitSet();
+			byte[] byteArray = new byte[bitArray.Length / 8]; // fill all bytes, may lose last few bits
+			bitArray.CopyTo(byteArray, 0);
+			return byteArray;
+		}
+
+		public static byte[] BitSetFingerprintToPaddedByteArray(BitSetFingerprint bsfp)
+		{
+			BitArray bitArray = bsfp.AsBitSet();
+			byte[] byteArray = new byte[(bitArray.Length + 7) / 8]; // pad as needed
+			bitArray.CopyTo(byteArray, 0);
+			return byteArray;
+		}
+
+		public static long[] BitSetFingerprintToLongArray(BitSetFingerprint bsfp)
+		{
+			BitArray bitArray = bsfp.AsBitSet();
+			long[] longArray = new long[bitArray.Length / 64]; // fill all longs, may lose last few longs
+			bitArray.CopyTo(longArray, 0);
+			return longArray;
+		}
+
+		public static long[] BitSetFingerprintToPaddedLongArray(BitSetFingerprint bsfp)
+		{
+			BitArray bitArray = bsfp.AsBitSet();
+			long[] longArray = new long[(bitArray.Length + 63) / 64]; // pad as needed
+			bitArray.CopyTo(longArray, 0);
+			return longArray;
 		}
 
 		/// <summary>

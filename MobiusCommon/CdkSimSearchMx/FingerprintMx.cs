@@ -3,23 +3,27 @@ using Mobius.Data;
 using Mobius.UAL;
 using Mobius.CdkMx;
 
-//using SoundFingerprinting.Mobius;
+using NCDK;
+using NCDK.Aromaticities;
+using NCDK.Config;
+using NCDK.Default;
+using NCDK.Depict;
+using NCDK.Fingerprints;
+using NCDK.Graphs;
+using NCDK.Isomorphisms;
+using NCDK.Isomorphisms.Matchers;
+using NCDK.IO;
+using NCDK.IO.Iterator;
+using NCDK.Layout;
+//using NCDK.Silent;
+using NCDK.Smiles;
+using NCDK.Tools;
+using NCDK.Tools.Manipulator;
 
-using java.util;
 using Lucene.Net.Util;
 
-using cdk = org.openscience.cdk;
-using org.openscience.cdk;
-using org.openscience.cdk.inchi;
-using org.openscience.cdk.interfaces;
-using org.openscience.cdk.fingerprint;
-using org.openscience.cdk.tools.manipulator;
-using org.openscience.cdk.graph;
-using org.openscience.cdk.qsar.result;
-using org.openscience.cdk.io;
-using org.openscience.cdk.io.iterator;
-
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -48,15 +52,14 @@ namespace Mobius.CdkSearchMx
 
 		public string CanonSmiles = ""; // canonical smiles of mol/fragment associated with this FP
 
-		public int[] OnBits { get { return CdkFp.getSetbits(); } } //	the bits in the fingerprint that are set to true.
+		public int[] OnBits => (int[])CdkFp.GetSetBits(); //	the bits in the fingerprint that are set to true.
 
-		public int Cardinality // the number of bits set to true in the fingerprint.
-		{ get { return CdkFp.cardinality(); } }
+		public int Cardinality => CdkFp.Cardinality; // the number of bits set to true in the fingerprint.
 
-		public long Size { get { return CdkFp.size(); } } // the length of the binary fingerprint in bits
+		public long Size => CdkFp.Length; // the length of the binary fingerprint in bits
 
-		public BitSet ToBitSet() // return as a Java BitSet
-		{ return CdkFp.asBitSet();  }
+		public BitArray ToBitSet() 
+		{ return CdkFp.AsBitSet();  }
 
 		/// <summary>
 		/// ToBoolArray - return as bool array
@@ -71,21 +74,6 @@ namespace Mobius.CdkSearchMx
 
 			return ba;
 		}
-
-		public byte[] ToByteArray()
-		{	return CdkFp.asBitSet().toByteArray(); }
-
-		public byte[] ToPaddedByteArray()
-		{
-			byte[] ba = CdkFp.asBitSet().toByteArray();
-			byte[] ba2 = new byte[(Size + 7) / 8]; // alloc full size
-			Array.Copy(ba, ba2, ba.Length); // and copy truncated to full size
-			ba = ba2;
-			return ba;
-		}
-
-		public long[] ToLongArray()
-		{ return CdkFp.asBitSet().toLongArray(); }
 
 		public byte[] MinHashSignature { get; set; } // First set bit seen for each of the 100 reorderings of the original bit array
 

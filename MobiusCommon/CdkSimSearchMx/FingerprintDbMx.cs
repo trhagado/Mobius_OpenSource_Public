@@ -3,16 +3,7 @@ using Mobius.Data;
 using Mobius.UAL;
 using Mobius.CdkMx;
 
-using cdk = org.openscience.cdk;
-using org.openscience.cdk;
-using org.openscience.cdk.inchi;
-using org.openscience.cdk.interfaces;
-using org.openscience.cdk.tools.manipulator;
-using org.openscience.cdk.graph;
-using org.openscience.cdk.qsar.result;
-using org.openscience.cdk.io;
-using org.openscience.cdk.io.iterator;
-using org.openscience.cdk.fingerprint;
+using NCDK.Fingerprints;
 
 using System;
 using System.Collections.Generic;
@@ -478,7 +469,7 @@ namespace Mobius.CdkSearchMx
 									continue;
 									//mol = new AtomContainer(); // write empty structure 
 								}
-
+								
 								bool includeOverallFingerprint = true;
 								List<BitSetFingerprint> fps = CdkMol.BuildBitSetFingerprints(mol.MolfileString, includeOverallFingerprint, FingerprintType);
 
@@ -490,8 +481,8 @@ namespace Mobius.CdkSearchMx
 									fpr.molId = molId;
 									fpr.SrcId = SrcDbId;
 									fpr.Cid = cid;
-									fpr.Cardinality = fp.cardinality();
-									fpr.Fingerprint = fp.asBitSet().toLongArray();
+									fpr.Cardinality = fp.Cardinality;
+									fpr.Fingerprint = CdkFingerprint.BitSetFingerprintToLongArray(fp);
 									fpRecList.Add(fpr);
 								}
 

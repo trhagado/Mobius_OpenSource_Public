@@ -5,6 +5,7 @@ using Mobius.Data;
 using Mobius.Services.Util.TypeConversionUtil;
 using Mobius.Services.Native;
 using Mobius.Services.Types;
+using Mobius.NativeSessionClient;
 
 using System;
 using System.Collections.Generic;

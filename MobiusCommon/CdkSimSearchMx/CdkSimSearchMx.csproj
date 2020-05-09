@@ -64,6 +64,14 @@
       <HintPath>..\..\MobiusCommon\ExternalLibraries\Lucene.Net.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="NCDK">
+      <HintPath>..\ExternalLibraries\NCDK.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NCDK.Display">
+      <HintPath>..\ExternalLibraries\NCDK.Display.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Oracle.DataAccess, Version=4.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalLibraries\Oracle.DataAccess.dll</HintPath>

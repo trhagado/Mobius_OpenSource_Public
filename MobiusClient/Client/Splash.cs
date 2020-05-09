@@ -108,47 +108,47 @@ namespace Mobius.Client
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Splash));
-			this.Panel = new System.Windows.Forms.Panel();
-			this.Picture = new System.Windows.Forms.PictureBox();
-			this.Panel.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.Picture)).BeginInit();
-			this.SuspendLayout();
-			// 
-			// Panel
-			// 
-			this.Panel.Controls.Add(this.Picture);
-			this.Panel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.Panel.Location = new System.Drawing.Point(0, 0);
-			this.Panel.Name = "Panel";
-			this.Panel.Size = new System.Drawing.Size(412, 269);
-			this.Panel.TabIndex = 3;
-			// 
-			// Picture
-			// 
-			this.Picture.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.Picture.Location = new System.Drawing.Point(0, 0);
-			this.Picture.Name = "Picture";
-			this.Picture.Size = new System.Drawing.Size(412, 269);
-			this.Picture.TabIndex = 1;
-			this.Picture.TabStop = false;
-			// 
-			// Splash
-			// 
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 14);
-			this.ClientSize = new System.Drawing.Size(412, 269);
-			this.Controls.Add(this.Panel);
-			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.MaximizeBox = false;
-			this.MinimizeBox = false;
-			this.Name = "Splash";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "Mobius - Starting...";
-			this.Shown += new System.EventHandler(this.Splash_Shown);
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Splash_FormClosed);
-			this.Panel.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.Picture)).EndInit();
-			this.ResumeLayout(false);
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Splash));
+      this.Panel = new System.Windows.Forms.Panel();
+      this.Picture = new System.Windows.Forms.PictureBox();
+      this.Panel.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.Picture)).BeginInit();
+      this.SuspendLayout();
+      // 
+      // Panel
+      // 
+      this.Panel.Controls.Add(this.Picture);
+      this.Panel.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.Panel.Location = new System.Drawing.Point(0, 0);
+      this.Panel.Name = "Panel";
+      this.Panel.Size = new System.Drawing.Size(412, 269);
+      this.Panel.TabIndex = 3;
+      // 
+      // Picture
+      // 
+      this.Picture.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.Picture.Location = new System.Drawing.Point(0, 0);
+      this.Picture.Name = "Picture";
+      this.Picture.Size = new System.Drawing.Size(412, 269);
+      this.Picture.TabIndex = 1;
+      this.Picture.TabStop = false;
+      // 
+      // Splash
+      // 
+      this.AutoScaleBaseSize = new System.Drawing.Size(5, 14);
+      this.ClientSize = new System.Drawing.Size(412, 269);
+      this.Controls.Add(this.Panel);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+      this.MaximizeBox = false;
+      this.MinimizeBox = false;
+      this.Name = "Splash";
+      this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+      this.Text = "Mobius - Starting...";
+      this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Splash_FormClosed);
+      this.Shown += new System.EventHandler(this.Splash_Shown);
+      this.Panel.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.Picture)).EndInit();
+      this.ResumeLayout(false);
 
 		}
 		#endregion

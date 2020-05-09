@@ -1251,7 +1251,7 @@ namespace Mobius.ClientComponents
 			get
 			{
 				if (Form.ActiveForm is Progress) return Instance?.ShellForm;
-				else if (Form.ActiveForm.GetType() == typeof(Progress)) return Instance?.ShellForm;
+				else if (Form.ActiveForm != null && Form.ActiveForm.GetType() == typeof(Progress)) return Instance?.ShellForm;
 
 				if (Form.ActiveForm != null) return Form.ActiveForm;
 				else return null;
