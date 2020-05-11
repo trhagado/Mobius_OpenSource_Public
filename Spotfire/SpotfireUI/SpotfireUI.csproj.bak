@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5BE4E505-6F53-4495-8633-5C7F70D35282}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SpotfireUI</RootNamespace>
+    <AssemblyName>SpotfireUI</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>2</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Images.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Office.v19.1.Core, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v19.1.Core, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v19.1.Export, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraBars.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraGrid.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraLayout.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraNavBar.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraRichEdit.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Aggregation.cs" />
+    <Compile Include="BarChartPropertiesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BarChartPropertiesDialog.designer.cs">
+      <DependentUpon>BarChartPropertiesDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ColorByPropertiesBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ColorByPropertiesBase.designer.cs">
+      <DependentUpon>ColorByPropertiesBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ColumnSelectorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ColumnSelectorControl.designer.cs">
+      <DependentUpon>ColumnSelectorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ColumnSelectorDropDown.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ColumnSelectorDropDown.designer.cs">
+      <DependentUpon>ColumnSelectorDropDown.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LabelsPropertiesPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LabelsPropertiesPanel.Designer.cs">
+      <DependentUpon>LabelsPropertiesPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataPropertiesPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataPropertiesPanel.Designer.cs">
+      <DependentUpon>DataPropertiesPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExpressionMsx.cs" />
+    <Compile Include="GeneralPropertiesPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GeneralPropertiesPanel.Designer.cs">
+      <DependentUpon>GeneralPropertiesPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HeatMapPropertiesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HeatMapPropertiesDialog.designer.cs">
+      <DependentUpon>HeatMapPropertiesDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyDialogsUtil.cs" />
+    <Compile Include="ScaleAxisPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ScaleAxisPanel.Designer.cs">
+      <DependentUpon>ScaleAxisPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScatterPlotPropertiesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScatterPlotPropertiesDialog.designer.cs">
+      <DependentUpon>ScatterPlotPropertiesDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ShapeByPropertiesBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ShapeByPropertiesBase.designer.cs">
+      <DependentUpon>ShapeByPropertiesBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SizeByPropertiesBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SizeByPropertiesBase.Designer.cs">
+      <DependentUpon>SizeByPropertiesBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SortingPropertiesPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SortingPropertiesPanel.Designer.cs">
+      <DependentUpon>SortingPropertiesPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SpotfirePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SpotfirePanel.Designer.cs">
+      <DependentUpon>SpotfirePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SpotfireToolbar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SpotfireToolbar.Designer.cs">
+      <DependentUpon>SpotfireToolbar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TablePlotPropertiesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TablePlotPropertiesDialog.designer.cs">
+      <DependentUpon>TablePlotPropertiesDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TableSelectorControlMsx.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TableSelectorControlMsx.designer.cs">
+      <DependentUpon>TableSelectorControlMsx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TreemapPropertiesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TreemapPropertiesDialog.designer.cs">
+      <DependentUpon>TreemapPropertiesDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrellisCardBarChartControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TrellisCardBarChartControl.Designer.cs">
+      <DependentUpon>TrellisCardBarChartControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrellisCardPropertiesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrellisCardPropertiesDialog.Designer.cs">
+      <DependentUpon>TrellisCardPropertiesDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrellisPropertiesPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TrellisPropertiesPanel.Designer.cs">
+      <DependentUpon>TrellisPropertiesPanel.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MobiusCommon\ComOps\ComOps.csproj">
+      <Project>{6e5dcba5-7804-42e2-b7ae-ec0f718621c9}</Project>
+      <Name>ComOps</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\Data\Data.csproj">
+      <Project>{d4397193-c9db-4a7f-a047-98d40ac12647}</Project>
+      <Name>Data</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\SpotfireApiClient\SpotfireApiClient.csproj">
+      <Project>{7d73be3e-411f-48cc-9f1e-f6c0dc3094d9}</Project>
+      <Name>SpotfireApiClient</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\SpotfireComClientMx\SpotfireComClientMx.csproj">
+      <Project>{8bbb7274-d056-4b72-b9c2-c04122113b6f}</Project>
+      <Name>SpotfireComClientMx</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\SpotfireDocumentClasses\SpotfireDocumentClasses.csproj">
+      <Project>{ec900570-2e1d-44ff-94a0-630aadb30cde}</Project>
+      <Name>SpotfireDocumentClasses</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="BarChartPropertiesDialog.resx">
+      <DependentUpon>BarChartPropertiesDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorByPropertiesBase.resx">
+      <DependentUpon>ColorByPropertiesBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColumnSelectorControl.resx">
+      <DependentUpon>ColumnSelectorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColumnSelectorDropDown.resx">
+      <DependentUpon>ColumnSelectorDropDown.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LabelsPropertiesPanel.resx">
+      <DependentUpon>LabelsPropertiesPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataPropertiesPanel.resx">
+      <DependentUpon>DataPropertiesPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GeneralPropertiesPanel.resx">
+      <DependentUpon>GeneralPropertiesPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HeatMapPropertiesDialog.resx">
+      <DependentUpon>HeatMapPropertiesDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScaleAxisPanel.resx">
+      <DependentUpon>ScaleAxisPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScatterPlotPropertiesDialog.resx">
+      <DependentUpon>ScatterPlotPropertiesDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShapeByPropertiesBase.resx">
+      <DependentUpon>ShapeByPropertiesBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SizeByPropertiesBase.resx">
+      <DependentUpon>SizeByPropertiesBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SortingPropertiesPanel.resx">
+      <DependentUpon>SortingPropertiesPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpotfirePanel.resx">
+      <DependentUpon>SpotfirePanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpotfireToolbar.resx">
+      <DependentUpon>SpotfireToolbar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TablePlotPropertiesDialog.resx">
+      <DependentUpon>TablePlotPropertiesDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TableSelectorControlMsx.resx">
+      <DependentUpon>TableSelectorControlMsx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TreemapPropertiesDialog.resx">
+      <DependentUpon>TreemapPropertiesDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrellisCardBarChartControl.resx">
+      <DependentUpon>TrellisCardBarChartControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrellisCardPropertiesDialog.resx">
+      <DependentUpon>TrellisCardPropertiesDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrellisPropertiesPanel.resx">
+      <DependentUpon>TrellisPropertiesPanel.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

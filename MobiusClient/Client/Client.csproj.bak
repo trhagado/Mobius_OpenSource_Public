@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{323061CF-315F-47DC-85D7-8ADC320105AA}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mobius.Client</RootNamespace>
+    <AssemblyName>MobiusClient</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>2</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.BonusSkins.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Data.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Images.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Office.v19.1.Core, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Pdf.v19.1.Core, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.PivotGrid.v19.1.Core, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v19.1.Core, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v19.1.Core, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v19.1">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraBars.v19.1">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraGrid.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraLayout.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraNavBar.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraPivotGrid.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraPrinting.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraRichEdit.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraTreeList.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Fizzler, Version=1.2.0.0, Culture=neutral, PublicKeyToken=4ebff4844e382110, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fizzler.1.2.0\lib\netstandard1.0\Fizzler.dll</HintPath>
+    </Reference>
+    <Reference Include="NCDK">
+      <HintPath>..\..\MobiusCommon\ExternalLibraries\NCDK.dll</HintPath>
+    </Reference>
+    <Reference Include="NCDK.Display">
+      <HintPath>..\..\MobiusCommon\ExternalLibraries\NCDK.Display.dll</HintPath>
+    </Reference>
+    <Reference Include="Svg, Version=3.0.0.0, Culture=neutral, PublicKeyToken=12a0bac221edeae2, processorArchitecture=MSIL">
+      <HintPath>..\packages\Svg.3.0.102\lib\net452\Svg.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="vjslib">
+      <HintPath>..\..\..\MobiusOldCode\MobiusCommon\ExternalLibraries\vjslib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shell.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Shell.Designer.cs">
+      <DependentUpon>Shell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Splash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Shell.resx">
+      <DependentUpon>Shell.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Splash.resx">
+      <DependentUpon>Splash.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MobiusCommon\CdkMx\CdkMx.csproj">
+      <Project>{203d17b0-f97c-4c9b-b406-cae30dad3241}</Project>
+      <Name>CdkMx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\CdkSimSearchMx\CdkSimSearchMx.csproj">
+      <Project>{47ef0025-d6a9-4aa8-9fae-e99ed47d5f85}</Project>
+      <Name>CdkSimSearchMx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\ComOps\ComOps.csproj">
+      <Project>{6e5dcba5-7804-42e2-b7ae-ec0f718621c9}</Project>
+      <Name>ComOps</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\Data\Data.csproj">
+      <Project>{d4397193-c9db-4a7f-a047-98d40ac12647}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\ExternalLibraries\ExternalLibraries.csproj">
+      <Project>{f8fba54e-48e4-4803-8379-ee8159661126}</Project>
+      <Name>ExternalLibraries</Name>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\HelmWebEditor\HelmWebEditor.csproj">
+      <Project>{6e5a710d-d31a-4a3e-bb3b-e4212921261a}</Project>
+      <Name>HelmWebEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\HelmWebServices\HelmWebServices.csproj">
+      <Project>{f8fefca4-b843-4cbc-bef4-d182e259b3ad}</Project>
+      <Name>HelmWebServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\MetaFactory\MetaFactory.csproj">
+      <Project>{11b976d5-a936-4456-bcaa-93c179b21e9f}</Project>
+      <Name>MetaFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\QueryEngine\QueryEngine.csproj">
+      <Project>{6720570f-53fe-4a28-a496-e04b2dc0c335}</Project>
+      <Name>QueryEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\ToolServices\ToolServices.csproj">
+      <Project>{1c16d1fe-96e4-4f37-b462-995fafaa2b9d}</Project>
+      <Name>ToolServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\UAL\UAL.csproj">
+      <Project>{32870ff5-86fc-43e0-b62c-eb2eb6fb689a}</Project>
+      <Name>UAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusServices\NativeSessionClient\NativeSessionClient.csproj">
+      <Project>{ec0203fd-d464-4ba0-a088-b87c31139f47}</Project>
+      <Name>NativeSessionClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusServices\NativeSessionTypeLib\NativeSessionTypeLib.csproj">
+      <Project>{2ea7b7aa-b74f-462a-ba86-65a6569648c1}</Project>
+      <Name>NativeSessionTypeLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusServices\ServicesInternalTypeLib\ServicesInternalTypeLib.csproj">
+      <Project>{a8ebd84d-e153-400d-9430-a056f432a8db}</Project>
+      <Name>ServicesInternalTypeLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusServices\ServicesTypeLib\ServicesTypeLib.csproj">
+      <Project>{a67635ba-89f2-4c7c-a864-f72cd85b43a2}</Project>
+      <Name>ServicesTypeLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusServices\ServiceUtil\ServiceUtil.csproj">
+      <Project>{7a78e6dd-7372-465f-afe2-aea5a9f35ea1}</Project>
+      <Name>ServiceUtil</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusServices\TypeConversionUtil\TypeConversionUtil.csproj">
+      <Project>{d3396ea4-e535-45aa-82c3-618dea7e3dcd}</Project>
+      <Name>TypeConversionUtil</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Spotfire\SpotfireApiClient\SpotfireApiClient.csproj">
+      <Project>{7d73be3e-411f-48cc-9f1e-f6c0dc3094d9}</Project>
+      <Name>SpotfireApiClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Spotfire\SpotfireDocumentClasses\SpotfireDocumentClasses.csproj">
+      <Project>{ec900570-2e1d-44ff-94a0-630aadb30cde}</Project>
+      <Name>SpotfireDocumentClasses</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Spotfire\SpotfireUI\SpotfireUI.csproj">
+      <Project>{5be4e505-6f53-4495-8633-5c7f70d35282}</Project>
+      <Name>SpotfireUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ClientComponents\ClientComponents.csproj">
+      <Project>{6e5faa19-0fe1-4075-b6d2-147de76830cc}</Project>
+      <Name>ClientComponents</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceFacade\ServiceFacade.csproj">
+      <Project>{4921b4b1-fbea-4c6b-87a6-e9481e3bebd1}</Project>
+      <Name>ServiceFacade</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools\Tools.csproj">
+      <Project>{6bbefb30-18e1-4e1e-bb86-52df2b7d5642}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>:: Uncomment the following line to copy external libraries to build folder
+:: Slows down builds so use only for initial build or after a clean
+:: xcopy C:\Mobius\MobiusCommon\ExternalLibraries\*.dll $(TargetDir) /d/c/r/y</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

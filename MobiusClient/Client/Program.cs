@@ -18,8 +18,8 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Diagnostics;
-using System.Security.Principal; 
-using System.Reflection; 
+using System.Security.Principal;
+using System.Reflection;
 
 namespace Mobius.Client 
 {

@@ -4,7 +4,12 @@
 
 <DataSources>
 
+	 <!-- For normal query use  -->
 	<Connection name="MySql_Mobius" dbType="MySQL" userName="root" password="tree1357"
+	  connectionString="Server=localhost;Port=3306;UserId=root;Password=tree1357;" />
+	  
+	 <!-- For Sequence access only -->
+	<Connection name="MySql_Mobius_Sequences" dbType="MySQL" userName="root" password="tree1357"   
 	  connectionString="Server=localhost;Port=3306;UserId=root;Password=tree1357;" />
 
 		<SchemaToConnection schema="mbs_owner"           connection="MySql_Mobius"    label="Mobius System Data" />

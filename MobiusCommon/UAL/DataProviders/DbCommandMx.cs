@@ -640,7 +640,8 @@ namespace Mobius.UAL
 
 				if (LogDbCommandDetail)
 					// || ClientState.IsDeveloper) // debug
-					DebugLog.Message("CommandId = " + Id + ", Prepare Time = " + FT(t0) + ", Sql = " + Lex.RemoveLineBreaksAndTabs(sql));
+					DebugLog.Message("CommandId = " + Id + ", Prepare Time = " + FT(t0) + ", Sql = " + Lex.RemoveLineBreaksAndTabs(sql)
+						+ new StackTrace(true));
 
 			}
 			catch (Exception ex)
@@ -1367,6 +1368,9 @@ namespace Mobius.UAL
 					DebugLog.Message(msg);
 				}
 			}
+
+			if (MxConn.IsMySqlConn)
+				MxConn.Close(); // release connection after each reader use
 		}
 
 		public string FormatCommandStats()

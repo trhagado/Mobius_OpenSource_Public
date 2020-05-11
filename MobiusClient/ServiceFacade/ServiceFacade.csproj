@@ -197,6 +197,7 @@
     <ProjectReference Include="..\..\Spotfire\SpotfireDocumentClasses\SpotfireDocumentClasses.csproj">
       <Project>{ec900570-2e1d-44ff-94a0-630aadb30cde}</Project>
       <Name>SpotfireDocumentClasses</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

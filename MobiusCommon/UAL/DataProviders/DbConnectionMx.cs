@@ -167,7 +167,7 @@ namespace Mobius.UAL
 
 			lock (DbConnectionsDict)
 			{
-				if (Debug) DebugLog.Message("Close connection " + SessionConn.InstanceName);
+				if (Debug) DebugLog.Message("Closing DB connection " + SessionConn.InstanceName);
 				try
 				{
 					SessionConn.Close();
@@ -1061,8 +1061,11 @@ namespace Mobius.UAL
 
 	public class SessionConnection
 	{
+		public int Id = InstanceCount++; // id of this instance
+		internal static int InstanceCount = 0; // instance count
+
 		public DataSourceMx DataSource; // associated datasource
-		public string InstanceName = ""; // connection instance name, usually matches datasource name
+		public string InstanceName = ""; // connection instance name, usually matches datasource namexxx
 
 		public DbConnection DbConn; // associated database connection 
 		public OracleConnection OracleConn { get { return DbConn as OracleConnection; } }
@@ -1117,16 +1120,19 @@ namespace Mobius.UAL
 					DataSourceMx dataSource = DataSourceMx.DataSources[dsName];
 					string connName = dsName; // connection name is same as datasource name by default
 
+					if (dataSource.DbType == DatabaseType.MySql)
+						connName += "." + (InstanceCount + 1); // force alloc of new connection for each statement
+
 					//if (DbConnectionMx.IsOdbcDatabase(dataSource.DatabaseName) && // reuse existing Odbc connection?
 					//  SessionConnections.ContainsKey(connName) && SessionConnections[connName].DbConn != null) 
 					//{
 					//  OdbcConnection dbc = SessionConnections[connName].DbConn as OdbcConnection;
 
-					//  try dbc.CreateCommand
-					//  if (dbc.State == 
+						//  try dbc.CreateCommand
+						//  if (dbc.State == 
 
-					//  connName += "_" + SessionConnections.Count + 1;
-					//}
+						//  connName += "_" + SessionConnections.Count + 1;
+						//}
 
 					if (!SessionConnections.ContainsKey(connName)) // create entry if needed
 					{
@@ -1481,7 +1487,7 @@ namespace Mobius.UAL
 			lock (SessionConnections)
 			{
 				if (Debug)
-					DebugLog.Message("Closing connection: " + InstanceName + " count = " + ActiveCount);
+					DebugLog.Message("Removing session connection: " + InstanceName + " count = " + ActiveCount);
 
 				if (DataSource != null && // if ODBC datasource then don't close underlying connection
 				 DbConnectionMx.IsOdbcDataSource(DataSource))

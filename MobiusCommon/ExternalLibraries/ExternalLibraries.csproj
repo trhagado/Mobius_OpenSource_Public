@@ -67,154 +67,48 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CDK.dll" />
     <Content Include="FileAssociation.dll" />
     <Content Include="ICSharpCode.SharpZipLib.dll" />
-    <Content Include="ikvm-native-win32-x86.dll" />
-    <Content Include="IKVM.AWT.WinForms.dll" />
-    <Content Include="IKVM.OpenJDK.Beans.dll" />
-    <Content Include="IKVM.OpenJDK.Charsets.dll" />
-    <Content Include="IKVM.OpenJDK.Cldrdata.dll" />
-    <Content Include="IKVM.OpenJDK.Corba.dll" />
-    <Content Include="IKVM.OpenJDK.Core.dll" />
-    <Content Include="IKVM.OpenJDK.Jdbc.dll" />
-    <Content Include="IKVM.OpenJDK.Localedata.dll" />
-    <Content Include="IKVM.OpenJDK.Management.dll" />
-    <Content Include="IKVM.OpenJDK.Media.dll" />
-    <Content Include="IKVM.OpenJDK.Misc.dll" />
-    <Content Include="IKVM.OpenJDK.Naming.dll" />
-    <Content Include="IKVM.OpenJDK.Nashorn.dll" />
-    <Content Include="IKVM.OpenJDK.Remoting.dll" />
-    <Content Include="IKVM.OpenJDK.Security.dll" />
-    <Content Include="IKVM.OpenJDK.SwingAWT.dll" />
-    <Content Include="IKVM.OpenJDK.Text.dll" />
-    <Content Include="IKVM.OpenJDK.Tools.dll" />
-    <Content Include="IKVM.OpenJDK.Util.dll" />
-    <Content Include="IKVM.OpenJDK.XML.API.dll" />
-    <Content Include="IKVM.OpenJDK.XML.Bind.dll" />
-    <Content Include="IKVM.OpenJDK.XML.Crypto.dll" />
-    <Content Include="IKVM.OpenJDK.XML.Parse.dll" />
-    <Content Include="IKVM.OpenJDK.XML.Transform.dll" />
-    <Content Include="IKVM.OpenJDK.XML.WebServices.dll" />
-    <Content Include="IKVM.OpenJDK.XML.XPath.dll" />
-    <Content Include="IKVM.Reflection.dll" />
-    <Content Include="IKVM.Runtime.dll" />
-    <Content Include="IKVM.Runtime.JNI.dll" />
-    <Content Include="jgrapht-core-0.9.2.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="jgrapht-ext-0.9.2.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="jni-inchi-0.7-jar-with-dependencies.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="JVM.DLL">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="LazyCache.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="libexpat.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="libsciinchi.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Lucene.Net.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="LumenWorks.Framework.IO.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Microsoft.Office.Interop.Excel.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Microsoft.Office.Interop.Word.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Microsoft.SharePoint.Client.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Microsoft.SharePoint.Client.Runtime.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Microsoft.Vbe.Interop.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Microsoft.Web.Services3.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Newtonsoft.Json.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Novell.Directory.Ldap.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Office.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="jgrapht-core-0.9.2.dll" />
+    <Content Include="jgrapht-ext-0.9.2.dll" />
+    <Content Include="jni-inchi-0.7-jar-with-dependencies.dll" />
+    <Content Include="JVM.DLL" />
+    <Content Include="libexpat.dll" />
+    <Content Include="libsciinchi.dll" />
+    <Content Include="Lucene.Net.dll" />
+    <Content Include="LumenWorks.Framework.IO.dll" />
+    <Content Include="Microsoft.Office.Interop.Excel.dll" />
+    <Content Include="Microsoft.Office.Interop.Word.dll" />
+    <Content Include="Microsoft.SharePoint.Client.dll" />
+    <Content Include="Microsoft.SharePoint.Client.Runtime.dll" />
+    <Content Include="Microsoft.Vbe.Interop.dll" />
+    <Content Include="Microsoft.Web.Services3.dll" />
+    <Content Include="Newtonsoft.Json.dll" />
+    <Content Include="Novell.Directory.Ldap.dll" />
+    <Content Include="Office.dll" />
     <Content Include="Oracle.DataAccess.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="PoorMansTSqlFormatterLib35.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="QtCore4.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="QtGui4.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="scizlib.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Spotfire.Dxp.Data.Formats.Sbdf.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Spotfire.Dxp.Data.Formats.Stdf.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Svg.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="System.Net.Http.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="vcbaseclient.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="vcCore.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="vcDM.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="vcDMUtil.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="vcMath.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="vcparser.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="vjscor.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="vjslib.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="vjsnativ.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="PoorMansTSqlFormatterLib35.dll" />
+    <Content Include="QtCore4.dll" />
+    <Content Include="QtGui4.dll" />
+    <Content Include="scizlib.dll" />
+    <Content Include="Spotfire.Dxp.Data.Formats.Sbdf.dll" />
+    <Content Include="Spotfire.Dxp.Data.Formats.Stdf.dll" />
+    <Content Include="Svg.dll" />
+    <Content Include="System.Net.Http.dll" />
+    <Content Include="vcbaseclient.dll" />
+    <Content Include="vcCore.dll" />
+    <Content Include="vcDM.dll" />
+    <Content Include="vcDMUtil.dll" />
+    <Content Include="vcMath.dll" />
+    <Content Include="vcparser.dll" />
+    <Content Include="vjscor.dll" />
+    <Content Include="vjslib.dll" />
+    <Content Include="vjsnativ.dll" />
     <Content Include="_ExternalLibrariesReadMe.txt" />
-    <Content Include="System.Web.Http.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="System.Web.Http.WebHost.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="System.Web.Http.dll" />
+    <Content Include="System.Web.Http.WebHost.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

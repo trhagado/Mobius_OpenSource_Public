@@ -128,23 +128,28 @@ namespace Mobius.UAL
 
 			int t0 = TimeOfDay.Milliseconds();
 
+			DbCommandMx seqCmd = new DbCommandMx();
+			seqCmd.MxConn = DbConnectionMx.GetConnection("MySql_Mobius");  // "MySql_Mobius_Sequences"
+
 			sql = String.Format(
 			@"update mbs_owner.mbs_sequences 
 			set value = last_insert_id(value) + {0}
 			where name = '{1}'", count, seqName.ToUpper());
 
-			DbCommandMx.PrepareAndExecuteNonReaderSql(sql);
+			seqCmd.PrepareUsingDefinedConnection(sql);
+			
+			int updCount = seqCmd.ExecuteNonReader();
+			if (updCount <= 0) throw new Exception("Error updating sequence (may not exist): " + seqName);
 
-			DbCommandMx readCmd = new DbCommandMx();
-			readCmd.MxConn = DbConnectionMx.GetConnection("MySql_Mobius");
 			sql = "select last_insert_id()"; // gets value before update above
-			readCmd.PrepareUsingDefinedConnection(sql, null);
-			DbDataReader rdr = readCmd.ExecuteReader();
+			seqCmd.PrepareUsingDefinedConnection(sql, null);
+			DbDataReader rdr = seqCmd.ExecuteReader();
 
 			bool readOk = rdr.Read();
 			AssertMx.IsTrue(readOk, "readOk");
 			long value = rdr.GetInt64(0);
 			rdr.Close();
+			seqCmd.CloseReader();
 
 			nextVal = value + 1; // return this one now
 

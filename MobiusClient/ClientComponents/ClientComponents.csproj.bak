@@ -1,0 +1,1833 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6E5FAA19-0FE1-4075-B6D2-147DE76830CC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mobius.ClientComponents</RootNamespace>
+    <AssemblyName>ClientComponents</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ApplicationIcon>Mobius.ico</ApplicationIcon>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Client\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>2</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>2</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\Client\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>2</WarningLevel>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>..\Client\bin\Debug\ClientComponents.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>2</WarningLevel>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\ClientComponents.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Office.v19.1.Core, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.PivotGrid.v19.1.Core, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Pdf.v19.1.Core, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v19.1.Export, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v19.1.Core, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v19.1.Core, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraBars.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraGrid.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraLayout.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraNavBar.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraPivotGrid.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraPrinting.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Images.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraRichEdit.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraTreeList.v19.1, Version=19.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\MobiusCommon\ExternalLibraries\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\MobiusCommon\ExternalLibraries\Microsoft.Office.Interop.Word.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Vbe.Interop, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\MobiusCommon\ExternalLibraries\Microsoft.Vbe.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Services3">
+      <HintPath>..\..\MobiusCommon\ExternalLibraries\Microsoft.Web.Services3.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>..\..\MobiusCommon\ExternalLibraries\Office.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Spotfire.Dxp.Data.Formats.Sbdf, Version=23.28.9701.4854, Culture=neutral, PublicKeyToken=789861576bd64dc5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\MobiusCommon\ExternalLibraries\Spotfire.Dxp.Data.Formats.Sbdf.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Spotfire.Dxp.Data.Formats.Stdf, Version=23.28.9701.4854, Culture=neutral, PublicKeyToken=789861576bd64dc5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\MobiusCommon\ExternalLibraries\Spotfire.Dxp.Data.Formats.Stdf.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SpotfireUI">
+      <HintPath>..\..\Spotfire\SpotfireUI\obj\Debug\SpotfireUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Presentation">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsFormsIntegration">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommonControls\MoleculeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommonControls\MoleculeControl.Designer.cs">
+      <DependentUpon>MoleculeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommonControls\MoleculeSelectorControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommonControls\MoleculeSelectorControl.Designer.cs">
+      <DependentUpon>MoleculeSelectorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\MoleculeEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\MoleculeEditor.Designer.cs">
+      <DependentUpon>MoleculeEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\SingleMoleculeEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\SingleMoleculeEditorControl.Designer.cs">
+      <DependentUpon>SingleMoleculeEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\StructureListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\StructureListControl.Designer.cs">
+      <DependentUpon>StructureListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\ToolResultsContainer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\ToolResultsContainer.Designer.cs">
+      <DependentUpon>ToolResultsContainer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\SpotfireViewManager2.cs" />
+    <Compile Include="SessionManager\AlertQueue.cs" />
+    <Compile Include="SessionManager\ClientLogging.cs" />
+    <Compile Include="SessionManager\LogWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionManager\LogWindow.Designer.cs">
+      <DependentUpon>LogWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\MessageBoxMx.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionManager\MessageBoxMx.designer.cs">
+      <DependentUpon>MessageBoxMx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\MoleculeViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionManager\MoleculeViewer.Designer.cs">
+      <DependentUpon>MoleculeViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\Progress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionManager\Progress.designer.cs">
+      <DependentUpon>Progress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\SessionState.cs" />
+    <Compile Include="SessionManager\UIMisc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionManager\IClientClass.cs" />
+    <Compile Include="SessionManager\MetaTreeNodeCollection.cs" />
+    <Compile Include="QueryBuilder\AggregationDefMenus.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\AggregationDefMenus.Designer.cs">
+      <DependentUpon>AggregationDefMenus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserObjectsAndData\AlertPropertiesDaily.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserObjectsAndData\AlertPropertiesDaily.Designer.cs">
+      <DependentUpon>AlertPropertiesDaily.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserObjectsAndData\AlertPropertiesMonthly.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserObjectsAndData\AlertPropertiesMonthly.Designer.cs">
+      <DependentUpon>AlertPropertiesMonthly.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserObjectsAndData\AlertPropertiesWeekly.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserObjectsAndData\AlertPropertiesWeekly.Designer.cs">
+      <DependentUpon>AlertPropertiesWeekly.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserObjectsAndData\CalcFieldColumnControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserObjectsAndData\CalcFieldColumnControl.Designer.cs">
+      <DependentUpon>CalcFieldColumnControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ContentsTree\ContentsTreeEditorControl2.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ContentsTree\ContentsTreeEditorControl2.Designer.cs">
+      <DependentUpon>ContentsTreeEditorControl2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ContentsTree\ContentsTreeWithSearch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ContentsTree\ContentsTreeWithSearch.designer.cs">
+      <DependentUpon>ContentsTreeWithSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RelatedCompounds\RelatedStructuresControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RelatedCompounds\RelatedStructuresControl.Designer.cs">
+      <DependentUpon>RelatedStructuresControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\StbOptionsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\StbOptionsControl.Designer.cs">
+      <DependentUpon>StbOptionsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\ExpressionPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\FieldListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\FieldListControl.Designer.cs">
+      <DependentUpon>FieldListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\MainMenuControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SessionManager\MainMenuControl.Designer.cs">
+      <DependentUpon>MainMenuControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserObjectsAndData\PermissionsList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserObjectsAndData\PermissionsList.Designer.cs">
+      <DependentUpon>PermissionsList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaCompoundIdControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaCompoundIdControl.designer.cs">
+      <DependentUpon>CriteriaCompoundIdControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaStructureFormatDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaStructureFormatDialog.Designer.cs">
+      <DependentUpon>CriteriaStructureFormatDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaStructureFSOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaStructureFSOptions.Designer.cs">
+      <DependentUpon>CriteriaStructureFSOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaStructureOptionsFull.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaStructureOptionsFull.Designer.cs">
+      <DependentUpon>CriteriaStructureOptionsFull.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaStructureOptionsSim.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaStructureOptionsSim.Designer.cs">
+      <DependentUpon>CriteriaStructureOptionsSim.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaStructureOptionsSW.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaStructureOptionsSW.Designer.cs">
+      <DependentUpon>CriteriaStructureOptionsSW.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaStructureOptionsSS.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaStructureOptionsSS.Designer.cs">
+      <DependentUpon>CriteriaStructureOptionsSS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaStructureRangeCtl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaStructureRangeCtl.Designer.cs">
+      <DependentUpon>CriteriaStructureRangeCtl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewTarget\TargetSummaryOptionsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewTarget\TargetSummaryOptionsControl.Designer.cs">
+      <DependentUpon>TargetSummaryOptionsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\ZoomControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SessionManager\ZoomControl.Designer.cs">
+      <DependentUpon>ZoomControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\CondFormatEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\CondFormatEditor.Designer.cs">
+      <DependentUpon>CondFormatEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ContentsTree\ContentsTreeEditorDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ContentsTree\ContentsTreeEditorDialog.Designer.cs">
+      <DependentUpon>ContentsTreeEditorDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaContentsTreeList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaContentsTreeList.Designer.cs">
+      <DependentUpon>CriteriaContentsTreeList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaStructurePreview.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaStructurePreview.Designer.cs">
+      <DependentUpon>CriteriaStructurePreview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaStructureSimOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaStructureSimOptions.Designer.cs">
+      <DependentUpon>CriteriaStructureSimOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaYesNo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaYesNo.Designer.cs">
+      <DependentUpon>CriteriaYesNo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\EditHtmlBasic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionManager\EditHtmlBasic.Designer.cs">
+      <DependentUpon>EditHtmlBasic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\EditHtmlRich.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionManager\EditHtmlRich.Designer.cs">
+      <DependentUpon>EditHtmlRich.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\SetupSpotfire.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\SetupSpotfire.Designer.cs">
+      <DependentUpon>SetupSpotfire.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\TextFormatDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\TextFormatDialog.Designer.cs">
+      <DependentUpon>TextFormatDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\DynamicWebServiceViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionManager\DynamicWebServiceViewer.Designer.cs">
+      <DependentUpon>DynamicWebServiceViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\FieldSelectorDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\FieldSelectorDialog.Designer.cs">
+      <DependentUpon>FieldSelectorDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\QueryEngineStatsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionManager\QueryEngineStatsForm.Designer.cs">
+      <DependentUpon>QueryEngineStatsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RelatedCompounds\RelatedCompoundsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RelatedCompounds\RelatedCompoundsDialog.Designer.cs">
+      <DependentUpon>RelatedCompoundsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RelatedCompounds\RelatedStructureBrowser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RelatedCompounds\RelatedStructureBrowser.Designer.cs">
+      <DependentUpon>RelatedStructureBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RelatedCompounds\RelatedStructureControlManager.cs" />
+    <Compile Include="ResultsViewBase\SpotfireLinkUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\SpotfireLinkUI.Designer.cs">
+      <DependentUpon>SpotfireLinkUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\DateFormatDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\DateFormatDialog.Designer.cs">
+      <DependentUpon>DateFormatDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\PopupMobiusCommandNavigation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\PopupMobiusCommandNavigation.Designer.cs">
+      <DependentUpon>PopupMobiusCommandNavigation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\ProjectDescriptionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionManager\ProjectDescriptionDialog.Designer.cs">
+      <DependentUpon>ProjectDescriptionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserObjectsAndData\PermissionsGroupEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserObjectsAndData\PermissionsGroupEditor.Designer.cs">
+      <DependentUpon>PermissionsGroupEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\NumericBinningDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\NumericBinningDialog.Designer.cs">
+      <DependentUpon>NumericBinningDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\PopupResults.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\PopupResults.Designer.cs">
+      <DependentUpon>PopupResults.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\SharePointFileDialog.cs" />
+    <Compile Include="SessionManager\SystemAvailabilityMsg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionManager\SystemAvailabilityMsg.Designer.cs">
+      <DependentUpon>SystemAvailabilityMsg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\WaitFormMosaic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionManager\WaitFormMosaic.Designer.cs">
+      <DependentUpon>WaitFormMosaic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="QueryManager\DataRowMx.cs" />
+    <Compile Include="QueryManager\DataTableManager.cs" />
+    <Compile Include="QueryManager\DataTableManager2.cs" />
+    <Compile Include="QueryManager\DataTableMx.cs" />
+    <Compile Include="QueryManager\ResultsField.cs" />
+    <Compile Include="QueryManager\ResultsFormatStructure.cs" />
+    <Compile Include="QueryManager\ResultsFormatHyperlink.cs" />
+    <Compile Include="QueryManager\ResultsTable.cs" />
+    <Compile Include="QueryManager\SmallWorldDepictions.cs" />
+    <Compile Include="QueryManager\TargetAssayManager2.cs" />
+    <Compile Include="ResultsViewSecondaryQuery\SecondaryQueryViewManager.cs" />
+    <Compile Include="ResultsViewPivotGrid\PivotGridDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewPivotGrid\PivotGridDialog.Designer.cs">
+      <DependentUpon>PivotGridDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\DataMapOptionsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\DataMapOptionsDialog.Designer.cs">
+      <DependentUpon>DataMapOptionsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\DataMapPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\DataMapPanel.Designer.cs">
+      <DependentUpon>DataMapPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\QueryViewSelectorDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\QueryViewSelectorDialog.Designer.cs">
+      <DependentUpon>QueryViewSelectorDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\QuerySelectorDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\QuerySelectorDialog.Designer.cs">
+      <DependentUpon>QuerySelectorDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\QueryTableSelectorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\QueryTableSelectorControl.Designer.cs">
+      <DependentUpon>QueryTableSelectorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\DataMapsTableSelectorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\DataMapsTableSelectorControl.Designer.cs">
+      <DependentUpon>DataMapsTableSelectorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\SelectColumnsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\SelectColumnsPanel.Designer.cs">
+      <DependentUpon>SelectColumnsPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\DataMapDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\DataMapDialog.Designer.cs">
+      <DependentUpon>DataMapDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\TestMobiusSpotfireApiForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\TestMobiusSpotfireApiForm.designer.cs">
+      <DependentUpon>TestMobiusSpotfireApiForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\ResultsPagePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\ResultsPagePanel.Designer.cs">
+      <DependentUpon>ResultsPagePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\ResultsPageControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\ResultsPageControl.designer.cs">
+      <DependentUpon>ResultsPageControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\SpotfirePageControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\SpotfirePageControl.Designer.cs">
+      <DependentUpon>SpotfirePageControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\SpotfireViewManager.cs" />
+    <Compile Include="ResultsViewBase\ViewsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\ViewsPanel.Designer.cs">
+      <DependentUpon>ViewsPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewPivotGrid\PivotGridSummarizedValueCondFormatting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewPivotGrid\PivotGridSummarizedValueCondFormatting.Designer.cs">
+      <DependentUpon>PivotGridSummarizedValueCondFormatting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewTable\HtmlTablePageControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewTable\HtmlTablePageControl.Designer.cs">
+      <DependentUpon>HtmlTablePageControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewTable\HtmlTablePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewTable\HtmlTablePanel.Designer.cs">
+      <DependentUpon>HtmlTablePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewTable\HtmlTableView.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ResultsViewTable\MoleculeGridControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ResultsViewTable\MoleculeGridControl.Designer.cs">
+      <DependentUpon>MoleculeGridControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewTable\MoleculeGridGetSetData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewTarget\TargetSummaryDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewTarget\TargetSummaryDialog.Designer.cs">
+      <DependentUpon>TargetSummaryDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewTarget\TargetSummaryImageMapDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewTarget\TargetSummaryImageMapDialog.Designer.cs">
+      <DependentUpon>TargetSummaryImageMapDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\FilterPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\FilterPanel.Designer.cs">
+      <DependentUpon>FilterPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\CfSummaryView.cs" />
+    <Compile Include="QueryBuilder\NumericIntervalDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\NumericIntervalDialog.Designer.cs">
+      <DependentUpon>NumericIntervalDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\QueryResultsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\QueryResultsControl.Designer.cs">
+      <DependentUpon>QueryResultsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\ViewManager.cs" />
+    <Compile Include="ResultsViewBase\DateGroupingDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\DateGroupingDialog.Designer.cs">
+      <DependentUpon>DateGroupingDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\ViewFactory.cs" />
+    <Compile Include="ResultsViewPivotGrid\PivotGridPageControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewPivotGrid\PivotGridPageControl.Designer.cs">
+      <DependentUpon>PivotGridPageControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewPivotGrid\PivotGridPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewPivotGrid\PivotGridPanel.Designer.cs">
+      <DependentUpon>PivotGridPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewPivotGrid\PivotGridView.cs" />
+    <Compile Include="UserObjectsAndData\PermissionsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserObjectsAndData\PermissionsDialog.Designer.cs">
+      <DependentUpon>PermissionsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\AlertUtil.cs" />
+    <Compile Include="SessionManager\BackgroundQuery.cs" />
+    <Compile Include="SessionManager\CidListCommand.cs" />
+    <Compile Include="SessionManager\CommandExec.cs" />
+    <Compile Include="ResultsViewPivotGrid\PivotGridControlMx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ResultsViewPivotGrid\PivotGridControlMx.Designer.cs">
+      <DependentUpon>PivotGridControlMx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserObjectsAndData\CreateUserDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserObjectsAndData\CreateUserDialog.Designer.cs">
+      <DependentUpon>CreateUserDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryManager\TargetAssayManager.cs" />
+    <Compile Include="SessionManager\Preferences.cs" />
+    <Compile Include="QueryBuilder\QbUtil.cs" />
+    <Compile Include="SessionManager\QueryExec.cs" />
+    <Compile Include="SessionManager\QueryTest.cs" />
+    <Compile Include="QueryManager\ResultsFormatter2.cs" />
+    <Compile Include="SessionManager\ToolHelper.cs" />
+    <Compile Include="SessionManager\UserData.cs" />
+    <Compile Include="ContentsTree\ContentsTreeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ContentsTree\ContentsTreeControl.Designer.cs">
+      <DependentUpon>ContentsTreeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ContentsTree\ContentsTreeControlUoMenus.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ContentsTree\ContentsTreeControlUoMenus.Designer.cs">
+      <DependentUpon>ContentsTreeControlUoMenus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\StatusBarManager.cs" />
+    <Compile Include="SessionManager\HistoryList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionManager\HistoryList.designer.cs">
+      <DependentUpon>HistoryList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewTable\MoleculeGridPageControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewTable\MoleculeGridPageControl.Designer.cs">
+      <DependentUpon>MoleculeGridPageControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewTable\MoleculeGridPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewTable\MoleculeGridPanel.Designer.cs">
+      <DependentUpon>MoleculeGridPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ContentsTree\ContentsTreeFindDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ContentsTree\ContentsTreeFindDialog.Designer.cs">
+      <DependentUpon>ContentsTreeFindDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\EditFind.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionManager\EditFind.designer.cs">
+      <DependentUpon>EditFind.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\PopupGrid.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\PopupGrid.Designer.cs">
+      <DependentUpon>PopupGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\PreferencesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionManager\PreferencesDialog.Designer.cs">
+      <DependentUpon>PreferencesDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\QnfSplitControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\QnfSplitControl.Designer.cs">
+      <DependentUpon>QnfSplitControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\CardTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionManager\CardTest.Designer.cs">
+      <DependentUpon>CardTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\FieldSelectorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\FieldSelectorControl.Designer.cs">
+      <DependentUpon>FieldSelectorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\FilterItemSliderControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\FilterItemSliderControl.Designer.cs">
+      <DependentUpon>FilterItemSliderControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\FilterCheckBoxListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\FilterCheckBoxListControl.Designer.cs">
+      <DependentUpon>FilterCheckBoxListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\FilterRangeSliderControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\FilterRangeSliderControl.Designer.cs">
+      <DependentUpon>FilterRangeSliderControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\FilterBasicCriteriaControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\FilterBasicCriteriaControl.Designer.cs">
+      <DependentUpon>FilterBasicCriteriaControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\FilterStructureControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\FilterStructureControl.Designer.cs">
+      <DependentUpon>FilterStructureControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\QbContentsTreeMenus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\QbContentsTreeMenus.Designer.cs">
+      <DependentUpon>QbContentsTreeMenus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\QuickSearchPopup.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\QuickSearchPopup.Designer.cs">
+      <DependentUpon>QuickSearchPopup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\AboutDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserObjectsAndData\AlertGridDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserObjectsAndData\AlertGridDialog.Designer.cs">
+      <DependentUpon>AlertGridDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\PopupHtml.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserObjectsAndData\CalcFieldEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserObjectsAndData\CalcFieldEditor.designer.cs">
+      <DependentUpon>CalcFieldEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaComplex.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaComplex.Designer.cs">
+      <DependentUpon>CriteriaComplex.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\FilterDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\FilterDialog.Designer.cs">
+      <DependentUpon>FilterDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryManager\ClickFunctions.cs" />
+    <Compile Include="SessionManager\CommandLine.cs" />
+    <Compile Include="SessionManager\CriteriaEditor.cs" />
+    <Compile Include="UserObjectsAndData\AlertProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserObjectsAndData\AlertProperties.Designer.cs">
+      <DependentUpon>AlertProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\CidListEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\CidListEditor.Designer.cs">
+      <DependentUpon>CidListEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ContentsTree\ContentsTreeSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ContentsTree\ContentsTreeSelector.Designer.cs">
+      <DependentUpon>ContentsTreeSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaDictionary.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\Criteria.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\Criteria.Designer.cs">
+      <DependentUpon>Criteria.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaCompoundId.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaCompoundId.Designer.cs">
+      <DependentUpon>CriteriaCompoundId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaDictMultSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaDictMultSelect.Designer.cs">
+      <DependentUpon>CriteriaDictMultSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaList.Designer.cs">
+      <DependentUpon>CriteriaList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaMolFormula.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaMolFormula.Designer.cs">
+      <DependentUpon>CriteriaMolFormula.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaStructure.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaStructure.Designer.cs">
+      <DependentUpon>CriteriaStructure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\InputCompoundId.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\InputCompoundId.Designer.cs">
+      <DependentUpon>InputCompoundId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\ListLogic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionManager\ListLogic.Designer.cs">
+      <DependentUpon>ListLogic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\Logon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionManager\NewsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\PrintPreviewDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\PrintPreviewDialog.Designer.cs">
+      <DependentUpon>PrintPreviewDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\SessionMonitorDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionManager\SessionMonitorDialog.Designer.cs">
+      <DependentUpon>SessionMonitorDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\QnfSplitDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\QnfSplitDialog.Designer.cs">
+      <DependentUpon>QnfSplitDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\QueryOptionsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\QueryOptionsDialog.Designer.cs">
+      <DependentUpon>QueryOptionsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ContentsTree\SelectFieldFromContents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ContentsTree\SelectFieldFromContents.Designer.cs">
+      <DependentUpon>SelectFieldFromContents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ContentsTree\SelectFromContents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ContentsTree\SelectFromContents.Designer.cs">
+      <DependentUpon>SelectFromContents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\SetupExcel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\SetupSdFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\SetupTextFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewBase\SetupWord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\SortMultipleDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\SortMultipleDialog.designer.cs">
+      <DependentUpon>SortMultipleDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\TableList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\TableList.Designer.cs">
+      <DependentUpon>TableList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\TextAlignmentDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\TextAlignmentDialog.Designer.cs">
+      <DependentUpon>TextAlignmentDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserObjectsAndData\UserDatabasesExplorer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserObjectsAndData\UserDatabasesExplorer.Designer.cs">
+      <DependentUpon>UserDatabasesExplorer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserObjectsAndData\UserDataEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserObjectsAndData\UserDataEditor.Designer.cs">
+      <DependentUpon>UserDataEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserObjectsAndData\UserDataEditor2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserObjectsAndData\UserDataImportFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserObjectsAndData\UserDataImportTextFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserObjectsAndData\UserObjectOpenDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserObjectsAndData\UserObjectOpenDialog.Designer.cs">
+      <DependentUpon>UserObjectOpenDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserObjectsAndData\UserObjectSaveDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserObjectsAndData\UserObjectSaveDialog.Designer.cs">
+      <DependentUpon>UserObjectSaveDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\SessionManager.cs" />
+    <Compile Include="QueryBuilder\CondFormatRulesControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\CondFormatRulesControl.Designer.cs">
+      <DependentUpon>CondFormatRulesControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\EditHyperlink.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewTable\MoleculeGridHelpers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsViewTable\MoleculeGridHelpers.designer.cs">
+      <DependentUpon>MoleculeGridHelpers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewBase\QnfStats.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\QbContentsTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\QbContentsTree.Designer.cs">
+      <DependentUpon>QbContentsTree.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\Criteria\CriteriaPanel.Designer.cs">
+      <DependentUpon>CriteriaPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\ColumnFormatDialog.cs" />
+    <Compile Include="SessionManager\ZoomDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionManager\ZoomDialog.Designer.cs">
+      <DependentUpon>ZoomDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintRibbonControllerResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PrintRibbonControllerResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryBuilder\QbControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\QbControl.Designer.cs">
+      <DependentUpon>QbControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\QueriesControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\QueriesControl.Designer.cs">
+      <DependentUpon>QueriesControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\QueryTableControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\QueryTableControl.Designer.cs">
+      <DependentUpon>QueryTableControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBuilder\QueryTablesControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryBuilder\QueryTablesControl.Designer.cs">
+      <DependentUpon>QueryTablesControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SessionManager\Alert.cs" />
+    <Compile Include="QueryManager\ExcelOp.cs" />
+    <Compile Include="SessionManager\PlugIns.cs" />
+    <Compile Include="QueryManager\QueryManager.cs" />
+    <Compile Include="QueryManager\ResultsBuffers.cs" />
+    <Compile Include="QueryManager\ResultsFormat.cs" />
+    <Compile Include="QueryManager\ResultsFormatFactory.cs" />
+    <Compile Include="QueryManager\ResultsFormatter.cs" />
+    <Compile Include="SessionManager\SecurityUtil.cs" />
+    <Compile Include="SessionManager\StructureUtil.cs" />
+    <Compile Include="SessionManager\UserObjectTree.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SessionManager\UserObjectUtil.cs" />
+    <Compile Include="QueryManager\WordOp.cs" />
+    <Compile Include="ResultsViewTable\MoleculeGridViewManager.cs" />
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\QueryColumnSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\QueryColumnSelector.designer.cs">
+      <DependentUpon>QueryColumnSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\DataMapControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\DataMapControl.Designer.cs">
+      <DependentUpon>DataMapControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\QuerySelectorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResultsViewSpotfire\PropertyDialogs\QuerySelectorControl.Designer.cs">
+      <DependentUpon>QuerySelectorControl.cs</DependentUpon>
+    </Compile>
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CommonControls\MoleculeControl.resx">
+      <DependentUpon>MoleculeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\AggregationDefMenus.resx">
+      <DependentUpon>AggregationDefMenus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommonControls\MoleculeSelectorControl.resx">
+      <DependentUpon>MoleculeSelectorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\MoleculeEditor.resx">
+      <DependentUpon>MoleculeEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\SingleMoleculeEditorControl.resx">
+      <DependentUpon>SingleMoleculeEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\StructureListControl.resx">
+      <DependentUpon>StructureListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\ToolResultsContainer.resx">
+      <DependentUpon>ToolResultsContainer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\LogWindow.resx">
+      <DependentUpon>LogWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\MessageBoxMx.resx">
+      <DependentUpon>MessageBoxMx.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\MoleculeViewer.resx">
+      <DependentUpon>MoleculeViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\Progress.resx">
+      <DependentUpon>Progress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\UIMisc.resx">
+      <DependentUpon>UIMisc.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserObjectsAndData\AlertPropertiesDaily.resx">
+      <DependentUpon>AlertPropertiesDaily.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserObjectsAndData\AlertPropertiesMonthly.resx">
+      <DependentUpon>AlertPropertiesMonthly.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserObjectsAndData\AlertPropertiesWeekly.resx">
+      <DependentUpon>AlertPropertiesWeekly.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserObjectsAndData\CalcFieldColumnControl.resx">
+      <DependentUpon>CalcFieldColumnControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContentsTree\ContentsTreeEditorControl2.resx">
+      <DependentUpon>ContentsTreeEditorControl2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContentsTree\ContentsTreeWithSearch.resx">
+      <DependentUpon>ContentsTreeWithSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RelatedCompounds\RelatedStructuresControl.resx">
+      <DependentUpon>RelatedStructuresControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\StbOptionsControl.resx">
+      <DependentUpon>StbOptionsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\FieldListControl.resx">
+      <DependentUpon>FieldListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\MainMenuControl.resx">
+      <DependentUpon>MainMenuControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserObjectsAndData\PermissionsList.resx">
+      <DependentUpon>PermissionsList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaCompoundIdControl.resx">
+      <DependentUpon>CriteriaCompoundIdControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaStructureFormatDialog.resx">
+      <DependentUpon>CriteriaStructureFormatDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaStructureFSOptions.resx">
+      <DependentUpon>CriteriaStructureFSOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaStructureOptionsFull.resx">
+      <DependentUpon>CriteriaStructureOptionsFull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaStructureOptionsSim.resx">
+      <DependentUpon>CriteriaStructureOptionsSim.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaStructureOptionsSW.resx">
+      <DependentUpon>CriteriaStructureOptionsSW.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaStructureOptionsSS.resx">
+      <DependentUpon>CriteriaStructureOptionsSS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaStructureRangeCtl.resx">
+      <DependentUpon>CriteriaStructureRangeCtl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewTarget\TargetSummaryOptionsControl.resx">
+      <DependentUpon>TargetSummaryOptionsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\ZoomControl.resx">
+      <DependentUpon>ZoomControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\CondFormatEditor.resx">
+      <DependentUpon>CondFormatEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContentsTree\ContentsTreeEditorDialog.resx">
+      <DependentUpon>ContentsTreeEditorDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaContentsTreeList.resx">
+      <DependentUpon>CriteriaContentsTreeList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaStructurePreview.resx">
+      <DependentUpon>CriteriaStructurePreview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaStructureSimOptions.resx">
+      <DependentUpon>CriteriaStructureSimOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaYesNo.resx">
+      <DependentUpon>CriteriaYesNo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\EditHtmlBasic.resx">
+      <DependentUpon>EditHtmlBasic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\EditHtmlRich.resx">
+      <DependentUpon>EditHtmlRich.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\SetupSpotfire.resx">
+      <DependentUpon>SetupSpotfire.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\TextFormatDialog.resx">
+      <DependentUpon>TextFormatDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\DynamicWebServiceViewer.resx">
+      <DependentUpon>DynamicWebServiceViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\FieldSelectorDialog.resx">
+      <DependentUpon>FieldSelectorDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\QueryEngineStatsForm.resx">
+      <DependentUpon>QueryEngineStatsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RelatedCompounds\RelatedCompoundsDialog.resx">
+      <DependentUpon>RelatedCompoundsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RelatedCompounds\RelatedStructureBrowser.resx">
+      <DependentUpon>RelatedStructureBrowser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\SpotfireLinkUI.resx">
+      <DependentUpon>SpotfireLinkUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\DateFormatDialog.resx">
+      <DependentUpon>DateFormatDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\PopupMobiusCommandNavigation.resx">
+      <DependentUpon>PopupMobiusCommandNavigation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\ProjectDescriptionDialog.resx">
+      <DependentUpon>ProjectDescriptionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserObjectsAndData\PermissionsGroupEditor.resx">
+      <DependentUpon>PermissionsGroupEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\NumericBinningDialog.resx">
+      <DependentUpon>NumericBinningDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\PopupResults.resx">
+      <DependentUpon>PopupResults.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\SystemAvailabilityMsg.resx">
+      <DependentUpon>SystemAvailabilityMsg.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\WaitFormMosaic.resx">
+      <DependentUpon>WaitFormMosaic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="ResultsViewPivotGrid\PivotGridDialog.resx">
+      <DependentUpon>PivotGridDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewSpotfire\PropertyDialogs\DataMapOptionsDialog.resx">
+      <DependentUpon>DataMapOptionsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewSpotfire\PropertyDialogs\DataMapPanel.resx">
+      <DependentUpon>DataMapPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewSpotfire\PropertyDialogs\QueryViewSelectorDialog.resx">
+      <DependentUpon>QueryViewSelectorDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewSpotfire\PropertyDialogs\QuerySelectorDialog.resx">
+      <DependentUpon>QuerySelectorDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewSpotfire\PropertyDialogs\QueryTableSelectorControl.resx">
+      <DependentUpon>QueryTableSelectorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewSpotfire\PropertyDialogs\DataMapsTableSelectorControl.resx">
+      <DependentUpon>DataMapsTableSelectorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewSpotfire\PropertyDialogs\SelectColumnsPanel.resx">
+      <DependentUpon>SelectColumnsPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewSpotfire\PropertyDialogs\DataMapDialog.resx">
+      <DependentUpon>DataMapDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewSpotfire\TestMobiusSpotfireApiForm.resx">
+      <DependentUpon>TestMobiusSpotfireApiForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewPivotGrid\PivotGridSummarizedValueCondFormatting.resx">
+      <DependentUpon>PivotGridSummarizedValueCondFormatting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\ResultsPagePanel.resx">
+      <DependentUpon>ResultsPagePanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\ResultsPageControl.resx">
+      <DependentUpon>ResultsPageControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewSpotfire\SpotfirePageControl.resx">
+      <DependentUpon>SpotfirePageControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\ViewsPanel.resx">
+      <DependentUpon>ViewsPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewTarget\TargetSummaryDialog.resx">
+      <DependentUpon>TargetSummaryDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewTarget\TargetSummaryImageMapDialog.resx">
+      <DependentUpon>TargetSummaryImageMapDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\FilterPanel.resx">
+      <DependentUpon>FilterPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\DateGroupingDialog.resx">
+      <DependentUpon>DateGroupingDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\NumericIntervalDialog.resx">
+      <DependentUpon>NumericIntervalDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\QueryResultsControl.resx">
+      <DependentUpon>QueryResultsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewPivotGrid\PivotGridPageControl.resx">
+      <DependentUpon>PivotGridPageControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewPivotGrid\PivotGridPanel.resx">
+      <DependentUpon>PivotGridPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserObjectsAndData\PermissionsDialog.resx">
+      <DependentUpon>PermissionsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContentsTree\ContentsTreeControl.resx">
+      <DependentUpon>ContentsTreeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContentsTree\ContentsTreeControlUoMenus.resx">
+      <DependentUpon>ContentsTreeControlUoMenus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\HistoryList.resx">
+      <DependentUpon>HistoryList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewTable\HtmlTablePageControl.resx">
+      <DependentUpon>HtmlTablePageControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewTable\HtmlTablePanel.resx">
+      <DependentUpon>HtmlTablePanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewTable\MoleculeGridControl.resx">
+      <DependentUpon>MoleculeGridControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewTable\MoleculeGridPageControl.resx">
+      <DependentUpon>MoleculeGridPageControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewTable\MoleculeGridPanel.resx">
+      <DependentUpon>MoleculeGridPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewPivotGrid\PivotGridControlMx.resx">
+      <DependentUpon>PivotGridControlMx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContentsTree\ContentsTreeFindDialog.resx">
+      <DependentUpon>ContentsTreeFindDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserObjectsAndData\CreateUserDialog.resx">
+      <DependentUpon>CreateUserDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\EditFind.resx">
+      <DependentUpon>EditFind.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\PopupGrid.resx">
+      <DependentUpon>PopupGrid.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\PreferencesDialog.resx">
+      <DependentUpon>PreferencesDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\QnfSplitControl.resx">
+      <DependentUpon>QnfSplitControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\CardTest.resx">
+      <DependentUpon>CardTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\FieldSelectorControl.resx">
+      <DependentUpon>FieldSelectorControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\FilterItemSliderControl.resx">
+      <DependentUpon>FilterItemSliderControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\FilterCheckBoxListControl.resx">
+      <DependentUpon>FilterCheckBoxListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\FilterRangeSliderControl.resx">
+      <DependentUpon>FilterRangeSliderControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\FilterBasicCriteriaControl.resx">
+      <DependentUpon>FilterBasicCriteriaControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\FilterStructureControl.resx">
+      <DependentUpon>FilterStructureControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\QbContentsTreeMenus.resx">
+      <DependentUpon>QbContentsTreeMenus.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\QuickSearchPopup.resx">
+      <DependentUpon>QuickSearchPopup.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\AboutDialog.resx">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserObjectsAndData\AlertProperties.resx">
+      <DependentUpon>AlertProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserObjectsAndData\AlertGridDialog.resx">
+      <DependentUpon>AlertGridDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\PopupHtml.resx">
+      <DependentUpon>PopupHtml.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserObjectsAndData\CalcFieldEditor.resx">
+      <DependentUpon>CalcFieldEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\CidListEditor.resx">
+      <DependentUpon>CidListEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\CondFormatRulesControl.resx">
+      <DependentUpon>CondFormatRulesControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\Criteria.resx">
+      <DependentUpon>Criteria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaComplex.resx">
+      <DependentUpon>CriteriaComplex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaCompoundId.resx">
+      <DependentUpon>CriteriaCompoundId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaDictionary.resx">
+      <DependentUpon>CriteriaDictionary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaDictMultSelect.resx">
+      <DependentUpon>CriteriaDictMultSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\FilterDialog.resx">
+      <DependentUpon>FilterDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaList.resx">
+      <DependentUpon>CriteriaList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaMolFormula.resx">
+      <DependentUpon>CriteriaMolFormula.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaStructure.resx">
+      <DependentUpon>CriteriaStructure.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\EditHyperlink.resx">
+      <DependentUpon>EditHyperlink.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewTable\MoleculeGridHelpers.resx">
+      <DependentUpon>MoleculeGridHelpers.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\InputCompoundId.resx">
+      <DependentUpon>InputCompoundId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\ListLogic.resx">
+      <DependentUpon>ListLogic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\Logon.resx">
+      <DependentUpon>Logon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\NewsDialog.resx">
+      <DependentUpon>NewsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\PrintPreviewDialog.resx">
+      <DependentUpon>PrintPreviewDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\SessionMonitorDialog.resx">
+      <DependentUpon>SessionMonitorDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\QnfSplitDialog.resx">
+      <DependentUpon>QnfSplitDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\QueryOptionsDialog.resx">
+      <DependentUpon>QueryOptionsDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContentsTree\SelectFieldFromContents.resx">
+      <DependentUpon>SelectFieldFromContents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContentsTree\SelectFromContents.resx">
+      <DependentUpon>SelectFromContents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\SetupExcel.resx">
+      <DependentUpon>SetupExcel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\SetupSdFile.resx">
+      <DependentUpon>SetupSdFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\SetupTextFile.resx">
+      <DependentUpon>SetupTextFile.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\SetupWord.resx">
+      <DependentUpon>SetupWord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\SortMultipleDialog.resx">
+      <DependentUpon>SortMultipleDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\TableList.resx">
+      <DependentUpon>TableList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\TextAlignmentDialog.resx">
+      <DependentUpon>TextAlignmentDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserObjectsAndData\UserDatabasesExplorer.resx">
+      <DependentUpon>UserDatabasesExplorer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserObjectsAndData\UserDataEditor.resx">
+      <DependentUpon>UserDataEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserObjectsAndData\UserDataImportFile.resx">
+      <DependentUpon>UserDataImportFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserObjectsAndData\UserDataImportTextFile.resx">
+      <DependentUpon>UserDataImportTextFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserObjectsAndData\UserObjectOpenDialog.resx">
+      <DependentUpon>UserObjectOpenDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserObjectsAndData\UserObjectSaveDialog.resx">
+      <DependentUpon>UserObjectSaveDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionManager\ZoomDialog.resx">
+      <DependentUpon>ZoomDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintRibbonControllerResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PrintRibbonControllerResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewBase\QnfStats.resx">
+      <DependentUpon>QnfStats.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\QueriesControl.resx">
+      <DependentUpon>QueriesControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\QbContentsTree.resx">
+      <DependentUpon>QbContentsTree.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\QbControl.resx">
+      <DependentUpon>QbControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaPanel.resx">
+      <DependentUpon>CriteriaPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\ColumnFormatDialog.resx">
+      <DependentUpon>ColumnFormatDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\QueryTableControl.resx">
+      <DependentUpon>QueryTableControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryBuilder\QueryTablesControl.resx">
+      <DependentUpon>QueryTablesControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewSpotfire\PropertyDialogs\QueryColumnSelector.resx">
+      <DependentUpon>QueryColumnSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewSpotfire\PropertyDialogs\DataMapControl.resx">
+      <DependentUpon>DataMapControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsViewSpotfire\PropertyDialogs\QuerySelectorControl.resx">
+      <DependentUpon>QuerySelectorControl.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Mobius.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MobiusCommon\CdkMx\CdkMx.csproj">
+      <Project>{203d17b0-f97c-4c9b-b406-cae30dad3241}</Project>
+      <Name>CdkMx</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\ComOps\ComOps.csproj">
+      <Project>{6e5dcba5-7804-42e2-b7ae-ec0f718621c9}</Project>
+      <Name>ComOps</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\Data\Data.csproj">
+      <Project>{d4397193-c9db-4a7f-a047-98d40ac12647}</Project>
+      <Name>Data</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\HelmWebEditor\HelmWebEditor.csproj">
+      <Project>{6e5a710d-d31a-4a3e-bb3b-e4212921261a}</Project>
+      <Name>HelmWebEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\HelmWebServices\HelmWebServices.csproj">
+      <Project>{f8fefca4-b843-4cbc-bef4-d182e259b3ad}</Project>
+      <Name>HelmWebServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MobiusServices\NativeSessionClient\NativeSessionClient.csproj">
+      <Project>{EC0203FD-D464-4BA0-A088-B87C31139F47}</Project>
+      <Name>NativeSessionClient</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Spotfire\SpotfireApiClient\SpotfireApiClient.csproj">
+      <Project>{7d73be3e-411f-48cc-9f1e-f6c0dc3094d9}</Project>
+      <Name>SpotfireApiClient</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Spotfire\SpotfireComClientMx\SpotfireComClientMx.csproj">
+      <Project>{8bbb7274-d056-4b72-b9c2-c04122113b6f}</Project>
+      <Name>SpotfireComClientMx</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Spotfire\SpotfireDocumentClasses\SpotfireDocumentClasses.csproj">
+      <Project>{ec900570-2e1d-44ff-94a0-630aadb30cde}</Project>
+      <Name>SpotfireDocumentClasses</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceFacade\ServiceFacade.csproj">
+      <Project>{4921b4b1-fbea-4c6b-87a6-e9481e3bebd1}</Project>
+      <Name>ServiceFacade</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\DataSources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Svg">
+      <Version>3.0.102</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
