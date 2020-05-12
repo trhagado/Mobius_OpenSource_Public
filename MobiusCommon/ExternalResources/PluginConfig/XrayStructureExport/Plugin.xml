@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- Plugin for X-Ray structure export -->
+
+<plugin
+  id = "Mobius.Tools.XrayStructureExport"
+  name="Xray Structure Export"
+  version="1.0"
+  provider-name =" Tom Hagadone"
+  class = "Mobius.Tools.XrayStructureExport" >
+  
+  <runtime>
+		<library name ="Tools.dll" />
+	</runtime>
+
+  <extension point = "Mobius.Action" 
+      id = "XrayStructureExport"
+      methodName = "ClickFunction" >
+  </extension>
+
+</plugin>

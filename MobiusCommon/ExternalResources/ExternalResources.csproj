@@ -72,6 +72,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="PluginConfig\MultStructSearch\Plugin.xml" />
+    <Content Include="PluginConfig\RgroupDecomposition\Plugin.xml" />
+    <Content Include="PluginConfig\RgroupMatrix\Plugin.xml" />
+    <Content Include="PluginConfig\SarLandscape\Plugin.xml" />
+    <Content Include="PluginConfig\TargetResultsViewer\Plugin.xml" />
+    <Content Include="PluginConfig\XrayStructureExport\Plugin.xml" />
     <Content Include="SpotfireWebPlayerTemplate.htm" />
     <Content Include="TestQueryScript.txt" />
   </ItemGroup>

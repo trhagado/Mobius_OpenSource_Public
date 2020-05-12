@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- Plugin for Multiple Structure Search functionality -->
+
+<plugin
+  id = "Mobius.Tools.MultStructSearch"
+  name="Multiple Structure Search"
+  version="1.0"
+  provider-name =" Tom Hagadone"
+  class = "Mobius.Tools.MultStructSearch" >
+  
+  <runtime>
+    <library name ="Tools.dll" />
+  </runtime>
+
+  <extension point = "Mobius.Action" 
+      id = "Mobius.Tools.MultStructSearch"
+      menubarPath = "Tools"
+      label = "Multiple Structure Search..."
+      class = "Mobius.Tools.MultStructSearch" >
+  </extension>
+
+</plugin>

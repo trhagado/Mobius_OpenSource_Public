@@ -753,8 +753,11 @@ M  END
 			if (format == MoleculeFormat.Molfile) // compress molfiles to chime
 			{
 				format = MoleculeFormat.Chime;
-				value = cs.ChimeString;
+				value = cs.GetChimeString();
 			}
+
+			if (format == MoleculeFormat.Unknown || Lex.IsUndefined(value))
+				return;
 
 			CompactMolecule cm = new CompactMolecule(format, value);
 			string key = "CidToMolecule(" + cid + ")";

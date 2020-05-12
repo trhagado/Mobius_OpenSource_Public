@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- Plugin for Rgroup Matrix functionality -->
+
+<plugin
+  id = "Mobius.Tools.RgroupMatrix"
+  name="Rgroup Matrix"
+  version="1.0"
+  provider-name =" Tom Hagadone"
+  class = "Mobius.Tools.RgroupMatrix" >
+  
+  <runtime>
+		<library name ="Tools.dll" />
+	</runtime>
+
+  <extension point = "Mobius.Action" 
+      id = "Mobius.Tools.RgroupMatrix"
+      menubarPath = "Tools"
+      label = "R-group Matrix..."
+      class = "Mobius.Tools.RgroupMatrix" >
+  </extension>
+
+</plugin>

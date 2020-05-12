@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- Plugin for SAR Landscape Analysis functionality -->
+
+<plugin
+  id = "Mobius.Tools.SarLandscape"
+  name="SAR Landscape Analysis"
+  version="1.0"
+  provider-name =" Tom Hagadone"
+  class = "Mobius.Tools.SarLandscape" >
+  
+  <runtime>
+    <library name ="Tools.dll" />
+  </runtime>
+
+  <extension point = "Mobius.Action" 
+      id = "Mobius.Tools.SarLandscape"
+      menubarPath = "Tools"
+      label = "SAR &quot;Landscape&quot; Analysis..."
+      class = "Mobius.Tools.SarLandscape" >
+  </extension>
+
+</plugin>

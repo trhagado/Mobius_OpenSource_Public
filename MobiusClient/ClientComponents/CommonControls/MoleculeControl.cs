@@ -90,7 +90,7 @@ namespace Mobius.ClientComponents
 			try
 			{
 				MoleculeCtl.Dock = DockStyle.Fill;
-				//MoleculeCtl.BorderStyle = BorderStyle.None;
+				MoleculeCtl.BorderStyle = BorderStyle.None;
 				//DisplayPreferences.SetStandardDisplayPreferences(MoleculeCtl);
 
 				HelmControl.HelmMode = Helm.HelmControlMode.BrowserViewOnly; // setup with rendering directly from Chrome browser (not just a bitmap)

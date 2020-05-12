@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- Plugin for TargetResultsViewer (Spill the Beans) -->
+
+<plugin
+  id = "Mobius.Tools.TargetResultsViewer"
+  name="TargetResultsViewer"
+  version="1.0"
+  provider-name =" Tom Hagadone"
+  class = "Mobius.Tools.TargetResultsViewer" >
+  
+  <runtime>
+    <library name ="Tools.dll" />
+  </runtime>
+
+  <extension point = "Mobius.Action" 
+      id = "Mobius.Tools.TargetResultsViewer"
+      menubarPath = "Tools"
+      label = "Target View of All Assay Data (Spill the Beans)..."
+      class = "Mobius.Tools.TargetResultsViewer" >
+  </extension>
+
+</plugin>

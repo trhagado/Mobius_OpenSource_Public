@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- Plugin for Rgroup Decomposition functionality -->
+
+<plugin
+  id = "Mobius.Tools.RgroupDecomposition"
+  name="Rgroup Decomposition"
+  version="1.0"
+  provider-name =" Tom Hagadone"
+  class = "Mobius.Tools.RgroupDecomposition" >
+  
+  <runtime>
+    <library name ="Tools.dll" />
+  </runtime>
+
+  <extension point = "Mobius.Action" 
+      id = "Mobius.Tools.RgroupDecomposition"
+      menubarPath = "Tools"
+      label = "R-group Decomposition Table..."
+      class = "Mobius.Tools.RgroupDecomposition" >
+  </extension>
+
+</plugin>
