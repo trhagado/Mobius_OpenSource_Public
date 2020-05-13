@@ -15,7 +15,7 @@ namespace Mobius.ComOps
 		/// <param name="s"></param>
 		/// <returns></returns>
 
-		public MemoryStream StringToMemoryStream(string s)
+		public static MemoryStream StringToMemoryStream(string s)
 		{
 			byte[] byteArray = Encoding.ASCII.GetBytes(s);
 			MemoryStream stream = new MemoryStream(byteArray);
@@ -28,7 +28,7 @@ namespace Mobius.ComOps
 		/// <param name="stream"></param>
 		/// <returns></returns>
 
-		public string StreamToString(Stream stream)
+		public static string StreamToString(Stream stream)
 		{
 			StreamReader reader = new StreamReader(stream);
 			string text = reader.ReadToEnd();

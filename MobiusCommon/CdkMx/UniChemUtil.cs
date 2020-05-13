@@ -1,8 +1,6 @@
 ﻿using Mobius.ComOps;
 using Mobius.Data;
 
-using java.io;
-
 using NCDK;
 using NCDK.Aromaticities;
 using NCDK.Config;

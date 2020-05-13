@@ -10,7 +10,7 @@ namespace Mobius.ComOps
 	/// Mobius CellStype class
 	/// </summary>
 
-	public class CellStyleMx 
+	public class CellStyleMx
 	{
 		public Font Font = null;
 		public Color ForeColor = Color.Black;

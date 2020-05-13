@@ -835,13 +835,13 @@ namespace Mobius.CdkMx
 		/// <param name="ji"></param>
 		/// <param name="defaultValue"></param>
 		/// <returns></returns>
-		public static int ji2i(
-			java.lang.Integer ji,
-			int defaultValue = 0)
-		{
-			if (ji == null) return defaultValue;
-			else return ji.intValue();
-		}
+		//public static int ji2i(
+		//	java.lang.Integer ji,
+		//	int defaultValue = 0)
+		//{
+		//	if (ji == null) return defaultValue;
+		//	else return ji.intValue();
+		//}
 
 
 		/// <summary>
@@ -849,11 +849,11 @@ namespace Mobius.CdkMx
 		/// </summary>
 		/// <param name="i"></param>
 		/// <returns></returns>
-		public static java.lang.Integer i2ji(
-			int i)
-		{
-			return new java.lang.Integer(i);
-		}
+		//public static java.lang.Integer i2ji(
+		//	int i)
+		//{
+		//	return new java.lang.Integer(i);
+		//}
 
 		/// <summary>
 		/// Convert an Inchi string to a molfile

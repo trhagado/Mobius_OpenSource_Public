@@ -32,9 +32,9 @@ using System.Windows.Forms;
 namespace Mobius.CdkMx
 {
 
-		/// <summary>
-		/// Wrapper for native CDK Molecule class
-		/// </summary>
+	/// <summary>
+	/// Wrapper for native CDK Molecule class
+	/// </summary>
 
 	public partial class CdkMol : ICdkMol
 	{
@@ -44,12 +44,39 @@ namespace Mobius.CdkMx
 		internal int Id = InstanceCount++; // id of this instance
 		internal static int InstanceCount = 0; // instance count
 
-/// <summary>
-/// Get molecule
-/// </summary>
-/// <returns></returns>
 
-		public CompactMolecule GetMolecule()
+		/// <summary>
+		/// Get the molecule value in a molfile format
+		/// </summary>
+		/// <returns></returns>
+
+		public string GetMolfile()
+		{
+			if (NativeMol == null) return null;
+
+			string molfile = AtomContainerToMolfile(NativeMol);
+			return molfile;
+		}
+
+        /// <summary>
+        /// Get the molecule value as a smiles string
+        /// </summary>
+        /// <returns></returns>
+
+        public string GetSmiles()
+        {
+            if (NativeMol == null) return null;
+
+            string molfile = AtomContainerToSmiles(NativeMol);
+            return molfile;
+        }
+
+        /// <summary>
+        /// Get molecule as a CompactMolecule
+        /// </summary>
+        /// <returns></returns>
+
+        public CompactMolecule GetMolecule()
 		{
 			return new CompactMolecule(_molFormat, _molString);
 		}

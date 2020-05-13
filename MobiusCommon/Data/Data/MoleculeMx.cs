@@ -1021,7 +1021,7 @@ namespace Mobius.Data
 				}
 			}
 
-			r.SetMolecule(cs.PrimaryFormat, cs.PrimaryValue); // set the structure
+			r.SetMoleculeAndRender(cs.PrimaryFormat, cs.PrimaryValue); // set the structure
 
 			string tag = "";
 			if (Lex.IsDefined(name))

@@ -43,12 +43,12 @@ namespace Mobius.ComOps
 			else return false;
 		}
 
-/// <summary>
-/// Verify that the supplied string is either SVG or compressed SVG and return the uncompressed form
-/// </summary>
-/// <param name="s"></param>
-/// <param name="svgXml"></param>
-/// <returns></returns>
+		/// <summary>
+		/// Verify that the supplied string is either SVG or compressed SVG and return the uncompressed form
+		/// </summary>
+		/// <param name="s"></param>
+		/// <param name="svgXml"></param>
+		/// <returns></returns>
 
 		public static bool TryGetSvgXml(
 			string s,
@@ -64,14 +64,28 @@ namespace Mobius.ComOps
 			else return GZip.TryDecompressFromString(s, out svgXml);
 		}
 
-		/// <summary>
-		/// Get bitmap from SVG XML
-		/// </summary>
-		/// <param name="svgXml"></param>
-		/// <param name="bitmapWidth">Desired width in pixels</param>
-		/// <returns></returns>
+        /// <summary>
+        /// Convert a SvgDocument to a SVG Xml string
+        /// </summary>
+        /// <param name="svgDoc"></param>
+        /// <returns></returns>
 
-		public static Bitmap GetBitmapFromSvgXml( 
+        public static string SvgDocumentToXml(SvgDocument svgDoc)
+        {
+            var stream = new MemoryStream(); // convert doc 
+            svgDoc.Write(stream);
+            string newSvg = Encoding.UTF8.GetString(stream.GetBuffer());
+            return newSvg;
+        }
+
+        /// <summary>
+        /// Get bitmap from SVG XML
+        /// </summary>
+        /// <param name="svgXml"></param>
+        /// <param name="bitmapWidth">Desired width in pixels</param>
+        /// <returns></returns>
+
+    public static Bitmap GetBitmapFromSvgXml( 
 			string svgXml,
 			int bitmapWidth)
 		{
@@ -191,24 +205,10 @@ namespace Mobius.ComOps
 				if (bbWidth <= 0) bbWidth = 1; // avoid possible zero divide
 				float bbHeight = bb.Height;
 
-#if false // needs work
-				if (bbWidth < newDocWidth) // scale up the ViewBox to avoid having a small object (e.g. structure) appear too big 
-				{
-					float scaleUp = newDocWidth / bbWidth;
-
-					float midX = (float)GeometryMx.Midpoint(bb.Left, bb.Right);
-					bbLeft = midX - (bbWidth / 2) * scaleUp;
-					bbWidth *= scaleUp;
-
-					float midY = (float)GeometryMx.Midpoint(bb.Top, bb.Bottom);
-					bbTop = midY - (bbHeight / 2) * scaleUp;
-					bbHeight *= scaleUp;
-				}
-#endif
-
 				SvgViewBox vb2 = new SvgViewBox(bbLeft, bbTop, bbWidth, bbHeight); // adjust the view box to just contain the image elements
 				doc.ViewBox = vb2;
 
+				docUnits = doc.Width.Type;
 				doc.Width = new SvgUnit(docUnits, docWidth);
 				float docHeight = docWidth * (bbHeight / bbWidth);
 				doc.Height = new SvgUnit(docUnits, docHeight);
@@ -216,11 +216,13 @@ namespace Mobius.ComOps
 				doc.X = new SvgUnit(docUnits, 0);
 				doc.Y = new SvgUnit(docUnits, 0);
 
-				//float docHeight = doc.Width.Value * (bbHeight / bbWidth); // as an alternate to the above, just adjust the doc height without changing units
-				//doc.Height = new SvgUnit(doc.Height.Type, docHeight);
-
-				//string svg = doc.gets
-
+				if (DebugMx.True && ClientState.IsDeveloper) // debug - dump xml and bitmap
+					try
+					{
+						FileUtil.WriteFile(@"c:\downloads\SvgUtilTestXml.html", svgXml);
+						//bmp.Save(@"c:\downloads\SvgUtilTestBmp.bmp");
+					}
+					catch (Exception ex) { ex = ex; }
 				return doc;
 			}
 

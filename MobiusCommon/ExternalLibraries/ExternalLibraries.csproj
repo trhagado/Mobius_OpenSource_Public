@@ -86,9 +86,7 @@
     <Content Include="Newtonsoft.Json.dll" />
     <Content Include="Novell.Directory.Ldap.dll" />
     <Content Include="Office.dll" />
-    <Content Include="Oracle.DataAccess.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Oracle.DataAccess.dll" />
     <Content Include="PoorMansTSqlFormatterLib35.dll" />
     <Content Include="QtCore4.dll" />
     <Content Include="QtGui4.dll" />

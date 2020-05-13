@@ -13,16 +13,142 @@ using System;
 using System.IO;
 using System.Drawing;
 using System.Diagnostics;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ComponentModel;
+using DevExpress.Utils.Svg;
 
 namespace Mobius.CdkMx
 {
 	public partial class CdkMolControl : DevExpress.XtraEditors.XtraUserControl, ICdkMolControl
 	{
+		CdkMol CdkMol = null;
 
+		public string MolString = "";
+		public MoleculeFormat MolFormat = MoleculeFormat.Unknown;
+
+/// <summary>
+/// SetMoleculeAndRender
+/// </summary>
+/// <param name="format"></param>
+/// <param name="value"></param>
+
+		public void SetMoleculeAndRender(MoleculeFormat format, string value)
+		{
+			MolFormat = format;
+			MolString = value;
+
+			CdkMol = new CdkMol(MolFormat, MolString);
+
+			RenderMolecule();
+
+			return;
+		}
+
+/// <summary>
+/// RenderMolecule
+/// </summary>
+
+		public void RenderMolecule()
+		{
+			Rectangle destRect = this.Bounds, boundingRect;
+			string svg;
+			Svg.SvgDocument svgDoc;
+			Bitmap bm;
+			int height; // formatted  height in milliinches
+			bool markBoundaries = false;
+			int fixedHeight = 0, translateType = 0, desiredBondLength = 100, pageHeight = 11000;
+			int miWidth;
+
+			if (MolFormat == MoleculeFormat.Unknown || Lex.IsUndefined(MolString))
+			{
+				ImageCtl.SvgImage = null;
+				ImageCtl.Image = null;
+				return;
+			}
+
+			svg = CdkMol.GetMoleculeSvg(this.Width, this.Height); // get svg 
+
+			if (DebugMx.False) // Create bitmap from CdkMol
+			{
+				bm = CdkMol.GetMoleculeBitmap(this.Width, this.Height);
+				ImageCtl.Image = bm;
+				return;
+			}
+
+			if (DebugMx.False) // Create svg, then get bitmap 
+			{
+				bm = SvgUtil.GetBitmapFromSvgXml(svg, this.Width);
+				ImageCtl.Image = bm;
+				return;
+			}
+
+			if (DebugMx.False) // Fit structure, then get bitmap
+			{
+				int stdBoxWidthPx = Mobius.Data.MoleculeMx.MilliinchesToPixels(Mobius.Data.MoleculeMx.StandardBoxWidth);
+				double scale = (float)this.Width / stdBoxWidthPx;
+				desiredBondLength = CdkMol.AdjustBondLengthToValidRange((int)(Mobius.Data.MoleculeMx.StandardBondLength * scale)); // (not implemented)
+				if (desiredBondLength < 1) desiredBondLength = 1;
+
+				CdkMol.FitStructureIntoRectangle // scale and translate structure into supplied rectangle.
+					(ref destRect, desiredBondLength, translateType, fixedHeight, markBoundaries, pageHeight, out boundingRect);
+
+				bm = CdkMol.GetMoleculeBitmap(this.Width, this.Height);
+				ImageCtl.Image = bm;
+				return;
+			}
+
+			if (DebugMx.True) // Create control SvgImage directly from SVG 
+			{
+				MemoryStream ms = StreamConverter.StringToMemoryStream(svg); // convert SVG to image for control
+				SvgImage svgImg = new SvgImage(ms);
+				ImageCtl.SvgImage = svgImg;
+				return;
+			}
+
+			if (DebugMx.True) 
+			{
+				//miWidth = MoleculeMx.PixelsToMilliinches(this.Width);
+				//float inchWidth = miWidth / 1000.0f; // convert width milliinches to inches
+				//svgDoc = SvgUtil.AdjustSvgDocumentToFitContent(svg, inchWidth, Svg.SvgUnitType.Inch);
+
+				string newSvg = SvgUtil.AdjustSvgToFitContent(svg, this.Width, Svg.SvgUnitType.Pixel, out svgDoc);
+				ImageCtl.Image = svgDoc.Draw(ImageCtl.Width, ImageCtl.Height);
+
+				//bm = SvgUtil.GetBitmapFromSvgXml(newSvg, this.Width);
+				//ImageCtl.Image = bm;
+				return;
+			}
+		}
+
+		/// <summary>
+		/// Getter/setter for molfile 
+		/// </summary>
+
+		public string MolfileString
+		{
+			get
+			{
+				if (CdkMol == null) return null;
+				string molfile = CdkMol.GetMolfile();
+				return molfile; 
+			}
+
+			set
+			{
+				SetMoleculeAndRender(MoleculeFormat.Molfile, value);
+			}
+		}
+
+
+		public void GetMolecule(out MoleculeFormat format, out string value)
+		{		
+			format = MolFormat;
+			value = MolString;
+			return;
+		}
 
 		public DisplayPreferences Preferences = null;
 
@@ -43,19 +169,6 @@ namespace Mobius.CdkMx
 		// }
 		// event MolEditorReturnedHandler _editorReturnedHandler;
 
-		public void SetMolecule(MoleculeFormat format, string value)
-		{
-			PrimaryFormat = format;
-			PrimaryValue = value;
-		}
-
-		public void GetMolecule(out MoleculeFormat format, out string value)
-		{
-			format = PrimaryFormat;
-			value = PrimaryValue;
-			return;
-		}
-
 
 		public void SetTag(object tag)
 		{
@@ -71,19 +184,6 @@ namespace Mobius.CdkMx
 		/// <summary>
 		/// Set control molecule from molfile string
 		/// </summary>
-
-		public string MolfileString
-		{
-			get
-			{
-				return ""; // throw new NotImplementedException();
-			}
-
-			set
-			{
-				return; // throw new NotImplementedException();
-			}
-		}
 
 		public DisplayPreferences DisplayPreferences;
 
@@ -106,20 +206,6 @@ namespace Mobius.CdkMx
 			throw new NotImplementedException();
 		}
 
-
-		/// <summary>
-		/// Get current version
-		/// </summary>
-		/// <returns></returns>
-		public static string GetVersion()
-		{
-			throw new NotImplementedException();
-			//Renderer hr = new Renderer(); // causes exception if not installed
-			//Assembly a = hr.GetType().Assembly;
-			//string codeBase = a.CodeBase; // needed in html references
-			//string version = a.GetName().Version.ToString();
-			//return version;
-		}
 
 		/// <summary>
 		/// Edit the structure in the specified Renditor
@@ -145,9 +231,6 @@ namespace Mobius.CdkMx
 			}
 		}
 		// Stub class based on HelmControl
-
-		public string PrimaryValue = "";
-		public MoleculeFormat PrimaryFormat = MoleculeFormat.Unknown;
 
 		[DefaultValue(CdkMolControlMode.BrowserViewOnly)]
 		public CdkMolControlMode HelmMode { get => _helmMode; set => _helmMode = value; }
@@ -366,15 +449,6 @@ namespace Mobius.CdkMx
 		}
 
 		/// <summary>
-		/// ResizeRendering
-		/// </summary>
-
-		public void ResizeRendering()
-		{
-			WinFormsBrowserMx.ResizeRendering();
-		}
-
-		/// <summary>
 		/// Get current HELM
 		/// </summary>
 		/// <returns></returns>
@@ -568,22 +642,13 @@ namespace Mobius.CdkMx
 
 		private void CdkMolControl_SizeChanged(object sender, EventArgs e)
 		{
-			if (WinFormsBrowserMx == null && OffScreenBrowserMx == null) return; // just return if nothing in HELM control yet
+			RenderMolecule();
 
 			if (Debug) DebugLog.Message("CdkMolControl_SizeChanged: " + this.Size.Width + ", " + this.Size.Height);
 
-			//ResizeRendering(); // redraw the helm at the proper size (being done at browser level now)
-
 			return;
 		}
-	}
 
-	class JsHandler
-	{
-		public void HandleJsCall(int arg)
-		{
-			MessageBox.Show($"Value Provided From JavaScript: {arg.ToString()}", "C# Method Called");
-		}
 	}
 
 	/// <summary>

@@ -311,10 +311,12 @@
     <ProjectReference Include="..\HelmWebEditor\HelmWebEditor.csproj">
       <Project>{6e5a710d-d31a-4a3e-bb3b-e4212921261a}</Project>
       <Name>HelmWebEditor</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\HelmWebServices\HelmWebServices.csproj">
       <Project>{f8fefca4-b843-4cbc-bef4-d182e259b3ad}</Project>
       <Name>HelmWebServices</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

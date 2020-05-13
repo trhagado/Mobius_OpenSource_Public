@@ -288,9 +288,9 @@ namespace Mobius.ClientComponents
 						DisplayPreferences dp = mol.GetDisplayPreferences();
 						if (debug) DebugLog.StopwatchMessage("tGetDisplayPreferences", sw);
 
-						desiredBondLength = mol.CdkMol.AdjustBondLengthToValidRange(desiredBondLength); // be sure bond len within allowed range 
-						if (debug) DebugLog.StopwatchMessage("tAdjustBondLengthToValidRange", sw);
-						dp.StandardBondLength = MoleculeMx.MilliinchesToDecipoints(desiredBondLength);
+						//desiredBondLength = mol.CdkMol.AdjustBondLengthToValidRange(desiredBondLength); // be sure bond len within allowed range 
+						//if (debug) DebugLog.StopwatchMessage("tAdjustBondLengthToValidRange", sw);
+						//dp.StandardBondLength = MoleculeMx.MilliinchesToDecipoints(desiredBondLength);
 						bm = mol.CdkMol.GetFixedHeightMoleculeBitmap(pixWidth, pixHeight, dp, cellStyle, mol.Caption);
 						if (debug) DebugLog.StopwatchMessage("tGetBitmap", sw);
 					}
