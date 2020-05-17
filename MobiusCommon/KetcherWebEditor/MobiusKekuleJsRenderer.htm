@@ -1,0 +1,59 @@
+﻿<!--
+//////////////////////////////////////////////////////////////////////////////////
+// MobiusKekuleJsRenderer.htm
+//////////////////////////////////////////////////////////////////////////////////
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>Mobius KekuleJs Renderer</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script type='text/javascript' src='//[server]/regmol/tools/dojo/dojo/dojo.js'></script> 
+    <script type='text/javascript' src='//[server]/regmol/jsdraw/Scilligence.JSDraw2.Pro.js'></script>
+    <script type='text/javascript' src='//[server]/regmol/jsdraw/Service.aspx'></script>
+    <script type='text/javascript' src='//[server]/regmol/jsdraw/Service.aspx?cmd=KekuleJs.monomer.downloadjson&url-username=<userName>@[server]&url-password=<password>'></script>
+<head>
+  
+  <body>
+
+	<div id='Div2' dataformat='KekuleJs' data="PEPTIDE1{A}$$$$"></div>
+
+    <script type="text/javascript">
+		var jsd = null; // global JSDraw variable we can reference in later injected JavaScript
+			 
+		scil.ready(function () {
+			jsd = new JSDraw2.Editor("Div2", { skin: "w8", width: 800, height: 400, viewonly: true, showKekuleJspopup: true }); // JSDraw viewer with monomer popup, no edit
+			
+			//jsd = new JSDraw2.Editor("Div2", { skin: "w8", width: 800, height: 400, popup: true, showKekuleJspopup: true }); // // JSDraw viewer with monomer popup and double-click popup editor
+			
+			//jsd = new JSDraw2.Editor("Div2", { skin: "w8", width: 800, height: 400, viewonly: false, showKekuleJspopup: true }); // JSDraw in-place editor with monomer popup
+		});
+
+		//document.onclick= function(event) {
+		//if (event===undefined) event= window.event;
+		//var target= 'target' in event? event.target : event.srcElement;
+		//
+		//window.external.DocumentClickedCallback(target.tagName); // notify browser container
+		//CefSharp.PostMessage('clicked on ' + target.tagName); 
+		//};
+
+		function getKekuleJsString() {
+		  return jsd.getKekuleJs();
+		}
+
+		function getSvgString() { 
+		  return jsd.getSvg(); 
+		}
+		
+		function getMolfileString() {
+		  var data = { jsdraw: jsd.getXml(), outputformat: 'molfile' };
+	      var result = scil.Utils.ajaxwait( // call ajax to invoke the service 
+		   JSDrawServices.url + '?cmd=jsdraw.KekuleJs2mol', // the url and command
+	       data); // the data); i.e. parameters for service call
+		  return result == null ? null : result.output 
+		}
+
+    </script>
+  </body>
+</html>

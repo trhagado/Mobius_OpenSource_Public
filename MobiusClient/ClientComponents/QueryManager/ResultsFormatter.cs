@@ -2852,7 +2852,7 @@ together to keep the related segments together.
 
 								MoleculeControl molCtl = MoleculeEditor.Instance.MoleculeCtl;
 								molCtl.SetupAndRenderMolecule(cs);
-								if (molCtl.MoleculeCtl.CanCopy)
+								if (molCtl.KekuleJsCtl.CanCopy)
 								{
 									molCtl.CopyMoleculeToClipboard();
 									if (Rf.ExportStructureFormat == ExportStructureFormat.Insight)

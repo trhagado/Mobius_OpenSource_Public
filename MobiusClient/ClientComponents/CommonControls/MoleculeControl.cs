@@ -89,8 +89,8 @@ namespace Mobius.ClientComponents
 
 			try
 			{
-				MoleculeCtl.Dock = DockStyle.Fill;
-				MoleculeCtl.BorderStyle = BorderStyle.None;
+				KekuleJsCtl.Dock = DockStyle.Fill;
+				KekuleJsCtl.BorderStyle = BorderStyle.None;
 				//DisplayPreferences.SetStandardDisplayPreferences(MoleculeCtl);
 
 				HelmControl.HelmMode = Helm.HelmControlMode.BrowserViewOnly; // setup with rendering directly from Chrome browser (not just a bitmap)
@@ -120,7 +120,7 @@ namespace Mobius.ClientComponents
 			if (Controls.Contains(HelmControl))
 				return MoleculeRendererType.Helm;
 
-			else if (Controls.Contains(MoleculeCtl))
+			else if (Controls.Contains(KekuleJsCtl))
 				return MoleculeRendererType.Chemistry;
 
 			else return MoleculeRendererType.Unknown;
@@ -136,8 +136,8 @@ namespace Mobius.ClientComponents
 			if (Controls.Contains(HelmControl))
 				return HelmControl;
 
-			else if (Controls.Contains(MoleculeCtl))
-				return MoleculeCtl;
+			else if (Controls.Contains(KekuleJsCtl))
+				return KekuleJsCtl;
 
 			else return null;
 		}
@@ -218,9 +218,9 @@ namespace Mobius.ClientComponents
 
 			if (newRenderer == MoleculeRendererType.Chemistry)
 			{
-				Controls.Add(MoleculeCtl);
+				Controls.Add(KekuleJsCtl);
 				RenditorRtClickMessageFilter = // capture rt-click for Renditor
-					WindowsMessageFilter.CreateRightClickMessageFilter(MoleculeCtl, MoleculeControlRightMouseButtonMessageReceived);
+					WindowsMessageFilter.CreateRightClickMessageFilter(KekuleJsCtl, MoleculeControlRightMouseButtonMessageReceived);
 			}
 
 			else if (newRenderer == MoleculeRendererType.Helm)
@@ -240,8 +240,8 @@ namespace Mobius.ClientComponents
 			if (Controls.Contains(HelmControl))
 				Controls.Remove(HelmControl);
 
-			if (Controls.Contains(MoleculeCtl))
-				Controls.Remove(MoleculeCtl);
+			if (Controls.Contains(KekuleJsCtl))
+				Controls.Remove(KekuleJsCtl);
 
 			return;
 		}
@@ -261,7 +261,7 @@ namespace Mobius.ClientComponents
 				else if (Molecule.IsChemStructureFormat)
 				{
 					string molfile = Molecule.GetMolfileString();
-					MoleculeCtl.MolfileString = molfile;
+					KekuleJsCtl.MolfileString = molfile;
 				}
 
 				else if (Molecule.IsBiopolymerFormat)
@@ -306,7 +306,7 @@ namespace Mobius.ClientComponents
 				Molecule = new MoleculeMx(MoleculeMx.PreferredMoleculeFormat);
 
 			if (DisplayChem)
-				CdkMx.CdkMolControl.EditStructure(MoleculeCtl);
+				CdkMx.CdkMolControl.EditStructure(KekuleJsCtl);
 
 			else if (DisplayHelm)
 				HelmControl.EditMolecule();
@@ -411,12 +411,12 @@ namespace Mobius.ClientComponents
 		{
 			try
 			{
-				if (MoleculeCtl.CanPaste)
+				if (KekuleJsCtl.CanPaste)
 				{
 					SetupRendererControl(MoleculeRendererType.Chemistry);
-					MoleculeCtl.PasteFromClipboard();
+					KekuleJsCtl.PasteFromClipboard();
 
-					SetPrimaryTypeAndValue(MoleculeFormat.Molfile, MoleculeCtl.MolfileString);
+					SetPrimaryTypeAndValue(MoleculeFormat.Molfile, KekuleJsCtl.MolfileString);
 					return true;
 				}
 
@@ -450,8 +450,8 @@ namespace Mobius.ClientComponents
 
 			if (mol.IsChemStructureFormat)
 			{
-				if (MoleculeCtl.CanCopy)
-					MoleculeCtl.CopyToClipboard();
+				if (KekuleJsCtl.CanCopy)
+					KekuleJsCtl.CopyToClipboard();
 				return;
 			}
 
@@ -480,10 +480,10 @@ namespace Mobius.ClientComponents
 				lock (StaticChemCopyPasteMoleculeControl) // non-reentrant
 				{
 					MoleculeControl ctl = StaticChemCopyPasteMoleculeControl;
-					ctl.MoleculeCtl.MolfileString = mol.GetMolfileString(); // set and render the molecule
+					ctl.KekuleJsCtl.MolfileString = mol.GetMolfileString(); // set and render the molecule
 
-					if (ctl.MoleculeCtl.CanCopy)
-						ctl.MoleculeCtl.CopyToClipboard();
+					if (ctl.KekuleJsCtl.CanCopy)
+						ctl.KekuleJsCtl.CopyToClipboard();
 				}
 				return;
 			}

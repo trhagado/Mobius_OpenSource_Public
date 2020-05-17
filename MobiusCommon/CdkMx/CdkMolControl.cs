@@ -22,7 +22,7 @@ using DevExpress.Utils.Svg;
 
 namespace Mobius.CdkMx
 {
-	public partial class CdkMolControl : DevExpress.XtraEditors.XtraUserControl, ICdkMolControl
+	public partial class CdkMolControl : DevExpress.XtraEditors.XtraUserControl, INativeMolControl
 	{
 		CdkMol CdkMol = null;
 
@@ -150,7 +150,7 @@ namespace Mobius.CdkMx
 			return;
 		}
 
-		public DisplayPreferences Preferences = null;
+		public DisplayPreferences Preferences = new DisplayPreferences();
 
 		public event EventHandler StructureChanged;
 

@@ -123,7 +123,7 @@ namespace Mobius.ClientComponents
 			try
 			{
 				Instance.MoleculeCtl.Molecule = mol;
-				ICdkMolControl molCtl = Instance.MoleculeCtl.MoleculeCtl;
+				INativeMolControl molCtl = (INativeMolControl)Instance.MoleculeCtl.KekuleJsCtl;
 				molCtl.EditorReturnedHandler = new MolEditorReturnedHandler(Instance.MolLibEditorReturned);
 
 				Instance.Text = title;
@@ -165,7 +165,7 @@ namespace Mobius.ClientComponents
 
 		private void Call_CdkMol_EditStructure()
 		{
-			CdkMx.CdkMolControl.EditStructure(Instance.MoleculeCtl.MoleculeCtl);
+			CdkMx.CdkMolControl.EditStructure(Instance.MoleculeCtl.KekuleJsCtl);
 			return;
 		}
 

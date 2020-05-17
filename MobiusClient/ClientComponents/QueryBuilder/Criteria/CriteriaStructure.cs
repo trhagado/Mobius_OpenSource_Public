@@ -155,7 +155,7 @@ namespace Mobius.ClientComponents
 
 			enabled = ChemSearchIsSupportedForColumn;
 			SubStruct.Enabled = Similarity.Enabled = Full.Enabled = enabled;
-			if (enabled && Psc.SearchType == StructureSearchType.Unknown) // default to SS search if not defined yet
+			if (Psc.SearchType == StructureSearchType.Unknown) // default to SS search if not defined yet
 				Psc.SearchType = StructureSearchType.Substructure;
 
 			// Enable SmallWorld Search option controls
@@ -170,12 +170,12 @@ namespace Mobius.ClientComponents
 			else if (Psc.SearchType == StructureSearchType.SmallWorld) // smallworld not allowed
 				Psc.SearchType = StructureSearchType.Unknown;
 
-			 DisplayPreferences.SetStandardDisplayPreferences(QueryMolCtl.MoleculeCtl.Preferences);
+			 DisplayPreferences.SetStandardDisplayPreferences(QueryMolCtl.KekuleJsCtl.Preferences);
 
 			if (Psc.SearchType == StructureSearchType.Substructure)
 			{
 				SubStruct.Checked = true;
-				QueryMolCtl.MoleculeCtl.Preferences.HydrogenDisplayMode = HydrogenDisplayMode.Off; // no hydrogen display for SSS
+				QueryMolCtl.KekuleJsCtl.Preferences.HydrogenDisplayMode = HydrogenDisplayMode.Off; // no hydrogen display for SSS
 			}
 
 			else if (Psc.SearchType == StructureSearchType.FullStructure)
@@ -384,7 +384,7 @@ namespace Mobius.ClientComponents
 		{
 			if (!SubStruct.Checked) return;
 
-			QueryMolCtl.MoleculeCtl.Preferences.HydrogenDisplayMode = HydrogenDisplayMode.Off; // no hydrogens for ss
+			QueryMolCtl.KekuleJsCtl.Preferences.HydrogenDisplayMode = HydrogenDisplayMode.Off; // no hydrogens for ss
 			Psc.SearchType = StructureSearchType.Substructure;
 			SetupOptions();
 		}
@@ -393,7 +393,7 @@ namespace Mobius.ClientComponents
 		{
 			if (!Full.Checked) return;
 
-			QueryMolCtl.MoleculeCtl.Preferences.HydrogenDisplayMode = HydrogenDisplayMode.Hetero;
+			QueryMolCtl.KekuleJsCtl.Preferences.HydrogenDisplayMode = HydrogenDisplayMode.Hetero;
 			Psc.SearchType = StructureSearchType.FullStructure;
 			SetupOptions();
 		}
@@ -402,7 +402,7 @@ namespace Mobius.ClientComponents
 		{
 			if (!Similarity.Checked) return;
 
-			QueryMolCtl.MoleculeCtl.Preferences.HydrogenDisplayMode = HydrogenDisplayMode.Hetero;
+			QueryMolCtl.KekuleJsCtl.Preferences.HydrogenDisplayMode = HydrogenDisplayMode.Hetero;
 			Psc.SearchType = StructureSearchType.MolSim;
 			//CriteriaStructureSimOptions.InitSimOptionsIfUndefined(Psc);
 			SetupOptions();

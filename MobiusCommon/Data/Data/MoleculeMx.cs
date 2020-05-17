@@ -1001,7 +1001,7 @@ namespace Mobius.Data
 		/// <param name="cs"></param>
 
 		public static void SetRendererStructure(
-			ICdkMolControl r,
+			INativeMolControl r,
 			MoleculeMx cs,
 			bool updateDisplayPreferences = true,
 			string name = "")
@@ -1062,7 +1062,7 @@ namespace Mobius.Data
 		}
 
 		public static void SetMoleculeControlStructure(
-			 ICdkMolControl r,
+			 INativeMolControl r,
 			 MoleculeMx cs)
 		{
 			throw new NotImplementedException();
@@ -1091,6 +1091,8 @@ namespace Mobius.Data
 
 		public override int GetHashCode()
 		{
+			if (SystemUtil.InDesignMode) return 123;
+
 			int hash = unchecked((int)MolWeight); // use molweight as hash
 			return hash;
 		}

@@ -1,0 +1,32 @@
+﻿<!--
+//////////////////////////////////////////////////////////////////////////////////
+// MobiusKekuleJsEditor.htm
+//////////////////////////////////////////////////////////////////////////////////
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>Mobius Sequence Editor</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script type='text/javascript' src='//[server]/regmol/tools/dojo/dojo/dojo.js'></script>
+    <script type='text/javascript' src='//[server]/regmol/jsdraw/Scilligence.JSDraw2.Pro.js'></script>
+    <script type='text/javascript' src='//[server]/regmol/jsdraw/Service.aspx'></script>
+    <script type='text/javascript' src='//[server]/regmol/jsdraw/Service.aspx?cmd=KekuleJs.monomer.downloadjson&url-username=<userName>@[server]&url-password=<password>'></script>
+  </head>
+  
+   <body>
+   <div id='ed'></div>
+   <script type='text/javascript'>
+   		var se = null; // global SequenceEditor variable we can reference later
+
+     dojo.ready(function() {
+       // create a JSDraw SequenceEditor
+       se = new JSDraw2.SequenceEditor("ed", { width: 800, height: 400 });
+       se.setFasta('>Protein\nAKDSKFKDFKDJFKJDFKJDKFJDKJFKDJFKDJFKJDF');
+       var fasta = se.getFasta();
+       var xml = se.getXml();
+     });
+   </script>
+   </body>
+</html>

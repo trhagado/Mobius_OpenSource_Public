@@ -517,7 +517,7 @@ namespace Mobius.Data
 	/// Interface for molecule renderer and editor
 	/// </summary>
 
-	public interface ICdkMolControl
+	public interface INativeMolControl
 	{
 
 		void SetMoleculeAndRender(MoleculeFormat format, string value); 
