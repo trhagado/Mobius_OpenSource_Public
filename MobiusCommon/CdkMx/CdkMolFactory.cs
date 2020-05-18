@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace Mobius.CdkMx
 {
-  public class CdkMolFactory : ICdkMolFactory
+  public class CdkMolFactory : INativeMolFactory
   {
 
 		/// <summary>
 		/// Basic constructor
 		/// </summary>
 
-		public ICdkMol NewCdkMol()
+		public INativeMol NewCdkMol()
 		{
 			return new CdkMol();
 		}
@@ -26,7 +26,7 @@ namespace Mobius.CdkMx
 		/// </summary>
 		/// <param name="parent"></param>
 
-		public ICdkMol NewCdkMol (MoleculeMx parent)
+		public INativeMol NewCdkMol (MoleculeMx parent)
 		{
 			return new CdkMol(parent);
 		}
@@ -38,7 +38,7 @@ namespace Mobius.CdkMx
 		/// <param name="molString"></param>
 		/// <returns></returns>
 
-		public ICdkMol NewCdkMol(
+		public INativeMol NewCdkMol(
 			MoleculeFormat molFormat,
 			string molString)
 		{

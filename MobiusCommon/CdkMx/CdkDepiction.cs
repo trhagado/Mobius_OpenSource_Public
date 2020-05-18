@@ -24,7 +24,7 @@ namespace Mobius.CdkMx
 	/// Depiction/Rendering
 	/// </summary>
 
-	public partial class CdkMol : ICdkMol 
+	public partial class CdkMol : INativeMol 
 	{
 		/// <summary>
 		/// Get structure bitmap with optional caption

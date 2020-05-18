@@ -22,7 +22,7 @@ namespace Mobius.CdkMx
 /// Substructure and full-structure search
 /// </summary>
 
-  public partial class CdkMol : ICdkMol
+  public partial class CdkMol : INativeMol
   {
 
     CdkMol FSSQueryMolecule = null;
@@ -35,8 +35,8 @@ namespace Mobius.CdkMx
     /// <returns></returns>
 
     public bool IsSSSMatch(
-      ICdkMol queryMol,
-      ICdkMol targetMol)
+      INativeMol queryMol,
+      INativeMol targetMol)
     {
       SetSSSQueryMolecule(queryMol as CdkMol);
       return IsSSSMatch(targetMol as CdkMol);
@@ -48,7 +48,7 @@ namespace Mobius.CdkMx
     /// <param name="queryMol"></param>
 
     public void SetSSSQueryMolecule(
-    ICdkMol queryMol)
+    INativeMol queryMol)
     {
       try
       {
@@ -67,7 +67,7 @@ namespace Mobius.CdkMx
     /// <returns></returns>
 
     public bool IsSSSMatch(
-      ICdkMol targetMol)
+      INativeMol targetMol)
     {
       throw new NotImplementedException();
     }
@@ -82,7 +82,7 @@ namespace Mobius.CdkMx
     /// <returns></returns>
 
     public bool GetSSSMapping(
-      ICdkMol targetMol,
+      INativeMol targetMol,
       out int queryIndex,
       out int[] mappedAtoms,
       out int[] mappedBonds)
@@ -165,8 +165,8 @@ namespace Mobius.CdkMx
     /// <param name="mappedBonds"></param>
     /// <returns></returns>
 
-    public ICdkMol HilightSSSMatchGMap(
-      ICdkMol targetMol,
+    public INativeMol HilightSSSMatchGMap(
+      INativeMol targetMol,
       int[] mappedAtoms,
       int[] mappedBonds)
     {
@@ -206,8 +206,8 @@ namespace Mobius.CdkMx
     /// <returns></returns>
 
     public bool FullStructureMatch(
-      ICdkMol query,
-      ICdkMol target,
+      INativeMol query,
+      INativeMol target,
       string FullStructureSearchType = null)
     {
       CdkMol q = query as CdkMol;
@@ -226,7 +226,7 @@ namespace Mobius.CdkMx
     /// <param name="queryMol"></param>
 
     public void SetFSSQueryMolecule(
-      ICdkMol queryMol,
+      INativeMol queryMol,
       string FullStructureSearchType = null)
     {
       FSSQueryMolecule = queryMol as CdkMol;
@@ -240,7 +240,7 @@ namespace Mobius.CdkMx
     /// <returns></returns>
 
     public bool IsFSSMatch(
-      ICdkMol targetMol)
+      INativeMol targetMol)
     {
       return FullStructureMatch(FSSQueryMolecule, targetMol);
     }

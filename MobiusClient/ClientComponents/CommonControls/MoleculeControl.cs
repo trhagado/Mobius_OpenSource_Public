@@ -307,8 +307,7 @@ namespace Mobius.ClientComponents
 				Molecule = new MoleculeMx(MoleculeMx.PreferredMoleculeFormat);
 
 			if (DisplayChem)
-				KekuleJsControl.Ed
-				CdkMx.CdkMolControl.EditStructure(KekuleJsCtl);
+				KekuleJsCtl.EditMolecule();
 
 			else if (DisplayHelm)
 				HelmControl.EditMolecule();

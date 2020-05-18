@@ -36,7 +36,7 @@ namespace Mobius.CdkMx
 	/// Wrapper for native CDK Molecule class
 	/// </summary>
 
-	public partial class CdkMol : ICdkMol
+	public partial class CdkMol : INativeMol
 	{
 		public MoleculeMx MoleculeMx; // Parent MoleculeMx that we are supporting (if any)
 		public IAtomContainer NativeMol = null; // native format library molecule that matches the current mol

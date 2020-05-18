@@ -63,7 +63,7 @@ namespace Mobius.CdkSearchMx
 			}
 		}
 
-		static ICdkMol CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
+		static INativeMol CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
 
 		/// <summary>
 		/// UpdateCorpFingerprintDatabaseMx

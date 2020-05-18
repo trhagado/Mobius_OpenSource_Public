@@ -17,11 +17,11 @@ namespace Mobius.QueryEngineLibrary
 
 	public class RgroupMetaBroker : GenericMetaBroker
 	{
-		ICdkMol CoreMolecule = null; // single core molecule
+		INativeMol CoreMolecule = null; // single core molecule
 		MoleculeMx CoreChemicalStructure = null;
 		StructureMatcher StrMatcher = null; // structure matcher
 
-		ICdkMol[] Substituents = new ICdkMol[32 + 1]; // substituents for current mapping 0 - 32
+		INativeMol[] Substituents = new INativeMol[32 + 1]; // substituents for current mapping 0 - 32
 
 		int[] CoreRNumbers;
 		int RgTotalCount; // total number of RGroup atoms in the core
@@ -34,7 +34,7 @@ namespace Mobius.QueryEngineLibrary
 		int MapCount = -1;
 		int MapPos = -1; // position in set of maps for current key
 
-		static ICdkMol CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
+		static INativeMol CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
 
 		// Constructor
 
@@ -565,7 +565,7 @@ namespace Mobius.QueryEngineLibrary
 	public class RgroupSubstituent
 	{
 		public double Mw; // mol weight, used for sorting & speeding match identity
-		ICdkMol fragMol = null; // matching mol
+		INativeMol fragMol = null; // matching mol
 
 		/// <summary>
 		/// Get substituent for a decomposition rgroup & map position & store in list

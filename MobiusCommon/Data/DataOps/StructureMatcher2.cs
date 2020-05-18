@@ -15,13 +15,13 @@ namespace Mobius.Data
 
 	public partial class StructureMatcher
 	{
-		static ICdkMol FSSQueryMol = null;
-		static ICdkMol FSSTargetMol = null;
+		static INativeMol FSSQueryMol = null;
+		static INativeMol FSSTargetMol = null;
 
-		static ICdkMol SSSQueryMol = null;
-		static ICdkMol SSSTargetMol = null;
+		static INativeMol SSSQueryMol = null;
+		static INativeMol SSSTargetMol = null;
 
-		ICdkMol CdkMolUtil => StaticCdkMol.I;
+		INativeMol CdkMolUtil => StaticCdkMol.I;
 
 		/// <summary>
 		/// Perform a full structure search of query molecule against target molecule

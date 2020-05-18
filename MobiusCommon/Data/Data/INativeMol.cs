@@ -24,21 +24,17 @@ namespace Mobius.Data
 	}
 
 	/// <summary>
-	/// Class containing injected public static instance of CdkMolFactory used to create CdkMol instances
-	/// 
+	/// Interface for factory that creates native molecule instances (e.g. CdkMol)
 	/// </summary>
 
-	public class CdkMolFactory
+	public interface INativeMolFactory
 	{
 		/// <summary>
 		/// Create basic CdkMol instance
 		/// </summary>
 		/// <returns></returns>
-		/// 
-		public static ICdkMol NewCdkMol()
-		{
-			return I.NewCdkMol();
-		}
+
+		INativeMol NewCdkMol();
 
 		/// <summary>
 		/// Create CdkMol instance from MoleculeMx
@@ -46,10 +42,7 @@ namespace Mobius.Data
 		/// <param name="molMx"></param>
 		/// <returns></returns>
 
-		public static ICdkMol NewCdkMol(MoleculeMx molMx)
-		{
-			return I.NewCdkMol(molMx);
-		}
+		INativeMol NewCdkMol(MoleculeMx molMx);
 
 		/// <summary>
 		/// Construct from mol format and string
@@ -58,61 +51,7 @@ namespace Mobius.Data
 		/// <param name="molString"></param>
 		/// <returns></returns>
 
-		public static ICdkMol NewCdkMol(
-			MoleculeFormat molFormat,
-			string molString)
-		{
-			return I.NewCdkMol(molFormat, molString);
-		}
-
-
-		/// <summary>
-		/// Injected instance of CdkMolFactory
-		/// </summary>
-
-		public static ICdkMolFactory I
-		{
-			get
-			{
-				if (i != null) return i;
-				throw new NullReferenceException("CdkMolFactory instance not defined");
-			}
-
-			set => i = value;
-
-		}
-		static ICdkMolFactory i = null;
-	}
-
-	/// <summary>
-	/// Interface for factory that creates CdkMol instances
-	/// </summary>
-
-	public interface ICdkMolFactory
-	{
-		/// <summary>
-		/// Create basic CdkMol instance
-		/// </summary>
-		/// <returns></returns>
-
-		ICdkMol NewCdkMol();
-
-		/// <summary>
-		/// Create CdkMol instance from MoleculeMx
-		/// </summary>
-		/// <param name="molMx"></param>
-		/// <returns></returns>
-
-		ICdkMol NewCdkMol(MoleculeMx molMx);
-
-		/// <summary>
-		/// Construct from mol format and string
-		/// </summary>
-		/// <param name="molFormat"></param>
-		/// <param name="molString"></param>
-		/// <returns></returns>
-
-		ICdkMol NewCdkMol(
+		INativeMol NewCdkMol(
 			MoleculeFormat molFormat,
 			string molString);
 
@@ -125,9 +64,9 @@ namespace Mobius.Data
 	public class StaticCdkMol
 	{
 
-		public static ICdkMol I => GetCdkMolInstance();
+		public static INativeMol I => GetCdkMolInstance();
 
-		static ICdkMol GetCdkMolInstance()
+		static INativeMol GetCdkMolInstance()
 		{
 			if (i == null) // get instance if not done yet
 				i = CdkMolFactory.NewCdkMol();
@@ -135,14 +74,14 @@ namespace Mobius.Data
 			return i;
 		}
 
-		static ICdkMol i = null;
+		static INativeMol i = null;
 	}
 
 	/// <summary>
 	/// Interface to MoleculeLibrary (e.g. Cdk) functionality for MoleculeMx Class
 	/// </summary>
 
-	public interface ICdkMol
+	public interface INativeMol
 	{
 
 		void UpdateNativeMolecule(); // update native molecule to 
@@ -393,8 +332,8 @@ namespace Mobius.Data
 		/// <returns></returns>
 
 		bool IsSSSMatch(
-			ICdkMol queryMol,
-			ICdkMol targetMol);
+			INativeMol queryMol,
+			INativeMol targetMol);
 
 		/// <summary>
 		/// Prepare for SSS matching of supplied query molecule
@@ -402,7 +341,7 @@ namespace Mobius.Data
 		/// <param name="queryMol"></param>
 
 		void SetSSSQueryMolecule(
-			ICdkMol queryMol);
+			INativeMol queryMol);
 
 		/// <summary>
 		/// Map current query against supplied target molecule
@@ -411,7 +350,7 @@ namespace Mobius.Data
 		/// <returns></returns>
 
 		bool IsSSSMatch(
-			ICdkMol targetMol);
+			INativeMol targetMol);
 
 		/// <summary>
 		/// Get mapping of current query against supplied target
@@ -423,7 +362,7 @@ namespace Mobius.Data
 		/// <returns></returns>
 
 		bool GetSSSMapping(
-			ICdkMol targetMol,
+			INativeMol targetMol,
 			out int queryIndex,
 			out int[] mappedAtoms,
 			out int[] mappedBonds);
@@ -457,8 +396,8 @@ namespace Mobius.Data
 		/// <param name="mappedBonds"></param>
 		/// <returns></returns>
 
-		ICdkMol HilightSSSMatchGMap(
-			ICdkMol targetMol,
+		INativeMol HilightSSSMatchGMap(
+			INativeMol targetMol,
 			int[] mappedAtoms,
 			int[] mappedBonds);
 
@@ -489,8 +428,8 @@ namespace Mobius.Data
 		/// <returns></returns>
 
 		bool FullStructureMatch(
-			ICdkMol query,
-			ICdkMol target,
+			INativeMol query,
+			INativeMol target,
 			string FullStructureSearchType = null);
 
 		/// <summary>
@@ -499,7 +438,7 @@ namespace Mobius.Data
 		/// <param name="queryMol"></param>
 
 		void SetFSSQueryMolecule(
-			ICdkMol queryMol,
+			INativeMol queryMol,
 			string FullStructureSearchType = null);
 
 		/// <summary>
@@ -509,22 +448,22 @@ namespace Mobius.Data
 		/// <returns></returns>
 
 		bool IsFSSMatch(
-			ICdkMol targetMol);
+			INativeMol targetMol);
 
 	}
 
 	/// <summary>
-	/// Interface for molecule renderer and editor
+	/// Interface for native molecule renderer and editor
 	/// </summary>
 
 	public interface INativeMolControl
 	{
 
-		void SetMoleculeAndRender(MoleculeFormat format, string value); 
+		void SetMoleculeAndRender(MoleculeFormat molFormat, string molString); 
 
-		void RenderMolecule();
+		//void RenderMolecule();
 
-		void GetMolecule(out MoleculeFormat format, out string value);
+		void GetMolecule(out MoleculeFormat molFormat, out string molString);
 
 		void SetTag(object tag);
 

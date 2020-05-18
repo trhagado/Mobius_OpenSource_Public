@@ -160,12 +160,12 @@ namespace Mobius.ClientComponents
 
 		private void MoleculeEditor_Shown(object sender, EventArgs e)
 		{
-			DelayedCallback.Schedule(Call_CdkMol_EditStructure); // delay so this form has time to render and we exit event
+			DelayedCallback.Schedule(Call_KekuleJs_EditStructure); // delay so this form has time to render and we exit event
 		}
 
-		private void Call_CdkMol_EditStructure()
+		private void Call_KekuleJs_EditStructure()
 		{
-			CdkMx.CdkMolControl.EditStructure(Instance.MoleculeCtl.KekuleJsCtl);
+			Instance.MoleculeCtl.KekuleJsCtl.EditMolecule();
 			return;
 		}
 

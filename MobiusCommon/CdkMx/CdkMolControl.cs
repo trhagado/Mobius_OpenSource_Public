@@ -212,7 +212,7 @@ namespace Mobius.CdkMx
 		/// </summary>
 		/// <param name="renditor"></param>
 
-		public static void EditStructure(
+		public static void EditMolecule(
 			CdkMolControl renditor)
 		{
 			AssertMx.IsNotNull(renditor, "renditor");

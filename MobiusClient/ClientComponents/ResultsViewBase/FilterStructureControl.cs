@@ -69,7 +69,7 @@ namespace Mobius.ClientComponents
 
 		private void Structure_MouseClick(object sender, MouseEventArgs e)
 		{
-			if (e.Button != MouseButtons.Right) CdkMx.CdkMolControl.EditStructure(StructureRenditor); // edit on single click
+			if (e.Button != MouseButtons.Right) CdkMx.CdkMolControl.EditMolecule(StructureRenditor); // edit on single click
 			return;
 		}
 

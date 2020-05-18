@@ -1,4 +1,9 @@
-﻿using System;
+﻿using Mobius.ComOps;
+using Mobius.Data;
+
+using DevExpress.XtraEditors;
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,14 +13,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using DevExpress.XtraEditors;
-
 namespace Mobius.KekuleJs
 {
 	public partial class KekuleJsEditorDialog : DevExpress.XtraEditors.XtraForm
 	{
-		public string OriginalKekuleJs = null;
-		public string EditedKekuleJs = null;
+		public string OriginalMolfile = null;
+		public string EditedMolfile = null;
 
 		public KekuleJsEditorDialog()
 		{
@@ -27,23 +30,22 @@ namespace Mobius.KekuleJs
 			return;
 		}
 
-
 		/// <summary>
 		/// Edit the KekuleJs
 		/// </summary>
-		/// <param name="originalKekuleJs"></param>
+		/// <param name="originalMolfile"></param>
 		/// <returns></returns>
 
 		public string Edit(
-			string originalKekuleJs,
+			string originalMolfile,
 			IWin32Window ownerForm = null)
 		{
-			OriginalKekuleJs = originalKekuleJs;
+			OriginalMolfile = originalMolfile;
 
 			DialogResult dr = ShowDialog(ownerForm);
 
 			if (dr != DialogResult.Cancel)
-				return EditedKekuleJs;
+				return EditedMolfile;
 
 			else return null; // cancelled
 		}
@@ -56,7 +58,7 @@ namespace Mobius.KekuleJs
 
 		private void SaveButton_Click(object sender, EventArgs e)
 		{
-			EditedKekuleJs = KekuleJsControl.GetKekuleJs();
+			EditedMolfile = KekuleJsControl.GetKekuleJs();
 			// todo: validate KekuleJs
 			DialogResult = DialogResult.OK;
 		}
@@ -68,7 +70,7 @@ namespace Mobius.KekuleJs
 
 		private void KekuleJsEditorDialog_Shown(object sender, EventArgs e)
 		{
-			KekuleJsControl.SetKekuleJsAndRender(OriginalKekuleJs); // display original KekuleJs once dialog is shown
+			KekuleJsControl.SetMoleculeAndRender(MoleculeFormat.Molfile, OriginalMolfile); // display original KekuleJs once dialog is shown
 
 			return;
 		}

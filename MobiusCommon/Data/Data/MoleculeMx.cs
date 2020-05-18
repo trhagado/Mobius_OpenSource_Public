@@ -56,23 +56,23 @@ namespace Mobius.Data
 		/// Create/Get associated lower level molecule MolLib instance
 		/// </summary>
 
-		public ICdkMol CdkMol => GetCdkMolInstance(); // link to low level object implementation
+		public INativeMol CdkMol => GetCdkMolInstance(); // link to low level object implementation
 
 		/// <summary>
 		/// Get or create associated IMolLib instance
 		/// </summary>
 		/// <returns></returns>
 
-    public ICdkMol GetCdkMolInstance()
+    public INativeMol GetCdkMolInstance()
     {
       if (_cdkMol == null)
 				_cdkMol = CdkMolFactory.NewCdkMol(this);
 
       return _cdkMol;
     }
-    private ICdkMol _cdkMol;
+    private INativeMol _cdkMol;
 
-		static ICdkMol CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
+		static INativeMol CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
 
 		///////////////////////////////////////////////////////
 		// String format molecule definitions

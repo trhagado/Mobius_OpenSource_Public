@@ -21,7 +21,7 @@ namespace Mobius.CdkMx
 /// Fingerprint methods
 /// </summary>
 
-	public partial class CdkMol : ICdkMol
+	public partial class CdkMol : INativeMol
 	{
 		/// <summary>
 		/// Build a CDK BitSetFingerprint from a molfile

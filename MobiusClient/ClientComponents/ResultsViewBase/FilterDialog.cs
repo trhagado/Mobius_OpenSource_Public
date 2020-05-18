@@ -337,7 +337,7 @@ namespace Mobius.ClientComponents
 
 		private void EditStructure_Click(object sender, EventArgs e)
 		{
-			CdkMx.CdkMolControl.EditStructure(FilterStructureControl.StructureRenditor);
+			CdkMx.CdkMolControl.EditMolecule(FilterStructureControl.StructureRenditor);
 			return;
 		}
 

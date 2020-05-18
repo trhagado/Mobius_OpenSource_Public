@@ -1794,6 +1794,10 @@
       <Name>HelmWebServices</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\KekuleJsWebEditor\KekuleJsWebEditor.csproj">
+      <Project>{eee68e89-65c0-4b33-b09e-ed00e914c3cd}</Project>
+      <Name>KekuleJsWebEditor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\MobiusServices\NativeSessionClient\NativeSessionClient.csproj">
       <Project>{EC0203FD-D464-4BA0-A088-B87C31139F47}</Project>
       <Name>NativeSessionClient</Name>
