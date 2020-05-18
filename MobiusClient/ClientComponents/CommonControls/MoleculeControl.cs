@@ -2,6 +2,7 @@
 using Mobius.ComOps;
 using Mobius.CdkMx;
 using Mobius.Helm;
+using Mobius.KekuleJs;
 using Mobius.Data;
 
 using DevExpress.XtraEditors;
@@ -261,7 +262,7 @@ namespace Mobius.ClientComponents
 				else if (Molecule.IsChemStructureFormat)
 				{
 					string molfile = Molecule.GetMolfileString();
-					KekuleJsCtl.MolfileString = molfile;
+					KekuleJsCtl.SetMoleculeAndRender(MoleculeFormat.Molfile, molfile);
 				}
 
 				else if (Molecule.IsBiopolymerFormat)
@@ -306,6 +307,7 @@ namespace Mobius.ClientComponents
 				Molecule = new MoleculeMx(MoleculeMx.PreferredMoleculeFormat);
 
 			if (DisplayChem)
+				KekuleJsControl.Ed
 				CdkMx.CdkMolControl.EditStructure(KekuleJsCtl);
 
 			else if (DisplayHelm)

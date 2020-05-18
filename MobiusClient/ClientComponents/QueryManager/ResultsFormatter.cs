@@ -2852,17 +2852,17 @@ together to keep the related segments together.
 
 								MoleculeControl molCtl = MoleculeEditor.Instance.MoleculeCtl;
 								molCtl.SetupAndRenderMolecule(cs);
-								if (molCtl.KekuleJsCtl.CanCopy)
-								{
-									molCtl.CopyMoleculeToClipboard();
-									if (Rf.ExportStructureFormat == ExportStructureFormat.Insight)
-										// && !Lex.Eq(workAround, "true"))
-										msg = WordOp.Call("Paste"); // paste structure object
-									else msg = WordOp.Call("PasteSpecial", WordOp.PasteMetafilePicture); // paste image
+								//if (molCtl.KekuleJsCtl.CanCopy)
+								//{
+								//	molCtl.CopyMoleculeToClipboard();
+								//	if (Rf.ExportStructureFormat == ExportStructureFormat.Insight)
+								//		// && !Lex.Eq(workAround, "true"))
+								//		msg = WordOp.Call("Paste"); // paste structure object
+								//	else msg = WordOp.Call("PasteSpecial", WordOp.PasteMetafilePicture); // paste image
 
-									//if (!Lex.Eq(workAround, "true"))
-									//  mutex.ReleaseMutex();
-								}
+								//	//if (!Lex.Eq(workAround, "true"))
+								//	//  mutex.ReleaseMutex();
+								//}
 
 								break;
 

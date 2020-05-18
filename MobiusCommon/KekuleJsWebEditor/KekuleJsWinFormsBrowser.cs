@@ -12,6 +12,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 using Mobius.ComOps;
+using Mobius.Data;
 
 namespace Mobius.KekuleJs
 {
@@ -47,7 +48,7 @@ namespace Mobius.KekuleJs
 
 		public WebBrowser OffScreenBrowser = null; // "OffScreen" browser
 
-		public string KekuleJs = null; // most-recently rendered KekuleJs
+		public CompactMolecule Molecule = null; // most-recently rendered molecule
 
 		public KekuleJsControlMode RendererMode = KekuleJsControlMode.BrowserViewOnly;
 		public Control ContainingControl; // control that will contain the browser control
@@ -333,22 +334,22 @@ namespace Mobius.KekuleJs
 		/// <summary>
 		/// Store the KekuleJs in the Scilligence component and render it
 		/// </summary>
-		/// <param name="KekuleJs"></param>
+		/// <param name="mol"></param>
 		/// <param name="size"></param>
 
 		public void SetKekuleJsAndRender(
-			string KekuleJs,
+			CompactMolecule mol,
 			Size size = new Size())
 		{
 			string script = "";
 
-			KekuleJs = KekuleJs;
+			mol = mol;
 
 			if (RendererMode != KekuleJsControlMode.BrowserEditor) // all modes except editor
 			{
 				//if (!String.IsNullOrWhiteSpace(KekuleJs)) // don't do this check, need to set if blank to clear out existing structure
 				{
-					script += "jsd.setKekuleJs(\"" + KekuleJs + "\");"; // var jsd = new JSDraw(...) is JSDraw canvas object JavaScript variable
+					script += "jsd.setKekuleJs(\"" + mol + "\");"; // var jsd = new JSDraw(...) is JSDraw canvas object JavaScript variable
 																											//JavaScriptManager.ExecuteScript(this, script); script = ""; // debug - one command at a time
 				}
 
@@ -367,7 +368,7 @@ namespace Mobius.KekuleJs
 			else // editor mode
 			{
 				script += // set the KekuleJs allowing for blank KekuleJs to clear the structure
-					"app.canvas.setKekuleJs(\"" + KekuleJs + "\");"; // var app = new scil.KekuleJs.App(), app.canvas is JSDraw canvas object
+					"app.canvas.setKekuleJs(\"" + mol + "\");"; // var app = new scil.KekuleJs.App(), app.canvas is JSDraw canvas object
 
 				//if (!size.IsEmpty)
 				//	script += "app.canvas.setSize(" + scaledCanvasWidth + "," + scaledCanvasHeight + ");";
@@ -481,12 +482,12 @@ namespace Mobius.KekuleJs
 		/// <summary>
 		/// Get a bitmap of the specified KekuleJs in the specified size
 		/// </summary>
-		/// <param name="KekuleJs"></param>
+		/// <param name="mol"></param>
 		/// <param name="size"></param>
 		/// <returns></returns>
 
 		public Bitmap GetBitmap(
-			string KekuleJs,
+			CompactMolecule mol,
 			Size size)
 		{
 			try
@@ -495,15 +496,15 @@ namespace Mobius.KekuleJs
 
 				LoadInitialPage(); // be sure initial page is loaded
 
-				if (Debug) DebugLog.Message("GetBitmap Entered: " + KekuleJs + ", " + size + IdText);
+				if (Debug) DebugLog.Message("GetBitmap Entered: " + mol + ", " + size + IdText);
 
 				Stopwatch sw = Stopwatch.StartNew();
 
-				string key = string.Format("GetKekuleJsBitmap({0}, {1}, {2})", KekuleJs, size.Width, size.Height);
+				string key = string.Format("GetKekuleJsBitmap({0}, {1}, {2})", mol, size.Width, size.Height);
 				if (CacheMx<Bitmap>.TryGetValue(key, out bm))
 					return bm;
 
-				SetKekuleJsAndRender(KekuleJs, size); // render the structure
+				SetKekuleJsAndRender(mol, size); // render the structure
 
 				bm = new Bitmap(Browser.Width, Browser.Height);
 				Rectangle rt = new Rectangle(0, 0, Browser.Width, Browser.Height);

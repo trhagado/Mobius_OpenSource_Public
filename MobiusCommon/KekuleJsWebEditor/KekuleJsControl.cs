@@ -18,14 +18,13 @@ namespace Mobius.KekuleJs
 {
 	public partial class KekuleJsControl : DevExpress.XtraEditors.XtraUserControl, INativeMolControl
 	{
-		[DefaultValue(KekuleJsControlMode.BrowserViewOnly)]
-		public KekuleJsControlMode KekuleJsMode { get => _KekuleJsMode; set => _KekuleJsMode = value; }
-		KekuleJsControlMode _KekuleJsMode = KekuleJsControlMode.BrowserViewOnly;
+		public KekuleJsControlMode KekuleJsMode { get => _helmMode; set => _helmMode = value; }
+		KekuleJsControlMode _helmMode = KekuleJsControlMode.BrowserViewOnly;
 
-		public bool BitmapMode => (_KekuleJsMode == KekuleJsControlMode.OffScreenBitmap); // rendered off-screen and returned as a bitmap that can then be used anywhere
-		public bool SvgMode => (_KekuleJsMode == KekuleJsControlMode.OffScreenSvg); // rendered off-screen and returned as SVG that can be used anywhere 
-		public bool ViewMode => (_KekuleJsMode == KekuleJsControlMode.BrowserViewOnly); // view KekuleJs in browser without edit controls
-		public bool EditMode => (KekuleJsMode == KekuleJsControlMode.BrowserEditor); // show KekuleJs in editor
+		public bool BitmapMode => (_helmMode == KekuleJsControlMode.OffScreenBitmap); // rendered off-screen and returned as a bitmap that can then be used anywhere
+		public bool SvgMode => (_helmMode == KekuleJsControlMode.OffScreenSvg); // rendered off-screen and returned as SVG that can be used anywhere 
+		public bool ViewMode => (_helmMode == KekuleJsControlMode.BrowserViewOnly); // view helm in browser without edit controls
+		public bool EditMode => (KekuleJsMode == KekuleJsControlMode.BrowserEditor); // show helm in editor
 
 		public KekuleJsWinFormsBrowser WinFormsBrowserMx = null; // underlying Mobius browser wrapper for view-only and editor modes
 
@@ -33,10 +32,13 @@ namespace Mobius.KekuleJs
 		public WindowsMessageFilter WindowsMessageFilter;
 
 		public KekuleJsOffScreenBrowser OffScreenBrowserMx = null; // used to generate OffScreen image for use as bitmap or SVG
-			 
+
 		public PictureBox OnScreenImageCtl = null; // used to display OffScreen renderer bitmap
 
-		public string KekuleJs = null; // most-recently rendered KekuleJs
+		public MoleculeFormat MolFormat = MoleculeFormat.Unknown; // most-recently rendered molecule format
+		public string MolString = ""; // most-recently rendered molecule string
+
+		public string KekuleJs = null; // most-recently rendered helm
 		public Size LastRenderSize = new Size(); // size of most-recently rendered bitmap
 		public int RenderCount = 0;
 		public int OnPaintCount = 0; // number of times OnPaint called
@@ -100,7 +102,7 @@ namespace Mobius.KekuleJs
 			{
 				if (WinFormsBrowserMx != null) return;
 
-				WinFormsBrowserMx = new KekuleJsWinFormsBrowser(KekuleJsMode, this); 
+				WinFormsBrowserMx = new KekuleJsWinFormsBrowser(KekuleJsMode, this);
 				WinFormsBrowserMx.LoadInitialPage();
 
 				if (WindowsMessageFilterCallback != null)
@@ -110,6 +112,75 @@ namespace Mobius.KekuleJs
 			if (Debug) DebugLog.Message("KekuleJsControl initialized for Mode: " + KekuleJsMode + IdText);
 			return;
 		}
+
+		/*******************************************************************/
+		/*************** INativeMolControl interface members ***************/
+		/*******************************************************************/
+
+		public DisplayPreferences Preferences = new DisplayPreferences();
+
+		public event EventHandler StructureChanged;
+
+		public MolEditorReturnedHandler EditorReturnedHandler
+		{
+			get => _editorReturnedHandler;
+			set => value = _editorReturnedHandler;
+		}
+		MolEditorReturnedHandler _editorReturnedHandler;
+
+
+		public void GetMolecule(out MoleculeFormat format, out string value)
+		{
+			format = MolFormat;
+			value = MolString;
+			return;
+		}
+
+		/// <summary>
+		/// SetMoleculeAndRender
+		/// </summary>
+		/// <param name="format"></param>
+		/// <param name="value"></param>
+
+		public void SetMoleculeAndRender(MoleculeFormat format, string value)
+		{
+			MolFormat = format;
+			MolString = value;
+
+			//CdkMol = new CdkMol(MolFormat, MolString);
+
+			RenderMolecule();
+
+			return;
+		}
+
+		/// <summary>
+		/// RenderMolecule
+		/// </summary>
+
+		public void RenderMolecule()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void SetTag(object tag)
+		{
+			this.Tag = tag;
+			return;
+		}
+
+		public object GetTag()
+		{
+			return this.Tag;
+		}
+
+		/********************************************************************/
+
+		/// <summary>
+		/// Set control molecule from molfile string
+		/// </summary>
+
+		public DisplayPreferences Display
 
 		/// <summary>
 		/// SetupOnScreenImageControl for displaying bitmap image of KekuleJs
@@ -141,29 +212,29 @@ namespace Mobius.KekuleJs
 
 
 		/// <summary>
-		/// Set KekuleJs string and render the depiction of the KekuleJs
+		/// Set HELM string and render the depiction of the HELM
 		/// </summary>
-		/// <param name="KekuleJs"></param>
+		/// <param name="helm"></param>
 
 		public void SetKekuleJsAndRender(
-			string KekuleJs)
+			string helm)
 		{
 			Size size = new Size(this.Size.Width - 20, this.Size.Height); // reduce width a bit to avoid truncating on the right
-			SetKekuleJsAndRender(KekuleJs, size);
+			SetKekuleJsAndRender(helm, size);
 			return;
 		}
 
 		/// <summary>
-		/// Set KekuleJs string and render the depiction of the KekuleJs (asynch)
+		/// Set HELM string and render the depiction of the HELM (asynch)
 		/// </summary>
-		/// <param name="KekuleJs"></param>
+		/// <param name="helm"></param>
 		/// <param name="size"></param>
 
 		public void SetKekuleJsAndRenderAsynch(
-			string KekuleJs,
+			string helm,
 			Size size)
 		{
-			object[] parms = new object[] { KekuleJs, size };
+			object[] parms = new object[] { helm, size };
 
 			DelayedCallback.Schedule(SetKekuleJsAndRenderAsynchCallback, parms);
 		}
@@ -171,31 +242,31 @@ namespace Mobius.KekuleJs
 		public void SetKekuleJsAndRenderAsynchCallback(
 			object parms)
 		{
-			string KekuleJs = (string)((object[])parms)[0];
+			string helm = (string)((object[])parms)[0];
 			Size size = (Size)((object[])parms)[1];
 
-			SetKekuleJsAndRender(KekuleJs, size);
+			SetKekuleJsAndRender(helm, size);
 			return;
 		}
-		
+
 		/// <summary>
-		/// Set KekuleJs string and render to full size of control
+		/// Set HELM string and render to full size of control
 		/// </summary>
-		/// <param name="KekuleJs"></param>
+		/// <param name="helm"></param>
 
 		public void SetKekuleJsAndRender(
-			string KekuleJs,
+			string helm,
 			Size size)
 		{
 			InitializeControl(); // be sure initial page is loaded into browser
 
 			//if (DebugMx.True) return; // debug - disable
 
-			if (Debug) DebugLog.Message("SetKekuleJsAndRender Entered: " + KekuleJs);
+			if (Debug) DebugLog.Message("SetKekuleJsAndRender Entered: " + helm);
 
 			Stopwatch sw = Stopwatch.StartNew();
 
-			KekuleJs = KekuleJs;
+			KekuleJs = helm;
 			LastRenderSize = size;
 
 			//double scaledCanvasWidth = size.Width * CefMx.MonitorScalingFactor; // scale for high DPI monitor?
@@ -206,11 +277,11 @@ namespace Mobius.KekuleJs
 				if (OnScreenImageCtl == null) throw new NullReferenceException("OnScreenImageCtl == null");
 
 				Bitmap bitmap = OffScreenBrowserMx.GetBitmap(KekuleJs, this.Size);
-				if (OnScreenImageCtl?.Image != null) 
-					BitmapUtil.DisposeOfBitmap(OnScreenImageCtl.Image);  
+				if (OnScreenImageCtl?.Image != null)
+					BitmapUtil.DisposeOfBitmap(OnScreenImageCtl.Image);
 				OnScreenImageCtl.Image = bitmap;
 				OnScreenImageCtl.Refresh();
-			} 
+			}
 
 			else if (SvgMode)
 			{
@@ -220,7 +291,7 @@ namespace Mobius.KekuleJs
 
 			else // RenderMode || EditMode
 			{
-				WinFormsBrowserMx.SetKekuleJsAndRender(KekuleJs, size);
+				WinFormsBrowserMx.SetKekuleJsAndRender(helm, size);
 			}
 
 			RenderCount++;
@@ -240,14 +311,14 @@ namespace Mobius.KekuleJs
 		}
 
 		/// <summary>
-		/// Get current KekuleJs
+		/// Get current HELM
 		/// </summary>
 		/// <returns></returns>
 
 		public string GetKekuleJs()
 		{
 			if (Debug) DebugLog.Message("GetKekuleJs Entered");
-			 
+
 			Stopwatch sw = Stopwatch.StartNew();
 
 			string script = "";
@@ -260,15 +331,15 @@ namespace Mobius.KekuleJs
 
 			JavaScriptManager.ExecuteScript(WinFormsBrowserMx, script);
 
-			string KekuleJs = JavaScriptManager.CallFunction(WinFormsBrowserMx, "getKekuleJsString"); // call function to get the KekuleJs
+			string helm = JavaScriptManager.CallFunction(WinFormsBrowserMx, "getKekuleJsString"); // call function to get the helm
 
-			if (Debug) DebugLog.StopwatchMessage("GetKekuleJs Complete: " + KekuleJs + ", Time: ", sw);
+			if (Debug) DebugLog.StopwatchMessage("GetKekuleJs Complete: " + helm + ", Time: ", sw);
 
-			return KekuleJs;
+			return helm;
 		}
 
 		/// <summary>
-		/// Get bitmap of current KekuleJs in current control size
+		/// Get bitmap of current helm in current control size
 		/// </summary>
 		/// <returns></returns>
 
@@ -283,15 +354,15 @@ namespace Mobius.KekuleJs
 			return bm;
 		}
 
-/// <summary>
-/// Static method to get bitmap trimed to proper height
-/// </summary>
-/// <param name="KekuleJs"></param>
-/// <param name="pixWidth"></param>
-/// <returns></returns>
+		/// <summary>
+		/// Static method to get bitmap trimed to proper height
+		/// </summary>
+		/// <param name="helm"></param>
+		/// <param name="pixWidth"></param>
+		/// <returns></returns>
 
-		public static Bitmap GetBitmap( 
-			string KekuleJs,
+		public static Bitmap GetBitmap(
+			string helm,
 			int pixWidth)
 		{
 			if (StaticOffScreenBrowser == null)
@@ -299,23 +370,23 @@ namespace Mobius.KekuleJs
 
 			lock (StaticOffScreenBrowser) // lock to avoid reentry
 			{
-				string svg = StaticOffScreenBrowser.GetSvg(KekuleJs);
+				string svg = StaticOffScreenBrowser.GetSvg(helm);
 				Bitmap bm = SvgUtil.GetBitmapFromSvgXml(svg, pixWidth);
 				return bm;
 
-				//float minViewBoxWidth = 40 * 6; // avoid scaleup for less than 6 KekuleJs monomers (todo: implement this)
+				//float minViewBoxWidth = 40 * 6; // avoid scaleup for less than 6 HELM monomers (todo: implement this)
 			}
 		}
 
 		/// <summary>
 		/// Static method to get GZip compressed svg depiction of KekuleJs
 		/// </summary>
-		/// <param name="KekuleJs"></param>
+		/// <param name="helm"></param>
 		/// <returns></returns>
 		public static string GetCompressedSvg(
-			string KekuleJs)
+			string helm)
 		{
-			string svg = GetSvg(KekuleJs);
+			string svg = GetSvg(helm);
 			byte[] svgGZ = GZip.Compress(svg);
 			return svg;
 		}
@@ -323,28 +394,28 @@ namespace Mobius.KekuleJs
 		/// <summary>
 		/// Static method to get SVG depiction of KekuleJs
 		/// </summary>
-		/// <param name="KekuleJs"></param>
+		/// <param name="helm"></param>
 		/// <param name="pixWidth"></param>
 		/// <returns></returns>
 		/// 
 
 		public static string GetSvg(
-			string KekuleJs)
+			string helm)
 		{
 			if (StaticOffScreenBrowser == null)
 				StaticOffScreenBrowser = new KekuleJsOffScreenBrowser();
 
 			lock (StaticOffScreenBrowser) // lock to avoid reentry
 			{
-				string svg = StaticOffScreenBrowser.GetSvg(KekuleJs);
+				string svg = StaticOffScreenBrowser.GetSvg(helm);
 				return svg;
 			}
 		}
 
-/// <summary>
-/// Get SVG depiction of current KekuleJs string
-/// </summary>
-/// <returns></returns>
+		/// <summary>
+		/// Get SVG depiction of current KekuleJs string
+		/// </summary>
+		/// <returns></returns>
 
 		public string GetSvg()
 		{
@@ -360,14 +431,14 @@ namespace Mobius.KekuleJs
 
 #if false
 		/// <summary>
-		/// Get SVG of the specified KekuleJs 
+		/// Get SVG of the specified HELM 
 		/// </summary>
-		/// <param name="KekuleJs"></param>
+		/// <param name="helm"></param>
 		/// <param name="size"></param>
 		/// <returns></returns>
 
 		public string GetSvg(
-			string KekuleJs,
+			string helm,
 			Size size)
 		{
 			if (KekuleJsMode != KekuleJsControlMode.OffScreenSvg)
@@ -375,9 +446,9 @@ namespace Mobius.KekuleJs
 
 			InitializeControl(); // be sure initial page is loaded into browser
 
-			KekuleJs = KekuleJs;
+			KekuleJs = helm;
 
-			string svg = OffScreenBrowserMx.GetSvg(KekuleJs, size);
+			string svg = OffScreenBrowserMx.GetSvg(helm, size);
 			return svg;
 		}
 #endif
@@ -405,7 +476,7 @@ namespace Mobius.KekuleJs
 			string newKekuleJs = editor.Edit(KekuleJs, ParentForm);
 			if (newKekuleJs != null && !String.Equals(newKekuleJs, KekuleJs))
 			{
-				SetKekuleJsAndRender(newKekuleJs); // display new KekuleJs
+				SetKekuleJsAndRender(newKekuleJs); // display new helm
 
 				if (MoleculeChanged != null) // tell creater if callback defined
 					MoleculeChanged(this, null);
@@ -433,152 +504,14 @@ namespace Mobius.KekuleJs
 
 		private void KekuleJsControl_SizeChanged(object sender, EventArgs e)
 		{
-			if (WinFormsBrowserMx == null && OffScreenBrowserMx == null) return; // just return if nothing in KekuleJs control yet
+			if (WinFormsBrowserMx == null && OffScreenBrowserMx == null) return; // just return if nothing in HELM control yet
 
 			if (Debug) DebugLog.Message("KekuleJsControl_SizeChanged: " + this.Size.Width + ", " + this.Size.Height);
 
-			//ResizeRendering(); // redraw the KekuleJs at the proper size (being done at browser level now)
+			//ResizeRendering(); // redraw the helm at the proper size (being done at browser level now)
 
 			return;
 		}
-
-		/*******************************************************************/
-		/*************** INativeMolControl interface members ***************/
-		/*******************************************************************/
-
-		public DisplayPreferences Preferences = new DisplayPreferences();
-
-		public event EventHandler StructureChanged;
-
-		public MolEditorReturnedHandler EditorReturnedHandler
-		{
-			get => _editorReturnedHandler;
-			set => value = _editorReturnedHandler;
-		}
-		MolEditorReturnedHandler _editorReturnedHandler;
-
-
-		public string MolString = "";
-		public MoleculeFormat MolFormat = MoleculeFormat.Unknown;
-
-		public void GetMolecule(out MoleculeFormat format, out string value)
-		{
-			format = MolFormat;
-			value = MolString;
-			return;
-		}
-
-		/// <summary>
-		/// SetMoleculeAndRender
-		/// </summary>
-		/// <param name="format"></param>
-		/// <param name="value"></param>
-
-		public void SetMoleculeAndRender(MoleculeFormat format, string value)
-		{
-			MolFormat = format;
-			MolString = value;
-
-			CdkMol = new CdkMol(MolFormat, MolString);
-
-			RenderMolecule();
-
-			return;
-		}
-
-		/// <summary>
-		/// RenderMolecule
-		/// </summary>
-
-		public void RenderMolecule()
-		{
-			Rectangle destRect = this.Bounds, boundingRect;
-			string svg;
-			Svg.SvgDocument svgDoc;
-			Bitmap bm;
-			int height; // formatted  height in milliinches
-			bool markBoundaries = false;
-			int fixedHeight = 0, translateType = 0, desiredBondLength = 100, pageHeight = 11000;
-			int miWidth;
-
-			if (MolFormat == MoleculeFormat.Unknown || Lex.IsUndefined(MolString))
-			{
-				ImageCtl.SvgImage = null;
-				ImageCtl.Image = null;
-				return;
-			}
-
-			svg = CdkMol.GetMoleculeSvg(this.Width, this.Height); // get svg 
-
-			if (DebugMx.False) // Create bitmap from CdkMol
-			{
-				bm = CdkMol.GetMoleculeBitmap(this.Width, this.Height);
-				ImageCtl.Image = bm;
-				return;
-			}
-
-			if (DebugMx.False) // Create svg, then get bitmap 
-			{
-				bm = SvgUtil.GetBitmapFromSvgXml(svg, this.Width);
-				ImageCtl.Image = bm;
-				return;
-			}
-
-			if (DebugMx.False) // Fit structure, then get bitmap
-			{
-				int stdBoxWidthPx = Mobius.Data.MoleculeMx.MilliinchesToPixels(Mobius.Data.MoleculeMx.StandardBoxWidth);
-				double scale = (float)this.Width / stdBoxWidthPx;
-				desiredBondLength = CdkMol.AdjustBondLengthToValidRange((int)(Mobius.Data.MoleculeMx.StandardBondLength * scale)); // (not implemented)
-				if (desiredBondLength < 1) desiredBondLength = 1;
-
-				CdkMol.FitStructureIntoRectangle // scale and translate structure into supplied rectangle.
-					(ref destRect, desiredBondLength, translateType, fixedHeight, markBoundaries, pageHeight, out boundingRect);
-
-				bm = CdkMol.GetMoleculeBitmap(this.Width, this.Height);
-				ImageCtl.Image = bm;
-				return;
-			}
-
-			if (DebugMx.True) // Create control SvgImage directly from SVG 
-			{
-				MemoryStream ms = StreamConverter.StringToMemoryStream(svg); // convert SVG to image for control
-				SvgImage svgImg = new SvgImage(ms);
-				ImageCtl.SvgImage = svgImg;
-				return;
-			}
-
-			if (DebugMx.True)
-			{
-				//miWidth = MoleculeMx.PixelsToMilliinches(this.Width);
-				//float inchWidth = miWidth / 1000.0f; // convert width milliinches to inches
-				//svgDoc = SvgUtil.AdjustSvgDocumentToFitContent(svg, inchWidth, Svg.SvgUnitType.Inch);
-
-				string newSvg = SvgUtil.AdjustSvgToFitContent(svg, this.Width, Svg.SvgUnitType.Pixel, out svgDoc);
-				ImageCtl.Image = svgDoc.Draw(ImageCtl.Width, ImageCtl.Height);
-
-				//bm = SvgUtil.GetBitmapFromSvgXml(newSvg, this.Width);
-				//ImageCtl.Image = bm;
-				return;
-			}
-		}
-
-		public void SetTag(object tag)
-		{
-			this.Tag = tag;
-			return;
-		}
-
-		public object GetTag()
-		{
-			return this.Tag;
-		}
-
-		/// <summary>
-		/// Set control molecule from molfile string
-		/// </summary>
-
-		public DisplayPreferences DisplayPreferences;
-
 	}
 
 	class JsHandler

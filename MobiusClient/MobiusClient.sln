@@ -72,7 +72,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CdkMx", "..\MobiusCommon\Cd
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDKitMx", "..\MobiusCommon\RDKitMx\RDKitMx.csproj", "{A2E15FB9-73CD-4CDF-BDE0-35E832E8A145}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KekuleJsWebEditor", "..\MobiusCommon\KetcherWebEditor\KekuleJsWebEditor.csproj", "{EEE68E89-65C0-4B33-B09E-ED00E914C3CD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KekuleJsWebEditor", "..\MobiusCommon\KekuleJsWebEditor\KekuleJsWebEditor.csproj", "{EEE68E89-65C0-4B33-B09E-ED00E914C3CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
