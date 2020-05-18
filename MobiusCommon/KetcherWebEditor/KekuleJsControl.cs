@@ -441,6 +441,144 @@ namespace Mobius.KekuleJs
 
 			return;
 		}
+
+		/*******************************************************************/
+		/*************** INativeMolControl interface members ***************/
+		/*******************************************************************/
+
+		public DisplayPreferences Preferences = new DisplayPreferences();
+
+		public event EventHandler StructureChanged;
+
+		public MolEditorReturnedHandler EditorReturnedHandler
+		{
+			get => _editorReturnedHandler;
+			set => value = _editorReturnedHandler;
+		}
+		MolEditorReturnedHandler _editorReturnedHandler;
+
+
+		public string MolString = "";
+		public MoleculeFormat MolFormat = MoleculeFormat.Unknown;
+
+		public void GetMolecule(out MoleculeFormat format, out string value)
+		{
+			format = MolFormat;
+			value = MolString;
+			return;
+		}
+
+		/// <summary>
+		/// SetMoleculeAndRender
+		/// </summary>
+		/// <param name="format"></param>
+		/// <param name="value"></param>
+
+		public void SetMoleculeAndRender(MoleculeFormat format, string value)
+		{
+			MolFormat = format;
+			MolString = value;
+
+			CdkMol = new CdkMol(MolFormat, MolString);
+
+			RenderMolecule();
+
+			return;
+		}
+
+		/// <summary>
+		/// RenderMolecule
+		/// </summary>
+
+		public void RenderMolecule()
+		{
+			Rectangle destRect = this.Bounds, boundingRect;
+			string svg;
+			Svg.SvgDocument svgDoc;
+			Bitmap bm;
+			int height; // formatted  height in milliinches
+			bool markBoundaries = false;
+			int fixedHeight = 0, translateType = 0, desiredBondLength = 100, pageHeight = 11000;
+			int miWidth;
+
+			if (MolFormat == MoleculeFormat.Unknown || Lex.IsUndefined(MolString))
+			{
+				ImageCtl.SvgImage = null;
+				ImageCtl.Image = null;
+				return;
+			}
+
+			svg = CdkMol.GetMoleculeSvg(this.Width, this.Height); // get svg 
+
+			if (DebugMx.False) // Create bitmap from CdkMol
+			{
+				bm = CdkMol.GetMoleculeBitmap(this.Width, this.Height);
+				ImageCtl.Image = bm;
+				return;
+			}
+
+			if (DebugMx.False) // Create svg, then get bitmap 
+			{
+				bm = SvgUtil.GetBitmapFromSvgXml(svg, this.Width);
+				ImageCtl.Image = bm;
+				return;
+			}
+
+			if (DebugMx.False) // Fit structure, then get bitmap
+			{
+				int stdBoxWidthPx = Mobius.Data.MoleculeMx.MilliinchesToPixels(Mobius.Data.MoleculeMx.StandardBoxWidth);
+				double scale = (float)this.Width / stdBoxWidthPx;
+				desiredBondLength = CdkMol.AdjustBondLengthToValidRange((int)(Mobius.Data.MoleculeMx.StandardBondLength * scale)); // (not implemented)
+				if (desiredBondLength < 1) desiredBondLength = 1;
+
+				CdkMol.FitStructureIntoRectangle // scale and translate structure into supplied rectangle.
+					(ref destRect, desiredBondLength, translateType, fixedHeight, markBoundaries, pageHeight, out boundingRect);
+
+				bm = CdkMol.GetMoleculeBitmap(this.Width, this.Height);
+				ImageCtl.Image = bm;
+				return;
+			}
+
+			if (DebugMx.True) // Create control SvgImage directly from SVG 
+			{
+				MemoryStream ms = StreamConverter.StringToMemoryStream(svg); // convert SVG to image for control
+				SvgImage svgImg = new SvgImage(ms);
+				ImageCtl.SvgImage = svgImg;
+				return;
+			}
+
+			if (DebugMx.True)
+			{
+				//miWidth = MoleculeMx.PixelsToMilliinches(this.Width);
+				//float inchWidth = miWidth / 1000.0f; // convert width milliinches to inches
+				//svgDoc = SvgUtil.AdjustSvgDocumentToFitContent(svg, inchWidth, Svg.SvgUnitType.Inch);
+
+				string newSvg = SvgUtil.AdjustSvgToFitContent(svg, this.Width, Svg.SvgUnitType.Pixel, out svgDoc);
+				ImageCtl.Image = svgDoc.Draw(ImageCtl.Width, ImageCtl.Height);
+
+				//bm = SvgUtil.GetBitmapFromSvgXml(newSvg, this.Width);
+				//ImageCtl.Image = bm;
+				return;
+			}
+		}
+
+		public void SetTag(object tag)
+		{
+			this.Tag = tag;
+			return;
+		}
+
+		public object GetTag()
+		{
+			return this.Tag;
+		}
+
+		/// <summary>
+		/// Set control molecule from molfile string
+		/// </summary>
+
+		public DisplayPreferences DisplayPreferences;
+
 	}
 
 	class JsHandler
