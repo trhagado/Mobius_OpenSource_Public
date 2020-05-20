@@ -1,0 +1,38 @@
+{{#unless no-groups}}
+	<form role="dialog" id="sgroup_special" style="display:none;">
+		<header>S-Group Properties</header>
+		<label>Context:
+			<select id="sgroup_context">
+				<option value="Fragment">Fragment</option>
+				<option value="Single Bond">Single Bond</option>
+				<option value="Atom">Atom</option>
+                <option value="Group">Group</option>
+			</select>
+		</label>
+		<fieldset class="data">
+		  <label class="sgroup_special_name">Field name:
+          	<select id="sgroup_special_name">
+            </select>
+		  </label>
+		  <label class="sgroup_special_value">Field value:
+			<textarea id="sgroup_special_value"></textarea>
+		  </label>
+		  <label class="pos">
+			<input type="radio" id="sgroup_special_absolute" name="data_field_pos" checked>
+			Absolute
+		  </label>
+		  <label class="pos">
+			<input type="radio" id="sgroup_special_relative" name="data_field_pos">
+			Relative
+		  </label>
+		  <label class="pos">
+			<input type="radio" id="sgroup_special_attached" name="data_field_pos">
+			Attached
+		  </label>
+		</fieldset>
+	    <footer>
+		  <input type="button" value="Cancel">
+		  <input type="button" value="OK">
+	    </footer>
+	</form>
+{{/unless}}

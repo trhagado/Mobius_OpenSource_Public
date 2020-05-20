@@ -197,6 +197,10 @@
       <Project>{f8fefca4-b843-4cbc-bef4-d182e259b3ad}</Project>
       <Name>HelmWebServices</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\MobiusCommon\KekuleJsWebEditor\KekuleJsWebEditor.csproj">
+      <Project>{eee68e89-65c0-4b33-b09e-ed00e914c3cd}</Project>
+      <Name>KekuleJsWebEditor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\MobiusCommon\MetaFactory\MetaFactory.csproj">
       <Project>{11b976d5-a936-4456-bcaa-93c179b21e9f}</Project>
       <Name>MetaFactory</Name>

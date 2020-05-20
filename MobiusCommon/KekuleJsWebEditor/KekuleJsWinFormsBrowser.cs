@@ -117,18 +117,16 @@ namespace Mobius.KekuleJs
 			string url = "";
 
 			if (RendererMode == KekuleJsControlMode.OffScreenBitmap)
-				url = "http://[server]/KekuleJsWebEditor/MobiusKekuleJsRenderer.htm";
+				url = ServicesIniFile.ReadWithException("KekuleJsRendererUrl");
 
 			else if (RendererMode == KekuleJsControlMode.BrowserViewOnly)
-				url = "http://[server]/KekuleJsWebEditor/MobiusKekuleJsRenderer.htm";
+				url = ServicesIniFile.ReadWithException("KekuleJsRendererUrl");
 
 			else if (RendererMode == KekuleJsControlMode.BrowserEditor)
-				url = "http://[server]/KekuleJsWebEditor/MobiusKekuleJsEditor.htm";
-
-			else throw new Exception("Unexpected KekuleJsControlMode: " + RendererMode);
+				url = ServicesIniFile.ReadWithException("KekuleJsEditorUrl");
 
 			if (Debug) DebugLog.Message("Loading initial " + RendererMode + " mode page: " + url + IdText);
-
+			 
 			Browser = new WebBrowser(); // create the browser 
 
 			Browser.Location = new Point(0, 0);
@@ -332,7 +330,7 @@ namespace Mobius.KekuleJs
 		}
 
 		/// <summary>
-		/// Store the KekuleJs in the Scilligence component and render it
+		/// Set the molecule and render it
 		/// </summary>
 		/// <param name="mol"></param>
 		/// <param name="size"></param>
@@ -341,25 +339,29 @@ namespace Mobius.KekuleJs
 			string molfile,
 			Size size = new Size())
 		{
-			string script = "";
+			string script = ""; // build stript and execute it
 
 			if (RendererMode != KekuleJsControlMode.BrowserEditor) // all modes except editor
 			{
-				//if (!String.IsNullOrWhiteSpace(KekuleJs)) // don't do this check, need to set if blank to clear out existing structure
-				{
-					script += "jsd.setKekuleJs(\"" + molfile + "\");"; // var jsd = new JSDraw(...) is JSDraw canvas object JavaScript variable
-																											//JavaScriptManager.ExecuteScript(this, script); script = ""; // debug - one command at a time
-				}
 
-				if (!size.IsEmpty)
-				{
-					script += "jsd.setSize(" + size.Width + "," + size.Height + ");";
+				CallJavaScriptMethod("setMolfileString", new string[] { molfile });
 
-					//JavaScriptManager.ExecuteScript(this, script); script = ""; // debug - one command at a time
-				}
+				////if (!String.IsNullOrWhiteSpace(KekuleJs)) // don't do this check, need to set if blank to clear out existing structure
+				//{
+				//	script += "viewer.setMolfileString(\"" + molfile + "\");"; 
+					
+				//	//JavaScriptManager.ExecuteScript(this, script); script = ""; // debug - one command at a time
+				//}
 
-				script += "jsd.refresh();"; // redraws the structure
-				JavaScriptManager.ExecuteScript(this, script);
+				//if (!size.IsEmpty)
+				//{
+				//	script += "jsd.setSize(" + size.Width + "," + size.Height + ");";
+					
+				//	//JavaScriptManager.ExecuteScript(this, script); script = ""; // debug - one command at a time
+				//}
+
+				//script += "jsd.refresh();"; // redraws the structure
+				//JavaScriptManager.ExecuteScript(this, script);
 				return;
 			}
 

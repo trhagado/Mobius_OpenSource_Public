@@ -1,0 +1,54 @@
+@font-face {
+	font-family: 'ketcher';
+	src: url('@{static-path}/ketcher.eot');
+	src: url('@{static-path}/ketcher.eot#iefix') format('embedded-opentype'),
+	     url('@{static-path}/ketcher.woff') format('woff');
+//	     url('@{static-path}/ketcher.ttf') format('truetype'),
+//	     url('@{static-path}/ketcher.svg#ketcher') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+//  Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it.
+// Note, that will break hinting! In other OS-es font will be not as sharp as it could be
+
+// @media screen and (-webkit-min-device-pixel-ratio:0) {
+// 	@font-face {
+// 		font-family: 'ketcher';
+// 		src: url('@{static-path}/ketcher.svg#ketcher') format('svg');
+// 	}
+// }
+
+@font-face {
+	font-family: 'ketcher-svg-fix';
+	src: url('@{static-path}/ketcher.ttf') format('truetype'),
+  	     url('@{static-path}/ketcher.svg#ketcher') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+#select-fragment, #select-rectangle {
+	button:before {
+		font-family: 'ketcher-svg-fix';
+	}
+}
+
+#template-common {
+	.separate-item(horizontal, 10px);
+}
+
+#template-custom {
+	button:before {
+		content: 'T' !important;
+		font-family: FreeSans, Arimo, "Droid Sans", Helvetica,
+	                "Helvetica Neue", Arial, sans-serif;
+	}
+}
+
+#calc-cip {
+	button:before {
+		content: 'Ɽ' !important;
+		font-family: FreeSans, Arimo, "Droid Sans", Helvetica,
+	                 "Helvetica Neue", Arial, sans-serif;
+	}
+}

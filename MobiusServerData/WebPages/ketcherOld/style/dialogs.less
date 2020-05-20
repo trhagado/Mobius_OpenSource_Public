@@ -1,0 +1,616 @@
+@import "mixins";
+
+#loading {
+	position: absolute;
+	margin: auto;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: 10%;
+	height: 10%;
+
+	fill: rgba(0, 0, 0, 0.5);
+}
+
+#input_label {
+    margin: 14px 0 0 14px;
+	position: absolute;
+	z-index:  30;
+}
+
+/////////////////////
+
+.overlay {
+	position: fixed;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	z-index: 40;
+	text-align: center;
+
+	background-image: data-uri('overlay.svg');
+	.background-opacity(#777, 0.2);
+
+
+	.transition(background-color 0.25s);
+	//.transition(opacity 0.3s);
+	//opacity: 1;
+	.animate & {
+		background-color: fade(#777, 1%);
+		//opacity: 0.1;
+	}
+
+	&:after {
+		content: '';
+		display: inline-block;
+		height: 100%;
+		vertical-align: middle;
+	}
+
+	form[role=dialog] {
+		display: inline-block;
+		position: relative;
+		vertical-align: middle;
+		.transition-zoom;
+	}
+}
+
+form[role=dialog] {
+	text-align: left;
+	background-color: #fff;
+	border: 1px solid #999;
+	border: 1px solid rgba(0,0,0,.3);
+	.border-radius(6px);
+	.box-shadow(0 3px 9px rgba(0,0,0,.5));
+	background-clip: padding-box;
+	overflow: hidden;
+	//outline: 0;
+	>* {
+		margin: 0.3em;
+	}
+	header, footer {
+		margin: 0;
+		padding: 0.2em 0.6em;
+		background-color: #f5f5f5;
+	}
+	header {
+		font-size: 1.6em;
+		font-weight: 600;
+		line-height: 1.3;
+		border-bottom: 1px solid #ddd;
+	}
+	footer {
+		clear: both;
+		border-top: 1px solid #ddd;
+		text-align: right;
+	}
+}
+
+/////////////////////
+
+.control() {
+	.border-radius(4px);
+
+	// &[disabled] {
+	// 	color: @disabled-color;
+	// }
+	&:active, &:focus {
+		outline: 0;
+	}
+}
+
+button, input[type=submit],
+input[type=reset], input[type=button] {
+	display: inline-block;
+	margin-bottom: 0;
+	text-align: center;
+	vertical-align: middle;
+	//touch-action: manipulation;
+	//cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	padding: 0.42em 0.85em;
+
+	color: #333;
+	background-color: #fff;
+	border-color: #ccc;
+	.border-radius(4px);
+	.user-select(none);
+
+	&:hover, &:focus {
+		.background-image(linear-gradient(to bottom, #fff, darken(#fff, 7%)));
+		//.gradient-vertical-three(25%, #fff, darken(#fff, 10%), #fff);
+		//color: @btn-default-color;
+		outline: 0;
+	}
+
+	&:active {
+		outline: 0;
+		background-image: none;
+		.box-shadow(inset 0 3px 5px rgba(0,0,0,.125));
+	}
+
+	&.disabled, &[disabled], fieldset[disabled] & {
+		background-image: none;
+		cursor: not-allowed;
+		.opacity(.5);
+		.box-shadow(none);
+	}
+}
+
+select, textarea,
+input[type=text] {
+	.control;
+	display: inline-block;
+	//display: block;
+	vertical-align: middle;
+
+	background: white;
+	line-height: 20 / 14;
+	height: 2.4em;
+	padding: 0.35em 0.15em 0.35em 0.3em;
+	margin: 2px;
+
+	border: 1px solid @border-color;
+	.box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
+
+	// .transition(~"border-color ease-in-out .15s, box-shadow ease-in-out .15s");
+	&:hover, &:focus {
+		.highlight-shadow(black);
+	}
+	.box-sizing(border-box);
+
+	&[disabled],
+	fieldset[disabled] & {
+		cursor: not-allowed;
+		//.box-shadow(none);
+		background: #ddd;
+		.opacity(0.5);
+	}
+}
+
+// select, option {
+// 	text-align: right;
+// 	direction: rtl;
+// }
+
+input[type=radio],
+input[type=checkbox] {
+	vertical-align: middle;
+	//display: inline-block;
+	margin: 0 0.3em;
+	margin-top: 1px \9; // IE8-9
+	line-height: normal;
+	// TODO: style focus, active, etc
+}
+
+fieldset {
+	border: 1px solid @border-color;
+	padding: 0.3em;
+	margin: 0;
+	.border-radius(4px);
+
+	&.-hidden {
+		border-color: transparent;
+		margin-top: 0.9em + 2 * 0.3em;
+	}
+}
+
+legend {
+	color: darken(@border-color, 25%);
+	padding: 0 0.4em;
+	font-size: 0.9em;
+}
+
+/////////////////////
+
+#custom_templates {
+	ul {
+		padding: 0;
+		//width: 25em;
+		width: 350px;
+		height: 18em;
+		overflow: auto;
+	}
+	li {
+		padding: 10px 0;
+		overflow: hidden;
+		height: 120px;
+		width: 100%;
+		position: relative;
+
+		& + li {
+			border-top: 1px solid @border-color;
+		}
+		&:before {
+			position: absolute;
+			left: 10px;
+			top: 5px;
+			font-size: 10px;
+			color: darken(@border-color, 30%);
+			content: attr(title);
+		}
+		&.selected, &:hover {
+			background: lighten(@border-color, 15%);
+		}
+	}
+
+	&.loading {
+		visibility: hidden;
+		li {			  // workaround padding in
+			height: 95px; // autoScale width bug
+		}
+	}
+}
+
+#bond_properties {
+	label {
+		text-align: right;
+		display: block;
+	}
+	select {
+		width: 12em;
+	}
+}
+
+#atom_properties {
+	label {
+		display: block;
+		text-align: right;
+	}
+	.main {
+		float: left;
+		&:extend(fieldset.-hidden);
+		input {
+			width: 8em;
+		}
+	}
+	.query, .reaction {
+		float:right;
+		clear: right;
+		width: 16em;
+	}
+}
+
+#atom_attpoints {
+	label {
+		display: block;
+	}
+}
+
+#automap_properties {
+	label {
+		display: block;
+		text-align: right;
+	}
+}
+
+#rlogic_table {
+	label {
+		display: block;
+		text-align: right;
+		input {
+			width: 7em;
+		}
+	}
+}
+
+#sgroup_properties, #sgroup_special {
+	label {
+		display: block;
+		text-align: right;
+		&.pos {
+			margin: 0.3em 0 0;
+			display: inline-block;
+		}
+	}
+	fieldset {
+		border: 0;
+		padding: 0;
+	}
+	.data label {
+		text-align: left;
+	}
+	.data textarea, #sgroup_special_value {
+		display: block;
+		width: 20em;
+		height: 15em;
+		overflow: auto;
+	}
+	.data input[type=text] {
+		width: 20em;
+		display: block;
+	}
+}
+
+#about_dialog {
+	>a, img {
+		display: block;
+	}
+	var {
+		font-style: normal;
+		font-weight: bold;
+	}
+	time {
+		font-style: italic;
+	}
+	a {
+		// ASK DESIGNER: to style generic links
+	}
+
+	@line-height: 1.4em;
+	dl {
+		position: relative;
+		margin: 0 1em 1em;
+		vertical-align: bottom;
+		line-height: @line-height;
+	}
+	dd {
+		text-align: right;
+		margin-bottom: 0.5em;
+	}
+	dt+dd {
+		margin: -@line-height 0 0;
+	}
+}
+
+#rgroup-table {
+	ul {
+		width: 26em;
+		padding: 0.5em 0.5em 1em;
+	}
+	li {
+		display: inline-block;
+		margin: 0.2em 0;
+	}
+	button {
+		font-size: 1.3em;
+		width: 2.3em;
+		height: 2em;
+		line-height: 1;
+		vertical-align: middle;
+		padding: 0.15em;
+		background: inherit;
+		&:first-letter {
+			font-weight: 600;
+			color: lighten(@main-color, 20%);
+		}
+		&:hover {
+			.highlight-scale;
+			.highlight-shadow(black);
+		}
+		&:active {
+			.highlight-scale(none);
+			.highlight-shadow(none);
+		}
+		&.selected {
+			.highlight-invert;
+			&:first-letter {
+				color: darken(white, 30%);
+			}
+		}
+	}
+}
+
+#elem-table {
+	td, th {
+		padding: 0;
+		margin: 0;
+		text-align: center;
+		vertical-align: middle;
+	}
+	th, td.ref {
+		.opacity(0.6);
+		font-weight: normal;
+		font-size: 0.8em;
+		padding: 0.3em 0.8em;
+	}
+	th.ref {
+		vertical-align: top;
+		text-align: right;
+	}
+	tr:nth-of-type(8) {
+		border-bottom: 1em solid transparent;
+	}
+
+	button {
+		font-size: 1.3em;
+		width: 2em;
+		height: 2em;
+		line-height: 2;
+		vertical-align: middle;
+		padding: 0.15em;
+		margin: 1px;
+		border: 0;
+		display: block;
+		position: relative;
+
+		&:after {
+			position: absolute;
+			.opacity(0.6);
+			top: 0.3em;
+			right: 0.3em;
+			font-size: 0.5em;
+			line-height: 1;
+			vertical-align: top;
+			content: attr(value);
+		}
+		&:hover, &.selected {
+			&:after {
+				visibility: hidden;
+			}
+		}
+		&:not(:hover) {
+			color: inherit;
+		}
+		&:hover {
+			.highlight-scale;
+			.highlight-shadow(black);
+			z-index: 60;
+			background: #fff;
+		}
+		&:active {
+			.highlight-scale(none);
+			.highlight-shadow(none);
+		}
+		&.selected {
+			.highlight-invert;
+		}
+	}
+
+	fieldset {
+		border: 0;
+		padding: 0.5em;
+		margin: 1em 0 0 1.5em;
+	}
+
+	.diatomic {
+		background: @atom-periodic-diatomic;
+	}
+	.noble {
+		background: @atom-periodic-noble-gas;
+	}
+	.alkali {
+		background: @atom-periodic-alkali-metal;
+	}
+	.alkaline-earth {
+		background: @atom-periodic-alkaline-earth-metal;
+	}
+	.metalloid {
+		background: @atom-periodic-metalloid;
+	}
+	.polyatomic {
+		background: @atom-periodic-polyatomic;
+	}
+	.post-transition {
+		background: @atom-periodic-post-transition-metal;
+	}
+	.transition {
+		background: @atom-periodic-transition-metal;
+	}
+	.lanthanide {
+		background: @atom-periodic-lanthanide;
+	}
+	.actinide {
+		background: @atom-periodic-actinide;
+	}
+	.unknown-properties {
+		background: @atom-periodic-unknown-properties;
+	}
+	.metal:after {
+		color: #006;
+	}
+	.gas:after {
+		color: #c00;
+	}
+	.liquid:after {
+		color: #0a0;
+	}
+}
+
+#generics-table {
+	.atom>fieldset, .acyclic, .cyclic {
+		display: inline-block;
+		vertical-align: top;
+		&+fieldset {
+			margin-left: 0.3em;
+		}
+	}
+	.cyclic>fieldset, .carbo, .hetero  {
+		float: left;
+	}
+	.carbo {
+		clear: both;
+	}
+	.hetero {
+		margin-left: 0.3em;
+	}
+	.cyclic>fieldset:first-of-type {
+		margin: 0 0.3em 0 0.8em; // smells like a hack
+	}
+	fieldset {
+		text-align: center;
+	}
+	.not, .atom>fieldset, .carbo>fieldset, .hetero>fieldset {
+		position: relative;
+		border: 0;
+		padding: 0 0 1em;
+		legend {
+			font-size: 0.7em;
+			bottom: 0.1em;
+			left: 0;
+			right: 0;
+			margin: 0 auto;
+			position: absolute;
+		}
+    }
+	button {
+		font-size: 1.1em;
+		height: 2em;
+		width: 2.5em;
+		line-height: 1;
+		vertical-align: middle;
+		padding: 0.15em;
+		background: inherit;
+		&:hover {
+			.highlight-scale;
+			.highlight-shadow(black);
+		}
+		&:active {
+			.highlight-scale(none);
+			.highlight-shadow(none);
+		}
+		&.selected {
+			.highlight-invert;
+		}
+	}
+}
+
+#open-file {
+	// constrain dialog resizebility
+	// max-width: 50%;
+	// max-height: 70%;
+	label {
+		display: block;
+	}
+	textarea {
+		width: 32em;
+		height: 23em;
+		overflow: auto;
+		white-space: pre;
+		//make it resizable
+		resize: both;
+	}
+	.open {
+		&:extend(button all);
+		float: left;
+	}
+	input[type=file] {
+		// hide
+		left: -9999px;
+		position: absolute;
+	}
+}
+
+#save-file {
+	label {
+		display: block;
+		text-align: right;
+	}
+	select {
+		width: 16em;
+	}
+	textarea {
+		width: 32em;
+		height: 23em;
+		overflow: auto;
+		white-space: pre;
+		resize: both;
+	}
+	.save {
+		&:extend(button all);
+		float: left;
+	}
+}

@@ -521,11 +521,6 @@ namespace Mobius.KekuleJs
 			throw new NotImplementedException();
 		}
 
-		public Bitmap PaintMolecule(MoleculeFormat molFormat, string molString, int width, int height)
-		{
-			throw new NotImplementedException();
-		}
-
 	}
 
 	class JsHandler

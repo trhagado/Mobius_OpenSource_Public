@@ -72,8 +72,6 @@
   <ItemGroup>
     <Content Include="MobiusKekuleJsEditor.htm" />
     <Content Include="MobiusKekuleJsRenderer.htm" />
-    <Content Include="MobiusKekuleJsRendererWithPopupEditor.htm" />
-    <Content Include="MobiusKekuleJsSequenceEditor.htm" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ComOps\ComOps.csproj">

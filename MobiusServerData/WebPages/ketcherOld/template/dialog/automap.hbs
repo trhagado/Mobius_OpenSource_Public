@@ -1,0 +1,17 @@
+{{#unless no-reactions}}
+	<form role="dialog" id="automap_properties" style="display:none;">
+		<header>Reaction Auto-Mapping</header>
+		<label>Mode:
+			<select id="automap_mode">
+				<option value="discard">Discard</option>
+				<option value="keep">Keep</option>
+				<option value="alter">Alter</option>
+				<option value="clear">Clear</option>
+			</select>
+		</label>
+		<footer>
+			<input id="automap_cancel" type="button" value="Cancel">
+			<input id="automap_ok" type="button" value="OK">
+		</footer>
+	</form>
+{{/unless}}
