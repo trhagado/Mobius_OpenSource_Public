@@ -873,6 +873,8 @@
     <Content Include="Bitmaps\MiscBitmaps\PivotAreaRow.bmp" />
     <Content Include="Bitmaps\MiscBitmaps\PivotChart.bmp" />
     <Content Include="Bitmaps\MiscBitmaps\PivotFields_16x16.png" />
+    <Content Include="Bitmaps\MiscBitmaps\PopDown.png" />
+    <Content Include="Bitmaps\MiscBitmaps\PopUp.png" />
     <Content Include="Bitmaps\MiscBitmaps\Portrait32.bmp" />
     <Content Include="Bitmaps\MiscBitmaps\Previous.bmp" />
     <Content Include="Bitmaps\MiscBitmaps\Previous2.bmp" />

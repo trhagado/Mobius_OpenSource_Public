@@ -13,9 +13,9 @@
 	<script src="libs/kekule/kekule.js"></script>
 	<head>
 
-		<body>
+		<body style="margin:0;">
 
-			<div id="chemViewer2D" style="width:600px;height:400px"
+			<div id="chemViewer2D"
 					 data-widget="Kekule.ChemWidget.Viewer2D"></div> <!-- a 2D viewer -->
 
 			<script type="text/javascript">
@@ -24,8 +24,14 @@
 				Kekule.X.domReady(function () { // set global chemViewer var when domReady
 					//window.onresize = adjustElemSizes;
 					chemViewer = Kekule.Widget.getWidgetById('chemViewer2D');
+					//chemViewer.setAutoSize(true);
+					chemViewer.enableToolbar = true;
+					chemViewer.enableEdit = true;
+					//chemViewer.caption = 'Dude!';
+					//chemViewer.showCaption = true;
+					//chemViewer.backgroundColor = 'lightgray'; // debug
 				}
-				);
+				); // end of domReady
 
 				function setMolfileString(molfile) {
 					var mol = Kekule.IO.loadFormatData(molfile, 'mol');

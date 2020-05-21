@@ -160,6 +160,8 @@ namespace Mobius.KekuleJs
 			BrowserWrapper = new WebBrowserWrapper(Browser);
 			BrowserWrapper.NavigateAndWait(url); // navigate to the initial page
 
+			ResizeRendering(); 
+
 			if (Debug) DebugLog.Message("Browser created, initial page loaded" + IdText);
 
 			return;
@@ -275,8 +277,8 @@ namespace Mobius.KekuleJs
 
 			if (RendererMode != KekuleJsControlMode.BrowserEditor) // all modes except editor
 			{
-				script += "jsd.setSize(" + Browser.Width + "," + Browser.Height + ");";
-				script += "jsd.refresh();"; // redraws the structure
+				script += "chemViewer.setDimension('" + Browser.Width + "px','" + Browser.Height + "px');";
+				//script += "jsd.refresh();"; // redraws the structure
 				JavaScriptManager.ExecuteScript(this, script);
 				return;
 			}

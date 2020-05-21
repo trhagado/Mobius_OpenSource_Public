@@ -132,17 +132,17 @@
 			// 
 			// EnlargeStructureButton
 			// 
-			this.EnlargeStructureButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.EnlargeStructureButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.EnlargeStructureButton.Appearance.BackColor = System.Drawing.Color.Transparent;
 			this.EnlargeStructureButton.Appearance.Options.UseBackColor = true;
 			this.EnlargeStructureButton.AppearanceHovered.BackColor = System.Drawing.Color.Transparent;
 			this.EnlargeStructureButton.AppearanceHovered.Options.UseBackColor = true;
 			this.EnlargeStructureButton.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("EnlargeStructureButton.ImageOptions.Image")));
-			this.EnlargeStructureButton.Location = new System.Drawing.Point(419, 341);
+			this.EnlargeStructureButton.Location = new System.Drawing.Point(427, 0);
 			this.EnlargeStructureButton.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.UltraFlat;
 			this.EnlargeStructureButton.LookAndFeel.UseDefaultLookAndFeel = false;
 			this.EnlargeStructureButton.Name = "EnlargeStructureButton";
-			this.EnlargeStructureButton.Size = new System.Drawing.Size(26, 25);
+			this.EnlargeStructureButton.Size = new System.Drawing.Size(16, 16);
 			this.EnlargeStructureButton.TabIndex = 23;
 			this.EnlargeStructureButton.ToolTip = "View Molecule in a New Window";
 			this.EnlargeStructureButton.Click += new System.EventHandler(this.EnlargeStructureButton_Click);
@@ -165,8 +165,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.KekuleJsCtl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.KekuleJsCtl.EditorReturnedHandler = null;
+			this.KekuleJsCtl.KekuleJsMode = Mobius.KekuleJs.KekuleJsControlMode.BrowserViewOnly;
 			this.KekuleJsCtl.Location = new System.Drawing.Point(27, 26);
 			this.KekuleJsCtl.Margin = new System.Windows.Forms.Padding(2);
+			this.KekuleJsCtl.MolfileString = "";
 			this.KekuleJsCtl.Name = "KekuleJsCtl";
 			this.KekuleJsCtl.Size = new System.Drawing.Size(161, 72);
 			this.KekuleJsCtl.TabIndex = 24;
