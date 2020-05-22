@@ -42,7 +42,7 @@
 			this.DeleteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.EnlargeStructureButton = new DevExpress.XtraEditors.SimpleButton();
 			this.HelmControl = new Mobius.Helm.HelmControl();
-			this.KekuleJsCtl = new Mobius.KekuleJs.KekuleJsControl();
+			this.KekuleControl = new Mobius.KekuleJs.KekuleJsControl();
 			this.RtClickContextMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -161,18 +161,19 @@
 			// 
 			// KekuleJsCtl
 			// 
-			this.KekuleJsCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.KekuleControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.KekuleJsCtl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.KekuleJsCtl.EditorReturnedHandler = null;
-			this.KekuleJsCtl.KekuleJsMode = Mobius.KekuleJs.KekuleJsControlMode.BrowserViewOnly;
-			this.KekuleJsCtl.Location = new System.Drawing.Point(27, 26);
-			this.KekuleJsCtl.Margin = new System.Windows.Forms.Padding(2);
-			this.KekuleJsCtl.MolfileString = "";
-			this.KekuleJsCtl.Name = "KekuleJsCtl";
-			this.KekuleJsCtl.Size = new System.Drawing.Size(161, 72);
-			this.KekuleJsCtl.TabIndex = 24;
+			this.KekuleControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.KekuleControl.EditorReturnedHandler = null;
+			this.KekuleControl.KekuleJsMode = Mobius.KekuleJs.KekuleJsControlMode.BrowserViewOnly;
+			this.KekuleControl.Location = new System.Drawing.Point(27, 26);
+			this.KekuleControl.Margin = new System.Windows.Forms.Padding(2);
+			this.KekuleControl.MolfileString = "";
+			this.KekuleControl.Name = "KekuleJsCtl";
+			this.KekuleControl.Size = new System.Drawing.Size(161, 72);
+			this.KekuleControl.TabIndex = 24;
+			this.KekuleControl.MoleculeChanged += new System.EventHandler(this.KekuleControl_MoleculeChanged);
 			// 
 			// MoleculeControl
 			// 
@@ -181,7 +182,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.Controls.Add(this.KekuleJsCtl);
+			this.Controls.Add(this.KekuleControl);
 			this.Controls.Add(this.EnlargeStructureButton);
 			this.Controls.Add(this.HelmControl);
 			this.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
@@ -206,6 +207,6 @@
 		public System.Windows.Forms.ToolStripMenuItem ViewMoleculeInNewWindowMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem DeleteMenuItem;
 		private DevExpress.XtraEditors.SimpleButton EnlargeStructureButton;
-		public KekuleJs.KekuleJsControl KekuleJsCtl;
+		public KekuleJs.KekuleJsControl KekuleControl;
 	}
 }

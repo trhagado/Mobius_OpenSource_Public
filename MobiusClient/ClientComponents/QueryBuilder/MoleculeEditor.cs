@@ -123,7 +123,7 @@ namespace Mobius.ClientComponents
 			try
 			{
 				Instance.MoleculeCtl.Molecule = mol;
-				INativeMolControl molCtl = (INativeMolControl)Instance.MoleculeCtl.KekuleJsCtl;
+				INativeMolControl molCtl = (INativeMolControl)Instance.MoleculeCtl.KekuleControl;
 				molCtl.EditorReturnedHandler = new MolEditorReturnedHandler(Instance.MolLibEditorReturned);
 
 				Instance.Text = title;
@@ -165,7 +165,7 @@ namespace Mobius.ClientComponents
 
 		private void Call_KekuleJs_EditStructure()
 		{
-			Instance.MoleculeCtl.KekuleJsCtl.EditMolecule();
+			Instance.MoleculeCtl.KekuleControl.EditMolecule();
 			return;
 		}
 

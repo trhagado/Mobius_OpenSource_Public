@@ -39,16 +39,6 @@ namespace Mobius.Client
 		[STAThread]
 		static void Main(string[] args)
 		{
-			//NCDK_Example.DepictionGenerator_Example.Run();
-
-			//string version = java.lang.Package.getPackage("java.lang").getImplementationVersion();
-
-			//StreamReader sr = new StreamReader(@"c:\downloads\aspirin.mol");
-			//string molfile = sr.ReadToEnd();
-			//sr.Close();
-
-			//IAtomContainer ac = CdkMol.MolfileToAtomContainer(molfile);
-
 			Splash splash = null;
 			bool unattended = false;
 			bool startedByMobiusClientStart = false;
@@ -113,23 +103,43 @@ namespace Mobius.Client
 			//SpotfireApiClient.UseAnalystClient = true; // debug
 
 			bool RunDevTest = false;
-			if (RunDevTest && ClientState.IsDeveloper) // do a quick dev test & then exit
+			if (RunDevTest) // && ClientState.IsDeveloper) // do a quick dev test & then exit
 			{
 				if (DebugMx.True)
+				{
+					Mobius.KekuleJs.KekuleTestForm f = new Mobius.KekuleJs.KekuleTestForm();
+					Application.Run(f);
+					return;
+				}
+
+				if (DebugMx.False)
 				{
 					MoleculeViewer v = new MoleculeViewer();
 					Application.Run(v);
 					return;
 				}
 
-				//if (DebugMx.False) // Helm editor
-				//{
-				//	Helm.CefMx.InitializeCef();
-				//	HelmEditorDialog editor = new HelmEditorDialog();
-				//	string helm = "PEPTIDE1{A.L.C}$$$$";
-				//	string newHelm = editor.Edit(helm);
-				//	return;
-				//}
+				if (DebugMx.False)
+				{
+					//NCDK_Example.DepictionGenerator_Example.Run();
+
+					//string version = java.lang.Package.getPackage("java.lang").getImplementationVersion();
+
+					//StreamReader sr = new StreamReader(@"c:\downloads\aspirin.mol");
+					//string molfile = sr.ReadToEnd();
+					//sr.Close();
+
+					//IAtomContainer ac = CdkMol.MolfileToAtomContainer(molfile);
+
+					//if (DebugMx.False) // Helm editor
+					//{
+					//	Helm.CefMx.InitializeCef();
+					//	HelmEditorDialog editor = new HelmEditorDialog();
+					//	string helm = "PEPTIDE1{A.L.C}$$$$";
+					//	string newHelm = editor.Edit(helm);
+					//	return;
+					//
+				}
 
 
 				if (DebugMx.False)

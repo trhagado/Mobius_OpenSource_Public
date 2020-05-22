@@ -8,9 +8,10 @@
 <html>
 <head>
 	<title>Mobius KekuleJs Renderer</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<link href="libs/kekule/themes/default/kekule.css" rel="stylesheet" type="text/css">
-	<script src="libs/kekule/kekule.js"></script>
+	 <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=10" /> <!-- works with 10 but not 11 or EDGE -->
+		<link href="libs/kekule/themes/default/kekule.css" rel="stylesheet" type="text/css">
+		<script src="libs/kekule/kekule.js"></script>
 	<head>
 
 		<body style="margin:0;">
@@ -25,14 +26,19 @@
 					//window.onresize = adjustElemSizes;
 					chemCtl = Kekule.Widget.getWidgetById('chemComposer');
 					//chemCtl.setAutoSize(true); // adjust control size to fit molecule
-					chemCtl.autofit = true; // expand mol to fit control
+					//chemCtl.autofit = true; // expand mol to fit control
 					chemCtl.enableDirectInteraction = true; // if true mouse can zoom, rotate and move the molecule
 					//chemCtl.enableToolbar = true;
 					//chemCtl.enableEdit = true;
 					//chemCtl.caption = 'Dude!';
 					//chemCtl.showCaption = true;
-					chemCtl.backgroundColor = 'lightgray'; // debug
-				}
+					//chemCtl.backgroundColor = 'lightgray'; // debug
+					
+					// Load test mol
+					//var cmlData = '<cml xmlns="http://www.xml-cml.org/schema"><molecule id="m1"><atomArray><atom id="a2" elementType="C" x2="7.493264658965051" y2="35.58088907877604"/><atom id="a3" elementType="O" x2="8.186084981992602" y2="35.18088907877604"/><atom id="a1" elementType="C" x2="6.800444335937501" y2="35.18088907877604"/></atomArray><bondArray><bond id="b2" order="S" atomRefs2="a2 a3"/><bond id="b1" order="S" atomRefs2="a2 a1"/></bondArray></molecule></cml>';
+					//var mol = Kekule.IO.loadFormatData(cmlData, 'cml');
+					//chemCtl.setChemObj(mol);
+					}
 				); // end of domReady
 
 				function setMolfileString(molfile) {

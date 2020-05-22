@@ -309,25 +309,25 @@ namespace Mobius.KekuleJs
 		/// </summary>
 		/// <returns></returns>
 
-		public string GetKekuleJs()
+		public string GetMolfile()
 		{
-			if (Debug) DebugLog.Message("GetKekuleJs Entered");
+			if (Debug) DebugLog.Message("GetMolfile Entered");
 
 			Stopwatch sw = Stopwatch.StartNew();
 
-			string script = "";
+			//string script = "";
 
-			if (ViewMode)
-				script = "function getKekuleJsString() { return jsd.getKekuleJs(); };"; // define function to get the KekuleJs
+			//if (ViewMode)
+			//	script = "function GetMolfileString() { return jsd.GetMolfile(); };"; // define function to get the KekuleJs
 
-			else
-				script = "function getKekuleJsString() { return app.canvas.getKekuleJs(); };"; // define function to get the KekuleJs
+			//else
+			//	script = "function GetMolfileString() { return app.canvas.GetMolfile(); };"; // define function to get the KekuleJs
 
-			JavaScriptManager.ExecuteScript(WinFormsBrowserMx, script);
+			//JavaScriptManager.ExecuteScript(WinFormsBrowserMx, script);
 
-			string moleculeString = JavaScriptManager.CallFunction(WinFormsBrowserMx, "getKekuleJsString"); // call function to get the moleculeString
+			string moleculeString = JavaScriptManager.CallFunction(WinFormsBrowserMx, "getMolfileString"); // call function to get the moleculeString
 
-			if (Debug) DebugLog.StopwatchMessage("GetKekuleJs Complete: " + moleculeString + ", Time: ", sw);
+			if (Debug) DebugLog.StopwatchMessage("GetMolfile Complete: " + moleculeString + ", Time: ", sw);
 
 			return moleculeString;
 		}

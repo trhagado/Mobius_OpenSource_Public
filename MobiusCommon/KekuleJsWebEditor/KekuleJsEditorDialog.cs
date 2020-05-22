@@ -58,7 +58,7 @@ namespace Mobius.KekuleJs
 
 		private void SaveButton_Click(object sender, EventArgs e)
 		{
-			EditedMolfile = KekuleJsControl.GetKekuleJs();
+			EditedMolfile = KekuleJsControl.GetMolfile();
 			// todo: validate KekuleJs
 			DialogResult = DialogResult.OK;
 		}

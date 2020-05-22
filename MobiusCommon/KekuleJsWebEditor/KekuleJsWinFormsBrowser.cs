@@ -407,7 +407,7 @@ namespace Mobius.KekuleJs
                 s = this.getSmiles(true);
                 break;
             case "KekuleJs":
-                s = this.getKekuleJs();
+                s = this.GetMolfile();
                 break 
         }
         if (scil.Utils.isNullOrEmpty(s)) {
@@ -460,7 +460,7 @@ namespace Mobius.KekuleJs
 
 				Stopwatch sw = Stopwatch.StartNew();
 
-				string key = string.Format("GetKekuleJsBitmap({0}, {1}, {2})", molfile, size.Width, size.Height);
+				string key = string.Format("GetMolfileBitmap({0}, {1}, {2})", molfile, size.Width, size.Height);
 				if (CacheMx<Bitmap>.TryGetValue(key, out bm))
 					return bm;
 
@@ -511,7 +511,7 @@ namespace Mobius.KekuleJs
 		{
 			string svg = null;
 
-			string key = string.Format("GetKekuleJsSvg({0}, {1}, {2})", KekuleJs, size.Width, size.Height);
+			string key = string.Format("GetMolfileSvg({0}, {1}, {2})", KekuleJs, size.Width, size.Height);
 			if (CacheMx<string>.TryGetValue(key, out svg))
 				return svg;
 

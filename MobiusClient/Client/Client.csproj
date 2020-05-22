@@ -109,6 +109,9 @@
     <Reference Include="Oracle.DataAccess">
       <HintPath>..\..\MobiusCommon\ExternalLibraries\Oracle.DataAccess.dll</HintPath>
     </Reference>
+    <Reference Include="PoorMansTSqlFormatterLib35">
+      <HintPath>..\..\MobiusCommon\ExternalLibraries\PoorMansTSqlFormatterLib35.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
