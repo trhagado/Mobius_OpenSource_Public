@@ -7,21 +7,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
+	<title>Mobius KekuleJs Renderer</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>KekuleJs v2.0.0-RC+r</title>
+	<link href="libs/kekule/themes/default/kekule.css" rel="stylesheet" type="text/css">
+	<script src="libs/kekule/kekule.js"></script>
+	<head>
 
-	<link rel="shortcut icon" type="image/x-icon" href="logo/favicon.ico">
-	<link rel="icon" type="image/png" sizes="32x32" href="logo/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="logo/favicon-16x16.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="logo/apple-touch-icon.png">
+		<body style="margin:0;">
+		
+			<div id="chemComposer"
+					 data-widget="Kekule.Editor.Composer"></div> <!-- Editor/Composer -->
 
-	<link rel="stylesheet" href="ketcher.css">
-	<script src="raphael.min.js"></script>
-	<script src="ketcher.js"></script>
+			<script type="text/javascript">
+				var chemCtl = null; // global ChemWidget variable we can reference in later injected JavaScript
 
-</head>
-<body role="application">
+				Kekule.X.domReady(function () { // set global chemCtl var when domReady
+					//window.onresize = adjustElemSizes;
+					chemCtl = Kekule.Widget.getWidgetById('chemComposer');
+					//chemCtl.setAutoSize(true); // adjust control size to fit molecule
+					chemCtl.autofit = true; // expand mol to fit control
+					chemCtl.enableDirectInteraction = true; // if true mouse can zoom, rotate and move the molecule
+					//chemCtl.enableToolbar = true;
+					//chemCtl.enableEdit = true;
+					//chemCtl.caption = 'Dude!';
+					//chemCtl.showCaption = true;
+					chemCtl.backgroundColor = 'lightgray'; // debug
+				}
+				); // end of domReady
 
-</body>
+				function setMolfileString(molfile) {
+					var mol = Kekule.IO.loadFormatData(molfile, 'mol');
+					chemCtl.setChemObj(mol);
+				}
+
+				function getMolfileString() {
+					var mol = chemCtl.getChemObj();
+					var molfile = Kekule.IO.saveFormatData(mol, 'mol');
+					return molfile;
+				}
+
+				function getSvgString() {
+
+					var context = chemCtl.getDrawContext();
+					if (context && context.toSVG) {
+						var svg = context.toSVG();
+						return chemCtl.getSvg();
+					}
+
+					else return '';
+				}
+
+			</script>
+		</body>
 </html>
+

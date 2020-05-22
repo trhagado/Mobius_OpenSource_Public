@@ -95,8 +95,8 @@ namespace Mobius.KekuleJs
 
 				WindowsMessageFilter BrowserRtClickMessageFilter; // to catch rt-click within Scilligence Webbrowser control
 
-				BrowserRtClickMessageFilter =
-					WindowsMessageFilter.CreateRightClickMessageFilter(Browser, BrowserControlRightMouseButtonMessageReceived);
+				//BrowserRtClickMessageFilter =
+				//	WindowsMessageFilter.CreateRightClickMessageFilter(Browser, BrowserControlRightMouseButtonMessageReceived);
 
 				BrowserWrapper = new WebBrowserWrapper(Browser);
 				BrowserWrapper.NavigateAndWait("about:blank"); // create initial blank page
@@ -236,7 +236,7 @@ namespace Mobius.KekuleJs
 
 		private void Browser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
 		{
-			Browser.Document.Body.AttachEventHandler("ondblclick", Document_DoubleClick); // allow double-click to be handled
+			//Browser.Document.Body.AttachEventHandler("ondblclick", Document_DoubleClick); // allow double-click to be handled
 			return;
 		}
 
@@ -275,21 +275,9 @@ namespace Mobius.KekuleJs
 		{
 			string script = "";
 
-			if (RendererMode != KekuleJsControlMode.BrowserEditor) // all modes except editor
-			{
-				script += "chemViewer.setDimension('" + Browser.Width + "px','" + Browser.Height + "px');";
-				//script += "jsd.refresh();"; // redraws the structure
-				JavaScriptManager.ExecuteScript(this, script);
-				return;
-			}
-
-			else // editor mode
-			{
-				script += "app.resizeWindow();";
-				//script += "app.refresh();"; // this seems to be slower than the resizeWindow call above
-				JavaScriptManager.ExecuteScript(this, script);
-				return;
-			}
+			script += "chemCtl.setDimension('" + Browser.Width + "px','" + Browser.Height + "px');";
+			JavaScriptManager.ExecuteScript(this, script);
+			return;
 		}
 
 		private void Browser_ProgressChanged(object sender, WebBrowserProgressChangedEventArgs e)
@@ -323,6 +311,7 @@ namespace Mobius.KekuleJs
 			{
 				Molfile = newMolfile;
 				SetMoleculeAndRender(newMolfile); // display new KekuleJs
+				return;
 			}
 		}
 
@@ -341,45 +330,14 @@ namespace Mobius.KekuleJs
 			string molfile,
 			Size size = new Size())
 		{
-			string script = ""; // build stript and execute it
+			string molfile2 = null;
 
-			if (RendererMode != KekuleJsControlMode.BrowserEditor) // all modes except editor
-			{
+			CallJavaScriptMethod("setMolfileString", new string[] { molfile });
 
-				CallJavaScriptMethod("setMolfileString", new string[] { molfile });
+			//if (Lex.IsDefined(molfile))
+			//	molfile2 = GetMolfile(); // debug
 
-				////if (!String.IsNullOrWhiteSpace(KekuleJs)) // don't do this check, need to set if blank to clear out existing structure
-				//{
-				//	script += "viewer.setMolfileString(\"" + molfile + "\");"; 
-					
-				//	//JavaScriptManager.ExecuteScript(this, script); script = ""; // debug - one command at a time
-				//}
-
-				//if (!size.IsEmpty)
-				//{
-				//	script += "jsd.setSize(" + size.Width + "," + size.Height + ");";
-					
-				//	//JavaScriptManager.ExecuteScript(this, script); script = ""; // debug - one command at a time
-				//}
-
-				//script += "jsd.refresh();"; // redraws the structure
-				//JavaScriptManager.ExecuteScript(this, script);
-				return;
-			}
-
-			else // editor mode
-			{
-				script += // set the KekuleJs allowing for blank KekuleJs to clear the structure
-					"app.canvas.setKekuleJs(\"" + molfile + "\");"; // var app = new scil.KekuleJs.App(), app.canvas is JSDraw canvas object
-
-				//if (!size.IsEmpty)
-				//	script += "app.canvas.setSize(" + scaledCanvasWidth + "," + scaledCanvasHeight + ");";
-
-				script += "app.canvas.refresh();"; // redraws the structure
-				JavaScriptManager.ExecuteScript(this, script);
-				return;
-			}
-
+			return;
 		}
 
 		/// <summary>
@@ -389,7 +347,7 @@ namespace Mobius.KekuleJs
 		/// <returns></returns>
 
 		public string GetMolfile(
-		string outputFormat = "molfile")
+			string outputFormat = "molfile")
 		{
 			if (Debug) DebugLog.Message("GetMolfile Entered" + IdText);
 

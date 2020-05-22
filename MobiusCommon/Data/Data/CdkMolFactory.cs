@@ -22,7 +22,7 @@ namespace Mobius.Data
 		/// </summary>
 		/// <returns></returns>
 		/// 
-		public static INativeMol NewCdkMol()
+		public static INativeMolMx NewCdkMol()
 		{
 			return I.NewCdkMol();
 		}
@@ -33,7 +33,7 @@ namespace Mobius.Data
 		/// <param name="molMx"></param>
 		/// <returns></returns>
 
-		public static INativeMol NewCdkMol(MoleculeMx molMx)
+		public static INativeMolMx NewCdkMol(MoleculeMx molMx)
 		{
 			return I.NewCdkMol(molMx);
 		}
@@ -45,7 +45,7 @@ namespace Mobius.Data
 		/// <param name="molString"></param>
 		/// <returns></returns>
 
-		public static INativeMol NewCdkMol(
+		public static INativeMolMx NewCdkMol(
 			MoleculeFormat molFormat,
 			string molString)
 		{

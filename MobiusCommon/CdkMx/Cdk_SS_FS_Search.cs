@@ -22,7 +22,7 @@ namespace Mobius.CdkMx
 /// Substructure and full-structure search
 /// </summary>
 
-  public partial class CdkMol : INativeMol
+  public partial class CdkMol : INativeMolMx
   {
 
     CdkMol FSSQueryMolecule = null;
@@ -35,8 +35,8 @@ namespace Mobius.CdkMx
     /// <returns></returns>
 
     public bool IsSSSMatch(
-      INativeMol queryMol,
-      INativeMol targetMol)
+      INativeMolMx queryMol,
+      INativeMolMx targetMol)
     {
       SetSSSQueryMolecule(queryMol as CdkMol);
       return IsSSSMatch(targetMol as CdkMol);
@@ -48,7 +48,7 @@ namespace Mobius.CdkMx
     /// <param name="queryMol"></param>
 
     public void SetSSSQueryMolecule(
-    INativeMol queryMol)
+    INativeMolMx queryMol)
     {
       try
       {
@@ -67,7 +67,7 @@ namespace Mobius.CdkMx
     /// <returns></returns>
 
     public bool IsSSSMatch(
-      INativeMol targetMol)
+      INativeMolMx targetMol)
     {
       throw new NotImplementedException();
     }
@@ -82,7 +82,7 @@ namespace Mobius.CdkMx
     /// <returns></returns>
 
     public bool GetSSSMapping(
-      INativeMol targetMol,
+      INativeMolMx targetMol,
       out int queryIndex,
       out int[] mappedAtoms,
       out int[] mappedBonds)
@@ -165,8 +165,8 @@ namespace Mobius.CdkMx
     /// <param name="mappedBonds"></param>
     /// <returns></returns>
 
-    public INativeMol HilightSSSMatchGMap(
-      INativeMol targetMol,
+    public INativeMolMx HilightSSSMatchGMap(
+      INativeMolMx targetMol,
       int[] mappedAtoms,
       int[] mappedBonds)
     {
@@ -206,12 +206,19 @@ namespace Mobius.CdkMx
     /// <returns></returns>
 
     public bool FullStructureMatch(
-      INativeMol query,
-      INativeMol target,
+      INativeMolMx query,
+      INativeMolMx target,
       string FullStructureSearchType = null)
     {
+      if (query == null || target == null) return false;
+
       CdkMol q = query as CdkMol;
+      q.UpdateNativeMolecule(); // be sure up to date
+      if (q?.NativeMol == null) return false;
+
       CdkMol t = target as CdkMol;
+      t.UpdateNativeMolecule();
+      if (t?.NativeMol == null) return false;
 
       var fs = new UniversalIsomorphismTester();
 
@@ -226,7 +233,7 @@ namespace Mobius.CdkMx
     /// <param name="queryMol"></param>
 
     public void SetFSSQueryMolecule(
-      INativeMol queryMol,
+      INativeMolMx queryMol,
       string FullStructureSearchType = null)
     {
       FSSQueryMolecule = queryMol as CdkMol;
@@ -240,7 +247,7 @@ namespace Mobius.CdkMx
     /// <returns></returns>
 
     public bool IsFSSMatch(
-      INativeMol targetMol)
+      INativeMolMx targetMol)
     {
       return FullStructureMatch(FSSQueryMolecule, targetMol);
     }

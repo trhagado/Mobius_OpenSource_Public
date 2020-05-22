@@ -220,7 +220,7 @@
     <Compile Include="Data\MoleculeMx3.cs" />
     <Compile Include="Data\CidList.cs" />
     <Compile Include="Data\CidListElement.cs" />
-    <Compile Include="Data\INativeMol.cs" />
+    <Compile Include="Data\INativeMolMx.cs" />
     <Compile Include="Data\CdkMolFactory.cs" />
     <Compile Include="Data\VoArrayList.cs" />
     <Compile Include="Data\QueryResultsVoMap.cs" />

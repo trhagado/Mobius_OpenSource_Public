@@ -220,8 +220,9 @@ namespace Mobius.ClientComponents
 			if (newRenderer == MoleculeRendererType.Chemistry)
 			{
 				Controls.Add(KekuleJsCtl);
-				RenditorRtClickMessageFilter = // capture rt-click for Renditor
-					WindowsMessageFilter.CreateRightClickMessageFilter(KekuleJsCtl, MoleculeControlRightMouseButtonMessageReceived);
+
+				//RenditorRtClickMessageFilter = // capture rt-click for Renditor
+				//	WindowsMessageFilter.CreateRightClickMessageFilter(KekuleJsCtl, MoleculeControlRightMouseButtonMessageReceived);
 			}
 
 			else if (newRenderer == MoleculeRendererType.Helm)

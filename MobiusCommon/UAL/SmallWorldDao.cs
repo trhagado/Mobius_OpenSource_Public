@@ -56,7 +56,7 @@ namespace Mobius.UAL
 
 		public static int SvgDepictionCount = 0; // number of GetDepiction calls for the current query
 
-		static INativeMol CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
+		static INativeMolMx CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
 
 		internal static bool Debug = false;
 
@@ -828,7 +828,7 @@ namespace Mobius.UAL
 		static string LastCheckResponse; // response from check
 		static Exception LastCheckException; // any exception that appears during check
 
-		static INativeMol CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
+		static INativeMolMx CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
 
 		static object DepictLock = new object();
 

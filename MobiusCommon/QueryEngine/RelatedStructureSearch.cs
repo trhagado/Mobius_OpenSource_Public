@@ -139,7 +139,7 @@ namespace Mobius.QueryEngineLibrary
 
 		private static List<RelatedStructureSearch> SearchHistory = new List<RelatedStructureSearch>();
 
-		static INativeMol CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
+		static INativeMolMx CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
 
 		private static string LogFileName { get { return ServicesDirs.LogDir + @"\RelatedStructureSearch - [Date].log"; } } // Allow logging to RelatedStructureSearch-specific file
 

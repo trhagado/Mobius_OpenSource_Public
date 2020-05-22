@@ -19,37 +19,39 @@
 					 data-widget="Kekule.ChemWidget.Viewer2D"></div> <!-- a 2D viewer -->
 
 			<script type="text/javascript">
-				var chemViewer = null; // global variable we can reference in later injected JavaScript
+				var chemCtl = null; // global variable we can reference in later injected JavaScript
 
-				Kekule.X.domReady(function () { // set global chemViewer var when domReady
+				Kekule.X.domReady(function () { // set global chemCtl var when domReady
 					//window.onresize = adjustElemSizes;
-					chemViewer = Kekule.Widget.getWidgetById('chemViewer2D');
-					//chemViewer.setAutoSize(true);
-					chemViewer.enableToolbar = true;
-					chemViewer.enableEdit = true;
-					//chemViewer.caption = 'Dude!';
-					//chemViewer.showCaption = true;
-					//chemViewer.backgroundColor = 'lightgray'; // debug
+					chemCtl = Kekule.Widget.getWidgetById('chemViewer2D');
+					//chemCtl.setAutoSize(true); // adjust control size to fit molecule
+					chemCtl.autofit = true; // expand mol to fit control
+					chemCtl.enableDirectInteraction = true; // if true mouse can zoom, rotate and move the molecule
+					//chemCtl.enableToolbar = true;
+					//chemCtl.enableEdit = true;
+					//chemCtl.caption = 'Dude!';
+					//chemCtl.showCaption = true;
+					//chemCtl.backgroundColor = 'lightgray'; // debug
 				}
 				); // end of domReady
 
 				function setMolfileString(molfile) {
 					var mol = Kekule.IO.loadFormatData(molfile, 'mol');
-					chemViewer.setChemObj(mol);
+					chemCtl.setChemObj(mol);
 				}
 
 				function getMolfileString() {
-					var molecule = chemViewer.getChemObj();
+					var molecule = chemCtl.getChemObj();
 					var molfile = Kekule.IO.saveFormatData(obj, 'mol');
 					return molfile;
 				}
 
 				function getSvgString() {
 
-					var context = chemViewer.getDrawContext();
+					var context = chemCtl.getDrawContext();
 					if (context && context.toSVG) {
 						var svg = context.toSVG();
-						return chemViewer.getSvg();
+						return chemCtl.getSvg();
 					}
 
 					else return '';

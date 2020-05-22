@@ -25,7 +25,7 @@ using System.Text;
 namespace Mobius.CdkMx
 {
 
-	public partial class CdkMol : INativeMol
+	public partial class CdkMol : INativeMolMx
 	{
 
 		public static int ParseSmilesErrorCount = 0;
@@ -569,7 +569,7 @@ namespace Mobius.CdkMx
 		public string GetMolFormulaDotDisconnect(
 			string molfile)
 		{
-			INativeMol mol = new CdkMol(MoleculeFormat.Molfile, molfile);
+			INativeMolMx mol = new CdkMol(MoleculeFormat.Molfile, molfile);
 			string mf = GetMolFormulaDotDisconnect(mol as CdkMol);
 			return mf;
 		}
@@ -581,7 +581,7 @@ namespace Mobius.CdkMx
 		/// <returns></returns>
 
 		public String GetMolFormulaDotDisconnect(
-			INativeMol mol)
+			INativeMolMx mol)
 		{
 			string mf = GetMolFormula(mol as CdkMol, includeSpaces: false, separateFragments: true);
 			return mf;
@@ -598,7 +598,7 @@ namespace Mobius.CdkMx
 		/// <returns></returns>
 
 		public String GetMolFormula(
-			INativeMol mol,
+			INativeMolMx mol,
 			bool includeSpaces = false,
 			bool separateFragments = false,
 			bool use2Hand3HforHydrogenIsotopes = false,

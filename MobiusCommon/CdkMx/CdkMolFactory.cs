@@ -16,7 +16,7 @@ namespace Mobius.CdkMx
 		/// Basic constructor
 		/// </summary>
 
-		public INativeMol NewCdkMol()
+		public INativeMolMx NewCdkMol()
 		{
 			return new CdkMol();
 		}
@@ -26,7 +26,7 @@ namespace Mobius.CdkMx
 		/// </summary>
 		/// <param name="parent"></param>
 
-		public INativeMol NewCdkMol (MoleculeMx parent)
+		public INativeMolMx NewCdkMol (MoleculeMx parent)
 		{
 			return new CdkMol(parent);
 		}
@@ -38,7 +38,7 @@ namespace Mobius.CdkMx
 		/// <param name="molString"></param>
 		/// <returns></returns>
 
-		public INativeMol NewCdkMol(
+		public INativeMolMx NewCdkMol(
 			MoleculeFormat molFormat,
 			string molString)
 		{

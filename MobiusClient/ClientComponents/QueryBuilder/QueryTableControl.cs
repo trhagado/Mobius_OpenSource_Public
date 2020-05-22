@@ -782,9 +782,10 @@ namespace Mobius.ClientComponents
 			if (mol.IsChemStructureFormat)
 			{
 				int miWidth = MoleculeMx.PixelsToMilliinches(pixWidth);
+				Rectangle destRect = new Rectangle(0, 0, miWidth, miWidth * 4 / 5); // default dest rect
 
-				Rectangle destRect = new Rectangle(0, 0, miWidth, 10000);
 				mol.CdkMol.FitStructureIntoRectangle(ref destRect, MoleculeMx.StandardBondLength, 0, 0, false, 11000, out boundingRect);
+
 				int pixHeight = MoleculeMx.MilliinchesToPixels(destRect.Height);
 				DisplayPreferences dp = new DisplayPreferences();
 				if (Lex.Contains(qc.Criteria, "SSS")) // no H display if SS query

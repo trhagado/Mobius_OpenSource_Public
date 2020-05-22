@@ -36,7 +36,7 @@ namespace Mobius.CdkMx
 	/// Wrapper for native CDK Molecule class
 	/// </summary>
 
-	public partial class CdkMol : INativeMol
+	public partial class CdkMol : INativeMolMx
 	{
 		public MoleculeMx MoleculeMx; // Parent MoleculeMx that we are supporting (if any)
 		public IAtomContainer NativeMol = null; // native format library molecule that matches the current mol
@@ -220,6 +220,7 @@ namespace Mobius.CdkMx
 		/// <param name="translateType">0=no xlate, 1=xlate, 2= xlate to upper left</param>
 		/// <param name="fixedHeight">0=no, 1=yes, 2=yes unless too tall to fit</param>
 		/// <param name="markBoundaries">True to mark edges of structure</param>
+		/// <param name="pageHeight">Bounding page height if > 0</param>
 		/// <returns>New bounding rectangle for structure in milliinches</returns>
 
 		public void FitStructureIntoRectangle(

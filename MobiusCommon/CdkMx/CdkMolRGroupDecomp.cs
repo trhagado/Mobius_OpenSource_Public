@@ -13,7 +13,7 @@ namespace Mobius.CdkMx
 	/// RGroup Decomposition
 	/// </summary>
 
-	public partial class CdkMol : INativeMol
+	public partial class CdkMol : INativeMolMx
 	{
 		public static object Grg = null; // the current decomposition
 
@@ -25,7 +25,7 @@ namespace Mobius.CdkMx
 			return;
 		}
 
-		public static void SetCoreStructure(INativeMol mol, bool PromptUser)
+		public static void SetCoreStructure(INativeMolMx mol, bool PromptUser)
 		{
 			throw new NotImplementedException();
 		}
@@ -62,26 +62,26 @@ namespace Mobius.CdkMx
 		/// <returns></returns>
 
 		public static void GetCoreRGroupInfo(
-			INativeMol mol,
+			INativeMolMx mol,
 			out SortedDictionary<int, int> rgCounts,
 			out SortedDictionary<int, int> rgBufferStartingPos)
 		{
 			throw new NotImplementedException();
 		}
 
-		public static int ProcessTargetMolecule(INativeMol mol)
+		public static int ProcessTargetMolecule(INativeMolMx mol)
 		{
 			throw new NotImplementedException();
 		}
 
-		public static INativeMol GetIthMappingFragment(
+		public static INativeMolMx GetIthMappingFragment(
 			int queryIndex, 
 			int rGroupIndex)
 		{
 			throw new NotImplementedException();
 		}
 
-		public static INativeMol GetAlignedTargetForMapping(
+		public static INativeMolMx GetAlignedTargetForMapping(
 			int queryIndex)
 		{
 			throw new NotImplementedException();

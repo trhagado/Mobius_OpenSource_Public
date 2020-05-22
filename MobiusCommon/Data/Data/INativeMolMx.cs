@@ -34,7 +34,7 @@ namespace Mobius.Data
 		/// </summary>
 		/// <returns></returns>
 
-		INativeMol NewCdkMol();
+		INativeMolMx NewCdkMol();
 
 		/// <summary>
 		/// Create CdkMol instance from MoleculeMx
@@ -42,7 +42,7 @@ namespace Mobius.Data
 		/// <param name="molMx"></param>
 		/// <returns></returns>
 
-		INativeMol NewCdkMol(MoleculeMx molMx);
+		INativeMolMx NewCdkMol(MoleculeMx molMx);
 
 		/// <summary>
 		/// Construct from mol format and string
@@ -51,7 +51,7 @@ namespace Mobius.Data
 		/// <param name="molString"></param>
 		/// <returns></returns>
 
-		INativeMol NewCdkMol(
+		INativeMolMx NewCdkMol(
 			MoleculeFormat molFormat,
 			string molString);
 
@@ -64,9 +64,9 @@ namespace Mobius.Data
 	public class StaticCdkMol
 	{
 
-		public static INativeMol I => GetCdkMolInstance();
+		public static INativeMolMx I => GetCdkMolInstance();
 
-		static INativeMol GetCdkMolInstance()
+		static INativeMolMx GetCdkMolInstance()
 		{
 			if (i == null) // get instance if not done yet
 				i = CdkMolFactory.NewCdkMol();
@@ -74,14 +74,14 @@ namespace Mobius.Data
 			return i;
 		}
 
-		static INativeMol i = null;
+		static INativeMolMx i = null;
 	}
 
 	/// <summary>
-	/// Interface to MoleculeLibrary (e.g. Cdk) functionality for MoleculeMx Class
+	/// Interface to wrapper for native molecule library (e.g. Cdk) 
 	/// </summary>
 
-	public interface INativeMol
+	public interface INativeMolMx
 	{
 
 		void UpdateNativeMolecule(); // update native molecule to 
@@ -215,6 +215,20 @@ namespace Mobius.Data
 
 		IEnumerable<int> GetBitSet(object fingerprint);
 
+		/// <summary>
+		/// Scale and translate structure into supplied rectangle.
+		/// This method involves scaling,
+		/// translating, and adjustments to font sizes and line widths.
+		/// </summary>
+		/// <param name="destRect">Destination rect to fit into, bottom may be adjusted</param>
+		/// <param name="desiredBondLength">0=no scale, 1=bond length for "standard" size box, >1 = desired bond length in milliinches</param>
+		/// <param name="translateType">0=no xlate, 1=xlate, 2= xlate to upper left</param>
+		/// <param name="fixedHeight">0=no, 1=yes, 2=yes unless too tall to fit</param>
+		/// <param name="markBoundaries">True to mark edges of structure</param>
+		/// <param name="pageHeight">Bounding page height if > 0</param>
+		/// <returns>New bounding rectangle for structure in milliinches</returns>
+
+
 		void FitStructureIntoRectangle(
 			ref Rectangle destRect,
 			int desiredBondLength,
@@ -332,8 +346,8 @@ namespace Mobius.Data
 		/// <returns></returns>
 
 		bool IsSSSMatch(
-			INativeMol queryMol,
-			INativeMol targetMol);
+			INativeMolMx queryMol,
+			INativeMolMx targetMol);
 
 		/// <summary>
 		/// Prepare for SSS matching of supplied query molecule
@@ -341,7 +355,7 @@ namespace Mobius.Data
 		/// <param name="queryMol"></param>
 
 		void SetSSSQueryMolecule(
-			INativeMol queryMol);
+			INativeMolMx queryMol);
 
 		/// <summary>
 		/// Map current query against supplied target molecule
@@ -350,7 +364,7 @@ namespace Mobius.Data
 		/// <returns></returns>
 
 		bool IsSSSMatch(
-			INativeMol targetMol);
+			INativeMolMx targetMol);
 
 		/// <summary>
 		/// Get mapping of current query against supplied target
@@ -362,7 +376,7 @@ namespace Mobius.Data
 		/// <returns></returns>
 
 		bool GetSSSMapping(
-			INativeMol targetMol,
+			INativeMolMx targetMol,
 			out int queryIndex,
 			out int[] mappedAtoms,
 			out int[] mappedBonds);
@@ -396,8 +410,8 @@ namespace Mobius.Data
 		/// <param name="mappedBonds"></param>
 		/// <returns></returns>
 
-		INativeMol HilightSSSMatchGMap(
-			INativeMol targetMol,
+		INativeMolMx HilightSSSMatchGMap(
+			INativeMolMx targetMol,
 			int[] mappedAtoms,
 			int[] mappedBonds);
 
@@ -428,8 +442,8 @@ namespace Mobius.Data
 		/// <returns></returns>
 
 		bool FullStructureMatch(
-			INativeMol query,
-			INativeMol target,
+			INativeMolMx query,
+			INativeMolMx target,
 			string FullStructureSearchType = null);
 
 		/// <summary>
@@ -438,7 +452,7 @@ namespace Mobius.Data
 		/// <param name="queryMol"></param>
 
 		void SetFSSQueryMolecule(
-			INativeMol queryMol,
+			INativeMolMx queryMol,
 			string FullStructureSearchType = null);
 
 		/// <summary>
@@ -448,7 +462,7 @@ namespace Mobius.Data
 		/// <returns></returns>
 
 		bool IsFSSMatch(
-			INativeMol targetMol);
+			INativeMolMx targetMol);
 
 	}
 

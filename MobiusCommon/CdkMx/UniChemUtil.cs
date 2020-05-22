@@ -56,7 +56,7 @@ public class UniChemUtil
 
 		public static int AtomContainerToSmilesAndBackErrorCount = 0;
 
-		static INativeMol CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
+		static INativeMolMx CdkMolUtil => StaticCdkMol.I; // static molecule shortcut for utility methods
 
 		/// <summary>
 		/// Build UniChem Data 
