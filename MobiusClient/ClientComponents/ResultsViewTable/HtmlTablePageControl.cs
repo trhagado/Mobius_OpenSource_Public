@@ -27,6 +27,7 @@ namespace Mobius.ClientComponents
 		public HtmlTablePageControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		private void BackBut_Click(object sender, EventArgs e)

@@ -45,6 +45,8 @@ namespace Mobius.Client
 		public Shell()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
+
 			RibbonControl.Manager.ShortcutItemClick += new ShortcutItemClickEventHandler(Manager_ShortcutItemClick);
 			MainMenuControl = new MainMenuControl();
 			MainMenuControl.AfterEditMenuSelected += AfterEditMenuSelected;

@@ -1,4 +1,5 @@
-﻿using Mobius.Data;
+﻿using Mobius.ComOps;
+using Mobius.Data;
 
 using DevExpress.XtraEditors;
 
@@ -38,6 +39,7 @@ namespace Mobius.ClientComponents
 		public QbControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		private void QbSplitter_Paint(object sender, PaintEventArgs e)

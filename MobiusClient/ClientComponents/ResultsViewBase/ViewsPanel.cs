@@ -38,6 +38,7 @@ namespace Mobius.ClientComponents
 		public ViewsPanel()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
 			return;
 		}

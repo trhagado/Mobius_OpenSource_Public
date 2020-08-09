@@ -85,8 +85,11 @@ namespace Mobius.ClientComponents
 		public MoleculeControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
 			InSetup = true;
+
+			WinFormsUtil.LogControlChildren(this);
 
 			try
 			{

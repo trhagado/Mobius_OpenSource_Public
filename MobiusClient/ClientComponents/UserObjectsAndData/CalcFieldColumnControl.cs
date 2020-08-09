@@ -33,6 +33,7 @@ namespace Mobius.ClientComponents
 		public CalcFieldColumnControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		/// <summary>

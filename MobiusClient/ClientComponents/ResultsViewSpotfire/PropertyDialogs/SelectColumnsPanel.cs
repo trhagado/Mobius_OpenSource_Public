@@ -30,6 +30,7 @@ namespace Mobius.SpotfireClient
 		public SelectColumnsPanel()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		/// <summary>

@@ -40,6 +40,7 @@ namespace Mobius.ClientComponents
 		public ContentsTreeWithSearch()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
 			ContentsTreeContextMenus = new QbContentsTreeMenus(); // context menus for main contents tree
 			//ContentsTreeContextMenus.QbContentsTree = this;

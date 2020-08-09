@@ -24,6 +24,7 @@ namespace Mobius.ClientComponents
 		public ZoomControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		/// <summary>

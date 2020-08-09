@@ -78,8 +78,9 @@ namespace Mobius.ClientComponents
 		public PivotGridPanel()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
-// Link chart to grid & do initial setup
+			// Link chart to grid & do initial setup
 
 			//Chart.DataSource = PivotGrid;
 			//Chart.SeriesDataMember = "Series";

@@ -27,6 +27,7 @@ namespace Mobius.SpotfireClient
 		public LabelsPropertiesPanel()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 	}
 }

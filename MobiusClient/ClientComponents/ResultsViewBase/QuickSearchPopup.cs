@@ -78,6 +78,8 @@ namespace Mobius.ClientComponents
 		{
 			InitializeComponent();
 
+			WinFormsUtil.LogControlChildren(this);
+
 			if (SystemUtil.InRuntimeMode)
 				RelatedStructuresControl.BorderStyle = BorderStyle.None;
 

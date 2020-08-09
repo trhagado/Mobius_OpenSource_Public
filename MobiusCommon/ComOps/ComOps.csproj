@@ -339,6 +339,7 @@
     <Compile Include="EncryptMx.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="WinFormsUtil.cs" />
     <Compile Include="XmlUtil.cs" />
     <Compile Include="GZip.cs" />
     <Compile Include="ZipUtils.cs" />

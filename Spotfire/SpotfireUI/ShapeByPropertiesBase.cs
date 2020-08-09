@@ -35,6 +35,7 @@ namespace Mobius.SpotfireClient
 		public ShapeBySelectorControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		/// <summary>

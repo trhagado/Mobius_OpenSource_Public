@@ -27,6 +27,7 @@ namespace Mobius.ClientComponents
 		public FilterRangeSliderControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		public void Setup(ColumnInfo colInfo)

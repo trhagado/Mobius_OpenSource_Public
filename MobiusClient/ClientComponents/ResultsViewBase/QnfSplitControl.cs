@@ -17,6 +17,7 @@ namespace Mobius.ClientComponents
 		public QnfSplitControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		/// <summary>

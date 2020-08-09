@@ -26,6 +26,7 @@ namespace Mobius.SpotfireClient
 		public SpotfireToolbar()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		private void OpenFromFile_Click(object sender, EventArgs e)

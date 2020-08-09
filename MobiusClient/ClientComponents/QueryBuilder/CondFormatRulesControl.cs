@@ -56,6 +56,7 @@ namespace Mobius.ClientComponents
 		public CondFormatRulesControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
 			if (SystemUtil.InDesignMode) return;
 

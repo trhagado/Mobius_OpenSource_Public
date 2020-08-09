@@ -35,6 +35,7 @@ namespace Mobius.ClientComponents
 		public ToolResultsContainer()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		public void SetupQueryResultsControlForResultsDisplay(

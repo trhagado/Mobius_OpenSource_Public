@@ -62,6 +62,7 @@ namespace Mobius.SpotfireClient
 		public ColumnSelectorDropDown()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
 			if (SystemUtil.InDesignMode) return;
 

@@ -57,6 +57,7 @@ namespace Mobius.ClientComponents
 		public QueriesControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
 			while (this.Tabs.TabPages.Count > FixedTabs) // remove all "non-fixed" tabs
 				this.Tabs.TabPages.RemoveAt(FixedTabs);

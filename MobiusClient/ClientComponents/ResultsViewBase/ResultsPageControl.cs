@@ -45,6 +45,7 @@ namespace Mobius.ClientComponents
 		public ResultsPageControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
 			ResultsPagePanel.ResultsPageControl = this; // link ResultsPagePanel up to us
 

@@ -42,19 +42,21 @@ namespace Mobius.ClientComponents
         private Hashtable _nodesForDeleting;
         private string _initialPath;
 
-        public ContentsTreeEditorControl2()
-        {
-            InitializeComponent();
-            treeList1.SelectImageList = Bitmaps.Bitmaps16x16;
-            _xmlNodesClipboard = new List<XmlNode>();
-        }
+		public ContentsTreeEditorControl2()
+		{
+			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
-        /// <summary>
-        /// Create various editors for the TreeList Control and set options.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ContentsTreeEditorControl_Load(object sender, EventArgs e)
+			treeList1.SelectImageList = Bitmaps.Bitmaps16x16;
+			_xmlNodesClipboard = new List<XmlNode>();
+		}
+
+		/// <summary>
+		/// Create various editors for the TreeList Control and set options.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ContentsTreeEditorControl_Load(object sender, EventArgs e)
         {
             //treeList1.OptionsBehavior.DragNodes = true;
             treeList1.OptionsDragAndDrop.DragNodesMode = DragNodesMode.Multiple;

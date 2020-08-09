@@ -19,7 +19,6 @@ namespace Mobius.ComOps
 
 	public class ZipUtils
 	{
-
 		/// <summary>
 		/// Extract the first file from a Zip file in the form of a byte array
 		/// </summary>

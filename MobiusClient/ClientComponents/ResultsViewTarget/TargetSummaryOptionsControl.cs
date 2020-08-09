@@ -35,12 +35,13 @@ namespace Mobius.ClientComponents
 		public TargetSummaryOptionsControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
-/// <summary>
-/// Allocate & initialize a TargetResultsViewerParms instance
-/// </summary>
-/// <returns></returns>
+		/// <summary>
+		/// Allocate & initialize a TargetResultsViewerParms instance
+		/// </summary>
+		/// <returns></returns>
 
 		public static TargetSummaryOptions GetPreferences()
 			{

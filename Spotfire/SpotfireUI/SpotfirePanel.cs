@@ -65,6 +65,7 @@ namespace Mobius.SpotfireClient
 		public SpotfirePanel()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
 			if (SystemUtil.InDesignMode) return;
 

@@ -33,13 +33,14 @@ namespace Mobius.SpotfireClient
 		public SizeBySelectorControl()
 		{ 
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
-/// <summary>
-/// Setup
-/// </summary>
-/// <param name="spotfireViewProps"></param>
-/// <param name="sizeAxis"></param>
+		/// <summary>
+		/// Setup
+		/// </summary>
+		/// <param name="spotfireViewProps"></param>
+		/// <param name="sizeAxis"></param>
 
 		public void Setup(
 			SizeAxisMsx sizeAxis,

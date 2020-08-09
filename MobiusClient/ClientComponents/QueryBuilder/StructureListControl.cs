@@ -40,6 +40,7 @@ namespace Mobius.ClientComponents
 		public StructureListControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
 			if (SystemUtil.InDesignMode) return;
 
@@ -49,7 +50,7 @@ namespace Mobius.ClientComponents
 
 			MoleculeGrid.AddStandardEventHandlers();
 
- 			return;
+			return;
 		}
 		
 		public void Setup(

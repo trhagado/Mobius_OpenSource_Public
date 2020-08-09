@@ -30,6 +30,7 @@ namespace Mobius.ClientComponents
 		public StbOptionsControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		/// <summary>

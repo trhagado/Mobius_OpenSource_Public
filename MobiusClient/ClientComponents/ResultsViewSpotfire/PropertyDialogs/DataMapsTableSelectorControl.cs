@@ -38,6 +38,7 @@ namespace Mobius.SpotfireClient
 		public DataMapsTableSelectorControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		/// <summary>

@@ -34,6 +34,7 @@ namespace Mobius.SpotfireClient
 		public DataMapPanel()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		/// <summary>

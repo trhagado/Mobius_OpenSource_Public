@@ -27,6 +27,7 @@ namespace Mobius.ClientComponents
 		public SingleMoleculeEditorControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		public void SetupControl(

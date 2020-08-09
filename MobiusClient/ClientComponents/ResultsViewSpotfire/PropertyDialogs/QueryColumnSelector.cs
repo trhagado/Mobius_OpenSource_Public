@@ -130,6 +130,7 @@ namespace Mobius.SpotfireClient
 		public QueryColumnSelect()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 

@@ -77,6 +77,7 @@ namespace Mobius.ClientComponents
 		public QueryResultsControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
 			if (SystemUtil.InDesignMode) return;
 

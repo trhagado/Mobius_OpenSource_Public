@@ -27,6 +27,7 @@ namespace Mobius.SpotfireClient
 		public SpotfirePageControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
 			Controls.Remove(ToolPanel);
 

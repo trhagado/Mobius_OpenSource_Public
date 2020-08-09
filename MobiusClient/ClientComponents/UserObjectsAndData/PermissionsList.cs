@@ -28,12 +28,13 @@ namespace Mobius.ClientComponents
 		public PermissionsList()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
-/// <summary>
-/// Setup with specified list
-/// </summary>
-/// <param name="acl"></param>
+		/// <summary>
+		/// Setup with specified list
+		/// </summary>
+		/// <param name="acl"></param>
 
 		public void Setup(AccessControlList acl)
 		{

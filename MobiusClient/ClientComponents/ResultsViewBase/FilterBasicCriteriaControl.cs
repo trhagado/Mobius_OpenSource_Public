@@ -26,12 +26,13 @@ namespace Mobius.ClientComponents
 		public FilterBasicCriteriaControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
-/// <summary>
-/// Initial setup for control
-/// </summary>
-/// <param name="colInfo"></param>
+		/// <summary>
+		/// Initial setup for control
+		/// </summary>
+		/// <param name="colInfo"></param>
 
 		public void Setup(ColumnInfo colInfo, IFilterManager filterManager)
 		{

@@ -277,6 +277,7 @@ namespace Mobius.CdkMx
 		public CdkMolControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
 			if (Debug) DebugLog.Message("CdkMolControl instance created" + IdText); // + "\r\n" + (new StackTrace(true)).ToString());
 			return;

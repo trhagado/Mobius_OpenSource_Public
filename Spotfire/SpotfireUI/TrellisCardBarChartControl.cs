@@ -78,6 +78,7 @@ namespace Mobius.SpotfireClient
 		public TrellisCardBarChartControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
 			//RulesGrid.Mode = MoleculeGridMode.LocalView; // local editing of structure
 			//			Grid.CompleteInitialization();

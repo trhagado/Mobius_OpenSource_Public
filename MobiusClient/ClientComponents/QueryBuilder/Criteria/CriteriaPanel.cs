@@ -26,6 +26,7 @@ namespace Mobius.ClientComponents
 		public CriteriaPanel()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
 			CtStructBox.Height = 141; // restore normal height
 			//Clear(); // Remove controls from criteria panel to allow later rebuild

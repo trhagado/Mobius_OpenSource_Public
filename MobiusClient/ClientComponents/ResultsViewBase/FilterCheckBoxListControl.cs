@@ -30,6 +30,7 @@ namespace Mobius.ClientComponents
 		public FilterCheckBoxListControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		public void Setup(ColumnInfo colInfo)

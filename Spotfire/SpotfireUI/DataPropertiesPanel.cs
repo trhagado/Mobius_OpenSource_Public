@@ -28,6 +28,7 @@ namespace Mobius.SpotfireClient
 		public DataPropertiesPanel()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		/// <summary>

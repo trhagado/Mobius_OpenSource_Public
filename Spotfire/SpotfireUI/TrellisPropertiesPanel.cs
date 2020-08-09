@@ -30,6 +30,7 @@ namespace Mobius.SpotfireClient
 		public TrellisPropertiesPanel()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		/// <summary>

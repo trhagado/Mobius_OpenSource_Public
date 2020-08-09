@@ -30,6 +30,7 @@ namespace Mobius.ClientComponents
 		public CriteriaCompoundIdControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		/// <summary>

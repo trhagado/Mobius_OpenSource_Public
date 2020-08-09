@@ -45,6 +45,7 @@ namespace Mobius.SpotfireClient
 		public QueryTableSelectorControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		/// <summary>

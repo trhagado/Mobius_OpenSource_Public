@@ -37,6 +37,7 @@ namespace Mobius.SpotfireClient
 		public SortingPropertiesPanel()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		/// <summary>

@@ -91,6 +91,7 @@ namespace Mobius.SpotfireClient
 		public DataMapControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
 			FieldGridP0 = FieldGrid.Location;
 		}

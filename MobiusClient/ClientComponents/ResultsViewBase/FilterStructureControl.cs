@@ -27,6 +27,7 @@ namespace Mobius.ClientComponents
 		public FilterStructureControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		public void Setup(ColumnInfo colInfo)

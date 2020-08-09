@@ -67,6 +67,7 @@ namespace Mobius.SpotfireClient
 		public TableSelectorControlMsx()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		private void TableNameDropDown_Click(object sender, EventArgs e)

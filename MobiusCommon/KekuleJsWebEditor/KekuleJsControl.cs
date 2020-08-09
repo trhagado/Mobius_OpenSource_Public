@@ -62,6 +62,7 @@ namespace Mobius.KekuleJs
 		public KekuleJsControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
 			if (Debug) DebugLog.Message("KekuleJsControl instance created" + IdText); // + "\r\n" + (new StackTrace(true)).ToString());
 			return;

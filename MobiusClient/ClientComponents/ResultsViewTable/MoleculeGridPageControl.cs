@@ -46,6 +46,7 @@ namespace Mobius.ClientComponents
 		public MoleculeGridPageControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
 			if (SystemUtil.InDesignMode) return;
 

@@ -30,6 +30,7 @@ namespace Mobius.ClientComponents
 		public HtmlTablePanel()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		private void WebBrowser_Navigating(object sender, WebBrowserNavigatingEventArgs e)

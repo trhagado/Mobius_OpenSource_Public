@@ -171,6 +171,7 @@ namespace Mobius.ClientComponents
 		public FieldSelectorControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		/// <summary>

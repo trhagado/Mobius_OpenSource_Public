@@ -32,6 +32,8 @@ namespace Mobius.ClientComponents
 		public FilterPanel()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
+
 			while (ScrollablePanel.Controls.Count > 0)
 				ScrollablePanel.Controls.RemoveAt(0);
 		}

@@ -42,6 +42,7 @@ namespace Mobius.ClientComponents
 		public FieldListControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		public void Setup(

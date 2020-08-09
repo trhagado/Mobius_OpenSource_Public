@@ -30,7 +30,8 @@ namespace Mobius.ClientComponents
 
 			Controls.Remove(ToolPanel); // hide the controls
 			PivotGridPanel.Dock = DockStyle.Fill;
-			PivotGridPanel.PageControl = this; 
+			PivotGridPanel.PageControl = this;
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		private void PivotGridPropertiesButton_Click(object sender, EventArgs e)

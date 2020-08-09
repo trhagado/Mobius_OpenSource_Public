@@ -72,10 +72,13 @@ namespace Mobius.ClientComponents
 		public ContentsTreeControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
 			TreeList.SelectImageList = Bitmaps.Bitmaps16x16;
 
 			Nodes = MetaTree.Nodes; // default set of nodes
+
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		/// <summary>

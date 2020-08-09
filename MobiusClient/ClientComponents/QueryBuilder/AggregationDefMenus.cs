@@ -45,6 +45,7 @@ namespace Mobius.ClientComponents
 		public AggregationDefMenus()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 /// <summary>

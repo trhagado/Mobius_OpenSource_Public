@@ -60,6 +60,7 @@ namespace Mobius.Helm
 		public HelmControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
 			if (Debug) DebugLog.Message("HelmControl instance created" + IdText); // + "\r\n" + (new StackTrace(true)).ToString());
 			return;

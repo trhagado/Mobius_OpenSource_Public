@@ -45,6 +45,7 @@ namespace Mobius.SpotfireClient
 		public ScaleAxisPanel()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		/// <summary>

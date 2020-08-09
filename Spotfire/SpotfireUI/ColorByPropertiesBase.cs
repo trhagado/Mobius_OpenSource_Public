@@ -38,16 +38,17 @@ namespace Mobius.SpotfireClient
 		public ColorBySelectorControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 
 			//ColorRulesControl.RulesGrid.V.Columns["RuleName"].Visible = false; // hide rule column
 			//ColorRulesControl.RulesGrid.V.Columns["BackColor1"].Caption = "Color";
 		}
 
-/// <summary>
-/// Setup
-/// </summary>
-/// <param name="view"></param>
-/// <param name="colorBy"></param>
+		/// <summary>
+		/// Setup
+		/// </summary>
+		/// <param name="view"></param>
+		/// <param name="colorBy"></param>
 
 		public void Setup(
 			ColorAxisMsx colorAxis,

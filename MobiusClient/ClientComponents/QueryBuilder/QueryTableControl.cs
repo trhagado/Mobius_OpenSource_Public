@@ -61,6 +61,7 @@ namespace Mobius.ClientComponents
 		public QueryTableControl()
 		{
 			InitializeComponent();
+			WinFormsUtil.LogControlChildren(this);
 		}
 
 		/// <summary>
