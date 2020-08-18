@@ -90,14 +90,14 @@
             this.menuExistingAnnotation,
             this.menuOpenAnnotation});
 			this.AnnotationButtonContextMenu.Name = "AnnotationButtonContextMenu";
-			this.AnnotationButtonContextMenu.Size = new System.Drawing.Size(293, 70);
+			this.AnnotationButtonContextMenu.Size = new System.Drawing.Size(292, 70);
 			// 
 			// menuNewAnnotation
 			// 
 			this.menuNewAnnotation.Image = global::Mobius.ClientComponents.Properties.Resources.NewDoc;
 			this.menuNewAnnotation.ImageTransparentColor = System.Drawing.Color.Cyan;
 			this.menuNewAnnotation.Name = "menuNewAnnotation";
-			this.menuNewAnnotation.Size = new System.Drawing.Size(292, 22);
+			this.menuNewAnnotation.Size = new System.Drawing.Size(291, 22);
 			this.menuNewAnnotation.Text = "Add New Annotation Table to Query...";
 			this.menuNewAnnotation.Click += new System.EventHandler(this.menuNewAnnotation_Click);
 			// 
@@ -106,7 +106,7 @@
 			this.menuExistingAnnotation.Image = global::Mobius.ClientComponents.Properties.Resources.FileOpen;
 			this.menuExistingAnnotation.ImageTransparentColor = System.Drawing.Color.Cyan;
 			this.menuExistingAnnotation.Name = "menuExistingAnnotation";
-			this.menuExistingAnnotation.Size = new System.Drawing.Size(292, 22);
+			this.menuExistingAnnotation.Size = new System.Drawing.Size(291, 22);
 			this.menuExistingAnnotation.Text = "Add Existing Annotation Table to Query...";
 			this.menuExistingAnnotation.Click += new System.EventHandler(this.menuExistingAnnotation_Click);
 			// 
@@ -115,7 +115,7 @@
 			this.menuOpenAnnotation.Image = global::Mobius.ClientComponents.Properties.Resources.Edit;
 			this.menuOpenAnnotation.ImageTransparentColor = System.Drawing.Color.Cyan;
 			this.menuOpenAnnotation.Name = "menuOpenAnnotation";
-			this.menuOpenAnnotation.Size = new System.Drawing.Size(292, 22);
+			this.menuOpenAnnotation.Size = new System.Drawing.Size(291, 22);
 			this.menuOpenAnnotation.Text = "Edit Existing Annotation Table...";
 			this.menuOpenAnnotation.Click += new System.EventHandler(this.menuOpenAnnotation_Click);
 			// 
@@ -126,14 +126,14 @@
             this.menuExistingCalcField,
             this.menuOpenCalcField});
 			this.CalcFieldButtonContextMenu.Name = "CalcFieldButtonContextMenu";
-			this.CalcFieldButtonContextMenu.Size = new System.Drawing.Size(289, 70);
+			this.CalcFieldButtonContextMenu.Size = new System.Drawing.Size(290, 70);
 			// 
 			// menuNewCalcField
 			// 
 			this.menuNewCalcField.Image = global::Mobius.ClientComponents.Properties.Resources.NewDoc;
 			this.menuNewCalcField.ImageTransparentColor = System.Drawing.Color.Cyan;
 			this.menuNewCalcField.Name = "menuNewCalcField";
-			this.menuNewCalcField.Size = new System.Drawing.Size(288, 22);
+			this.menuNewCalcField.Size = new System.Drawing.Size(289, 22);
 			this.menuNewCalcField.Text = "Add New Calculated Field to Query...";
 			this.menuNewCalcField.Click += new System.EventHandler(this.menuNewCalcField_Click);
 			// 
@@ -142,7 +142,7 @@
 			this.menuExistingCalcField.Image = global::Mobius.ClientComponents.Properties.Resources.FileOpen;
 			this.menuExistingCalcField.ImageTransparentColor = System.Drawing.Color.Cyan;
 			this.menuExistingCalcField.Name = "menuExistingCalcField";
-			this.menuExistingCalcField.Size = new System.Drawing.Size(288, 22);
+			this.menuExistingCalcField.Size = new System.Drawing.Size(289, 22);
 			this.menuExistingCalcField.Text = "Add Existing Calculated Field to Query...";
 			this.menuExistingCalcField.Click += new System.EventHandler(this.menuExistingCalcField_Click);
 			// 
@@ -151,7 +151,7 @@
 			this.menuOpenCalcField.Image = global::Mobius.ClientComponents.Properties.Resources.Edit;
 			this.menuOpenCalcField.ImageTransparentColor = System.Drawing.Color.Cyan;
 			this.menuOpenCalcField.Name = "menuOpenCalcField";
-			this.menuOpenCalcField.Size = new System.Drawing.Size(288, 22);
+			this.menuOpenCalcField.Size = new System.Drawing.Size(289, 22);
 			this.menuOpenCalcField.Text = "Edit Existing Calculated Field Definition...";
 			this.menuOpenCalcField.Click += new System.EventHandler(this.menuOpenCalcField_Click);
 			// 
@@ -161,14 +161,14 @@
             this.NewUserDatabaseMenuItem,
             this.OpenUserDatabaseMenuItem});
 			this.UserDatabaseButtonContextMenu.Name = "UserDatabaseButtonContextMenu";
-			this.UserDatabaseButtonContextMenu.Size = new System.Drawing.Size(323, 48);
+			this.UserDatabaseButtonContextMenu.Size = new System.Drawing.Size(324, 48);
 			// 
 			// NewUserDatabaseMenuItem
 			// 
 			this.NewUserDatabaseMenuItem.Image = global::Mobius.ClientComponents.Properties.Resources.NewDoc;
 			this.NewUserDatabaseMenuItem.ImageTransparentColor = System.Drawing.Color.Cyan;
 			this.NewUserDatabaseMenuItem.Name = "NewUserDatabaseMenuItem";
-			this.NewUserDatabaseMenuItem.Size = new System.Drawing.Size(322, 22);
+			this.NewUserDatabaseMenuItem.Size = new System.Drawing.Size(323, 22);
 			this.NewUserDatabaseMenuItem.Text = "New User Compound Database...";
 			this.NewUserDatabaseMenuItem.Click += new System.EventHandler(this.NewUserDatabaseMenuItem_Click);
 			// 
@@ -177,18 +177,17 @@
 			this.OpenUserDatabaseMenuItem.Image = global::Mobius.ClientComponents.Properties.Resources.FileOpen;
 			this.OpenUserDatabaseMenuItem.ImageTransparentColor = System.Drawing.Color.Cyan;
 			this.OpenUserDatabaseMenuItem.Name = "OpenUserDatabaseMenuItem";
-			this.OpenUserDatabaseMenuItem.Size = new System.Drawing.Size(322, 22);
+			this.OpenUserDatabaseMenuItem.Size = new System.Drawing.Size(323, 22);
 			this.OpenUserDatabaseMenuItem.Text = "View/Edit Existing User Compound Databases...";
 			this.OpenUserDatabaseMenuItem.Click += new System.EventHandler(this.OpenUserDatabaseMenuItem_Click);
 			// 
 			// AnnotationButton
 			// 
 			this.AnnotationButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.AnnotationButton.ImageIndex = 1;
-			this.AnnotationButton.ImageList = this.Bitmaps16x16;
-			this.AnnotationButton.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+			this.AnnotationButton.ImageOptions.ImageIndex = 1;
+			this.AnnotationButton.ImageOptions.ImageList = this.Bitmaps16x16;
+			this.AnnotationButton.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
 			this.AnnotationButton.Location = new System.Drawing.Point(1, 276);
-			this.AnnotationButton.LookAndFeel.SkinName = "Money Twins";
 			this.AnnotationButton.Name = "AnnotationButton";
 			this.AnnotationButton.Size = new System.Drawing.Size(22, 22);
 			toolTipTitleItem1.Text = "Annotation Tables";
@@ -204,11 +203,10 @@
 			// 
 			this.UserDatabaseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.UserDatabaseButton.Enabled = false;
-			this.UserDatabaseButton.ImageIndex = 3;
-			this.UserDatabaseButton.ImageList = this.Bitmaps16x16;
-			this.UserDatabaseButton.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+			this.UserDatabaseButton.ImageOptions.ImageIndex = 3;
+			this.UserDatabaseButton.ImageOptions.ImageList = this.Bitmaps16x16;
+			this.UserDatabaseButton.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
 			this.UserDatabaseButton.Location = new System.Drawing.Point(51, 276);
-			this.UserDatabaseButton.LookAndFeel.SkinName = "Money Twins";
 			this.UserDatabaseButton.Name = "UserDatabaseButton";
 			this.UserDatabaseButton.Size = new System.Drawing.Size(22, 22);
 			toolTipTitleItem2.Text = "User Compound Databases";
@@ -224,11 +222,10 @@
 			// CalcFieldButton
 			// 
 			this.CalcFieldButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.CalcFieldButton.ImageIndex = 2;
-			this.CalcFieldButton.ImageList = this.Bitmaps16x16;
-			this.CalcFieldButton.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+			this.CalcFieldButton.ImageOptions.ImageIndex = 2;
+			this.CalcFieldButton.ImageOptions.ImageList = this.Bitmaps16x16;
+			this.CalcFieldButton.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
 			this.CalcFieldButton.Location = new System.Drawing.Point(26, 276);
-			this.CalcFieldButton.LookAndFeel.SkinName = "Money Twins";
 			this.CalcFieldButton.Name = "CalcFieldButton";
 			this.CalcFieldButton.Size = new System.Drawing.Size(22, 22);
 			toolTipTitleItem3.Text = "Calculated Fields";
@@ -243,11 +240,10 @@
 			// AddTableButton
 			// 
 			this.AddTableButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.AddTableButton.ImageIndex = 4;
-			this.AddTableButton.ImageList = this.Bitmaps16x16;
-			this.AddTableButton.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleRight;
+			this.AddTableButton.ImageOptions.ImageIndex = 4;
+			this.AddTableButton.ImageOptions.ImageList = this.Bitmaps16x16;
+			this.AddTableButton.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleRight;
 			this.AddTableButton.Location = new System.Drawing.Point(251, 276);
-			this.AddTableButton.LookAndFeel.SkinName = "Money Twins";
 			this.AddTableButton.Name = "AddTableButton";
 			this.AddTableButton.Size = new System.Drawing.Size(48, 22);
 			toolTipTitleItem4.Text = "Add Table to Query";
@@ -263,11 +259,10 @@
 			// ContentsFind2
 			// 
 			this.ContentsFind2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.ContentsFind2.ImageIndex = 0;
-			this.ContentsFind2.ImageList = this.Bitmaps16x16;
-			this.ContentsFind2.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
+			this.ContentsFind2.ImageOptions.ImageIndex = 0;
+			this.ContentsFind2.ImageOptions.ImageList = this.Bitmaps16x16;
+			this.ContentsFind2.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
 			this.ContentsFind2.Location = new System.Drawing.Point(174, 2);
-			this.ContentsFind2.LookAndFeel.SkinName = "Money Twins";
 			this.ContentsFind2.Name = "ContentsFind2";
 			this.ContentsFind2.Size = new System.Drawing.Size(62, 22);
 			toolTipTitleItem5.Text = "Find in Database Contents";
@@ -284,10 +279,9 @@
 			// ContentsFindReset2
 			// 
 			this.ContentsFindReset2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.ContentsFindReset2.ImageIndex = 0;
-			this.ContentsFindReset2.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
+			this.ContentsFindReset2.ImageOptions.ImageIndex = 0;
+			this.ContentsFindReset2.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
 			this.ContentsFindReset2.Location = new System.Drawing.Point(239, 2);
-			this.ContentsFindReset2.LookAndFeel.SkinName = "Money Twins";
 			this.ContentsFindReset2.Name = "ContentsFindReset2";
 			this.ContentsFindReset2.Size = new System.Drawing.Size(60, 22);
 			toolTipTitleItem6.Text = "Show Full Database Contents tree";
@@ -303,13 +297,14 @@
 			// ContentsLabel
 			// 
 			this.ContentsLabel.Appearance.Font = new System.Drawing.Font("Arial", 11.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+			this.ContentsLabel.Appearance.Options.UseFont = true;
 			this.ContentsLabel.Location = new System.Drawing.Point(5, 5);
 			this.ContentsLabel.Name = "ContentsLabel";
 			this.ContentsLabel.Size = new System.Drawing.Size(133, 17);
 			this.ContentsLabel.TabIndex = 198;
 			this.ContentsLabel.Text = "Database Contents";
 			// 
-			// ContentsTree
+			// QbContentsTreeCtl
 			// 
 			this.QbContentsTreeCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 

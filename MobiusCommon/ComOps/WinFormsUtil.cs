@@ -123,6 +123,9 @@ namespace Mobius.ComOps
 			sw.WriteLine(string.Format(format, "Type", "Name", "Left", "Top", "Width", "Height", "Anchor", "Dock", "Text", "Full Type Name"));
 			sw.WriteLine(string.Format(format, "--------------------------", "--------------------------", "----", "----", "-----", "------", "--------------------------", "----", "--------------", "--------------------------"));
 
+			html += // wrap control in div with class name matching the Winforms/Dx control class name
+				"<div class=\"" + t.Name + "\" style=\"position: relative; width: 100%; height: 100%; border: 1px solid orange; \">\r\n";
+
 			foreach (Control c in pc.Controls)
 			{
 				//if (!cc.Visible) continue;
@@ -138,32 +141,60 @@ namespace Mobius.ComOps
 				string div = "<div style =\"position: absolute; ";
 
 				if (c.Dock == DockStyle.Fill) // if Dock defined than use that (Fill only for now)
-					div += "width: 100%; height: 100 %; ";
+					div += "width: 100%; height: 100%; ";
 
 				else // use Anchor settings
 				{
-					if ((c.Anchor & AnchorStyles.Left) != 0)
+					bool left = ((c.Anchor & AnchorStyles.Left) != 0);
+					bool right = ((c.Anchor & AnchorStyles.Right) != 0);
+
+					if (left)
+					{
 						div += "left: " + c.Left + "px; ";
+						if (!right)
+							div += "width: " + c.Width + "px; ";
 
-					if ((c.Anchor & AnchorStyles.Right) != 0)
-						div += "right: " + c.Right + "px; ";
+						else // if left & right defined then set width as a calc()
+							div += "width: calc(100% - " + (c.Left + (pc.Width - c.Right)) + "px); ";
+					}
 
-					if ((c.Anchor & AnchorStyles.Top) != 0)
+					else if (right) // set right and width
+					{
+						div += "right: " + (pc.Width - c.Right) + "px; width: " + c.Width + "px; ";
+					}
+
+					bool top = ((c.Anchor & AnchorStyles.Top) != 0);
+					bool bottom = ((c.Anchor & AnchorStyles.Bottom) != 0);
+
+					if (top)
+					{
 						div += "top: " + c.Top + "px; ";
+						if (!bottom)
+							div += "height: " + c.Height + "px; ";
 
-					if ((c.Anchor & AnchorStyles.Bottom) != 0)
-						div += "bottom: " + c.Bottom + "px; ";
+						else // if top & bottom defined then set height as a calc()
+							div += "height: calc(100% - " + (c.Top + (pc.Height - c.Bottom)) + "px); ";
+					}
+
+					else if (bottom) // set bottom and height
+					{
+						div += "bottom: " + (pc.Height - c.Bottom) + "px; height: " + c.Height + "px; ";
+					}
 
 				}
 
-				div += "border: 3px solid #73AD21;\">"; // finish up style and div tag
+				div += "border: 1px solid yellow;\">"; // finish up style and div tag
 
-				// insert the element
+				if (Lex.IsDefined(c.Text)) // insert the element content
+					div += c.Text;
+				else div += c.Name; // or just name if no text
 
 				div += "</div>\r\n"; // close the div
 
 				html += div; // add to html
 			}
+
+			html += "</div>\r\n"; // close the component div
 
 			sw.Close();
 
