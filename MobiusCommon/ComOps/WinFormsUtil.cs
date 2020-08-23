@@ -145,6 +145,7 @@ namespace Mobius.ComOps
 
 				else // use Anchor settings
 				{
+					string widthHeight = "";
 					bool left = ((c.Anchor & AnchorStyles.Left) != 0);
 					bool right = ((c.Anchor & AnchorStyles.Right) != 0);
 
@@ -152,35 +153,40 @@ namespace Mobius.ComOps
 					{
 						div += "left: " + c.Left + "px; ";
 						if (!right)
-							div += "width: " + c.Width + "px; ";
+							widthHeight += "width: " + c.Width + "px; ";
 
 						else // if left & right defined then set width as a calc()
-							div += "width: calc(100% - " + (c.Left + (pc.Width - c.Right)) + "px); ";
+							widthHeight += "width: calc(100% - " + (c.Left + (pc.Width - c.Right)) + "px); ";
 					}
 
 					else if (right) // set right and width
 					{
-						div += "right: " + (pc.Width - c.Right) + "px; width: " + c.Width + "px; ";
+						div += "right: " + (pc.Width - c.Right) + "px; ";
+						widthHeight += "width: " + c.Width + "px; ";
 					}
 
 					bool top = ((c.Anchor & AnchorStyles.Top) != 0);
 					bool bottom = ((c.Anchor & AnchorStyles.Bottom) != 0);
 
+					// Note: for buttons it looks like they could move up one px & be 2px taller
+
 					if (top)
 					{
 						div += "top: " + c.Top + "px; ";
 						if (!bottom)
-							div += "height: " + c.Height + "px; ";
+							widthHeight += "height: " + c.Height + "px; ";
 
 						else // if top & bottom defined then set height as a calc()
-							div += "height: calc(100% - " + (c.Top + (pc.Height - c.Bottom)) + "px); ";
+							widthHeight += "height: calc(100% - " + (c.Top + (pc.Height - c.Bottom)) + "px); ";
 					}
 
 					else if (bottom) // set bottom and height
 					{
-						div += "bottom: " + (pc.Height - c.Bottom) + "px; height: " + c.Height + "px; ";
+						div += "bottom: " + (pc.Height - c.Bottom) + "px; ";
+						widthHeight += "height: " + c.Height + "px; ";
 					}
 
+					div += widthHeight; // put width height after location
 				}
 
 				div += "border: 1px solid yellow;\">"; // finish up style and div tag
