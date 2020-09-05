@@ -1326,7 +1326,7 @@ namespace Mobius.ClientComponents
 				{
 					if (Lex.StartsWith(currentTableName, "Annotation_"))
 					{
-						qmi.Image = bitmaps16x16.Images[(int)Bitmaps16x16Enum.Annotation];
+						qmi.Image = bitmaps16x16.Images[(int)Bitmaps16x16Enum.AnnotationTable];
 						mtn.Type = MetaTreeNodeType.Annotation;
 					}
 

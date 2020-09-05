@@ -84,7 +84,7 @@ namespace Mobius.ClientComponents
 			AC("Base64 Decode", new CM1(B64Decode), 0);
 			AC("Base64 Encode", new CM1(B64Encode), 0);
 			AC("Build MetaTable From Database Catalog", new CM1(BuildMetaTableXmlFromDatabaseCatalog), 1, false, false);
-			//AC("Build MetaTable Oracle View", new CM0(CallServerCommand));
+			AC("Build CssForMobiusIcons", new CM0(Bitmaps.GenerateCssForMobiusIcons));
 
 			AC("Call", new CM1(CallClassMethod), 0);
 

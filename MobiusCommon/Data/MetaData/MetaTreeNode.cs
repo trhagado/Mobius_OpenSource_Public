@@ -387,7 +387,7 @@ namespace Mobius.Data
 					else
 					{
 						if (Shared) return Bitmaps16x16Enum.AnnotationPublic;
-						else return Bitmaps16x16Enum.Annotation;
+						else return Bitmaps16x16Enum.AnnotationTable;
 					}
 
 				case MetaTreeNodeType.CondFormat:

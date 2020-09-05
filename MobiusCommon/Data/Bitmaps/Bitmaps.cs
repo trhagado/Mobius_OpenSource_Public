@@ -274,6 +274,37 @@ namespace Mobius.Data
 
 			else return -1;
 		}
+
+		/// <summary>
+		/// Used to create css for Mobius imagees / icons
+		/// </summary>
+		/// <returns></returns>
+
+		public static string GenerateCssForMobiusIcons()
+		{
+			string template = @".<name>IconMx:before {
+				content: url(!Images/<name>.png!);
+				margin: 0px; padding: 0px;
+				width: 16px; height: 16px; }
+";
+
+			string[] names = Enum.GetNames(typeof(Bitmaps16x16Enum));
+
+			Array.Sort(names);
+
+			string result = "";
+
+			foreach (string name in names)
+			{
+				string txt = template.Replace('!', '"');
+				txt = txt.Replace("<name>", name);
+
+				result += txt;
+			}
+
+			return result;
+		}
+
 	}
 
 	/// <summary>
@@ -313,8 +344,8 @@ namespace Mobius.Data
 		Tools = 27,
 		Help = 28,
 		Design = 29,
-		SaveDoc = 30,
-		OpenDoc = 31,
+		Save = 30,
+		OpenDocument = 31,
 		NewDoc = 32,
 		Run = 33,
 		Key = 34, // key data type image 
@@ -357,7 +388,7 @@ namespace Mobius.Data
 		TargetFamily = 71,
 		Project = 72,
 		CalcField = 73,
-		Annotation = 74,
+		AnnotationTable = 74,
 		Sort = 75,
 		Go = 76,
 		DropdownBlack = 77,
@@ -402,7 +433,17 @@ namespace Mobius.Data
 		TargetTargetTable = 116,
 		ResultsPage = 117,
 		Group = 118,
-		Settings = 119
+		Settings = 119,
+		// added for Web client
+		CloseDocument,
+		Delete,
+		Find,
+		ListLogic,
+		LeftBlueArrow,
+		LeftGreenArrow,
+		RightBlueArrow,
+		RightGreenArrow,
+		Alert
 	}
 
 	/// <summary>
