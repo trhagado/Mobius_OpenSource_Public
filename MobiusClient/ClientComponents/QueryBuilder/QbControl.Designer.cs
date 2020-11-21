@@ -68,8 +68,9 @@
 			this.QueryTablesControl.Query = null;
 			this.QueryTablesControl.ShowCriteriaTab = true;
 			this.QueryTablesControl.ShowHeader = true;
-			this.QueryTablesControl.Size = new System.Drawing.Size(536, 509);
+			this.QueryTablesControl.Size = new System.Drawing.Size(531, 509);
 			this.QueryTablesControl.TabIndex = 0;
+			this.QueryTablesControl.Load += new System.EventHandler(this.QueryTablesControl_Load);
 			// 
 			// QbControl
 			// 

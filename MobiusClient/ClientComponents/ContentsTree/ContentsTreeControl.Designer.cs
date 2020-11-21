@@ -43,10 +43,12 @@ namespace Mobius.ClientComponents
 			this.TreeList.Columns.AddRange(new DevExpress.XtraTreeList.Columns.TreeListColumn[] {
             this.MetaTreeNodeCol});
 			this.TreeList.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.TreeList.FixedLineWidth = 3;
+			this.TreeList.HorzScrollStep = 4;
 			this.TreeList.ImageIndexFieldName = "";
 			this.TreeList.Location = new System.Drawing.Point(0, 0);
-			this.TreeList.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.TreeList.MinWidth = 23;
+			this.TreeList.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+			this.TreeList.MinWidth = 30;
 			this.TreeList.Name = "TreeList";
 			this.TreeList.OptionsBehavior.Editable = false;
 			this.TreeList.OptionsBehavior.EditorShowMode = DevExpress.XtraTreeList.TreeListEditorShowMode.MouseDownFocused;
@@ -57,9 +59,9 @@ namespace Mobius.ClientComponents
 			this.TreeList.OptionsView.ShowIndicator = false;
 			this.TreeList.OptionsView.ShowRoot = false;
 			this.TreeList.OptionsView.ShowVertLines = false;
-			this.TreeList.Size = new System.Drawing.Size(346, 351);
+			this.TreeList.Size = new System.Drawing.Size(445, 417);
 			this.TreeList.TabIndex = 0;
-			this.TreeList.TreeLevelWidth = 21;
+			this.TreeList.TreeLevelWidth = 27;
 			this.TreeList.BeforeExpand += new DevExpress.XtraTreeList.BeforeExpandEventHandler(this.Tree_BeforeExpand);
 			this.TreeList.FocusedNodeChanged += new DevExpress.XtraTreeList.FocusedNodeChangedEventHandler(this.Tree_FocusedNodeChanged);
 			this.TreeList.CustomDrawNodeCell += new DevExpress.XtraTreeList.CustomDrawNodeCellEventHandler(this.Tree_CustomDrawNodeCell);
@@ -73,20 +75,20 @@ namespace Mobius.ClientComponents
 			this.MetaTreeNodeCol.AllowIncrementalSearch = false;
 			this.MetaTreeNodeCol.Caption = "MetaTreeNodeCol";
 			this.MetaTreeNodeCol.FieldName = "MetaTreeNodeCol";
-			this.MetaTreeNodeCol.MinWidth = 23;
+			this.MetaTreeNodeCol.MinWidth = 30;
 			this.MetaTreeNodeCol.Name = "MetaTreeNodeCol";
 			this.MetaTreeNodeCol.Visible = true;
 			this.MetaTreeNodeCol.VisibleIndex = 0;
-			this.MetaTreeNodeCol.Width = 1167;
+			this.MetaTreeNodeCol.Width = 1500;
 			// 
 			// ContentsTreeControl
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.TreeList);
-			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
 			this.Name = "ContentsTreeControl";
-			this.Size = new System.Drawing.Size(346, 351);
+			this.Size = new System.Drawing.Size(445, 417);
 			((System.ComponentModel.ISupportInitialize)(this.TreeList)).EndInit();
 			this.ResumeLayout(false);
 

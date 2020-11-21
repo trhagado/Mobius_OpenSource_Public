@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- **************************************************** -->
+<!-- Mobius Metadata Tree -->
+<!-- **************************************************** -->
+<metatree>
+  <node name="root" l="Contents" l2="" type="root">
+    <child name="DrugCorp_database" />
+    <child name="CHEMBL" />
+  </node>
+  
+  <!-- **************************************************** -->
+  <!-- **************************************************** -->
+  <!-- Main menu -->
+  <!-- **************************************************** -->
+  <!-- **************************************************** -->
+  <node name="DrugCorp_database" l="DrugCorp Database" type="database">
+    <child name="DrugCorp_structures" l="DrugCorp Structures" type="metatable" item="DrugCorp_structure" />
+    <child name="substance_data" />
+    <child name="pchem_data" />
+    <child name="insilico_data" />
+    <child name="all_results_data" />
+    <child name="default_folder" l="Private Queries, Lists..." type="project" item="default_folder" />
+  </node>
+  
+    <!-- **************************************************** -->
+  <!-- Substance Data -->
+  <!-- **************************************************** -->
+  <node name="substance_data" l="Substance Data" type="project" PROJECTTYPE="Other">
+    <child name="sam_substance" l="Basic Substance Data" type="metatable" />
+    <child name="sam_substance_restriction" l="Substance Restrictions" type="metatable" />
+    <child name="sam_substance_content" l="Substance Components for Mixtures" type="metatable" />
+    <child name="sam_alias" l="Substance Aliases" type="metatable" />
+    <child name="despatched_samples" l="Global Sample Requests (SMC transfers not included)" type="MetaTable" disabled="false" />
+    <child name="ddf_organic_request" l="Sample Requests" type="MetaTable" disabled="false" />
+    <child name="mainsite_despatched_samples" l="Main Site Sample Requests (SMC transfers not included)" type="MetaTable" disabled="false" creationDate="06/07/2017 15:57:19" />
+    <child name="sam_library" l="Libraries" type="metatable" />
+    <child name="unique_libraries" l="Unique Libraries" type="metatable" />
+    <child name="annotation_904197" l="Development Cmpds with multiple registered structs" type="Annotation" disabled="false" creationDate="06/06/2019 12:33:23" />
+    <child name="annotation_913786" l="Oncolytics with CorpId, salts, isomers, and human pk" type="Annotation" disabled="false" creationDate="11/04/2019 10:19:26" />
+    <child name="annotation_170652" l="Abbreviated Special Laboratory Handling Requirements" type="annotation" item="annotation_170652" />
+    <child name="annotation_85633" l="CorpId, name and status for DrugCorp cmpds found in IDDB and PharmaProjects" type="annotation" item="annotation_85633" />
+    <child name="Large_mol_substance" l="Large Molecule Substance data" type="metatable" />
+    <child name="Large_mol_substance_detail" l="Large Molecule Substance Detail data" type="metatable" />
+    <child name="CorpId_salt_isomer_info" l="CorpId - Salt and Isomer Information" type="metatable" />
+    <child name="CorpId_salt_isomer_info_all_CorpIds" l="CorpId - Salt and Isomer Information (all cmpds included)" type="metatable" />
+    <child name="CorpId_salt_isomer_info_mwpairs" l="CorpId - Salt and Isomer Information (with MW info)" type="metatable" />
+    <child name="CorpId_salt_isomer_info_all_CorpIds_cnts" l="CorpId - Salt and Isomer Counts (all cmpds included)" type="metatable" />
+    <child name="annotation_542954" l="Same Sequence Peptides" type="Annotation" disabled="false" creationDate="09/17/2014 12:14:05" />
+    <child name="rdm_sbmsn_CorpId" l="Table to decode Submission id's into CorpIds" type="metatable" />
+    <child name="url_htmc_collab" l="Collaboration site" type="url" item="http://DrugCorpnet.global.DrugCorp.com/sites/HighThroughputMedicinalChemistryGroup/default.aspx" />
+    <child name="Hazard" l="Hazard Information" type="metatable" />
+    <child name="Sample_submission_history" l="Sample Submission Registration History" type="metatable" />
+    <child name="Sample_CorpId_history" l="Sample CorpId Registration History" type="metatable" />
+    <child name="Sample_tare" l="Get Vial Tare Weights" type="MetaTable" disabled="false" creationDate="06/07/2016 16:28:31" />
+    <child name="person_notebook" l="ELN5 Notebook Scientist Translation Table" type="MetaTable" disabled="false" creationDate="12/19/2016 10:22:08" />
+    <child name="unpivoted_assay_results" l="Unpivoted Assay Results" type="metatable" />
+    <child name="animalhealth_Sample_tare" l="Get Animal Health Vial Tare Weights" type="MetaTable" disabled="false" creationDate="01/06/2020 22:27:14" />
+  </node>
+    <!-- **************************************************** -->
+  <!-- pchem Data -->
+  <!-- **************************************************** -->
+  <node name="pchem_data" l="Physical, Analytical, and X-Ray Data" type="project">
+    <child name="pka_pka" l="Measured pKa" type="metatable" />
+    <child name="pka_logp" l="Measured Log P, Log D" type="metatable" />
+    <child name="ALC_HDX_Summary2" l="HDX Summary" type="MetaTable" disabled="false" />
+    <child name="nmr_data" />
+    <child name="solubility_info" />
+    <child name="xray_info" />
+    <child name="ATP_MOB_FUBRAINSU_SA" l="FU Brain Surrogate data" type="metatable" />
+    <child name="characterization_purity" />
+  </node>
+  <!-- **************************************************** -->
+  <!-- characterization_purity -->
+  <!-- **************************************************** -->
+  <node name="characterization_purity" l="Characterization and Purity Analysis" type="project">
+    <child Name="ATP_MOB_QCDB_SA" l="QCDB data" type="metatable" />
+    <child name="annotation_285298" l="FBDD Summary Database" type="metatable" item="ANNOTATION_285298" disabled="false">
+    </child>
+    <child name="annotation_285482" l="OPANS Summary Database" type="metatable" item="annotation_285482" />
+    <child name="annotation_285346" l="T0 Summary Database" type="metatable" item="annotation_285346" />
+    <child name="annotation_285271" l="PCHEM Summary Database" type="metatable" item="annotation_285271" />
+  </node>
+  <!-- **************************************************** -->
+  <!-- nmr_data -->
+  <!-- **************************************************** -->
+  <node name="nmr_data" l="NMR and related data" type="folder">
+    <child name="ASMSDB_19FNMR" l="FNMR Binding results" type="MetaTable" disabled="false" creationDate="10/12/2018 15:34:17" >
+    </child>
+    <child name="ATP_MOB_19FNMR_SA" l="19FNMR Binding results (Old)" type="MetaTable" disabled="false">
+    </child>
+    <child name="atp_mob_nmrd2Ocm_sa" type="metatable" />
+    <child name="atp_mob_nmrdmsocm_sa" type="metatable" />
+  </node>
+  <!-- **************************************************** -->
+  <!-- filtered logp Data -->
+  <!-- **************************************************** -->
+  <node name="pkalogp_data" l="Filtered logP Data (other)" type="SystemFolder" disabled="false">
+    <child name="pka_logponly" l="Measured Log P (both Potentiometric and HPLC isocratic)" type="metatable" />
+    <child name="pka_logponly_potentiometric" l="Measured Log P(Potentiometric only)" type="metatable" />
+    <child name="pka_logponly_hplc" l="Measured Log P(HPLC isocratic only)" type="metatable" />
+  </node>
+  <!-- **************************************************** -->
+  <!-- solubility_info Info -->
+  <!-- **************************************************** -->
+  <node name="solubility_info" l="Solubility and related data" type="folder">
+    <child name="DrugCorp_structures" l="DrugCorp Structures" type="metatable" item="DrugCorp_structure" />
+    <child name="pka_solubility" l="Measured Solubility" type="metatable" />
+    <child name="annotation_493853" l="Polarized Light Microscopy (Note)" type="MetaTable" disabled="false" creationDate="04/22/2019 09:05:00" />
+    <child name="bmv_2659" l="NV-DMSO Solubility 10mM SP SMC" type="metatable" />
+    <child name="bmv_2660" l="NV-DMSO Solubility 100mM SP SMC" type="metatable" />
+    <child Name="ATP_MOB_HTSA_SA" l="HTSA data" type="metatable" />
+    <child name="crave_solut_stab" l="SMDD Solution Stability Data - Crave" type="MetaTable" disabled="false" creationDate="08/31/2017 13:31:02" >
+    </child>
+    <child name="crave_solubility" l="SMDD Solubility Data - Crave" type="MetaTable" disabled="false" creationDate="08/28/2017 13:31:51" >
+    </child>
+  </node>
+  <!-- **************************************************** -->
+  <!-- X-RAY Info -->
+  <!-- **************************************************** -->
+  <node name="xray_info" l="X-Ray Crystallographic and related data" type="folder">
+    <child name="xray2_CorpId_view" l="Protein/Ligand X-Ray Data (CorpId Data View - XRay2)" type="MetaTable" />
+    <child name="xray2_target_view" l="Protein/Ligand X-Ray Data (CorpId + PDB structures View - XRay2)" type="MetaTable" />
+    <child name="ANNOTATION_925116" l="Small Molecule Crystal Structures (SMDD)" type="Annotation" disabled="false" creationDate="01/30/2020 12:38:40" />
+    <child name="query_925254" l="Small Molecule Crystal Structures (SMDD)" type="Query" disabled="false">
+    </child>
+    <child name="ChemistrySD_PROTEIN_STRUCTURES" l="Chemistry San Diego Protein Structures" type="metatable" />
+    <child name="ChemistrySD_CRYSTAL_PIPELINE" l="Chemistry San Diego Crystal Pipeline Data (CorpIds)" type="MetaTable" disabled="false">
+    </child>
+    <child name="ChemistrySD_CRYSTAL_PIPELINE_all" l="Chemistry San Diego Crystal Pipeline Data (All cmpds)" type="MetaTable" disabled="false">
+    </child>
+  </node>
+  
+  <!-- **************************************************** -->
+  <!-- Insilico Data -->
+  <!-- **************************************************** -->
+  <node name="insilico_data" l="Insilico Property Predictions, Insilico ADME and Activity Models" type="project">
+    <child name="Phys_Chem" />
+    <child name="Leadlike_Models" />
+    <child name="ADME_Models" />
+  </node>
+
+<!-- **************************************************** -->
+  <!-- Phys Chem Models-->
+  <!-- **************************************************** -->
+  <node name="Phys_Chem" l="Phys / Chem Property Models" type="project" projecttype="Other">
+    <child name="IRW_201" l="ISRT: Molecular Weight" type="metatable" displayFormat="decimal" width="6" decimals="2" />
+    <child name="IRW_215" l="ISRT: clogD (Chemaxon)" type="metatable" />
+    <child name="IRW_8484" l="ISRT: clogD7.4 (DrugCorp)" type="metatable" />
+    <child name="IRW_213" l="ISRT: clogP (Biobyte/Daylight)" type="metatable" />
+    <child name="IRW_214" l="ISRT: clogP (Chemaxon)" type="metatable" />
+    <child name="IRW_8483" l="ISRT: clogP (DrugCorp)" type="metatable" />
+    <child name="IRW_221" l="ISRT: clogP (PRISMm model)" type="metatable" />
+    <child name="IRW_212" l="ISRT: Solvation Energy" type="metatable" />
+    <child name="IRW_210" l="ISRT: Water Accessible Molecular Volume" type="metatable" />
+    <child name="IRW_211" l="ISRT: Molecular Volume" type="metatable" />
+    <child name="IRW_216" l="ISRT: pKa (Chemaxon)" type="metatable" />
+    <child name="IRW_11847" l="ISRT: Additional pKas (Chemaxon)" type="MetaTable" disabled="false" creationDate="01/07/2016 11:34:39" />
+    <child name="IRW_209" l="ISRT: Negatively Charged Atom" type="metatable" />
+    <child name="IRW_208" l="ISRT: Positively Charged Atom" type="metatable" />
+    <child name="htsa_models" creationDate="02/04/2015 14:14:45" />
+  </node>
+  <!-- **************************************************** -->
+  <!-- Key Insilico predictions to enhance p(TS) -->
+  <!-- **************************************************** -->
+  <node name="Key_Models" l="Key  Models to Enhance portfolio success" type="project" projecttype="Other">
+    <child name="IRW_204" l="ISRT: H Bond Donor" type="metatable" />
+    <child name="IRW_207" l="ISRT: Novartis PSA" type="metatable" />
+    <child name="IRW_221" l="ISRT: clogP (PRISMm model)" type="metatable" />
+    <child name="IRW_215" l="ISRT: clogD (Chemaxon)" type="metatable" />
+    <child name="IRW_201" l="ISRT: Molecular Weight" type="metatable" displayFormat="decimal" width="6" decimals="2" />
+    <child name="IRW_216" l="ISRT: pKa (Chemaxon)" type="metatable" />
+    <child name="PAINS2" l="PAINS substructural (unpivoted) alerts" type="MetaTable" disabled="false" creationDate="07/10/2015 09:51:04" />
+  </node>
+  <!-- **************************************************** -->
+  <!-- Leadlike Druglike Filter Models-->
+  <!-- **************************************************** -->
+  <node name="Leadlike_Models" l="Lead-like / Drug-Like Models" type="project" projecttype="Other">
+    <child name="IRW_219" l="ISRT: druglike rules" type="metatable" />
+    <child name="IRW_205" l="ISRT: H Bond Acceptor" type="metatable" />
+    <child name="IRW_204" l="ISRT: H Bond Donor" type="metatable" />
+    <child name="hbs_data" l="ISRT: Hydrogen Bond Strength" disabled="false" creationDate="02/17/2017 14:58:03" type="MetaTable">
+    </child>
+    <child name="IRW_202" l="ISRT: #Heavy Atoms" type="metatable" />
+    <child name="IRW_217" l="ISRT: lipinski rules" type="metatable" />
+    <child name="IRW_218" l="ISRT: medchem rules" type="metatable" />
+    <child name="IRW_206" l="ISRT: DrugCorp PSA" type="metatable" />
+    <child name="IRW_207" l="ISRT: Novartis PSA" type="metatable" />
+    <child name="IRW_203" l="ISRT: Rotatable Bond" type="metatable" />
+    <child name="IRW_223" l="ISRT: fraction SP3 Carbons" type="MetaTable" disabled="false">
+    </child>
+    <child name="IRW_224" l="ISRT: Aryl/Heteroaryl Ring Count" type="MetaTable" disabled="false">
+    </child>
+    <child name="url_medchem_ppt_doc" l="Medchem Rules list of rules XLS" type="url" item="https://www.google.com/" />
+    <child name="url_medchem_xls_doc" l="Medchem Rules OMC presentation PPT" type="url" item="https://www.google.com/" />
+  </node>
+  <!-- **************************************************** -->
+  <!-- ADME-Tox Models-->
+  <!-- **************************************************** -->
+  <node name="ADME_Models" l="ADME / Tox Models" type="project" projecttype="Other">
+    <!-- *************************
+<child name="IRW_20" l="ISRT: Ames Mutagenicity 2C Classifier" type="metatable"  />*************************** -->
+    <child name="Absorption_Models" creationDate="02/04/2015 14:22:08" ></child>
+    <child name="Metabolism_Models" creationDate="02/04/2015 14:22:09" />
+    <child name="Distribution_Models" creationDate="02/04/2015 14:22:09" />
+    <child name="Toxicology_Models" creationDate="02/04/2015 14:22:09" type="SystemFolder" />
+    <child name="Drug_Drug_Interaction_Models" creationDate="02/04/2015 14:22:09" />
+    <child name="CNS_Models" creationDate="02/04/2015 14:22:09" />
+    <child name="in_silico_fci_models" creationDate="08/19/2019 16:33:24" />
+    <child name="Old_ADMET_models" creationDate="02/09/2015 09:04:04" />
+  </node>
+  <!-- **************************************************** -->
+  <!-- Activity Models-->
+  <!-- **************************************************** -->
+  <node name="Activity_Models" l="Activity Models" type="project" projecttype="Other">
+  </node>
+
+<!-- **************************************************** -->
+  <!-- All Results Folder -->
+  <!-- **************************************************** -->
+  <node name="all_results_data" l="All Results Data" type="project" PROJECTTYPE="Other">
+    <child name="all_InVitro_pivoted" l="All InVitro Data (Pivoted)" type="metatable" />
+    <child name="InVitro_unpivoted" l="All InVitro Data (Unpivoted)" type="metatable" />
+    <child name="all_annotation_pivoted" l="All Annotation Data (Pivoted)" type="metatable" /> --&gt;
+  </node>
+  
+  <!-- **************************************************************************************************** -->
+  <!-- CHEMBL                                     -->
+  <!-- **************************************************************************************************** -->
+  
+  <node name="CHEMBL" l="ChEMBL" type="database" PROJECTTYPE="Other">
+    <child name="CHEMBL1" />
+    <child name="CHEMBL2" />
+	<child name="default_folder" l="Private Queries, Lists..." type="project" item="default_folder" />
+  </node>
+  
+  <node name="CHEMBL1" l="ChEMBL small molecule(SM) DB" type="database" PROJECTTYPE="Other">
+    <child name="chembl_structures" l="Chembl Small Molecule(SM) Structures" type="metatable" />
+    <child name="chembl_properties" l="Chembl SM Compound Properties" type="metatable" />
+    <child name="chembl_mol_dictionary" l="Chembl SM Molecule DIctionary" type="metatable" />
+    <child name="chembl_assay_data" l="Chembl General Assay Data for SM" type="metatable" />
+    <child name="chembl_gene_data" l="Chembl IC50/Ki Assay  Data for SM" type="metatable" />
+    <child name="chembl_ADME_assay_data_SM" l="Chembl ADME Assay Data for SM" type="metatable" />
+    <child name="chembl_therapeutics_SM" l="ChEMBL Therapeutics for SM" type="metatable" />
+    <child name="ChEMBL_Queries" l="ChEMBL Queries and links" type="project" />
+    <child name="chembl_invivo_data_SM" l="ChEMBL in vivo data for SM" type="metatable" />
+	
+  </node>
+  
+  <!-- **************************************************************************************************** -->
+  <!--                              chembl2                                   -->
+  <!-- ***************************************************************************************************** -->
+  
+  <node name="chembl2" l="ChEMBL Data for All molecules" type="database" PROJECTTYPE="Other">
+    <child name="chembl_parent" l="Chembl Compounds (All Molecules (AM))" type="metatable" />
+    <child name="chembl_biotherapeutics" l="ChEMBL Biotherapeutics (non-small molecules)" type="metatable" />
+    <child name="chembl_drugcombinations" l="ChemblDrug Combinations (no structures)" type="metatable" />
+    <child name="chembl_properties_md" l="Chembl Compound Properties for AM" type="metatable" />
+    <child name="chembl_ADC_md" l="Chembl ADCs" type="metatable" />
+    <child name="chembl_ADME_assay_data" l="Chembl ADME Assay Data for AM" type="metatable" />
+    <child name="chembl_therapeutics" l="ChEMBL Therapeutics for AM" type="metatable" />
+    <child name="chembl_invivo_data" l="ChEMBL in vivo data for AM" type="metatable" />
+    <child name="ChEMBL2_Queries" l="ChEMBL(all) Queries and links" type="project" />
+  </node>
+
+</metatree>

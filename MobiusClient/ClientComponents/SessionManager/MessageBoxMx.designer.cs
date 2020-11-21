@@ -120,6 +120,9 @@ namespace Mobius.ClientComponents
 			this.label1.Appearance.BackColor = System.Drawing.Color.Transparent;
 			this.label1.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label1.Appearance.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label1.Appearance.Options.UseBackColor = true;
+			this.label1.Appearance.Options.UseFont = true;
+			this.label1.Appearance.Options.UseForeColor = true;
 			this.label1.Cursor = System.Windows.Forms.Cursors.Default;
 			this.label1.Location = new System.Drawing.Point(9, 10);
 			this.label1.Name = "label1";
@@ -179,9 +182,9 @@ namespace Mobius.ClientComponents
 			this.Controls.Add(this.Button1);
 			this.Controls.Add(this.Button4);
 			this.Controls.Add(this.HtmlMessage);
+			this.IconOptions.ShowIcon = false;
 			this.MinimizeBox = false;
 			this.Name = "MessageBoxMx";
-			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "MessageBoxEx";

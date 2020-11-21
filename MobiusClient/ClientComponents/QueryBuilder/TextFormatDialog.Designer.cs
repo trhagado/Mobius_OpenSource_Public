@@ -90,7 +90,7 @@
 			this.HtmlCheckEdit.Properties.Caption = "HTML";
 			this.HtmlCheckEdit.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.HtmlCheckEdit.Properties.RadioGroupIndex = 1;
-			this.HtmlCheckEdit.Size = new System.Drawing.Size(92, 19);
+			this.HtmlCheckEdit.Size = new System.Drawing.Size(92, 20);
 			this.HtmlCheckEdit.TabIndex = 2;
 			this.HtmlCheckEdit.TabStop = false;
 			this.HtmlCheckEdit.CheckedChanged += new System.EventHandler(this.Scientific_CheckedChanged);
@@ -103,7 +103,7 @@
 			this.NormalFormatCheckEdit.Properties.Caption = "Normal";
 			this.NormalFormatCheckEdit.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.NormalFormatCheckEdit.Properties.RadioGroupIndex = 1;
-			this.NormalFormatCheckEdit.Size = new System.Drawing.Size(92, 19);
+			this.NormalFormatCheckEdit.Size = new System.Drawing.Size(92, 20);
 			this.NormalFormatCheckEdit.TabIndex = 4;
 			// 
 			// TextFormatDialog
@@ -119,10 +119,10 @@
 			this.Controls.Add(this.labelControl1);
 			this.Controls.Add(this.NormalFormatCheckEdit);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.IconOptions.ShowIcon = false;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "TextFormatDialog";
-			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Text Format ";

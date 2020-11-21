@@ -51,5 +51,10 @@ namespace Mobius.ClientComponents
 			}
 
 		}
+
+		private void QueryTablesControl_Load(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

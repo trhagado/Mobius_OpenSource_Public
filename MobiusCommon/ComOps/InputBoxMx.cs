@@ -70,10 +70,12 @@ namespace Mobius.ComOps
 			// 
 			// Prompt
 			// 
-			this.Prompt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-									| System.Windows.Forms.AnchorStyles.Left)
-									| System.Windows.Forms.AnchorStyles.Right)));
+			this.Prompt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.Prompt.Appearance.BackColor = System.Drawing.Color.Transparent;
+			this.Prompt.Appearance.Options.UseBackColor = true;
+			this.Prompt.Appearance.Options.UseTextOptions = true;
 			this.Prompt.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
 			this.Prompt.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Top;
 			this.Prompt.Appearance.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
@@ -105,9 +107,9 @@ namespace Mobius.ComOps
 			// 
 			// HtmlPrompt
 			// 
-			this.HtmlPrompt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-									| System.Windows.Forms.AnchorStyles.Left)
-									| System.Windows.Forms.AnchorStyles.Right)));
+			this.HtmlPrompt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.HtmlPrompt.Location = new System.Drawing.Point(8, 9);
 			this.HtmlPrompt.MinimumSize = new System.Drawing.Size(20, 20);
 			this.HtmlPrompt.Name = "HtmlPrompt";
@@ -116,8 +118,8 @@ namespace Mobius.ComOps
 			// 
 			// Input
 			// 
-			this.Input.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-									| System.Windows.Forms.AnchorStyles.Right)));
+			this.Input.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.Input.Location = new System.Drawing.Point(8, 75);
 			this.Input.Name = "Input";
 			this.Input.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -126,7 +128,7 @@ namespace Mobius.ComOps
 			this.Input.Size = new System.Drawing.Size(317, 20);
 			this.Input.TabIndex = 86;
 			// 
-			// InputBox
+			// InputBoxMx
 			// 
 			this.AcceptButton = this.OK;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 14);
@@ -140,7 +142,7 @@ namespace Mobius.ComOps
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "InputBox";
+			this.Name = "InputBoxMx";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "InputBox";

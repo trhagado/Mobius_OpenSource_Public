@@ -96,7 +96,7 @@
 			// 
 			this.BrowseMode.Controls.Add(this.QueryResultsControl);
 			this.BrowseMode.Name = "BrowseMode";
-			this.BrowseMode.Size = new System.Drawing.Size(743, 580);
+			this.BrowseMode.Size = new System.Drawing.Size(747, 583);
 			this.BrowseMode.Text = "BrowseMode";
 			// 
 			// QueryResultsControl
@@ -105,7 +105,7 @@
 			this.QueryResultsControl.Location = new System.Drawing.Point(0, 0);
 			this.QueryResultsControl.Margin = new System.Windows.Forms.Padding(0);
 			this.QueryResultsControl.Name = "QueryResultsControl";
-			this.QueryResultsControl.Size = new System.Drawing.Size(743, 580);
+			this.QueryResultsControl.Size = new System.Drawing.Size(747, 583);
 			this.QueryResultsControl.TabIndex = 0;
 			// 
 			// BuildMode
@@ -113,7 +113,7 @@
 			this.BuildMode.Controls.Add(this.QueryBuilderControl);
 			this.BuildMode.ImageOptions.ImageIndex = 0;
 			this.BuildMode.Name = "BuildMode";
-			this.BuildMode.Size = new System.Drawing.Size(743, 580);
+			this.BuildMode.Size = new System.Drawing.Size(747, 583);
 			this.BuildMode.Text = "BuildMode";
 			// 
 			// QueryBuilderControl
@@ -121,7 +121,7 @@
 			this.QueryBuilderControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.QueryBuilderControl.Location = new System.Drawing.Point(0, 0);
 			this.QueryBuilderControl.Name = "QueryBuilderControl";
-			this.QueryBuilderControl.Size = new System.Drawing.Size(743, 580);
+			this.QueryBuilderControl.Size = new System.Drawing.Size(747, 583);
 			this.QueryBuilderControl.TabIndex = 0;
 			// 
 			// QueryContextMenu

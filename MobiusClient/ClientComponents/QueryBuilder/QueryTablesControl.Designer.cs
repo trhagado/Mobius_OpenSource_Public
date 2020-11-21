@@ -155,7 +155,7 @@
             this.ShowQueryXmlMenuItem,
             this.ShowMetaTableXmlMenuItem});
 			this.OptionsContextMenu.Name = "RunQueryPlusMenu";
-			this.OptionsContextMenu.Size = new System.Drawing.Size(310, 264);
+			this.OptionsContextMenu.Size = new System.Drawing.Size(308, 264);
 			this.OptionsContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.OptionsContextMenu_Opening);
 			// 
 			// TableSumPosMenuItem
@@ -163,7 +163,7 @@
 			this.TableSumPosMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("TableSumPosMenuItem.Image")));
 			this.TableSumPosMenuItem.ImageTransparentColor = System.Drawing.Color.Cyan;
 			this.TableSumPosMenuItem.Name = "TableSumPosMenuItem";
-			this.TableSumPosMenuItem.Size = new System.Drawing.Size(309, 22);
+			this.TableSumPosMenuItem.Size = new System.Drawing.Size(307, 22);
 			this.TableSumPosMenuItem.Text = "Table Summarization and Position Options...";
 			this.TableSumPosMenuItem.Click += new System.EventHandler(this.TableSumPosMenuItem_Click);
 			// 
@@ -172,7 +172,7 @@
 			this.AlertOptionsMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("AlertOptionsMenuItem.Image")));
 			this.AlertOptionsMenuItem.ImageTransparentColor = System.Drawing.Color.Cyan;
 			this.AlertOptionsMenuItem.Name = "AlertOptionsMenuItem";
-			this.AlertOptionsMenuItem.Size = new System.Drawing.Size(309, 22);
+			this.AlertOptionsMenuItem.Size = new System.Drawing.Size(307, 22);
 			this.AlertOptionsMenuItem.Text = "Alert Options...";
 			this.AlertOptionsMenuItem.Click += new System.EventHandler(this.AlertOptionsMenuItem_Click);
 			// 
@@ -181,7 +181,7 @@
 			this.MiscOptionsMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("MiscOptionsMenuItem.Image")));
 			this.MiscOptionsMenuItem.ImageTransparentColor = System.Drawing.Color.Cyan;
 			this.MiscOptionsMenuItem.Name = "MiscOptionsMenuItem";
-			this.MiscOptionsMenuItem.Size = new System.Drawing.Size(309, 22);
+			this.MiscOptionsMenuItem.Size = new System.Drawing.Size(307, 22);
 			this.MiscOptionsMenuItem.Text = "Miscellaneous Common Options...";
 			this.MiscOptionsMenuItem.Click += new System.EventHandler(this.MiscOptionsMenuItem_Click);
 			// 
@@ -190,70 +190,70 @@
 			this.AdvancedOptionsMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("AdvancedOptionsMenuItem.Image")));
 			this.AdvancedOptionsMenuItem.ImageTransparentColor = System.Drawing.Color.Cyan;
 			this.AdvancedOptionsMenuItem.Name = "AdvancedOptionsMenuItem";
-			this.AdvancedOptionsMenuItem.Size = new System.Drawing.Size(309, 22);
+			this.AdvancedOptionsMenuItem.Size = new System.Drawing.Size(307, 22);
 			this.AdvancedOptionsMenuItem.Text = "Advanced Options...";
 			this.AdvancedOptionsMenuItem.Click += new System.EventHandler(this.AdvancedOptionsMenuItem_Click);
 			// 
 			// toolStripMenuItem1
 			// 
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(306, 6);
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(304, 6);
 			// 
 			// QueryIdMenuItem
 			// 
 			this.QueryIdMenuItem.Name = "QueryIdMenuItem";
-			this.QueryIdMenuItem.Size = new System.Drawing.Size(309, 22);
+			this.QueryIdMenuItem.Size = new System.Drawing.Size(307, 22);
 			this.QueryIdMenuItem.Text = "=== Query Id: 12345 ===";
 			// 
 			// toolStripMenuItem2
 			// 
 			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-			this.toolStripMenuItem2.Size = new System.Drawing.Size(306, 6);
+			this.toolStripMenuItem2.Size = new System.Drawing.Size(304, 6);
 			// 
 			// ShowOpenQueryURLMenuItem
 			// 
 			this.ShowOpenQueryURLMenuItem.Name = "ShowOpenQueryURLMenuItem";
-			this.ShowOpenQueryURLMenuItem.Size = new System.Drawing.Size(309, 22);
+			this.ShowOpenQueryURLMenuItem.Size = new System.Drawing.Size(307, 22);
 			this.ShowOpenQueryURLMenuItem.Text = "URL to Open this Query";
 			this.ShowOpenQueryURLMenuItem.Click += new System.EventHandler(this.ShowOpenQueryURLMenuItem_Click);
 			// 
 			// ShowRunQueryUrlMenuItem
 			// 
 			this.ShowRunQueryUrlMenuItem.Name = "ShowRunQueryUrlMenuItem";
-			this.ShowRunQueryUrlMenuItem.Size = new System.Drawing.Size(309, 22);
+			this.ShowRunQueryUrlMenuItem.Size = new System.Drawing.Size(307, 22);
 			this.ShowRunQueryUrlMenuItem.Text = "URL to Run this Query";
 			this.ShowRunQueryUrlMenuItem.Click += new System.EventHandler(this.ShowRunQueryUrlMenuItem_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(306, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(304, 6);
 			// 
 			// ShowMqlMenuItem
 			// 
 			this.ShowMqlMenuItem.Name = "ShowMqlMenuItem";
-			this.ShowMqlMenuItem.Size = new System.Drawing.Size(309, 22);
+			this.ShowMqlMenuItem.Size = new System.Drawing.Size(307, 22);
 			this.ShowMqlMenuItem.Text = "Show MQL for Query";
 			this.ShowMqlMenuItem.Click += new System.EventHandler(this.ShowMqlMenuItem_Click);
 			// 
 			// ShowSqlMenuItem
 			// 
 			this.ShowSqlMenuItem.Name = "ShowSqlMenuItem";
-			this.ShowSqlMenuItem.Size = new System.Drawing.Size(309, 22);
+			this.ShowSqlMenuItem.Size = new System.Drawing.Size(307, 22);
 			this.ShowSqlMenuItem.Text = "Show SQL for Query";
 			this.ShowSqlMenuItem.Click += new System.EventHandler(this.ShowSqlMenuItem_Click);
 			// 
 			// ShowQueryXmlMenuItem
 			// 
 			this.ShowQueryXmlMenuItem.Name = "ShowQueryXmlMenuItem";
-			this.ShowQueryXmlMenuItem.Size = new System.Drawing.Size(309, 22);
+			this.ShowQueryXmlMenuItem.Size = new System.Drawing.Size(307, 22);
 			this.ShowQueryXmlMenuItem.Text = "Show Query Xml";
 			this.ShowQueryXmlMenuItem.Click += new System.EventHandler(this.ShowQueryXmlMenuItem_Click);
 			// 
 			// ShowMetaTableXmlMenuItem
 			// 
 			this.ShowMetaTableXmlMenuItem.Name = "ShowMetaTableXmlMenuItem";
-			this.ShowMetaTableXmlMenuItem.Size = new System.Drawing.Size(309, 22);
+			this.ShowMetaTableXmlMenuItem.Size = new System.Drawing.Size(307, 22);
 			this.ShowMetaTableXmlMenuItem.Text = "Show Current MetaTable Xml";
 			this.ShowMetaTableXmlMenuItem.Click += new System.EventHandler(this.ShowMetaTableXmlMenuItem_Click);
 			// 
@@ -295,7 +295,7 @@
 			// 
 			this.QbCriteriaTabPagePrototype.Controls.Add(this.CriteriaPanelPrototype);
 			this.QbCriteriaTabPagePrototype.Name = "QbCriteriaTabPagePrototype";
-			this.QbCriteriaTabPagePrototype.Size = new System.Drawing.Size(537, 494);
+			this.QbCriteriaTabPagePrototype.Size = new System.Drawing.Size(541, 497);
 			this.QbCriteriaTabPagePrototype.Text = "QbCriteriaTab";
 			// 
 			// CriteriaPanelPrototype
@@ -303,7 +303,7 @@
 			this.CriteriaPanelPrototype.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.CriteriaPanelPrototype.Location = new System.Drawing.Point(0, 0);
 			this.CriteriaPanelPrototype.Name = "CriteriaPanelPrototype";
-			this.CriteriaPanelPrototype.Size = new System.Drawing.Size(537, 494);
+			this.CriteriaPanelPrototype.Size = new System.Drawing.Size(541, 497);
 			this.CriteriaPanelPrototype.TabIndex = 0;
 			// 
 			// QbTableTabPagePrototype
@@ -311,7 +311,7 @@
 			this.QbTableTabPagePrototype.Controls.Add(this.TableControlPrototype);
 			this.QbTableTabPagePrototype.Name = "QbTableTabPagePrototype";
 			this.QbTableTabPagePrototype.ShowCloseButton = DevExpress.Utils.DefaultBoolean.True;
-			this.QbTableTabPagePrototype.Size = new System.Drawing.Size(537, 494);
+			this.QbTableTabPagePrototype.Size = new System.Drawing.Size(541, 497);
 			this.QbTableTabPagePrototype.Text = "QbTableTab";
 			// 
 			// TableControlPrototype
@@ -323,7 +323,7 @@
 			this.TableControlPrototype.QueryTable = null;
 			this.TableControlPrototype.SelectOnly = false;
 			this.TableControlPrototype.SelectSingle = false;
-			this.TableControlPrototype.Size = new System.Drawing.Size(537, 494);
+			this.TableControlPrototype.Size = new System.Drawing.Size(541, 497);
 			this.TableControlPrototype.TabIndex = 0;
 			// 
 			// RunQueryButton
@@ -332,7 +332,6 @@
 			this.RunQueryButton.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("RunQueryButton.ImageOptions.Image")));
 			this.RunQueryButton.ImageOptions.ImageIndex = 0;
 			this.RunQueryButton.Location = new System.Drawing.Point(374, 2);
-			this.RunQueryButton.LookAndFeel.SkinName = "iMaginary";
 			this.RunQueryButton.Name = "RunQueryButton";
 			this.RunQueryButton.Size = new System.Drawing.Size(93, 22);
 			toolTipTitleItem1.Text = "Run Query";
@@ -351,7 +350,6 @@
 			// 
 			this.OptionsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.OptionsButton.Location = new System.Drawing.Point(474, 2);
-			this.OptionsButton.LookAndFeel.SkinName = "iMaginary";
 			this.OptionsButton.Name = "OptionsButton";
 			this.OptionsButton.Size = new System.Drawing.Size(67, 22);
 			toolTipTitleItem2.Text = "Query Options";
@@ -375,7 +373,6 @@
 			this.SelectedDataButton.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.UltraFlat;
 			this.SelectedDataButton.ImageOptions.ImageIndex = 0;
 			this.SelectedDataButton.Location = new System.Drawing.Point(2, 3);
-			this.SelectedDataButton.LookAndFeel.SkinName = "iMaginary";
 			this.SelectedDataButton.Name = "SelectedDataButton";
 			this.SelectedDataButton.Size = new System.Drawing.Size(124, 22);
 			this.SelectedDataButton.TabIndex = 184;
