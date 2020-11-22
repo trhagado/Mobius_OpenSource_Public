@@ -677,6 +677,57 @@ namespace Mobius.ComOps
 			return location;
 		}
 
+		public static string GetEventHandlerName(
+			Control c,
+			string eventName)
+		{
+			try
+			{
+				EventHandlerList events = (EventHandlerList)typeof(Component)
+						.GetProperty("Events", BindingFlags.NonPublic | BindingFlags.Instance)
+						.GetValue(c, null);
+
+				object key = c.GetType().GetField("EVENT_" + eventName, BindingFlags.NonPublic | BindingFlags.Static)
+						.GetValue(null);
+
+				Delegate handlers = events[key];
+				foreach (Delegate handler in handlers.GetInvocationList())
+				{
+					MethodInfo method = handler.Method;
+					string name = handler.Target == null ? "" : handler.Target.ToString();
+					if (handler.Target is Control) name = ((Control)handler.Target).Name;
+					return name;
+				}
+
+				return null;
+			}
+
+			catch (Exception ex)
+			{
+				return null;
+			}
+		}
+
+		/// <summary>
+		/// Get list of event handlers for the specified control and event name
+		/// </summary>
+		/// <param name="b"></param>
+		/// <param name="eventName"></param>
+		/// <returns></returns>
+
+		public static EventHandlerList GetEventHandlers(
+			Control b,
+			string eventName)
+		{
+			FieldInfo f1 = typeof(Control).GetField(eventName,
+			BindingFlags.Static | BindingFlags.NonPublic);
+			object obj = f1.GetValue(b);
+			PropertyInfo pi = b.GetType().GetProperty("Events",
+				BindingFlags.NonPublic | BindingFlags.Instance);
+			EventHandlerList list = (EventHandlerList)pi.GetValue(b, null);
+			return list;
+		}
+
 		/// <summary>
 		/// Remove all event handlers of a particular type from a Windows control
 		/// </summary>
