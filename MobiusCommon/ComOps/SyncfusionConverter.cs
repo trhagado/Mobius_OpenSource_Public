@@ -97,14 +97,15 @@ namespace Mobius.ComOps
 				Form f = pc as Form;
 
 				dy = 32; // adjustment for WinForms header (~32 pixels). 
-				int height = f.Height + dy; // add size of WinForms header to get correct html height
+				int height = f.Height; // add size of WinForms header to get correct html height
 				int width = f.Width;
 				string headerText = f.Text;
 
 // Wrap with SfDialog definition
 
-				header = $@"<SfDialog Target='#target' Height='{height}px' Width='{width}px' ShowCloseIcon='true' AllowDragging='true' EnableResize='false' 
-          @ref='Instance' @bind-Visible='DialogVisible' CssClass='dialogboxmx'>
+				header = $@"<SfDialog Target='#target' Height='{height}px' Width='{width}px' IsModal='true' ShowCloseIcon='true' AllowDragging='true' EnableResize='false' 
+
+					@ref ='SfDialog' @bind-Visible='DialogVisible' CssClass='dialogboxmx'>
 				  <DialogTemplates>
 						<Header>{headerText}</Header>
 						<Content>
@@ -112,16 +113,70 @@ namespace Mobius.ComOps
 
 				footer = $@"</Content>
 					</DialogTemplates>
+					<DialogEvents Opened='@DialogOpened' Closed='@DialogClosed'></DialogEvents>
 				</SfDialog>" + "\r\n";
 
-// Define variables for code section
+// Define variables and event stubs for code section
 
-				code = $@"{f.Name} Instance;
-	bool DialogVisible;
+		code = @"
+		public static " + f.Name + @" Instance { get; set; } 
+		public SfDialog SfDialog { get; set; } 
+		public static bool IncludeInRenderTree { get; set; } = true; 
+		public bool DialogVisible { get; set; } = false; 
+		public DialogResult DialogResult { get; set; } = DialogResult.None;
+
+    protected override void OnInitialized()
+    {
+			Instance = this;
+			base.OnInitialized();
+			return;
+		}
+
+		protected override async Task OnInitializedAsync()
+		{
+			await base.OnInitializedAsync();
+			return;
+		}
+
+		protected override async Task OnAfterRenderAsync(bool firstRender)
+		{
+			await base.OnAfterRenderAsync(firstRender);
+			return;
+		}
+
+		protected override void OnAfterRender(bool firstRender)
+		{
+			base.OnAfterRender(firstRender);
+		}
+
+		private void OK_Click()
+    {
+			DialogResult = DialogResult.OK;
+      SfDialog.Hide();
+    }
+
+    private void Cancel_Click()
+    {
+			DialogResult = DialogResult.Cancel;
+      SfDialog.Hide();
+    }
+
+    private void DialogOpened(OpenEventArgs args)
+    {
+      return;
+    }
+
+    private void DialogClosed(CloseEventArgs args)
+    {
+      if (Lex.Ne(args?.ClosedBy, ""User Action""))
+        DialogResult = DialogResult.Cancel;
+
+      return;
+    }
 ";
 			}
 
-			ConvertContainerControl(pc, sw, "", header, footer, dy, ref html);
+			ConvertContainerControl(pc, sw, "", header, footer, dy, ref html, ref code);
 
 			sw.Close();
 
@@ -155,7 +210,8 @@ namespace Mobius.ComOps
 			string header,
 			string footer,
 			int dy,
-			ref string html)
+			ref string html,
+			ref string code)
 		{
 			Type pcType = pc.GetType();
 
@@ -172,8 +228,7 @@ namespace Mobius.ComOps
 			else // otherwise wrap in a div
 			{
 				html += // wrap control in div with class name matching the Winforms/Dx control class name
-					"<div class=\"" + pcType.Name + "\" style=\"position: relative; width: 100%; height: 100%; border: 1px solid orange; " +
-					customDivStyling + " \">\r\n";
+					$@"<div class='{pcType.Name}' style='position: relative; width: 100%; height: 100%; border: 1px solid orange; {customDivStyling} '>" + "\r\n";
 			}
 
 			List<Control> cl = new List<Control>();
@@ -207,7 +262,7 @@ namespace Mobius.ComOps
 				int cTop = c.Top + dy; // adjust down for added header height
 				int cBottom = c.Bottom + dy;
 
-				string div = "<div style =\"position: absolute; ";
+				string div = "<div style =\"position: absolute; display:flex; align-items: center; ";
 
 				if (c.Dock == DockStyle.Fill) // if Dock defined than use that (Fill only for now)
 					div += "width: 100%; height: 100%; ";
@@ -260,7 +315,7 @@ namespace Mobius.ComOps
 
 				div += "border: 1px solid yellow;\">\r\n"; // finish up style and div tag
 
-				ConvertControl(c, sw, ref div); // convert the control and include conversion in containing div
+				ConvertControl(c, sw, ref div, ref code); // convert the control and include conversion in containing div
 
 				div += "</div>\r\n"; // close the div
 
@@ -279,9 +334,10 @@ namespace Mobius.ComOps
 		static void ConvertControl(
 			Control c,
 			StreamWriter sw,
-			ref string html)
+			ref string html,
+			ref string code)
 		{
-			string header = "", footer = "", txt = "";
+			string header = "", footer = "", htmlFrag = "", codeFrag = "";
 
 			Type cType = c.GetType();
 
@@ -293,7 +349,7 @@ namespace Mobius.ComOps
 			if (c is UserControl || c is XtraUserControl)
 			{
 
-				html += "< " + cType.Name + " />\r\n"; // add control reference (and parameters) to html
+				html += @"<{cType.Name}/>\r\n"; // add control reference (and parameters) to html
 
 				ToRazor(c); // write the definition to separate Razor file if not done yet
 			}
@@ -309,16 +365,16 @@ namespace Mobius.ComOps
 
 				header =
 					"<fieldset>\r\n" +
-					"  <legend style=\"color:blue;font-weight:bold;\">" + gb.Text + "</legend>";
+					 $"<legend style='color:blue;font-weight:bold;'>{gb.Text}</legend>" + "\r\n";
 
 				footer += "</fieldset>";
 
-				ConvertContainerControl(c, sw, "", header, footer, 0, ref html);
+				ConvertContainerControl(c, sw, "", header, footer, 0, ref html, ref code);
 			}
 
 			else if (c is Panel || c is XtraPanel)
 			{
-				ConvertContainerControl(c, sw, "", header, footer, 0, ref html);
+				ConvertContainerControl(c, sw, "", header, footer, 0, ref html, ref code);
 			}
 
 			////////////////////////////////////////////////////////////////////////////////
@@ -331,17 +387,17 @@ namespace Mobius.ComOps
 				if (l.LineVisible)
 				{
 					if (Lex.IsUndefined(l.Text))
-						txt = "<hr>\r\n";
+						htmlFrag = "<hr class='hr-mobius'>\r\n";
 
 					else // horizontal rule with text overlaid using utility css
-						txt = $"<hr data-content='{l.Text}' class='hr-text'>";
+						htmlFrag = $"<hr data-content='{l.Text}' class=' class='hr-mobius hr-text'>\r\n";
 				}
 
 				else if (Lex.IsDefined(l.Text))
 				{
-					txt = "<span class='mobius-mx' @onclick='mx_click'>" + l.Text + "</span>\r\n";
+					htmlFrag = "<span class='mobius-mx' @onclick='mx_click'>" + l.Text + "</span>\r\n";
 					//if (l.Click.Get == null)
-					txt = txt.Replace("@onclick = 'mx_click'", "");
+					htmlFrag = htmlFrag.Replace("@onclick = 'mx_click'", "");
 				}
 			}
 
@@ -350,11 +406,18 @@ namespace Mobius.ComOps
 				CheckEdit ce = c as CheckEdit; 
 				if (ce.Properties.CheckBoxOptions.Style == CheckBoxStyle.CheckBox)
 				{
-					txt = $"<SfCheckBox Label='{ce.Text}' Name='{c.Name}' Checked='{ce.Checked.ToString().ToLower()}' />\r\n";
+					htmlFrag = $@"<SfCheckBox Label='{ce.Text}' Name='{c.Name}' Checked='{ce.Checked.ToString().ToLower()}'  
+						@ref='{c.Name}' />" + "\r\n";
+
+					codeFrag = $"SfCheckBox<bool> {c.Name};\r\n";
 				}
+
 				else
 				{
-					txt = $"<SfRadioButton Label='{ce.Text}' Name='{c.Name}' Checked='{ce.Checked.ToString().ToLower()}' />\r\n";
+					htmlFrag = $@"<SfRadioButton Label='{ce.Text}' Name='{c.Name}' Checked='{ce.Checked.ToString().ToLower()}'
+						@ref='{c.Name}' />" + "\r\n";
+
+					codeFrag = $"SfRadioButton<bool> {c.Name};\r\n";
 				}
 			}
 
@@ -363,28 +426,29 @@ namespace Mobius.ComOps
 				// Example: <SfButton CssClass="e-flat" IsToggle="true" IsPrimary="true" 
 				//            Content="@Content" IconCss="@IconCss" @ref="ToggleButton" @onclick="OnToggleClick"></SfButton>
 				SimpleButton b = c as SimpleButton;
-				txt = $"<SfButton Content='{c.Text}' ";
+				htmlFrag = $"<SfButton Content='{c.Text}' ";
 
 				if (Lex.Eq(c.Text, "OK") || Lex.Eq(c.Text, "Yes"))
-					txt += " IsPrimary = 'true'";
+					htmlFrag += " IsPrimary = 'true'";
 
 				//string handler = WindowsHelper.GetEventHandlerName(c, "Click"); // doesn't work
-				//if (Lex.IsDefined(handler))
-				//	txt += $"@onclick = '{handler}'";
+				//if (Lex.IsDefined(handler)) ...
+				htmlFrag += $"@ref='{c.Name}' @onclick = '{c.Name}_Click' />\r\n";
 
-				txt += " />\r\n";
+				codeFrag = $"SfButton {c.Name};\r\n";
 			}
 
 			else // unrecognized
 			{
-				txt = "<" + c.Name;
+				htmlFrag = "<" + c.Name;
 
 				if (Lex.IsDefined(c.Text)) // insert the element content
-					txt += " name=\"" + c.Text + '"';
-				txt += " />";
+					htmlFrag += " name=\"" + c.Text + '"';
+				htmlFrag += " />";
 			}
 
-			html += txt;
+			html += htmlFrag;
+			code += codeFrag;
 			return;
 		}
 
