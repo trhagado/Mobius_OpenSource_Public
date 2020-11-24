@@ -20,6 +20,7 @@ namespace Mobius.ComOps
 	public class SyncfusionConverter
 	{
 		static HashSet<string> ControlsLogged = new HashSet<string>();
+		static bool CvcDefined = false; // set to true once code for RadioButton CheckedValueContainer has been added
 
 		/// <summary>
 		/// Convert a Windows/DevExpress Form or UserControl to a Blazor .razor Component file
@@ -36,6 +37,7 @@ namespace Mobius.ComOps
 @using Syncfusion.Blazor.Popups
 @using Syncfusion.Blazor.Layouts
 @using Syncfusion.Blazor.Navigations
+@using Syncfusion.Blazor.Inputs
 @using Syncfusion.Blazor.Buttons
 @using Syncfusion.Blazor.SplitButtons
 @using Syncfusion.Blazor.Lists
@@ -91,6 +93,8 @@ namespace Mobius.ComOps
 			StreamWriter sw = new StreamWriter(@"c:\downloads\MobiusControlTemplates\" + t.Name + ".txt");
 
 			StreamWriter sw2 = new StreamWriter(@"c:\downloads\MobiusControlTemplates\" + t.Name + ".razor");
+
+			CvcDefined = false;
 
 			if (typeof(Form).IsAssignableFrom(pc.GetType())) // Form or XtraForm?
 			{
@@ -414,11 +418,29 @@ namespace Mobius.ComOps
 
 				else
 				{
-					htmlFrag = $@"<SfRadioButton Label='{ce.Text}' Name='{c.Name}' Checked='{ce.Checked.ToString().ToLower()}'
-						@ref='{c.Name}' />" + "\r\n";
+					                 
+					htmlFrag = $@"<SfRadioButton Label='{ce.Text}' Name='group1' Value='{ce.Name}'
+						@ref ='{c.Name}.Button' @bind-Checked='CVC.CheckedValue' />" + "\r\n";
 
-					codeFrag = $"SfRadioButton<bool> {c.Name};\r\n";
+					if (!CvcDefined)
+					{
+						codeFrag = "static CheckedValueContainer CVC = new CheckedValueContainer();";
+						CvcDefined = true;
+					}
+
+					codeFrag = $"RadioButtonMx {c.Name} = new RadioButtonMx(CVC);\r\n";
 				}
+			}
+
+			else if (c is TextEdit)
+			{
+				// Example: <SfTextBox @bind-Value="@TextBoxValue" @ref="@SfTextBox" Type="InputType.Text" Placeholder="@InitialText" />
+
+				TextEdit te = c as TextEdit;
+
+				htmlFrag = $"<SfTextBox @ref='{c.Name}.TextBox' @bind-Value='{c.Name}.Text' Type='InputType.Text' />\r\n";
+
+				codeFrag = $"TextBoxMx {c.Name} = new TextBoxMx();\r\n";
 			}
 
 			else if (c is SimpleButton)
