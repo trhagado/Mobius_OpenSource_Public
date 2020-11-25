@@ -182,7 +182,7 @@ namespace Mobius.ClientComponents
 			this.Decimal.Properties.Caption = "Decimal (Fixed number of decimal places)";
 			this.Decimal.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.Decimal.Properties.RadioGroupIndex = 1;
-			this.Decimal.Size = new System.Drawing.Size(276, 18);
+			this.Decimal.Size = new System.Drawing.Size(322, 18);
 			this.Decimal.TabIndex = 1;
 			this.Decimal.CheckedChanged += new System.EventHandler(this.Decimal_CheckedChanged);
 			// 
@@ -193,7 +193,7 @@ namespace Mobius.ClientComponents
 			this.Scientific.Properties.Caption = "Scientific";
 			this.Scientific.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.Scientific.Properties.RadioGroupIndex = 1;
-			this.Scientific.Size = new System.Drawing.Size(92, 18);
+			this.Scientific.Size = new System.Drawing.Size(322, 18);
 			this.Scientific.TabIndex = 2;
 			this.Scientific.TabStop = false;
 			this.Scientific.CheckedChanged += new System.EventHandler(this.Scientific_CheckedChanged);
@@ -202,10 +202,10 @@ namespace Mobius.ClientComponents
 			// 
 			this.SigDigits.Location = new System.Drawing.Point(14, 43);
 			this.SigDigits.Name = "SigDigits";
-			this.SigDigits.Properties.Caption = "Significant Digits (Fixed number of significant digits)";
+			this.SigDigits.Properties.Caption = "Significant Digits (Fixed number of digits)";
 			this.SigDigits.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.SigDigits.Properties.RadioGroupIndex = 1;
-			this.SigDigits.Size = new System.Drawing.Size(284, 18);
+			this.SigDigits.Size = new System.Drawing.Size(322, 18);
 			this.SigDigits.TabIndex = 3;
 			this.SigDigits.TabStop = false;
 			this.SigDigits.CheckedChanged += new System.EventHandler(this.SigDigits_CheckedChanged);

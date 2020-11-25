@@ -165,7 +165,7 @@ namespace Mobius.ComOps
       SfDialog.Hide();
     }
 
-    private void DialogOpened(OpenEventArgs args)
+    private void DialogOpened(Syncfusion.Blazor.Popups.OpenEventArgs args)
     {
       return;
     }
@@ -232,7 +232,7 @@ namespace Mobius.ComOps
 			else // otherwise wrap in a div
 			{
 				html += // wrap control in div with class name matching the Winforms/Dx control class name
-					$@"<div class='{pcType.Name}' style='position: relative; width: 100%; height: 100%; border: 1px solid orange; {customDivStyling} '>" + "\r\n";
+					$@"<div class='font-mx defaults-mx' class='{pcType.Name}' style='position: relative; width: 100%; height: 100%; border: 1px solid orange; {customDivStyling} '>" + "\r\n";
 			}
 
 			List<Control> cl = new List<Control>();
@@ -266,7 +266,7 @@ namespace Mobius.ComOps
 				int cTop = c.Top + dy; // adjust down for added header height
 				int cBottom = c.Bottom + dy;
 
-				string div = "<div style =\"position: absolute; display:flex; align-items: center; ";
+				string div = "<div class='font-mx defaults-mx' style =\"position: absolute; display:flex; align-items: center; ";
 
 				if (c.Dock == DockStyle.Fill) // if Dock defined than use that (Fill only for now)
 					div += "width: 100%; height: 100%; ";
@@ -367,9 +367,10 @@ namespace Mobius.ComOps
 			{
 				GroupBox gb = c as GroupBox;
 
+				html = Lex.Replace(html, "align-items: center;", ""); // need to remove in fieldset
 				header =
-					"<fieldset>\r\n" +
-					 $"<legend style='color:blue;font-weight:bold;'>{gb.Text}</legend>" + "\r\n";
+					"<fieldset class='fieldset-mx'>\r\n" +
+					 $"<legend class='legend-mx'>{gb.Text}</legend>" + "\r\n";
 
 				footer += "</fieldset>";
 
@@ -399,7 +400,7 @@ namespace Mobius.ComOps
 
 				else if (Lex.IsDefined(l.Text))
 				{
-					htmlFrag = "<span class='mobius-mx' @onclick='mx_click'>" + l.Text + "</span>\r\n";
+					htmlFrag = "<span>" + l.Text + "</span>\r\n";
 					//if (l.Click.Get == null)
 					htmlFrag = htmlFrag.Replace("@onclick = 'mx_click'", "");
 				}
@@ -410,8 +411,8 @@ namespace Mobius.ComOps
 				CheckEdit ce = c as CheckEdit; 
 				if (ce.Properties.CheckBoxOptions.Style == CheckBoxStyle.CheckBox)
 				{
-					htmlFrag = $@"<SfCheckBox Label='{ce.Text}' Name='{c.Name}' Checked='{ce.Checked.ToString().ToLower()}'  
-						@ref='{c.Name}' />" + "\r\n";
+					htmlFrag = $@"<SfCheckBox CssClass='font-mx defaults-mx' Label='{ce.Text}' Name='{c.Name}' Checked='{ce.Checked.ToString().ToLower()}'  
+						@ref ='{c.Name}' />" + "\r\n";
 
 					codeFrag = $"SfCheckBox<bool> {c.Name};\r\n";
 				}
@@ -419,16 +420,16 @@ namespace Mobius.ComOps
 				else
 				{
 					                 
-					htmlFrag = $@"<SfRadioButton Label='{ce.Text}' Name='group1' Value='{ce.Name}'
+					htmlFrag = $@"<SfRadioButton CssClass='font-mx defaults-mx' Label='{ce.Text}' Name='group1' Value='{ce.Name}'
 						@ref ='{c.Name}.Button' @bind-Checked='CVC.CheckedValue' />" + "\r\n";
 
 					if (!CvcDefined)
 					{
-						codeFrag = "static CheckedValueContainer CVC = new CheckedValueContainer();";
+						codeFrag = "static CheckedValueContainer CVC = new CheckedValueContainer();\r\n\r\n";
 						CvcDefined = true;
 					}
 
-					codeFrag = $"RadioButtonMx {c.Name} = new RadioButtonMx(CVC);\r\n";
+					codeFrag += $"RadioButtonMx {c.Name} = new RadioButtonMx(CVC);\r\n";
 				}
 			}
 
@@ -438,7 +439,7 @@ namespace Mobius.ComOps
 
 				TextEdit te = c as TextEdit;
 
-				htmlFrag = $"<SfTextBox @ref='{c.Name}.TextBox' @bind-Value='{c.Name}.Text' Type='InputType.Text' />\r\n";
+				htmlFrag = $"<SfTextBox CssClass='e-small defaults-mx' @ref='{c.Name}.SfTextBox' @bind-Value='{c.Name}.Text' Type='InputType.Text' />\r\n";
 
 				codeFrag = $"TextBoxMx {c.Name} = new TextBoxMx();\r\n";
 			}
@@ -448,7 +449,7 @@ namespace Mobius.ComOps
 				// Example: <SfButton CssClass="e-flat" IsToggle="true" IsPrimary="true" 
 				//            Content="@Content" IconCss="@IconCss" @ref="ToggleButton" @onclick="OnToggleClick"></SfButton>
 				SimpleButton b = c as SimpleButton;
-				htmlFrag = $"<SfButton Content='{c.Text}' ";
+				htmlFrag = $"<SfButton CssClass='button-mx' Content='{c.Text}' ";
 
 				if (Lex.Eq(c.Text, "OK") || Lex.Eq(c.Text, "Yes"))
 					htmlFrag += " IsPrimary = 'true'";

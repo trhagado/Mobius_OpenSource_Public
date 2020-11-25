@@ -36,7 +36,9 @@ namespace Mobius.ClientComponents
 				return DialogResult.Cancel;
 			}
 
-// Setup
+			// Setup
+
+			SyncfusionConverter.ToRazor(Instance);
 
 			string fmt = qc.DisplayFormatString;
 			if (Lex.IsNullOrEmpty(fmt)) fmt = "d-MMM-yyyy"; // default format

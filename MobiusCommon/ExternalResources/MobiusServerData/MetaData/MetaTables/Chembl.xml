@@ -34,6 +34,7 @@
 		<c Name="standard_inchi_key" Label="Standard Inchi Key" DataType="String" Description="IUPAC standard InChI key for the compound" DisplayLevel="hidden" DisplayWidth="12" ColumnMap="standard_inchi_key" />
 		<c Name="molsmiles" Label="Smiles" DataType="String" Description="Canonical smiles, generated using pipeline pilot" DisplayLevel="Selected" DisplayWidth="12" ColumnMap="molsmiles" />
 		<c name="molsimilarity" l="Similarity Score" type="float" display="selectable" searchable="false" displayFormat="decimal" width="8" decimals="2" map="0" dataTransform="GetMolsim" />
+		<c name="molecule_date" l="Update Date" type="date" width="11" display="hidden" />
 	</metatable>
 
 	<!-- **************************************************** -->
