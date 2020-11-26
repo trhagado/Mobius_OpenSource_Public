@@ -20,14 +20,15 @@ namespace Mobius.ComOps
 	public class SyncfusionConverter
 	{
 		static HashSet<string> ControlsLogged = new HashSet<string>();
-		static bool CvcDefined = false; // set to true once code for RadioButton CheckedValueContainer has been added
+		bool CvcDefined = false; // set to true once code for RadioButton CheckedValueContainer has been added
+		StreamWriter log;
 
 		/// <summary>
 		/// Convert a Windows/DevExpress Form or UserControl to a Blazor .razor Component file
 		/// </summary>
 		/// <param name="pc"></param>
 
-		public static void ToRazor(Control pc)
+		public void ToRazor(Control pc)
 		{
 			string s;
 
@@ -77,52 +78,48 @@ namespace Mobius.ComOps
 @*******@
  ";
 
-
 			//////////////////////////////////////////////
 			// Build the HTML and plug into the template
 			//////////////////////////////////////////////
 
-			string html = "", header="", footer="", code=""; // html built here
-			int dy = 0; // y offset to subtract WinForms window header and for y values relative to the bottom of the dialog
+			string html = "", code = ""; // strings for global building of html and code sections
 
 			Type t = pc.GetType();
 			string ctlFullName = t.FullName;
 			//if (ControlsLogged.Contains(ctlFullName)) return;
 			ControlsLogged.Add(ctlFullName);
 
-			StreamWriter sw = new StreamWriter(@"c:\downloads\MobiusControlTemplates\" + t.Name + ".txt");
-
-			StreamWriter sw2 = new StreamWriter(@"c:\downloads\MobiusControlTemplates\" + t.Name + ".razor");
+			log = new StreamWriter(@"c:\downloads\MobiusControlTemplates\" + t.Name + ".txt");
 
 			CvcDefined = false;
+
+			// ======================================================
+			// Process a top level Form or XtraForm (i.e. DialogBox)
+			// ======================================================
 
 			if (typeof(Form).IsAssignableFrom(pc.GetType())) // Form or XtraForm?
 			{
 				Form f = pc as Form;
 
-				dy = 32; // adjustment for WinForms header (~32 pixels). 
 				int height = f.Height; // add size of WinForms header to get correct html height
 				int width = f.Width;
 				string headerText = f.Text;
 
-// Wrap with SfDialog definition
+				// Wrap with SfDialog definition
 
-				header = $@"<SfDialog Target='#target' Height='{height}px' Width='{width}px' IsModal='true' ShowCloseIcon='true' AllowDragging='true' EnableResize='false' 
+				html = $@"<SfDialog Target='#target' Height='{height}px' Width='{width}px' IsModal='true' ShowCloseIcon='true' AllowDragging='true' EnableResize='false' 
 
 					@ref ='SfDialog' @bind-Visible='DialogVisible' CssClass='dialogboxmx'>
 				  <DialogTemplates>
-						<Header>{headerText}</Header>
-						<Content>
+						<Header>
+							<div style='display:flex; align-items:center; width: 100%; height: 20px; font-size: 13px; border: 0px;'>{headerText}</div>
+						</Header>
+					<Content>
 				 ";
 
-				footer = $@"</Content>
-					</DialogTemplates>
-					<DialogEvents Opened='@DialogOpened' Closed='@DialogClosed'></DialogEvents>
-				</SfDialog>" + "\r\n";
+			// Define variables and event stubs for code section
 
-// Define variables and event stubs for code section
-
-		code = @"
+				code = @"
 		public static " + f.Name + @" Instance { get; set; } 
 		public SfDialog SfDialog { get; set; } 
 		public static bool IncludeInRenderTree { get; set; } = true; 
@@ -178,62 +175,84 @@ namespace Mobius.ComOps
       return;
     }
 ";
+
+				ConvertContainedControls(pc, 0, ref html, ref code);
+
+				html += // Finish up the SfDialog component
+					$@"</Content>
+					</DialogTemplates>
+					<DialogEvents Opened='@DialogOpened' Closed='@DialogClosed'></DialogEvents>
+				</SfDialog>" + "\r\n";
+
 			}
 
-			ConvertContainerControl(pc, sw, "", header, footer, dy, ref html, ref code);
+			// ======================================================
+			// Process a UserControl or XtraUserControl
+			// ======================================================
 
-			sw.Close();
+			else if (pc is UserControl || pc is XtraUserControl)
+			{
+				html =
+				 @"<!-- Cascade this instance of the component down to all lower components -->
+
+					<CascadingValue Value='@this'>" + "\r\n";
+
+				ConvertContainedControls(pc, 0, ref html, ref code);
+
+				html += "</CascadingValue>"; // finish up the HTML part of the component definition
+
+			}
+
+			else throw new Exception("Can't convert control of type: " + pc?.GetType()?.Name);
 
 			string razor = Lex.Replace(razorTemplate, "<html>", html);
 
 			razor = Lex.Replace(razor, "<code>", code);
 
-			sw2.Write(razor);
-			sw2.Close();
+			log.Close();
+
+			StreamWriter sw = new StreamWriter(@"c:\downloads\MobiusControlTemplates\" + t.Name + ".razor");
+			sw.Write(razor);
+			sw.Close();
 			return;
 
 		}
 
 		/// <summary>
-		/// Convert container; Types:
-		///   UserControl, fixed content
-		///   WinForms/Dx container
+		/// Convert a list of controls for a control container which can be any of the following:
+		///   UserControl, XtraUserControl
+		///   WinForms/Dx predefined container (e.g. GroupBox, Panel...)
 		/// </summary>
 		/// <param name="pc"></param>
 		/// <param name="sw"></param>
 		/// <param name="customDivStyling"></param>
 		/// <param name="header"></param>
 		/// <param name="footer"></param>
-		/// <param name="dy"></param>
 		/// <param name="html"></param>
 
-		static void ConvertContainerControl(
+		void ConvertContainedControls(
 			Control pc,
-			StreamWriter sw,
-			string customDivStyling,
-			string header,
-			string footer,
 			int dy,
 			ref string html,
 			ref string code)
 		{
 			Type pcType = pc.GetType();
 
-			sw.WriteLine("Parent Type:\t" + pcType.Name + "\t, Parent Name:\t" + pc.Name + "\t, Full Type Name:\t" + pcType.FullName);
-			sw.WriteLine("");
+			log.WriteLine("");
+			log.WriteLine("Parent Type:\t" + pcType.Name + "\t, Parent Name:\t" + pc.Name + "\t, Full Type Name:\t" + pcType.FullName);
 
 			string format = "{0,-26}\t{1,-26}\t{2,5}\t{3,5}\t{4,5}\t{5,6}\t{6,-26}\t{7,-6}\t{8,-14}\t{9,-32}";
-			sw.WriteLine(string.Format(format, "Type", "Name", "Left", "Top", "Width", "Height", "Anchor", "Dock", "Text", "Full Type Name"));
-			sw.WriteLine(string.Format(format, "--------------------------", "--------------------------", "----", "----", "-----", "------", "--------------------------", "----", "--------------", "--------------------------"));
+			log.WriteLine(string.Format(format, "Type", "Name", "Left", "Top", "Width", "Height", "Anchor", "Dock", "Text", "Full Type Name"));
+			log.WriteLine(string.Format(format, "--------------------------", "--------------------------", "----", "----", "-----", "------", "--------------------------", "----", "--------------", "--------------------------"));
 
-			if (Lex.IsDefined(header)) // wrap in header if defined
-				html += header;
+			//if (Lex.IsDefined(header)) // wrap in header if defined
+			//	html += header;
 
-			else // otherwise wrap in a div
-			{
-				html += // wrap control in div with class name matching the Winforms/Dx control class name
-					$@"<div class='font-mx defaults-mx' class='{pcType.Name}' style='position: relative; width: 100%; height: 100%; border: 1px solid orange; {customDivStyling} '>" + "\r\n";
-			}
+			//else // otherwise wrap in a div
+			//{
+			//	html += // wrap control in div with class name matching the Winforms/Dx control class name
+			//		$@"<div class='font-mx defaults-mx' class='{pcType.Name}' style='position: relative; width: 100%; height: 100%; border: 1px solid orange; {customDivStyling} '>" + "\r\n";
+			//}
 
 			List<Control> cl = new List<Control>();
 
@@ -259,91 +278,31 @@ namespace Mobius.ComOps
 
 				// Log basic info
 
-				sw.WriteLine(string.Format(format, t.Name, c.Name,
+				log.WriteLine(string.Format(format, t.Name, c.Name,
 					c.Left, c.Top, c.Width, c.Height,
 					c.Anchor, c.Dock, c.Text, t.FullName));
 
-				int cTop = c.Top + dy; // adjust down for added header height
-				int cBottom = c.Bottom + dy;
-
-				string div = "<div class='font-mx defaults-mx' style =\"position: absolute; display:flex; align-items: center; ";
-
-				if (c.Dock == DockStyle.Fill) // if Dock defined than use that (Fill only for now)
-					div += "width: 100%; height: 100%; ";
-
-				else // use Anchor settings
-				{
-					string widthHeight = "";
-					bool left = ((c.Anchor & AnchorStyles.Left) != 0);
-					bool right = ((c.Anchor & AnchorStyles.Right) != 0);
-
-					if (left)
-					{
-						div += "left: " + c.Left + "px; ";
-						if (!right)
-							widthHeight += "width: " + c.Width + "px; ";
-
-						else // if left & right defined then set width as a calc()
-							widthHeight += "width: calc(100% - " + (c.Left + (pc.Width - c.Right)) + "px); ";
-					}
-
-					else if (right) // set right and width
-					{
-						div += "right: " + (pc.Width - c.Right) + "px; ";
-						widthHeight += "width: " + c.Width + "px; ";
-					}
-
-					bool anchorTop = ((c.Anchor & AnchorStyles.Top) != 0);
-					bool anchorBottom = ((c.Anchor & AnchorStyles.Bottom) != 0);
-
-					// Note: for buttons it looks like they could move up one px & be 2px taller
-
-					if (anchorTop)
-					{
-						div += "top: " + cTop + "px; ";
-						if (!anchorBottom)
-							widthHeight += "height: " + c.Height + "px; ";
-
-						else // if top & bottom defined then set height as a calc()
-							widthHeight += "height: calc(100% - " + (cTop + (pc.Height - cBottom)) + "px); ";
-					}
-
-					else if (anchorBottom) // set bottom and height
-					{
-						div += "bottom: " + (pc.Height - cBottom) + "px; ";
-						widthHeight += "height: " + c.Height + "px; ";
-					}
-
-					div += widthHeight; // put width height after location
-				}
-
-				div += "border: 1px solid yellow;\">\r\n"; // finish up style and div tag
-
-				ConvertControl(c, sw, ref div, ref code); // convert the control and include conversion in containing div
-
-				div += "</div>\r\n"; // close the div
-
-				html += div; // add to html
+				ConvertControl(pc, c, dy, ref html, ref code); // convert the control and surround with a positioning div
 
 			} // child control list
 
-			if (Lex.IsDefined(header))
-				html += footer;
-
-			else html += "</div>\r\n"; // close the div
+			log.WriteLine("End of Parent Type:\t" + pcType.Name + "\t, Parent Name:\t" + pc.Name + "\t, Full Type Name:\t" + pcType.FullName);
 
 			return;
 		}
 
-		static void ConvertControl(
+		void ConvertControl(
+			Control pc,
 			Control c,
-			StreamWriter sw,
+			int dy,
 			ref string html,
 			ref string code)
 		{
-			string header = "", footer = "", htmlFrag = "", codeFrag = "";
+			string htmlFrag = "", codeFrag = "";
+			int dy2 = 0;
 
 			Type cType = c.GetType();
+			DivMx div = new DivMx(); // the div to surround and position the control
 
 			////////////////////////////////////////////////////////////////////////////////
 			// For user controls write reference to this file and then the control and 
@@ -352,10 +311,15 @@ namespace Mobius.ComOps
 
 			if (c is UserControl || c is XtraUserControl)
 			{
+				htmlFrag += div.Build(pc, c, dy); // build the div
 
-				html += @"<{cType.Name}/>\r\n"; // add control reference (and parameters) to html
+				htmlFrag += $"<{cType.Name} @ref = '{cType.Name}'/>\r\n"; // add control with a @ref reference (and parameters) to html
 
-				ToRazor(c); // write the definition to separate Razor file if not done yet
+				htmlFrag += div.Close();
+
+				codeFrag += $"\r\npublic {cType.Name} {cType.Name}\r\n"; // add a variable to contain a reference to the control instance
+
+				new SyncfusionConverter().ToRazor(c); // write the definition to separate Razor file if not done yet
 			}
 
 			////////////////////////////////////////////////////////////////////////////////
@@ -367,89 +331,121 @@ namespace Mobius.ComOps
 			{
 				GroupBox gb = c as GroupBox;
 
-				html = Lex.Replace(html, "align-items: center;", ""); // need to remove in fieldset
-				header =
+				gb.Height += 8;
+				gb.Top -= 8;
+
+				htmlFrag += div.Build(pc, c, dy); // build the div
+
+				gb.Height -= 8;
+				gb.Top += 8;
+
+				htmlFrag +=
 					"<fieldset class='fieldset-mx'>\r\n" +
-					 $"<legend class='legend-mx'>{gb.Text}</legend>" + "\r\n";
+					 $"<legend class='legend-mx'>{gb.Text}</legend>\r\n";
 
-				footer += "</fieldset>";
+				dy2 = 4; // move contained controls down a bit
+				ConvertContainedControls(c, dy2, ref htmlFrag, ref codeFrag); 
+		
+				htmlFrag += "</fieldset>\r\n";
 
-				ConvertContainerControl(c, sw, "", header, footer, 0, ref html, ref code);
+				htmlFrag += div.Close();
 			}
 
 			else if (c is Panel || c is XtraPanel)
 			{
-				ConvertContainerControl(c, sw, "", header, footer, 0, ref html, ref code);
+				htmlFrag += div.Build(pc, c, dy);
+
+				htmlFrag += ""; // todo...
+
+				ConvertContainedControls(c, dy2, ref htmlFrag, ref codeFrag);
+
+				htmlFrag += ""; // todo...
+
+				htmlFrag += div.Close();
 			}
 
 			////////////////////////////////////////////////////////////////////////////////
-			// Winforms/DX builtin control. Just the control header with and property values
+			// Winforms/DX builtin control
 			////////////////////////////////////////////////////////////////////////////////
 
 			else if (c is LabelControl)
 			{
+				htmlFrag += div.Build(pc, c, dy);
+
 				LabelControl l = c as LabelControl;
 				if (l.LineVisible)
 				{
 					if (Lex.IsUndefined(l.Text))
-						htmlFrag = "<hr class='hr-mobius'>\r\n";
+						htmlFrag += "<hr class='hr-mobius'>\r\n";
 
 					else // horizontal rule with text overlaid using utility css
-						htmlFrag = $"<hr data-content='{l.Text}' class=' class='hr-mobius hr-text'>\r\n";
+						htmlFrag += $"<hr data-content='{l.Text}' class=' class='hr-mobius hr-text'>\r\n";
 				}
 
 				else if (Lex.IsDefined(l.Text))
 				{
-					htmlFrag = "<span>" + l.Text + "</span>\r\n";
+					htmlFrag += "<span>" + l.Text + "</span>\r\n";
 					//if (l.Click.Get == null)
-					htmlFrag = htmlFrag.Replace("@onclick = 'mx_click'", "");
+					htmlFrag += htmlFrag.Replace("@onclick = 'mx_click'", "");
 				}
+
+				htmlFrag += div.Close();
 			}
 
 			else if (c is CheckEdit)
 			{
-				CheckEdit ce = c as CheckEdit; 
+				htmlFrag += div.Build(pc, c, dy);
+
+				CheckEdit ce = c as CheckEdit;
 				if (ce.Properties.CheckBoxOptions.Style == CheckBoxStyle.CheckBox)
 				{
-					htmlFrag = $@"<SfCheckBox CssClass='font-mx defaults-mx' Label='{ce.Text}' Name='{c.Name}' Checked='{ce.Checked.ToString().ToLower()}'  
+					htmlFrag += $@"<SfCheckBox CssClass='font-mx defaults-mx' Label='{ce.Text}' Name='{c.Name}' Checked='{ce.Checked.ToString().ToLower()}'  
 						@ref ='{c.Name}' />" + "\r\n";
 
-					codeFrag = $"SfCheckBox<bool> {c.Name};\r\n";
+					codeFrag += $"SfCheckBox<bool> {c.Name};\r\n";
 				}
 
 				else
 				{
-					                 
-					htmlFrag = $@"<SfRadioButton CssClass='font-mx defaults-mx' Label='{ce.Text}' Name='group1' Value='{ce.Name}'
+
+					htmlFrag += $@"<SfRadioButton CssClass='font-mx defaults-mx' Label='{ce.Text}' Name='group1' Value='{ce.Name}'
 						@ref ='{c.Name}.Button' @bind-Checked='CVC.CheckedValue' />" + "\r\n";
 
 					if (!CvcDefined)
 					{
-						codeFrag = "static CheckedValueContainer CVC = new CheckedValueContainer();\r\n\r\n";
+						codeFrag += "static CheckedValueContainer CVC = new CheckedValueContainer();\r\n\r\n";
 						CvcDefined = true;
 					}
 
 					codeFrag += $"RadioButtonMx {c.Name} = new RadioButtonMx(CVC);\r\n";
 				}
+
+				htmlFrag += div.Close();
 			}
 
 			else if (c is TextEdit)
 			{
+				htmlFrag += div.Build(pc, c, dy);
+
 				// Example: <SfTextBox @bind-Value="@TextBoxValue" @ref="@SfTextBox" Type="InputType.Text" Placeholder="@InitialText" />
 
 				TextEdit te = c as TextEdit;
 
-				htmlFrag = $"<SfTextBox CssClass='e-small defaults-mx' @ref='{c.Name}.SfTextBox' @bind-Value='{c.Name}.Text' Type='InputType.Text' />\r\n";
+				htmlFrag += $"<SfTextBox CssClass='e-small defaults-mx' @ref='{c.Name}.SfTextBox' @bind-Value='{c.Name}.Text' Type='InputType.Text' />\r\n";
 
-				codeFrag = $"TextBoxMx {c.Name} = new TextBoxMx();\r\n";
+				codeFrag += $"TextBoxMx {c.Name} = new TextBoxMx();\r\n";
+
+				htmlFrag += div.Close();
 			}
 
 			else if (c is SimpleButton)
-			{ 
+			{
+				htmlFrag += div.Build(pc, c, dy);
+
 				// Example: <SfButton CssClass="e-flat" IsToggle="true" IsPrimary="true" 
 				//            Content="@Content" IconCss="@IconCss" @ref="ToggleButton" @onclick="OnToggleClick"></SfButton>
 				SimpleButton b = c as SimpleButton;
-				htmlFrag = $"<SfButton CssClass='button-mx' Content='{c.Text}' ";
+				htmlFrag += $"<SfButton CssClass='button-mx' Content='{c.Text}' ";
 
 				if (Lex.Eq(c.Text, "OK") || Lex.Eq(c.Text, "Yes"))
 					htmlFrag += " IsPrimary = 'true'";
@@ -458,12 +454,14 @@ namespace Mobius.ComOps
 				//if (Lex.IsDefined(handler)) ...
 				htmlFrag += $"@ref='{c.Name}' @onclick = '{c.Name}_Click' />\r\n";
 
-				codeFrag = $"SfButton {c.Name};\r\n";
+				codeFrag += $"SfButton {c.Name};\r\n";
+
+				htmlFrag += div.Close();
 			}
 
 			else // unrecognized
 			{
-				htmlFrag = "<" + c.Name;
+				htmlFrag += "<" + c.Name;
 
 				if (Lex.IsDefined(c.Text)) // insert the element content
 					htmlFrag += " name=\"" + c.Text + '"';
@@ -473,6 +471,122 @@ namespace Mobius.ComOps
 			html += htmlFrag;
 			code += codeFrag;
 			return;
+		}
+
+	}
+
+	public class DivMx
+	{
+		public string Class = "font-mx defaults-mx";
+		public string Position = "absolute";
+		public string Display = "flex";
+		public string AlignItems = "center";
+
+		public string Width = "";
+		public string Height = "";
+
+		public string Top = "";
+		public string Bottom = "";
+		public string Left = "";
+		public string Right = "";
+
+		public string Border = "1px solid yellow";
+
+		/// <summary>
+		/// Build a Div to wrap the specified control
+		/// </summary>
+		/// <param name="pc">Parent control</param>
+		/// <param name="c">Control being wrapped in the Div</param>
+		/// <returns></returns>
+
+		public string Build(
+			Control pc,
+			Control c,
+			int dy,
+			string styleAttributesToRemove = null,
+			string styleAttributesToAdd = null)
+		{
+
+			if (typeof(Form).IsAssignableFrom(pc.GetType())) // Form or XtraForm?
+				dy += 32; // add pixel height of WinForms window header to div top/bottom to adjust for move to HTML
+
+			int cTop = c.Top + dy; // move top and bottom down to correct from WinForms to HTML
+			int cBottom = c.Bottom + dy;
+
+			string div = "<div class='font-mx defaults-mx' style='position:absolute; display:flex; align-items:center; ";
+
+			if (c.Dock == DockStyle.Fill) // if Dock defined than use that (Fill only for now)
+				div += "width: 100%; height: 100%; ";
+
+			else // use Anchor settings
+			{
+				string widthHeight = "";
+				bool left = ((c.Anchor & AnchorStyles.Left) != 0);
+				bool right = ((c.Anchor & AnchorStyles.Right) != 0);
+
+				if (left)
+				{
+					div += "left: " + c.Left + "px; ";
+					if (!right)
+						widthHeight += "width: " + c.Width + "px; ";
+
+					else // if left & right defined then set width as a calc()
+						widthHeight += "width: calc(100% - " + (c.Left + (pc.Width - c.Right)) + "px); ";
+				}
+
+				else if (right) // set right and width
+				{
+					div += "right: " + (pc.Width - c.Right) + "px; ";
+					widthHeight += "width: " + c.Width + "px; ";
+				}
+
+				bool anchorTop = ((c.Anchor & AnchorStyles.Top) != 0);
+				bool anchorBottom = ((c.Anchor & AnchorStyles.Bottom) != 0);
+
+				// Note: for buttons it looks like they could move up one px & be 2px taller
+
+				if (anchorTop)
+				{
+					div += "top: " + cTop + "px; ";
+					if (!anchorBottom)
+						widthHeight += "height: " + c.Height + "px; ";
+
+					else // if top & bottom defined then set height as a calc()
+						widthHeight += "height: calc(100% - " + (cTop + (pc.Height - cBottom)) + "px); ";
+				}
+
+				else if (anchorBottom) // set bottom and height
+				{
+					div += "bottom: " + (pc.Height - cBottom) + "px; ";
+					widthHeight += "height: " + c.Height + "px; ";
+				}
+
+				div += widthHeight; // put width height after location
+			}
+
+			div += "border: 1px solid yellow;'>\r\n"; // finish up style and div tag
+
+			if (Lex.IsDefined(styleAttributesToRemove))
+			{
+				div = Lex.Replace(div, styleAttributesToRemove, "");
+			}
+
+			if (Lex.IsDefined(styleAttributesToAdd))
+			{
+				div = Lex.Replace(div, "style='", "style='" + styleAttributesToAdd + " ");
+			}
+
+			return div;
+		}
+
+		/// <summary>
+		/// Return string to close the div
+		/// </summary>
+		/// <returns></returns>
+
+		public string Close()
+		{
+			return "</div>\r\n"; 
 		}
 
 	}

@@ -38,7 +38,7 @@ namespace Mobius.ClientComponents
 
 			// Setup
 
-			SyncfusionConverter.ToRazor(Instance);
+			new SyncfusionConverter().ToRazor(Instance);
 
 			ColumnFormatEnum df = qc.DisplayFormat;
 			if (df != ColumnFormatEnum.HtmlText)

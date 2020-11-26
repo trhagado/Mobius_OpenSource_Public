@@ -33,7 +33,7 @@ namespace Mobius.ComOps
 
 			if (DebugMx.True)
 			{
-				SyncfusionConverter.ToRazor(pc);
+				new SyncfusionConverter().ToRazor(pc);
 				return;
 			}
 
