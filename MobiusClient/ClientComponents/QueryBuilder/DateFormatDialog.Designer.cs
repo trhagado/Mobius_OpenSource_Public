@@ -32,35 +32,36 @@
 			this.OK = new DevExpress.XtraEditors.SimpleButton();
 			this.Cancel = new DevExpress.XtraEditors.SimpleButton();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.DateNone = new DevExpress.XtraEditors.CheckEdit();
+			this.M_d_yyyy = new DevExpress.XtraEditors.CheckEdit();
 			this.M_d_yy = new DevExpress.XtraEditors.CheckEdit();
 			this.d_MMM_yy = new DevExpress.XtraEditors.CheckEdit();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.d_MMM_yyyy = new DevExpress.XtraEditors.CheckEdit();
-			this.M_d_yyyy = new DevExpress.XtraEditors.CheckEdit();
-			this.DateNone = new DevExpress.XtraEditors.CheckEdit();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.TimeNone = new DevExpress.XtraEditors.CheckEdit();
 			this.H_mm_ss = new DevExpress.XtraEditors.CheckEdit();
-			this.h_mm_ss_tt = new DevExpress.XtraEditors.CheckEdit();
 			this.H_mm = new DevExpress.XtraEditors.CheckEdit();
+			this.h_mm_ss_tt = new DevExpress.XtraEditors.CheckEdit();
 			this.h_mm_tt = new DevExpress.XtraEditors.CheckEdit();
 			this.groupBox1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.DateNone.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.M_d_yyyy.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.M_d_yy.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.d_MMM_yy.Properties)).BeginInit();
-			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.d_MMM_yyyy.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.M_d_yyyy.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.DateNone.Properties)).BeginInit();
+			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.TimeNone.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.H_mm_ss.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.h_mm_ss_tt.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.H_mm.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.h_mm_ss_tt.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.h_mm_tt.Properties)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// labelControl1
 			// 
-			this.labelControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-									| System.Windows.Forms.AnchorStyles.Right)));
+			this.labelControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.labelControl1.Appearance.Options.UseTextOptions = true;
 			this.labelControl1.Appearance.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
 			this.labelControl1.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
 			this.labelControl1.LineVisible = true;
@@ -116,6 +117,28 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Date Format";
 			// 
+			// DateNone
+			// 
+			this.DateNone.Location = new System.Drawing.Point(14, 114);
+			this.DateNone.Name = "DateNone";
+			this.DateNone.Properties.Caption = "None";
+			this.DateNone.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
+			this.DateNone.Properties.RadioGroupIndex = 1;
+			this.DateNone.Size = new System.Drawing.Size(103, 20);
+			this.DateNone.TabIndex = 6;
+			this.DateNone.TabStop = false;
+			// 
+			// M_d_yyyy
+			// 
+			this.M_d_yyyy.Location = new System.Drawing.Point(14, 64);
+			this.M_d_yyyy.Name = "M_d_yyyy";
+			this.M_d_yyyy.Properties.Caption = "3/14/2001";
+			this.M_d_yyyy.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
+			this.M_d_yyyy.Properties.RadioGroupIndex = 1;
+			this.M_d_yyyy.Size = new System.Drawing.Size(103, 20);
+			this.M_d_yyyy.TabIndex = 5;
+			this.M_d_yyyy.TabStop = false;
+			// 
 			// M_d_yy
 			// 
 			this.M_d_yy.Location = new System.Drawing.Point(14, 89);
@@ -123,7 +146,7 @@
 			this.M_d_yy.Properties.Caption = "3/14/01";
 			this.M_d_yy.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.M_d_yy.Properties.RadioGroupIndex = 1;
-			this.M_d_yy.Size = new System.Drawing.Size(103, 19);
+			this.M_d_yy.Size = new System.Drawing.Size(103, 20);
 			this.M_d_yy.TabIndex = 1;
 			this.M_d_yy.TabStop = false;
 			// 
@@ -134,10 +157,21 @@
 			this.d_MMM_yy.Properties.Caption = "14-Mar-01";
 			this.d_MMM_yy.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.d_MMM_yy.Properties.RadioGroupIndex = 1;
-			this.d_MMM_yy.Size = new System.Drawing.Size(92, 19);
+			this.d_MMM_yy.Size = new System.Drawing.Size(92, 20);
 			this.d_MMM_yy.TabIndex = 2;
 			this.d_MMM_yy.TabStop = false;
 			this.d_MMM_yy.CheckedChanged += new System.EventHandler(this.Scientific_CheckedChanged);
+			// 
+			// d_MMM_yyyy
+			// 
+			this.d_MMM_yyyy.EditValue = true;
+			this.d_MMM_yyyy.Location = new System.Drawing.Point(14, 19);
+			this.d_MMM_yyyy.Name = "d_MMM_yyyy";
+			this.d_MMM_yyyy.Properties.Caption = "14-Mar-2001";
+			this.d_MMM_yyyy.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
+			this.d_MMM_yyyy.Properties.RadioGroupIndex = 1;
+			this.d_MMM_yyyy.Size = new System.Drawing.Size(92, 20);
+			this.d_MMM_yyyy.TabIndex = 4;
 			// 
 			// groupBox2
 			// 
@@ -153,91 +187,58 @@
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Time Format";
 			// 
-			// d_MMM_yyyy
-			// 
-			this.d_MMM_yyyy.EditValue = true;
-			this.d_MMM_yyyy.Location = new System.Drawing.Point(14, 19);
-			this.d_MMM_yyyy.Name = "d_MMM_yyyy";
-			this.d_MMM_yyyy.Properties.Caption = "14-Mar-2001";
-			this.d_MMM_yyyy.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
-			this.d_MMM_yyyy.Properties.RadioGroupIndex = 1;
-			this.d_MMM_yyyy.Size = new System.Drawing.Size(92, 19);
-			this.d_MMM_yyyy.TabIndex = 4;
-			// 
-			// M_d_yyyy
-			// 
-			this.M_d_yyyy.Location = new System.Drawing.Point(14, 64);
-			this.M_d_yyyy.Name = "M_d_yyyy";
-			this.M_d_yyyy.Properties.Caption = "3/14/2001";
-			this.M_d_yyyy.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
-			this.M_d_yyyy.Properties.RadioGroupIndex = 1;
-			this.M_d_yyyy.Size = new System.Drawing.Size(103, 19);
-			this.M_d_yyyy.TabIndex = 5;
-			this.M_d_yyyy.TabStop = false;
-			// 
-			// DateNone
-			// 
-			this.DateNone.Location = new System.Drawing.Point(14, 114);
-			this.DateNone.Name = "DateNone";
-			this.DateNone.Properties.Caption = "None";
-			this.DateNone.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
-			this.DateNone.Properties.RadioGroupIndex = 1;
-			this.DateNone.Size = new System.Drawing.Size(103, 19);
-			this.DateNone.TabIndex = 6;
-			this.DateNone.TabStop = false;
-			// 
 			// TimeNone
 			// 
 			this.TimeNone.Location = new System.Drawing.Point(15, 114);
 			this.TimeNone.Name = "TimeNone";
 			this.TimeNone.Properties.Caption = "None";
 			this.TimeNone.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
-			this.TimeNone.Properties.RadioGroupIndex = 1;
-			this.TimeNone.Size = new System.Drawing.Size(103, 19);
+			this.TimeNone.Properties.RadioGroupIndex = 2;
+			this.TimeNone.Size = new System.Drawing.Size(103, 20);
 			this.TimeNone.TabIndex = 12;
 			this.TimeNone.TabStop = false;
 			// 
-			// H_m_s
+			// H_mm_ss
 			// 
 			this.H_mm_ss.Location = new System.Drawing.Point(15, 39);
-			this.H_mm_ss.Name = "H_m_s";
+			this.H_mm_ss.Name = "H_mm_ss";
 			this.H_mm_ss.Properties.Caption = "13:30:55";
 			this.H_mm_ss.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
-			this.H_mm_ss.Properties.RadioGroupIndex = 1;
-			this.H_mm_ss.Size = new System.Drawing.Size(103, 19);
+			this.H_mm_ss.Properties.RadioGroupIndex = 2;
+			this.H_mm_ss.Size = new System.Drawing.Size(103, 20);
 			this.H_mm_ss.TabIndex = 11;
 			this.H_mm_ss.TabStop = false;
 			// 
-			// h_m_s_tt
-			// 
-			this.h_mm_ss_tt.Location = new System.Drawing.Point(15, 89);
-			this.h_mm_ss_tt.Name = "h_m_s_tt";
-			this.h_mm_ss_tt.Properties.Caption = "1:30:55 PM";
-			this.h_mm_ss_tt.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
-			this.h_mm_ss_tt.Properties.RadioGroupIndex = 1;
-			this.h_mm_ss_tt.Size = new System.Drawing.Size(103, 19);
-			this.h_mm_ss_tt.TabIndex = 7;
-			this.h_mm_ss_tt.TabStop = false;
-			// 
-			// H_m
+			// H_mm
 			// 
 			this.H_mm.EditValue = true;
 			this.H_mm.Location = new System.Drawing.Point(15, 17);
-			this.H_mm.Name = "H_m";
+			this.H_mm.Name = "H_mm";
 			this.H_mm.Properties.Caption = "13:30";
 			this.H_mm.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
-			this.H_mm.Properties.RadioGroupIndex = 1;
-			this.H_mm.Size = new System.Drawing.Size(92, 19);
+			this.H_mm.Properties.RadioGroupIndex = 2;
+			this.H_mm.Size = new System.Drawing.Size(92, 20);
 			this.H_mm.TabIndex = 8;
 			// 
-			// h_m_tt
+			// h_mm_ss_tt
+			// 
+			this.h_mm_ss_tt.Location = new System.Drawing.Point(15, 89);
+			this.h_mm_ss_tt.Name = "h_mm_ss_tt";
+			this.h_mm_ss_tt.Properties.Caption = "1:30:55 PM";
+			this.h_mm_ss_tt.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
+			this.h_mm_ss_tt.Properties.RadioGroupIndex = 2;
+			this.h_mm_ss_tt.Size = new System.Drawing.Size(103, 20);
+			this.h_mm_ss_tt.TabIndex = 7;
+			this.h_mm_ss_tt.TabStop = false;
+			// 
+			// h_mm_tt
 			// 
 			this.h_mm_tt.Location = new System.Drawing.Point(15, 64);
-			this.h_mm_tt.Name = "h_m_tt";
+			this.h_mm_tt.Name = "h_mm_tt";
 			this.h_mm_tt.Properties.Caption = "1:30 PM";
 			this.h_mm_tt.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
-			this.h_mm_tt.Properties.RadioGroupIndex = 1;
-			this.h_mm_tt.Size = new System.Drawing.Size(92, 19);
+			this.h_mm_tt.Properties.RadioGroupIndex = 2;
+			this.h_mm_tt.Size = new System.Drawing.Size(92, 20);
 			this.h_mm_tt.TabIndex = 10;
 			this.h_mm_tt.TabStop = false;
 			// 
@@ -254,24 +255,24 @@
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.labelControl1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.IconOptions.ShowIcon = false;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "DateFormatDialog";
-			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Date/Time Format ";
 			this.groupBox1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.DateNone.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.M_d_yyyy.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.M_d_yy.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.d_MMM_yy.Properties)).EndInit();
-			this.groupBox2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.d_MMM_yyyy.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.M_d_yyyy.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.DateNone.Properties)).EndInit();
+			this.groupBox2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.TimeNone.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.H_mm_ss.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.h_mm_ss_tt.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.H_mm.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.h_mm_ss_tt.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.h_mm_tt.Properties)).EndInit();
 			this.ResumeLayout(false);
 

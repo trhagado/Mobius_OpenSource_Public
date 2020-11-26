@@ -20,7 +20,7 @@ namespace Mobius.ComOps
 	public class SyncfusionConverter
 	{
 		static HashSet<string> ControlsLogged = new HashSet<string>();
-		bool CvcDefined = false; // set to true once code for RadioButton CheckedValueContainer has been added
+		HashSet<string> RadioGroups = new HashSet<string>(); // names of each of the radio button groups seen 
 		StreamWriter log;
 
 		/// <summary>
@@ -91,7 +91,8 @@ namespace Mobius.ComOps
 
 			log = new StreamWriter(@"c:\downloads\MobiusControlTemplates\" + t.Name + ".txt");
 
-			CvcDefined = false;
+			RadioGroups = new HashSet<string>();
+			
 
 			// ======================================================
 			// Process a top level Form or XtraForm (i.e. DialogBox)
@@ -386,7 +387,7 @@ namespace Mobius.ComOps
 				{
 					htmlFrag += "<span>" + l.Text + "</span>\r\n";
 					//if (l.Click.Get == null)
-					htmlFrag += htmlFrag.Replace("@onclick = 'mx_click'", "");
+					htmlFrag = htmlFrag.Replace("@onclick = 'mx_click'", "");
 				}
 
 				htmlFrag += div.Close();
@@ -394,6 +395,9 @@ namespace Mobius.ComOps
 
 			else if (c is CheckEdit)
 			{
+				if (dy == 0)
+					dy = -4; // move up a bit
+
 				htmlFrag += div.Build(pc, c, dy);
 
 				CheckEdit ce = c as CheckEdit;
@@ -408,16 +412,17 @@ namespace Mobius.ComOps
 				else
 				{
 
-					htmlFrag += $@"<SfRadioButton CssClass='font-mx defaults-mx' Label='{ce.Text}' Name='group1' Value='{ce.Name}'
-						@ref ='{c.Name}.Button' @bind-Checked='CVC.CheckedValue' />" + "\r\n";
+					string groupName = "RadioGroupValue" + ce.Properties.RadioGroupIndex;
+						htmlFrag += $@"<SfRadioButton CssClass='font-mx defaults-mx' Label='{ce.Text}' Name='{groupName}' Value='{ce.Name}'
+						@ref ='{c.Name}.Button' @bind-Checked='{groupName}.CheckedValue' />" + "\r\n";
 
-					if (!CvcDefined)
+					if (!RadioGroups.Contains(groupName)) // add var to identify the current radio button for the group
 					{
-						codeFrag += "static CheckedValueContainer CVC = new CheckedValueContainer();\r\n\r\n";
-						CvcDefined = true;
+						codeFrag += $"static CheckedValueContainer {groupName} = new CheckedValueContainer();\r\n";
+						RadioGroups.Add(groupName);
 					}
 
-					codeFrag += $"RadioButtonMx {c.Name} = new RadioButtonMx(CVC);\r\n";
+					codeFrag += $"RadioButtonMx {c.Name} = new RadioButtonMx({groupName});\r\n";
 				}
 
 				htmlFrag += div.Close();
