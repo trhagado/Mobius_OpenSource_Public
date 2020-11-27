@@ -32,6 +32,8 @@ namespace Mobius.ClientComponents
 
 		DialogResult ShowInstance(QueryColumn qc)
 		{
+			new SyncfusionConverter().ToRazor(Instance);
+
 			MetaColumn mc = qc.MetaColumn;
 
 			HorizontalAlignmentEx ha = qc.ActiveHorizontalAlignment;

@@ -34,6 +34,7 @@ namespace Mobius.ComOps
 
 			string razorTemplate = @"
 @using Mobius.ComOps
+@using WebShell
 
 @using Syncfusion.Blazor.Popups
 @using Syncfusion.Blazor.Layouts
@@ -49,10 +50,6 @@ namespace Mobius.ComOps
 @using System.Reflection
 @using Microsoft.AspNetCore.Components
 
-@using WebShell
-@* using WebShell.Shared *@
-
-@inject Microsoft.AspNetCore.Components.NavigationManager UriHelper
 @inject IJSRuntime JsRuntime;
 
 @namespace Mobius.ClientComponents
@@ -366,8 +363,13 @@ namespace Mobius.ComOps
 			}
 
 			////////////////////////////////////////////////////////////////////////////////
-			// Winforms/DX builtin control
+			// Winforms/DX builtin controls
 			////////////////////////////////////////////////////////////////////////////////
+
+			/////////////////////////////////////////////////////////////////////////////////
+			// LabelControl
+			/////////////////////////////////////////////////////////////////////////////////
+
 
 			else if (c is LabelControl)
 			{
@@ -393,6 +395,11 @@ namespace Mobius.ComOps
 				htmlFrag += div.Close();
 			}
 
+			/////////////////////////////////////////////////////////////////////////////////
+			// CheckEdit (CheckBox and RadioButton
+			/////////////////////////////////////////////////////////////////////////////////
+
+
 			else if (c is CheckEdit)
 			{
 				if (dy == 0)
@@ -401,15 +408,16 @@ namespace Mobius.ComOps
 				htmlFrag += div.Build(pc, c, dy);
 
 				CheckEdit ce = c as CheckEdit;
-				if (ce.Properties.CheckBoxOptions.Style == CheckBoxStyle.CheckBox)
-				{
-					htmlFrag += $@"<SfCheckBox CssClass='font-mx defaults-mx' Label='{ce.Text}' Name='{c.Name}' Checked='{ce.Checked.ToString().ToLower()}'  
-						@ref ='{c.Name}' />" + "\r\n";
+				if (ce.Properties.CheckBoxOptions.Style == CheckBoxStyle.CheckBox ||
+						ce.Properties.CheckBoxOptions.Style == CheckBoxStyle.Default)
+				{ // CheckBox
+					htmlFrag += $@"<SfCheckBox CssClass='font-mx defaults-mx' Label='{ce.Text}' Name='{c.Name}'   
+						@ref ='{c.Name}.Button' @bind-Checked='{c.Name}.Checked' />" + "\r\n";
 
-					codeFrag += $"SfCheckBox<bool> {c.Name};\r\n";
+					codeFrag += $"CheckBoxMx {c.Name} = new CheckBoxMx();\r\n";
 				}
 
-				else
+				else // RadioButton
 				{
 
 					string groupName = "RadioGroupValue" + ce.Properties.RadioGroupIndex;
@@ -428,6 +436,10 @@ namespace Mobius.ComOps
 				htmlFrag += div.Close();
 			}
 
+			/////////////////////////////////////////////////////////////////////////////////
+			// TextEdit
+			/////////////////////////////////////////////////////////////////////////////////
+
 			else if (c is TextEdit)
 			{
 				htmlFrag += div.Build(pc, c, dy);
@@ -442,6 +454,35 @@ namespace Mobius.ComOps
 
 				htmlFrag += div.Close();
 			}
+
+			/////////////////////////////////////////////////////////////////////////////////
+			// CheckButton - Button with a checked state and button group like a RadioButton
+			/////////////////////////////////////////////////////////////////////////////////
+
+			else if (c is CheckButton)
+			{
+				htmlFrag += div.Build(pc, c, dy);
+
+				CheckButton cb = c as CheckButton;
+
+				string groupName = "CheckButtonGroup" + cb.GroupIndex;
+				htmlFrag += $@"<SfButton CssClass='button-mx' Content='{c.Text}' 
+					@ref ='{c.Name}.Button'  />" + "\r\n";
+
+				if (!RadioGroups.Contains(groupName)) // add var to identify the current radio button for the group
+				{
+					codeFrag += $"static CheckedValueContainer {groupName} = new CheckedValueContainer();\r\n";
+					RadioGroups.Add(groupName);
+				}
+
+				codeFrag += $"CheckButtonMx {c.Name} = new CheckButtonMx({groupName});\r\n";
+
+				htmlFrag += div.Close();
+			}
+
+			/////////////////////////////////////////////////////////////////////////////////
+			// SimpleButton
+			/////////////////////////////////////////////////////////////////////////////////
 
 			else if (c is SimpleButton)
 			{
@@ -463,6 +504,10 @@ namespace Mobius.ComOps
 
 				htmlFrag += div.Close();
 			}
+
+			/////////////////////////////////////////////////////////////////////////////////
+			// Unrecognized
+			/////////////////////////////////////////////////////////////////////////////////
 
 			else // unrecognized
 			{

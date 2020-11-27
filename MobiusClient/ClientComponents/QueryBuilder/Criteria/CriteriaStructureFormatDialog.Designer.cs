@@ -85,7 +85,7 @@
 			// 
 			this.AlignStructures.EditValue = true;
 			this.AlignStructures.Location = new System.Drawing.Point(12, 37);
-			this.AlignStructures.Name = "AlignStructs";
+			this.AlignStructures.Name = "AlignStructures";
 			this.AlignStructures.Properties.Caption = "Align Structure Orientation";
 			this.AlignStructures.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
 			this.AlignStructures.Size = new System.Drawing.Size(182, 19);
@@ -95,7 +95,7 @@
 			// 
 			this.HilightStructures.EditValue = true;
 			this.HilightStructures.Location = new System.Drawing.Point(12, 12);
-			this.HilightStructures.Name = "ShowColors";
+			this.HilightStructures.Name = "HilightStructures";
 			this.HilightStructures.Properties.Caption = "Highlight Match  (Show Colors)";
 			this.HilightStructures.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
 			this.HilightStructures.Size = new System.Drawing.Size(201, 19);

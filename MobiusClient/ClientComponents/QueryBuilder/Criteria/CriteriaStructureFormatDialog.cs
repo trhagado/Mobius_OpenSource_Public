@@ -43,6 +43,8 @@ namespace Mobius.ClientComponents
 
 			// Setup
 
+			new SyncfusionConverter().ToRazor(Instance);
+
 			if (pssc.SearchType == StructureSearchType.SmallWorld)
 			{
 				cfd.HilightStructures.Checked = pssc.SmallWorldParameters.Highlight;
