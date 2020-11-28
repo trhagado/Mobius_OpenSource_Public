@@ -160,8 +160,10 @@ namespace Mobius.ComOps
       SfDialog.Hide();
     }
 
-    private void DialogOpened(Syncfusion.Blazor.Popups.OpenEventArgs args)
+    private async Task DialogOpened(Syncfusion.Blazor.Popups.OpenEventArgs args)
     {
+			args.PreventFocus = true;
+			await OK.FocusIn();
       return;
     }
 
@@ -296,7 +298,7 @@ namespace Mobius.ComOps
 			ref string html,
 			ref string code)
 		{
-			string htmlFrag = "", codeFrag = "";
+			string htmlFrag = "", codeFrag = "", groupName = "";
 			int dy2 = 0;
 
 			Type cType = c.GetType();
@@ -420,7 +422,7 @@ namespace Mobius.ComOps
 				else // RadioButton
 				{
 
-					string groupName = "RadioGroupValue" + ce.Properties.RadioGroupIndex;
+					groupName = "RadioGroupValue" + ce.Properties.RadioGroupIndex;
 						htmlFrag += $@"<SfRadioButton CssClass='font-mx defaults-mx' Label='{ce.Text}' Name='{groupName}' Value='{ce.Name}'
 						@ref ='{c.Name}.Button' @bind-Checked='{groupName}.CheckedValue' />" + "\r\n";
 
@@ -461,14 +463,25 @@ namespace Mobius.ComOps
 
 			else if (c is CheckButton)
 			{
+				// CheckButtons and their groups are handled in the same way as RadioButtons
+				// with the value for checked comparison being the ID of the SfButton.
+
 				htmlFrag += div.Build(pc, c, dy);
 
 				CheckButton cb = c as CheckButton;
 
-				string groupName = "CheckButtonGroup" + cb.GroupIndex;
-				htmlFrag += $@"<SfButton CssClass='button-mx' Content='{c.Text}' 
-					@ref ='{c.Name}.Button'  />" + "\r\n";
+				groupName = "CheckButtonGroup" + cb.GroupIndex;
+				string iconName = c.Name;
+				iconName = Lex.Replace(iconName, "Va", ""); // hack for TextAlignment Dialog
+				iconName = Lex.Replace(iconName, "Ha", "");
 
+				if (!Lex.StartsWith(iconName, "Align")) iconName = "Align" + iconName; // make name match SF icon names
+				if (!Lex.EndsWith(iconName, "IconMx")) iconName += "IconMx";
+
+				htmlFrag += $@"<SfButton @ref ='{c.Name}.Button' @bind-CssClass='{c.Name}.CssClass' IconCss = '{iconName}' 
+					Content='{c.Text}' OnClick='{c.Name}_Click' />" + "\r\n";
+
+				groupName = "CheckButtonGroupValue" + (cb.GroupIndex);
 				if (!RadioGroups.Contains(groupName)) // add var to identify the current radio button for the group
 				{
 					codeFrag += $"static CheckedValueContainer {groupName} = new CheckedValueContainer();\r\n";

@@ -30,7 +30,6 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TextAlignmentDialog));
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.OK = new DevExpress.XtraEditors.SimpleButton();
 			this.Cancel = new DevExpress.XtraEditors.SimpleButton();
 			this.ApplyToAllColumns = new DevExpress.XtraEditors.CheckEdit();
@@ -53,21 +52,12 @@
 			this.VaMiddle = new DevExpress.XtraEditors.CheckButton();
 			this.TopLabel = new DevExpress.XtraEditors.LabelControl();
 			this.VaTop = new DevExpress.XtraEditors.CheckButton();
+			this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
 			((System.ComponentModel.ISupportInitialize)(this.ApplyToAllColumns.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.SetAsDefault.Properties)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// groupBox2
-			// 
-			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox2.Location = new System.Drawing.Point(0, 216);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(363, 2);
-			this.groupBox2.TabIndex = 88;
-			this.groupBox2.TabStop = false;
 			// 
 			// OK
 			// 
@@ -105,18 +95,16 @@
 			// 
 			this.ApplyToAllColumns.Location = new System.Drawing.Point(10, 161);
 			this.ApplyToAllColumns.Name = "ApplyToAllColumns";
-			this.ApplyToAllColumns.Properties.AutoWidth = true;
 			this.ApplyToAllColumns.Properties.Caption = "Apply to all columns in this query";
-			this.ApplyToAllColumns.Size = new System.Drawing.Size(177, 18);
+			this.ApplyToAllColumns.Size = new System.Drawing.Size(348, 20);
 			this.ApplyToAllColumns.TabIndex = 89;
 			// 
 			// SetAsDefault
 			// 
 			this.SetAsDefault.Location = new System.Drawing.Point(10, 186);
 			this.SetAsDefault.Name = "SetAsDefault";
-			this.SetAsDefault.Properties.AutoWidth = true;
-			this.SetAsDefault.Properties.Caption = "Use these values as my defaults for new and modified queries";
-			this.SetAsDefault.Size = new System.Drawing.Size(318, 18);
+			this.SetAsDefault.Properties.Caption = "Use these values as defaults for new and modified queries";
+			this.SetAsDefault.Size = new System.Drawing.Size(348, 20);
 			this.SetAsDefault.TabIndex = 90;
 			// 
 			// groupBox1
@@ -150,9 +138,9 @@
 			// 
 			this.HaCenter.AllowAllUnchecked = true;
 			this.HaCenter.GroupIndex = 1;
-			this.HaCenter.ImageIndex = 4;
-			this.HaCenter.ImageList = this.HAlignBitmaps20;
-			this.HaCenter.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+			this.HaCenter.ImageOptions.ImageIndex = 4;
+			this.HaCenter.ImageOptions.ImageList = this.HAlignBitmaps20;
+			this.HaCenter.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
 			this.HaCenter.Location = new System.Drawing.Point(13, 76);
 			this.HaCenter.Name = "HaCenter";
 			this.HaCenter.Size = new System.Drawing.Size(22, 22);
@@ -189,9 +177,9 @@
 			// 
 			this.HaRight.AllowAllUnchecked = true;
 			this.HaRight.GroupIndex = 1;
-			this.HaRight.ImageIndex = 6;
-			this.HaRight.ImageList = this.HAlignBitmaps20;
-			this.HaRight.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+			this.HaRight.ImageOptions.ImageIndex = 6;
+			this.HaRight.ImageOptions.ImageList = this.HAlignBitmaps20;
+			this.HaRight.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
 			this.HaRight.Location = new System.Drawing.Point(13, 105);
 			this.HaRight.Name = "HaRight";
 			this.HaRight.Size = new System.Drawing.Size(22, 22);
@@ -213,9 +201,9 @@
 			// 
 			this.HaLeft.AllowAllUnchecked = true;
 			this.HaLeft.GroupIndex = 1;
-			this.HaLeft.ImageIndex = 2;
-			this.HaLeft.ImageList = this.HAlignBitmaps20;
-			this.HaLeft.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+			this.HaLeft.ImageOptions.ImageIndex = 2;
+			this.HaLeft.ImageOptions.ImageList = this.HAlignBitmaps20;
+			this.HaLeft.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
 			this.HaLeft.Location = new System.Drawing.Point(13, 48);
 			this.HaLeft.Name = "HaLeft";
 			this.HaLeft.Size = new System.Drawing.Size(22, 22);
@@ -237,9 +225,9 @@
 			// 
 			this.HaGeneral.AllowAllUnchecked = true;
 			this.HaGeneral.GroupIndex = 1;
-			this.HaGeneral.ImageIndex = 0;
-			this.HaGeneral.ImageList = this.HAlignBitmaps20;
-			this.HaGeneral.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+			this.HaGeneral.ImageOptions.ImageIndex = 0;
+			this.HaGeneral.ImageOptions.ImageList = this.HAlignBitmaps20;
+			this.HaGeneral.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
 			this.HaGeneral.Location = new System.Drawing.Point(13, 21);
 			this.HaGeneral.Name = "HaGeneral";
 			this.HaGeneral.Size = new System.Drawing.Size(22, 22);
@@ -276,9 +264,9 @@
 			// 
 			this.VaBottom.AllowAllUnchecked = true;
 			this.VaBottom.GroupIndex = 2;
-			this.VaBottom.ImageIndex = 4;
-			this.VaBottom.ImageList = this.VAlignBitmaps20;
-			this.VaBottom.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+			this.VaBottom.ImageOptions.ImageIndex = 4;
+			this.VaBottom.ImageOptions.ImageList = this.VAlignBitmaps20;
+			this.VaBottom.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
 			this.VaBottom.Location = new System.Drawing.Point(13, 76);
 			this.VaBottom.Name = "VaBottom";
 			this.VaBottom.Size = new System.Drawing.Size(22, 22);
@@ -311,9 +299,9 @@
 			// 
 			this.VaMiddle.AllowAllUnchecked = true;
 			this.VaMiddle.GroupIndex = 2;
-			this.VaMiddle.ImageIndex = 2;
-			this.VaMiddle.ImageList = this.VAlignBitmaps20;
-			this.VaMiddle.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+			this.VaMiddle.ImageOptions.ImageIndex = 2;
+			this.VaMiddle.ImageOptions.ImageList = this.VAlignBitmaps20;
+			this.VaMiddle.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
 			this.VaMiddle.Location = new System.Drawing.Point(13, 48);
 			this.VaMiddle.Name = "VaMiddle";
 			this.VaMiddle.Size = new System.Drawing.Size(22, 22);
@@ -335,15 +323,28 @@
 			// 
 			this.VaTop.AllowAllUnchecked = true;
 			this.VaTop.GroupIndex = 2;
-			this.VaTop.ImageIndex = 0;
-			this.VaTop.ImageList = this.VAlignBitmaps20;
-			this.VaTop.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+			this.VaTop.ImageOptions.ImageIndex = 0;
+			this.VaTop.ImageOptions.ImageList = this.VAlignBitmaps20;
+			this.VaTop.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
 			this.VaTop.Location = new System.Drawing.Point(13, 21);
 			this.VaTop.Name = "VaTop";
 			this.VaTop.Size = new System.Drawing.Size(22, 22);
 			this.VaTop.TabIndex = 0;
 			this.VaTop.TabStop = false;
 			this.VaTop.CheckedChanged += new System.EventHandler(this.VaTop_CheckedChanged);
+			// 
+			// labelControl1
+			// 
+			this.labelControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.labelControl1.Appearance.Options.UseTextOptions = true;
+			this.labelControl1.Appearance.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
+			this.labelControl1.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
+			this.labelControl1.LineVisible = true;
+			this.labelControl1.Location = new System.Drawing.Point(0, 209);
+			this.labelControl1.Name = "labelControl1";
+			this.labelControl1.Size = new System.Drawing.Size(361, 12);
+			this.labelControl1.TabIndex = 93;
 			// 
 			// TextAlignmentDialog
 			// 
@@ -352,18 +353,18 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.Cancel;
 			this.ClientSize = new System.Drawing.Size(360, 253);
+			this.Controls.Add(this.labelControl1);
 			this.Controls.Add(this.groupBox3);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.SetAsDefault);
 			this.Controls.Add(this.ApplyToAllColumns);
-			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.OK);
 			this.Controls.Add(this.Cancel);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.IconOptions.ShowIcon = false;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "TextAlignmentDialog";
-			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Text Alignment";
@@ -378,8 +379,6 @@
 		}
 
 		#endregion
-
-		private System.Windows.Forms.GroupBox groupBox2;
 		public DevExpress.XtraEditors.SimpleButton OK;
 		public DevExpress.XtraEditors.SimpleButton Cancel;
 		private System.Windows.Forms.GroupBox groupBox1;
@@ -402,5 +401,6 @@
 		public System.Windows.Forms.ImageList HAlignBitmaps20;
 		public DevExpress.XtraEditors.CheckEdit ApplyToAllColumns;
 		public DevExpress.XtraEditors.CheckEdit SetAsDefault;
+		public DevExpress.XtraEditors.LabelControl labelControl1;
 	}
 }
