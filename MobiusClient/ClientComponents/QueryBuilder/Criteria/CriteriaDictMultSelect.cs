@@ -39,6 +39,8 @@ namespace Mobius.ClientComponents
 
 			if (Instance == null) Instance = new CriteriaDictMultSelect();
 
+			new SyncfusionConverter().ToRazor(Instance);
+
 			string title = "Search criteria for " + qc.ActiveLabel;
 			string prompt = "Select one or more " + qc.ActiveLabel + " from the list below.";
 

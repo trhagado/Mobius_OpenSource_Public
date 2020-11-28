@@ -110,7 +110,7 @@ namespace Mobius.ComOps
 					@ref ='SfDialog' @bind-Visible='DialogVisible' CssClass='dialogboxmx'>
 				  <DialogTemplates>
 						<Header>
-							<div style='display:flex; align-items:center; width: 100%; height: 20px; font-size: 13px; border: 0px;'>{headerText}</div>
+							<div style='display:flex; align-items:center; width: 100%; height: 20px; font-size: 13px; border: 0px;'>@HeaderText</div>
 						</Header>
 					<Content>
 				 ";
@@ -120,6 +120,7 @@ namespace Mobius.ComOps
 				code = @"
 		public static " + f.Name + @" Instance { get; set; } 
 		public SfDialog SfDialog { get; set; } 
+		public string HeaderText = " + Lex.AddDoubleQuotes(headerText)  + @";
 		public static bool IncludeInRenderTree { get; set; } = true; 
 		public bool DialogVisible { get; set; } = false; 
 		public DialogResult DialogResult { get; set; } = DialogResult.None;
@@ -389,9 +390,8 @@ namespace Mobius.ComOps
 
 				else if (Lex.IsDefined(l.Text))
 				{
-					htmlFrag += "<span>" + l.Text + "</span>\r\n";
-					//if (l.Click.Get == null)
-					htmlFrag = htmlFrag.Replace("@onclick = 'mx_click'", "");
+					htmlFrag += $"<span>@{c.Name}.Text</span>\r\n";
+					codeFrag += $"LabelControlMx {c.Name} = new LabelControlMx(\"{l.Text}\");\r\n";
 				}
 
 				htmlFrag += div.Close();

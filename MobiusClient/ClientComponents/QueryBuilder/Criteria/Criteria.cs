@@ -40,6 +40,9 @@ namespace Mobius.ClientComponents
 		public static bool Edit(
 			QueryColumn qc)
 		{
+
+			//if (DebugMx.True) return CriteriaYesNo.Edit(qc);
+
 			if (qc.MetaColumn.DictionaryMultipleSelect) return CriteriaDictMultSelect.Edit(qc);
 
 			else if (Lex.Eq(qc.MetaColumn.Dictionary, "yes_no")) return CriteriaYesNo.Edit(qc);
@@ -47,6 +50,9 @@ namespace Mobius.ClientComponents
 			MetaColumn mc = qc.MetaColumn;
 			if (Instance == null) Instance = new Criteria();
 			if (Instance.Visible) return false; // catch 2nd of two quick single-clicks & ignore
+
+			new SyncfusionConverter().ToRazor(Instance);
+
 			Instance.Setup(qc);
 			Instance.Qc = qc;
 			Form activeForm = SessionManager.ActiveForm;

@@ -106,7 +106,7 @@
 			this.YesCheckEdit.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.YesCheckEdit.Properties.RadioGroupIndex = 1;
 			this.YesCheckEdit.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.YesCheckEdit.Size = new System.Drawing.Size(414, 19);
+			this.YesCheckEdit.Size = new System.Drawing.Size(414, 20);
 			this.YesCheckEdit.TabIndex = 92;
 			this.YesCheckEdit.TabStop = false;
 			// 
@@ -125,7 +125,7 @@
 			this.None.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.None.Properties.RadioGroupIndex = 1;
 			this.None.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.None.Size = new System.Drawing.Size(182, 19);
+			this.None.Size = new System.Drawing.Size(182, 20);
 			this.None.TabIndex = 91;
 			this.None.TabStop = false;
 			// 
@@ -144,7 +144,7 @@
 			this.NoCheckEdit.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.NoCheckEdit.Properties.RadioGroupIndex = 1;
 			this.NoCheckEdit.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.NoCheckEdit.Size = new System.Drawing.Size(414, 19);
+			this.NoCheckEdit.Size = new System.Drawing.Size(414, 20);
 			this.NoCheckEdit.TabIndex = 93;
 			this.NoCheckEdit.TabStop = false;
 			// 
@@ -182,10 +182,10 @@
 			this.Controls.Add(this.OK);
 			this.Controls.Add(this.Cancel);
 			this.Controls.Add(this.labelControl1);
+			this.IconOptions.ShowIcon = false;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "CriteriaYesNo";
-			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Criteria";
