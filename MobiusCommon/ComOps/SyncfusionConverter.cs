@@ -345,8 +345,8 @@ namespace Mobius.ComOps
 					 $"<legend class='legend-mx'>{gb.Text}</legend>\r\n";
 
 				dy2 = 4; // move contained controls down a bit
-				ConvertContainedControls(c, dy2, ref htmlFrag, ref codeFrag); 
-		
+				ConvertContainedControls(c, dy2, ref htmlFrag, ref codeFrag);
+
 				htmlFrag += "</fieldset>\r\n";
 
 				htmlFrag += div.Close();
@@ -423,7 +423,7 @@ namespace Mobius.ComOps
 				{
 
 					groupName = "RadioGroupValue" + ce.Properties.RadioGroupIndex;
-						htmlFrag += $@"<SfRadioButton CssClass='font-mx defaults-mx' Label='{ce.Text}' Name='{groupName}' Value='{ce.Name}'
+					htmlFrag += $@"<SfRadioButton CssClass='font-mx defaults-mx' Label='{ce.Text}' Name='{groupName}' Value='{ce.Name}'
 						@ref ='{c.Name}.Button' @bind-Checked='{groupName}.CheckedValue' />" + "\r\n";
 
 					if (!RadioGroups.Contains(groupName)) // add var to identify the current radio button for the group
@@ -454,6 +454,39 @@ namespace Mobius.ComOps
 
 				codeFrag += $"TextBoxMx {c.Name} = new TextBoxMx();\r\n";
 
+				htmlFrag += div.Close();
+			}
+
+			/////////////////////////////////////////////////////////////////////////////////
+			// DropdownButton - button with dropdown menu attached
+			// Example:
+			//  <SfDropDownButton IconCss="e-ddb-icons e-profile">
+			//    <DropDownMenuItems>
+			//      <DropDownMenuItem Text="User Settings" IconCss="e-ddb-icons e-settings"></DropDownMenuItem>
+			//      <DropDownMenuItem Text="Log Out" IconCss="e-ddb-icons e-logout"></DropDownMenuItem>
+			//    </DropDownMenuItems>
+			// </SfDropDownButton>
+			//
+			/////////////////////////////////////////////////////////////////////////////////
+
+			else if (c is DropDownButton ||
+				(c is SimpleButton && Lex.Eq(c.Name, "BasicOpBut"))) // treat the as dropdown also
+			{
+				SimpleButton db = c as SimpleButton;
+
+				htmlFrag += div.Build(pc, c, dy);
+
+				htmlFrag += $@"<SfDropDownButton CssClass='button-mx' 
+				  @ref='{c.Name}.Button' Content='@{c.Name}.Text 
+					@onclick = '{c.Name}_Click' >
+				 </SfDropDownButton>";
+
+				//<DropDownMenuItems>
+				//  <DropDownMenuItem Text='Loading...'></DropDownMenuItem>
+				//</DropDownMenuItems>
+
+				codeFrag += $"DropDownButtonMx {c.Name} = new DropDownButtonMx(\"{c.Text}\");\r\n";
+				
 				htmlFrag += div.Close();
 			}
 
