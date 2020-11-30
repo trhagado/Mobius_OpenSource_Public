@@ -961,11 +961,11 @@
     <Compile Include="QueryBuilder\Criteria\CriteriaDictionary.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="QueryBuilder\Criteria\Criteria.cs">
+    <Compile Include="QueryBuilder\Criteria\CriteriaDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="QueryBuilder\Criteria\Criteria.Designer.cs">
-      <DependentUpon>Criteria.cs</DependentUpon>
+    <Compile Include="QueryBuilder\Criteria\CriteriaDialog.Designer.cs">
+      <DependentUpon>CriteriaDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="QueryBuilder\Criteria\CriteriaCompoundId.cs">
       <SubType>Form</SubType>
@@ -1606,8 +1606,8 @@
     <EmbeddedResource Include="QueryBuilder\CondFormatRulesControl.resx">
       <DependentUpon>CondFormatRulesControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="QueryBuilder\Criteria\Criteria.resx">
-      <DependentUpon>Criteria.cs</DependentUpon>
+    <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaDialog.resx">
+      <DependentUpon>CriteriaDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="QueryBuilder\Criteria\CriteriaComplex.resx">
       <DependentUpon>CriteriaComplex.cs</DependentUpon>

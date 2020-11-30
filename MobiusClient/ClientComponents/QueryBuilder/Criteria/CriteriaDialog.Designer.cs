@@ -1,6 +1,6 @@
 namespace Mobius.ClientComponents
 {
-	partial class Criteria
+	partial class CriteriaDialog
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -29,7 +29,7 @@ namespace Mobius.ClientComponents
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Criteria));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CriteriaDialog));
 			this.IsNotNull = new DevExpress.XtraEditors.CheckEdit();
 			this.menuGE = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuGT = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,6 +93,7 @@ namespace Mobius.ClientComponents
 			this.IsNotNull.Properties.Appearance.Options.UseFont = true;
 			this.IsNotNull.Properties.Appearance.Options.UseForeColor = true;
 			this.IsNotNull.Properties.Caption = " Data Exists for this field";
+			this.IsNotNull.Properties.CheckBoxOptions.Style = DevExpress.XtraEditors.Controls.CheckBoxStyle.Radio;
 			this.IsNotNull.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.IsNotNull.Properties.RadioGroupIndex = 1;
 			this.IsNotNull.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -158,6 +159,7 @@ namespace Mobius.ClientComponents
 			this.IsNull.Properties.Appearance.Options.UseFont = true;
 			this.IsNull.Properties.Appearance.Options.UseForeColor = true;
 			this.IsNull.Properties.Caption = " Data Doesn\'t Exist for this field";
+			this.IsNull.Properties.CheckBoxOptions.Style = DevExpress.XtraEditors.Controls.CheckBoxStyle.Radio;
 			this.IsNull.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.IsNull.Properties.RadioGroupIndex = 1;
 			this.IsNull.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -193,6 +195,7 @@ namespace Mobius.ClientComponents
 			this.Within.Properties.Appearance.Options.UseFont = true;
 			this.Within.Properties.Appearance.Options.UseForeColor = true;
 			this.Within.Properties.Caption = " Within the Last:";
+			this.Within.Properties.CheckBoxOptions.Style = DevExpress.XtraEditors.Controls.CheckBoxStyle.Radio;
 			this.Within.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.Within.Properties.RadioGroupIndex = 1;
 			this.Within.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -306,6 +309,7 @@ namespace Mobius.ClientComponents
 			this.All.Properties.Appearance.Options.UseFont = true;
 			this.All.Properties.Appearance.Options.UseForeColor = true;
 			this.All.Properties.Caption = " All data rows for this assay/table";
+			this.All.Properties.CheckBoxOptions.Style = DevExpress.XtraEditors.Controls.CheckBoxStyle.Radio;
 			this.All.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.All.Properties.RadioGroupIndex = 1;
 			this.All.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -341,6 +345,7 @@ namespace Mobius.ClientComponents
 			this.Like.Properties.Appearance.Options.UseFont = true;
 			this.Like.Properties.Appearance.Options.UseForeColor = true;
 			this.Like.Properties.Caption = " Contains the Substring:";
+			this.Like.Properties.CheckBoxOptions.Style = DevExpress.XtraEditors.Controls.CheckBoxStyle.Radio;
 			this.Like.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.Like.Properties.RadioGroupIndex = 1;
 			this.Like.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -406,6 +411,7 @@ namespace Mobius.ClientComponents
 			this.InList.Properties.Appearance.Options.UseFont = true;
 			this.InList.Properties.Appearance.Options.UseForeColor = true;
 			this.InList.Properties.Caption = " In List";
+			this.InList.Properties.CheckBoxOptions.Style = DevExpress.XtraEditors.Controls.CheckBoxStyle.Radio;
 			this.InList.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.InList.Properties.RadioGroupIndex = 1;
 			this.InList.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -426,6 +432,7 @@ namespace Mobius.ClientComponents
 			this.None.Properties.Appearance.Options.UseFont = true;
 			this.None.Properties.Appearance.Options.UseForeColor = true;
 			this.None.Properties.Caption = " No criteria";
+			this.None.Properties.CheckBoxOptions.Style = DevExpress.XtraEditors.Controls.CheckBoxStyle.Radio;
 			this.None.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.None.Properties.RadioGroupIndex = 1;
 			this.None.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -446,6 +453,8 @@ namespace Mobius.ClientComponents
 			this.BasicOp.Properties.Appearance.Options.UseBackColor = true;
 			this.BasicOp.Properties.Appearance.Options.UseFont = true;
 			this.BasicOp.Properties.Appearance.Options.UseForeColor = true;
+			this.BasicOp.Properties.Caption = "";
+			this.BasicOp.Properties.CheckBoxOptions.Style = DevExpress.XtraEditors.Controls.CheckBoxStyle.Radio;
 			this.BasicOp.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.BasicOp.Properties.RadioGroupIndex = 1;
 			this.BasicOp.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -465,6 +474,7 @@ namespace Mobius.ClientComponents
 			this.Between.Properties.Appearance.Options.UseFont = true;
 			this.Between.Properties.Appearance.Options.UseForeColor = true;
 			this.Between.Properties.Caption = " Between";
+			this.Between.Properties.CheckBoxOptions.Style = DevExpress.XtraEditors.Controls.CheckBoxStyle.Radio;
 			this.Between.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.Between.Properties.RadioGroupIndex = 1;
 			this.Between.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -518,10 +528,10 @@ namespace Mobius.ClientComponents
 			this.BasicOpBut.ImageOptions.ImageIndex = 0;
 			this.BasicOpBut.ImageOptions.ImageList = this.TinyBitmaps;
 			this.BasicOpBut.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleRight;
-			this.BasicOpBut.Location = new System.Drawing.Point(33, 64);
+			this.BasicOpBut.Location = new System.Drawing.Point(32, 64);
 			this.BasicOpBut.Margin = new System.Windows.Forms.Padding(0);
 			this.BasicOpBut.Name = "BasicOpBut";
-			this.BasicOpBut.Size = new System.Drawing.Size(50, 18);
+			this.BasicOpBut.Size = new System.Drawing.Size(56, 22);
 			this.BasicOpBut.TabIndex = 79;
 			this.BasicOpBut.Text = "Equals";
 			this.BasicOpBut.Click += new System.EventHandler(this.BasicOpBut_Click);
@@ -571,7 +581,7 @@ namespace Mobius.ClientComponents
 			this.labelControl1.TabIndex = 87;
 			this.labelControl1.Click += new System.EventHandler(this.labelControl1_Click);
 			// 
-			// Criteria
+			// CriteriaDialog
 			// 
 			this.AcceptButton = this.OK;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -606,7 +616,7 @@ namespace Mobius.ClientComponents
 			this.IconOptions.ShowIcon = false;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "Criteria";
+			this.Name = "CriteriaDialog";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Criteria";

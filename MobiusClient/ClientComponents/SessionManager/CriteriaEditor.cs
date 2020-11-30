@@ -84,7 +84,7 @@ namespace Mobius.ClientComponents
 					case MetaColumnType.Date:
 					case MetaColumnType.DictionaryId:
 
-						if (!Criteria.Edit(qc)) return false;
+						if (!CriteriaDialog.Edit(qc)) return false;
 						else break;
 
 					default:
@@ -139,7 +139,7 @@ namespace Mobius.ClientComponents
 		public static bool GetGeneralCriteria(
 			QueryColumn qc)
 		{
-			return Criteria.Edit(qc);
+			return CriteriaDialog.Edit(qc);
 		}
 
 		/// <summary>

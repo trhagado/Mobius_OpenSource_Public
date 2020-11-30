@@ -10,6 +10,7 @@ using System.Net;
 using System.Reflection;
 using System.Diagnostics;
 using System.Management;
+using System.Web;
 using Microsoft.Win32;
 
 using DevExpress.XtraEditors;
@@ -115,12 +116,18 @@ namespace Mobius.ComOps
 					<Content>
 				 ";
 
-			// Define variables and event stubs for code section
+				// Define variables and event stubs for code section
 
-				code = @"
-		public static " + f.Name + @" Instance { get; set; } 
-		public SfDialog SfDialog { get; set; } 
-		public string HeaderText = " + Lex.AddDoubleQuotes(headerText)  + @";
+				code = $@"
+
+		/******************************* File links *********************************/
+		public static {f.Name} RazorFile; // used to link to this file
+		{f.Name} csFile => {f.Name}.CsFile;
+		/****************************************************************************/
+
+		public static {f.Name} Instance {{ get; set; }} 
+		public SfDialog SfDialog {{ get; set; }} 
+		public string HeaderText = ""{headerText}"";" + @"
 		public static bool IncludeInRenderTree { get; set; } = true; 
 		public bool DialogVisible { get; set; } = false; 
 		public DialogResult DialogResult { get; set; } = DialogResult.None;
@@ -164,7 +171,7 @@ namespace Mobius.ComOps
     private async Task DialogOpened(Syncfusion.Blazor.Popups.OpenEventArgs args)
     {
 			args.PreventFocus = true;
-			await OK.FocusIn();
+			await OK.Button.FocusIn();
       return;
     }
 
@@ -175,6 +182,7 @@ namespace Mobius.ComOps
 
       return;
     }
+
 ";
 
 				ConvertContainedControls(pc, 0, ref html, ref code);
@@ -303,6 +311,8 @@ namespace Mobius.ComOps
 			int dy2 = 0;
 
 			Type cType = c.GetType();
+			string cText = HttpUtility.HtmlEncode(c.Text);
+
 			DivMx div = new DivMx(); // the div to surround and position the control
 
 			////////////////////////////////////////////////////////////////////////////////
@@ -398,59 +408,18 @@ namespace Mobius.ComOps
 			}
 
 			/////////////////////////////////////////////////////////////////////////////////
-			// CheckEdit (CheckBox and RadioButton
-			/////////////////////////////////////////////////////////////////////////////////
-
-
-			else if (c is CheckEdit)
-			{
-				if (dy == 0)
-					dy = -4; // move up a bit
-
-				htmlFrag += div.Build(pc, c, dy);
-
-				CheckEdit ce = c as CheckEdit;
-				if (ce.Properties.CheckBoxOptions.Style == CheckBoxStyle.CheckBox ||
-						ce.Properties.CheckBoxOptions.Style == CheckBoxStyle.Default)
-				{ // CheckBox
-					htmlFrag += $@"<SfCheckBox CssClass='font-mx defaults-mx' Label='{ce.Text}' Name='{c.Name}'   
-						@ref ='{c.Name}.Button' @bind-Checked='{c.Name}.Checked' />" + "\r\n";
-
-					codeFrag += $"CheckBoxMx {c.Name} = new CheckBoxMx();\r\n";
-				}
-
-				else // RadioButton
-				{
-
-					groupName = "RadioGroupValue" + ce.Properties.RadioGroupIndex;
-					htmlFrag += $@"<SfRadioButton CssClass='font-mx defaults-mx' Label='{ce.Text}' Name='{groupName}' Value='{ce.Name}'
-						@ref ='{c.Name}.Button' @bind-Checked='{groupName}.CheckedValue' />" + "\r\n";
-
-					if (!RadioGroups.Contains(groupName)) // add var to identify the current radio button for the group
-					{
-						codeFrag += $"static CheckedValueContainer {groupName} = new CheckedValueContainer();\r\n";
-						RadioGroups.Add(groupName);
-					}
-
-					codeFrag += $"RadioButtonMx {c.Name} = new RadioButtonMx({groupName});\r\n";
-				}
-
-				htmlFrag += div.Close();
-			}
-
-			/////////////////////////////////////////////////////////////////////////////////
 			// TextEdit
 			/////////////////////////////////////////////////////////////////////////////////
 
 			else if (c is TextEdit)
 			{
-				htmlFrag += div.Build(pc, c, dy);
+				htmlFrag += div.Build(pc, c, dy - 2); // move the textbox up a few pixels to align better with other controls
 
 				// Example: <SfTextBox @bind-Value="@TextBoxValue" @ref="@SfTextBox" Type="InputType.Text" Placeholder="@InitialText" />
 
 				TextEdit te = c as TextEdit;
 
-				htmlFrag += $"<SfTextBox CssClass='e-small defaults-mx' @ref='{c.Name}.SfTextBox' @bind-Value='{c.Name}.Text' Type='InputType.Text' />\r\n";
+				htmlFrag += $"<SfTextBox CssClass='e-small sftextbox-mx defaults-mx' @ref='{c.Name}.SfTextBox' @bind-Value='{c.Name}.Text' Type='InputType.Text' />\r\n";
 
 				codeFrag += $"TextBoxMx {c.Name} = new TextBoxMx();\r\n";
 
@@ -469,8 +438,8 @@ namespace Mobius.ComOps
 			//
 			/////////////////////////////////////////////////////////////////////////////////
 
-			else if (c is DropDownButton ||
-				(c is SimpleButton && Lex.Eq(c.Name, "BasicOpBut"))) // treat the as dropdown also
+			else if (c is DropDownButton)
+			// || (c is SimpleButton && Lex.Eq(c.Name, "BasicOpBut"))) // treat the as dropdown also
 			{
 				SimpleButton db = c as SimpleButton;
 
@@ -491,7 +460,55 @@ namespace Mobius.ComOps
 			}
 
 			/////////////////////////////////////////////////////////////////////////////////
-			// CheckButton - Button with a checked state and button group like a RadioButton
+			// CheckEdit (CheckBox and RadioButton)
+			/////////////////////////////////////////////////////////////////////////////////
+
+
+			else if (c is CheckEdit)
+			{
+				if (dy == 0)
+					dy = -4; // move up a bit
+
+				htmlFrag += div.Build(pc, c, dy + 2);
+
+				CheckEdit ce = c as CheckEdit;
+				CheckBoxStyle style = ce.Properties.CheckBoxOptions.Style;
+				if (style == CheckBoxStyle.Default)
+				{
+					if (ce.Properties.RadioGroupIndex >= 0)
+						style = CheckBoxStyle.Radio;
+					else style = CheckBoxStyle.CheckBox;
+				}
+
+				if (style == CheckBoxStyle.CheckBox)
+				{ // CheckBox
+					htmlFrag += $@"<SfCheckBox CssClass='font-mx defaults-mx' Label='{cText}' Name='{c.Name}'   
+						@ref ='{c.Name}.Button' @bind-Checked='{c.Name}.Checked' />" + "\r\n";
+
+					codeFrag += $"CheckBoxMx {c.Name} = new CheckBoxMx();\r\n";
+				}
+
+				else // assume RadioButton
+				{
+
+					groupName = "RadioGroupValue" + ce.Properties.RadioGroupIndex;
+					htmlFrag += $@"<SfRadioButton CssClass='font-mx defaults-mx' Label='{cText}' Name='{groupName}' Value='{ce.Name}'
+						@ref ='{c.Name}.Button' @bind-Checked='{groupName}.CheckedValue' />" + "\r\n";
+
+					if (!RadioGroups.Contains(groupName)) // add var to identify the current radio button for the group
+					{
+						codeFrag += $"static CheckedValueContainer {groupName} = new CheckedValueContainer();\r\n";
+						RadioGroups.Add(groupName);
+					}
+
+					codeFrag += $"RadioButtonMx {c.Name} = new RadioButtonMx({groupName});\r\n";
+				}
+
+				htmlFrag += div.Close();
+			}
+
+			/////////////////////////////////////////////////////////////////////////////////
+			// CheckButton - Like a RadioButton but with an image et al in place of a checkmark
 			/////////////////////////////////////////////////////////////////////////////////
 
 			else if (c is CheckButton)
@@ -504,15 +521,15 @@ namespace Mobius.ComOps
 				CheckButton cb = c as CheckButton;
 
 				groupName = "CheckButtonGroup" + cb.GroupIndex;
-				string iconName = c.Name;
+				string iconName = cb.Name;
 				iconName = Lex.Replace(iconName, "Va", ""); // hack for TextAlignment Dialog
 				iconName = Lex.Replace(iconName, "Ha", "");
 
 				if (!Lex.StartsWith(iconName, "Align")) iconName = "Align" + iconName; // make name match SF icon names
 				if (!Lex.EndsWith(iconName, "IconMx")) iconName += "IconMx";
 
-				htmlFrag += $@"<SfButton @ref ='{c.Name}.Button' @bind-CssClass='{c.Name}.CssClass' IconCss = '{iconName}' 
-					Content='{c.Text}' OnClick='{c.Name}_Click' />" + "\r\n";
+				htmlFrag += $@"<SfButton @ref ='{cb.Name}.Button' @bind-CssClass='{cb.Name}.CssClass' IconCss = '{iconName}' 
+					Content='{cText}' OnClick='{cb.Name}_Click' />" + "\r\n";
 
 				groupName = "CheckButtonGroupValue" + (cb.GroupIndex);
 				if (!RadioGroups.Contains(groupName)) // add var to identify the current radio button for the group
@@ -521,7 +538,7 @@ namespace Mobius.ComOps
 					RadioGroups.Add(groupName);
 				}
 
-				codeFrag += $"CheckButtonMx {c.Name} = new CheckButtonMx({groupName});\r\n";
+				codeFrag += $"CheckButtonMx {cb.Name} = new CheckButtonMx({groupName});\r\n";
 
 				htmlFrag += div.Close();
 			}
@@ -532,21 +549,26 @@ namespace Mobius.ComOps
 
 			else if (c is SimpleButton)
 			{
-				htmlFrag += div.Build(pc, c, dy);
+				htmlFrag += div.Build(pc, c, dy - 3);
 
 				// Example: <SfButton CssClass="e-flat" IsToggle="true" IsPrimary="true" 
 				//            Content="@Content" IconCss="@IconCss" @ref="ToggleButton" @onclick="OnToggleClick"></SfButton>
 				SimpleButton b = c as SimpleButton;
-				htmlFrag += $"<SfButton CssClass='button-mx' Content='{c.Text}' ";
+
+				string cssClass = "button-mx";
+				if (b.Appearance.BackColor == Color.Transparent)
+					cssClass = "transparent-button-mx";
+
+				htmlFrag += $"<SfButton CssClass='{cssClass}' Content='@{c.Name}.Text' ";
 
 				if (Lex.Eq(c.Text, "OK") || Lex.Eq(c.Text, "Yes"))
 					htmlFrag += " IsPrimary = 'true'";
 
 				//string handler = WindowsHelper.GetEventHandlerName(c, "Click"); // doesn't work
 				//if (Lex.IsDefined(handler)) ...
-				htmlFrag += $"@ref='{c.Name}' @onclick = '{c.Name}_Click' />\r\n";
+				htmlFrag += $"@ref='{c.Name}.Button' @onclick = '{c.Name}_Click' />\r\n"; 
 
-				codeFrag += $"SfButton {c.Name};\r\n";
+				codeFrag += $"ButtonMx {c.Name} = new ButtonMx(\"{cText}\");\r\n";
 
 				htmlFrag += div.Close();
 			}
@@ -559,7 +581,7 @@ namespace Mobius.ComOps
 			{
 				htmlFrag += "<" + c.Name;
 
-				if (Lex.IsDefined(c.Text)) // insert the element content
+				if (Lex.IsDefined(cText)) // insert the element content
 					htmlFrag += " name=\"" + c.Text + '"';
 				htmlFrag += " />";
 			}

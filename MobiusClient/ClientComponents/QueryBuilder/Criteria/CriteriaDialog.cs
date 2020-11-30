@@ -15,15 +15,15 @@ using System.Windows.Forms;
 
 namespace Mobius.ClientComponents
 {
-	public partial class Criteria : DevExpress.XtraEditors.XtraForm
+	public partial class CriteriaDialog : DevExpress.XtraEditors.XtraForm
 	{
-		static Criteria Instance;
+		static CriteriaDialog Instance;
 
 		int InitialHeight;
 		int InitialNoneTop;
 		QueryColumn Qc; // column being edited
 
-		public Criteria()
+		public CriteriaDialog()
 		{
 			InitializeComponent();
 
@@ -48,7 +48,7 @@ namespace Mobius.ClientComponents
 			else if (Lex.Eq(qc.MetaColumn.Dictionary, "yes_no")) return CriteriaYesNo.Edit(qc);
 
 			MetaColumn mc = qc.MetaColumn;
-			if (Instance == null) Instance = new Criteria();
+			if (Instance == null) Instance = new CriteriaDialog();
 			if (Instance.Visible) return false; // catch 2nd of two quick single-clicks & ignore
 
 			new SyncfusionConverter().ToRazor(Instance);
