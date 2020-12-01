@@ -61,7 +61,7 @@ namespace Mobius.ClientComponents
 			this.BasicOpBut = new DevExpress.XtraEditors.SimpleButton();
 			this.Value = new DevExpress.XtraEditors.ComboBoxEdit();
 			this.WithinUnits = new DevExpress.XtraEditors.ComboBoxEdit();
-			this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
+			this.LabelControl = new DevExpress.XtraEditors.LabelControl();
 			((System.ComponentModel.ISupportInitialize)(this.IsNotNull.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.IsNull.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.WithinValue.Properties)).BeginInit();
@@ -527,6 +527,7 @@ namespace Mobius.ClientComponents
 			this.BasicOpBut.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.UltraFlat;
 			this.BasicOpBut.ImageOptions.ImageIndex = 0;
 			this.BasicOpBut.ImageOptions.ImageList = this.TinyBitmaps;
+			this.BasicOpBut.ImageOptions.ImageUri.Uri = "&#9662;";
 			this.BasicOpBut.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleRight;
 			this.BasicOpBut.Location = new System.Drawing.Point(32, 64);
 			this.BasicOpBut.Margin = new System.Windows.Forms.Padding(0);
@@ -562,24 +563,24 @@ namespace Mobius.ClientComponents
 			this.WithinUnits.Size = new System.Drawing.Size(90, 20);
 			this.WithinUnits.TabIndex = 86;
 			// 
-			// labelControl1
+			// LabelControl
 			// 
-			this.labelControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			this.LabelControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labelControl1.Appearance.BackColor = System.Drawing.Color.Transparent;
-			this.labelControl1.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelControl1.Appearance.ForeColor = System.Drawing.SystemColors.WindowText;
-			this.labelControl1.Appearance.Options.UseBackColor = true;
-			this.labelControl1.Appearance.Options.UseFont = true;
-			this.labelControl1.Appearance.Options.UseForeColor = true;
-			this.labelControl1.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-			this.labelControl1.Cursor = System.Windows.Forms.Cursors.Default;
-			this.labelControl1.LineVisible = true;
-			this.labelControl1.Location = new System.Drawing.Point(-2, 287);
-			this.labelControl1.Name = "labelControl1";
-			this.labelControl1.Size = new System.Drawing.Size(485, 10);
-			this.labelControl1.TabIndex = 87;
-			this.labelControl1.Click += new System.EventHandler(this.labelControl1_Click);
+			this.LabelControl.Appearance.BackColor = System.Drawing.Color.Transparent;
+			this.LabelControl.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LabelControl.Appearance.ForeColor = System.Drawing.SystemColors.WindowText;
+			this.LabelControl.Appearance.Options.UseBackColor = true;
+			this.LabelControl.Appearance.Options.UseFont = true;
+			this.LabelControl.Appearance.Options.UseForeColor = true;
+			this.LabelControl.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
+			this.LabelControl.Cursor = System.Windows.Forms.Cursors.Default;
+			this.LabelControl.LineVisible = true;
+			this.LabelControl.Location = new System.Drawing.Point(-2, 287);
+			this.LabelControl.Name = "LabelControl";
+			this.LabelControl.Size = new System.Drawing.Size(485, 10);
+			this.LabelControl.TabIndex = 87;
+			this.LabelControl.Click += new System.EventHandler(this.LabelControl_Click);
 			// 
 			// CriteriaDialog
 			// 
@@ -611,7 +612,7 @@ namespace Mobius.ClientComponents
 			this.Controls.Add(this.Between);
 			this.Controls.Add(this.BetweenAnd);
 			this.Controls.Add(this.BasicOpBut);
-			this.Controls.Add(this.labelControl1);
+			this.Controls.Add(this.LabelControl);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.IconOptions.ShowIcon = false;
 			this.MaximizeBox = false;
@@ -676,6 +677,6 @@ namespace Mobius.ClientComponents
 		public DevExpress.XtraEditors.LabelControl Prompt;
 		public DevExpress.XtraEditors.ComboBoxEdit Value;
 		public DevExpress.XtraEditors.ComboBoxEdit WithinUnits;
-		public DevExpress.XtraEditors.LabelControl labelControl1;
+		public DevExpress.XtraEditors.LabelControl LabelControl;
 	}
 }

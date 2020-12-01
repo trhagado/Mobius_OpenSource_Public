@@ -131,8 +131,15 @@ namespace Mobius.ComOps
 		public static bool IncludeInRenderTree { get; set; } = true; 
 		public bool DialogVisible { get; set; } = false; 
 		public DialogResult DialogResult { get; set; } = DialogResult.None;
+		public SfContextMenu<MenuItem> ContextMenu; // the context menu to show
+		public List<MenuItem> MenuItems = // MenuItems data source for ContextMenu
+						new List<MenuItem> { new MenuItem { Text = ""Loading..."" } };
 
-    protected override void OnInitialized()
+/*************************************************/
+/*** Basic SfDialog overrides and Click events ***/
+/*************************************************/
+
+		protected override void OnInitialized()
     {
 			Instance = this;
 			base.OnInitialized();
@@ -183,7 +190,44 @@ namespace Mobius.ComOps
       return;
     }
 
-";
+/****************************/
+/*** SfContextMenu events ***/
+/****************************/
+
+		public void BeforeMenuOpen(BeforeOpenCloseMenuEventArgs<MenuItem> args) // called once for menu with children
+		{
+			//DebugLog.Message(args.ParentItem != null ? args.ParentItem?.Text : ""null"");
+			return;
+		}
+
+		public void MenuOpened(OpenCloseMenuEventArgs<MenuItem> args) // called once for menu with children
+		{
+			//DebugLog.Message(args.ParentItem != null ? args.ParentItem?.Text : ""null"");
+			return;
+		}
+
+		public void BeforeMenuClosed(BeforeOpenCloseMenuEventArgs<MenuItem> args) // called once for menu with children
+		{
+			//DebugLog.Message(args.ParentItem?.Text);
+			return;
+		}
+
+		public void MenuClosed(OpenCloseMenuEventArgs<MenuItem> args) // called once for menu with children
+		{
+			//DebugLog.Message(args.ParentItem?.Text);
+			return;
+		}
+
+		public void MenuItemRender(MenuEventArgs<MenuItem> args) // called once per item
+		{
+			return;
+		}
+
+		public void MenuItemSelected(MenuEventArgs<MenuItem> args)
+		{
+			//DebugLog.Message(args?.Item?.Text != null ? args.Item.Text : ""null"");
+			return;
+		}" + "\r\n\r\n";
 
 				ConvertContainedControls(pc, 0, ref html, ref code);
 
@@ -191,7 +235,17 @@ namespace Mobius.ComOps
 					$@"</Content>
 					</DialogTemplates>
 					<DialogEvents Opened='@DialogOpened' Closed='@DialogClosed'></DialogEvents>
-				</SfDialog>" + "\r\n";
+				</SfDialog>
+
+				 <div id='ContextMenuDivId' class='ContextMenuDiv' style='width: 100%;'
+			     oncontextmenu='return false;'>
+
+						<SfContextMenu TValue='@MenuItem' @ref='@ContextMenu' Target='.ContextMenuDiv' Items='@MenuItems'>
+							<MenuEvents TValue='@MenuItem'
+													OnOpen='@BeforeMenuOpen' OnClose='@BeforeMenuClosed' Opened='@MenuOpened' Closed='@MenuClosed'
+													OnItemRender='@MenuItemRender' ItemSelected='@MenuItemSelected' />
+						</SfContextMenu>
+					</div>" + "\r\n";
 
 			}
 
@@ -322,11 +376,10 @@ namespace Mobius.ComOps
 
 			if (c is UserControl || c is XtraUserControl)
 			{
-				htmlFrag += div.Build(pc, c, dy); // build the div
-
+				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag); // build the div
 				htmlFrag += $"<{cType.Name} @ref = '{cType.Name}'/>\r\n"; // add control with a @ref reference (and parameters) to html
 
-				htmlFrag += div.Close();
+				div.Close(ref htmlFrag);
 
 				codeFrag += $"\r\npublic {cType.Name} {cType.Name}\r\n"; // add a variable to contain a reference to the control instance
 
@@ -345,7 +398,7 @@ namespace Mobius.ComOps
 				gb.Height += 8;
 				gb.Top -= 8;
 
-				htmlFrag += div.Build(pc, c, dy); // build the div
+				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag); // build the div
 
 				gb.Height -= 8;
 				gb.Top += 8;
@@ -359,12 +412,12 @@ namespace Mobius.ComOps
 
 				htmlFrag += "</fieldset>\r\n";
 
-				htmlFrag += div.Close();
+				div.Close(ref htmlFrag);
 			}
 
 			else if (c is Panel || c is XtraPanel)
 			{
-				htmlFrag += div.Build(pc, c, dy);
+				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag);
 
 				htmlFrag += ""; // todo...
 
@@ -372,7 +425,7 @@ namespace Mobius.ComOps
 
 				htmlFrag += ""; // todo...
 
-				htmlFrag += div.Close();
+				div.Close(ref htmlFrag);
 			}
 
 			////////////////////////////////////////////////////////////////////////////////
@@ -386,7 +439,7 @@ namespace Mobius.ComOps
 
 			else if (c is LabelControl)
 			{
-				htmlFrag += div.Build(pc, c, dy);
+				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag);
 
 				LabelControl l = c as LabelControl;
 				if (l.LineVisible)
@@ -401,10 +454,11 @@ namespace Mobius.ComOps
 				else if (Lex.IsDefined(l.Text))
 				{
 					htmlFrag += $"<span>@{c.Name}.Text</span>\r\n";
-					codeFrag += $"LabelControlMx {c.Name} = new LabelControlMx(\"{l.Text}\");\r\n";
 				}
 
-				htmlFrag += div.Close();
+				codeFrag += $"LabelControlMx {c.Name} = new LabelControlMx(\"{l.Text}\");\r\n";
+
+				div.Close(ref htmlFrag);
 			}
 
 			/////////////////////////////////////////////////////////////////////////////////
@@ -413,7 +467,7 @@ namespace Mobius.ComOps
 
 			else if (c is TextEdit)
 			{
-				htmlFrag += div.Build(pc, c, dy - 2); // move the textbox up a few pixels to align better with other controls
+				div.Build(pc, c, dy - 2, ref htmlFrag, ref codeFrag); // move the textbox up a few pixels to align better with other controls
 
 				// Example: <SfTextBox @bind-Value="@TextBoxValue" @ref="@SfTextBox" Type="InputType.Text" Placeholder="@InitialText" />
 
@@ -423,7 +477,7 @@ namespace Mobius.ComOps
 
 				codeFrag += $"TextBoxMx {c.Name} = new TextBoxMx();\r\n";
 
-				htmlFrag += div.Close();
+				div.Close(ref htmlFrag);
 			}
 
 			/////////////////////////////////////////////////////////////////////////////////
@@ -443,7 +497,7 @@ namespace Mobius.ComOps
 			{
 				SimpleButton db = c as SimpleButton;
 
-				htmlFrag += div.Build(pc, c, dy);
+				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag);
 
 				htmlFrag += $@"<SfDropDownButton CssClass='button-mx' 
 				  @ref='{c.Name}.Button' Content='@{c.Name}.Text 
@@ -455,8 +509,8 @@ namespace Mobius.ComOps
 				//</DropDownMenuItems>
 
 				codeFrag += $"DropDownButtonMx {c.Name} = new DropDownButtonMx(\"{c.Text}\");\r\n";
-				
-				htmlFrag += div.Close();
+
+				div.Close(ref htmlFrag);
 			}
 
 			/////////////////////////////////////////////////////////////////////////////////
@@ -469,7 +523,7 @@ namespace Mobius.ComOps
 				if (dy == 0)
 					dy = -4; // move up a bit
 
-				htmlFrag += div.Build(pc, c, dy + 2);
+				div.Build(pc, c, dy + 2, ref htmlFrag, ref codeFrag);
 
 				CheckEdit ce = c as CheckEdit;
 				CheckBoxStyle style = ce.Properties.CheckBoxOptions.Style;
@@ -504,7 +558,7 @@ namespace Mobius.ComOps
 					codeFrag += $"RadioButtonMx {c.Name} = new RadioButtonMx({groupName});\r\n";
 				}
 
-				htmlFrag += div.Close();
+				div.Close(ref htmlFrag);
 			}
 
 			/////////////////////////////////////////////////////////////////////////////////
@@ -516,7 +570,7 @@ namespace Mobius.ComOps
 				// CheckButtons and their groups are handled in the same way as RadioButtons
 				// with the value for checked comparison being the ID of the SfButton.
 
-				htmlFrag += div.Build(pc, c, dy);
+				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag);
 
 				CheckButton cb = c as CheckButton;
 
@@ -540,7 +594,7 @@ namespace Mobius.ComOps
 
 				codeFrag += $"CheckButtonMx {cb.Name} = new CheckButtonMx({groupName});\r\n";
 
-				htmlFrag += div.Close();
+				div.Close(ref htmlFrag);
 			}
 
 			/////////////////////////////////////////////////////////////////////////////////
@@ -549,7 +603,7 @@ namespace Mobius.ComOps
 
 			else if (c is SimpleButton)
 			{
-				htmlFrag += div.Build(pc, c, dy - 3);
+				div.Build(pc, c, dy - 3, ref htmlFrag, ref codeFrag);
 
 				// Example: <SfButton CssClass="e-flat" IsToggle="true" IsPrimary="true" 
 				//            Content="@Content" IconCss="@IconCss" @ref="ToggleButton" @onclick="OnToggleClick"></SfButton>
@@ -557,11 +611,19 @@ namespace Mobius.ComOps
 
 				string cssClass = "button-mx";
 				if (b.Appearance.BackColor == Color.Transparent)
+				{
 					cssClass = "transparent-button-mx";
+					if (Lex.IsDefined(b.ImageOptions.ImageUri))
+					{
+						string imageName = b.ImageOptions.ImageUri;
+						if (Lex.StartsWith(imageName, "&#")) // unicode character?
+							cText += " " + imageName;
+					}
+				}
 
 				htmlFrag += $"<SfButton CssClass='{cssClass}' Content='@{c.Name}.Text' ";
 
-				if (Lex.Eq(c.Text, "OK") || Lex.Eq(c.Text, "Yes"))
+				if (Lex.Eq(cText, "OK") || Lex.Eq(cText, "Yes"))
 					htmlFrag += " IsPrimary = 'true'";
 
 				//string handler = WindowsHelper.GetEventHandlerName(c, "Click"); // doesn't work
@@ -570,7 +632,7 @@ namespace Mobius.ComOps
 
 				codeFrag += $"ButtonMx {c.Name} = new ButtonMx(\"{cText}\");\r\n";
 
-				htmlFrag += div.Close();
+				div.Close(ref htmlFrag);
 			}
 
 			/////////////////////////////////////////////////////////////////////////////////
@@ -582,7 +644,7 @@ namespace Mobius.ComOps
 				htmlFrag += "<" + c.Name;
 
 				if (Lex.IsDefined(cText)) // insert the element content
-					htmlFrag += " name=\"" + c.Text + '"';
+					htmlFrag += " name=\"" + cText + '"';
 				htmlFrag += " />";
 			}
 
@@ -617,10 +679,12 @@ namespace Mobius.ComOps
 		/// <param name="c">Control being wrapped in the Div</param>
 		/// <returns></returns>
 
-		public string Build(
+		public void Build(
 			Control pc,
 			Control c,
 			int dy,
+			ref string htmlFrag,
+			ref string codeFrag,
 			string styleAttributesToRemove = null,
 			string styleAttributesToAdd = null)
 		{
@@ -631,7 +695,9 @@ namespace Mobius.ComOps
 			int cTop = c.Top + dy; // move top and bottom down to correct from WinForms to HTML
 			int cBottom = c.Bottom + dy;
 
-			string div = "<div class='font-mx defaults-mx' style='position:absolute; display:flex; align-items:center; ";
+			string div = $"<div @ref='{c.Name}.DivRef' class='font-mx defaults-mx' style='position:absolute; display:flex; align-items:center; ";
+			string code = ""; // nothing yet
+												//<div @ref="myMouseMoveElement"
 
 			if (c.Dock == DockStyle.Fill) // if Dock defined than use that (Fill only for now)
 				div += "width: 100%; height: 100%; ";
@@ -694,7 +760,8 @@ namespace Mobius.ComOps
 				div = Lex.Replace(div, "style='", "style='" + styleAttributesToAdd + " ");
 			}
 
-			return div;
+			htmlFrag += div;
+			return;
 		}
 
 		/// <summary>
@@ -702,9 +769,11 @@ namespace Mobius.ComOps
 		/// </summary>
 		/// <returns></returns>
 
-		public string Close()
+		public void Close(
+			ref string htmlFrag)
 		{
-			return "</div>\r\n"; 
+			htmlFrag += "</div>\r\n";
+			return;
 		}
 
 	}

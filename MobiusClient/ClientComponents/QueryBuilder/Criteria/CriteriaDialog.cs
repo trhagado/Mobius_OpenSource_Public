@@ -771,7 +771,7 @@ namespace Mobius.ClientComponents
 			Value.Focus();
 		}
 
-		private void labelControl1_Click(object sender, EventArgs e)
+		private void LabelControl_Click(object sender, EventArgs e)
 		{
 
 		}
