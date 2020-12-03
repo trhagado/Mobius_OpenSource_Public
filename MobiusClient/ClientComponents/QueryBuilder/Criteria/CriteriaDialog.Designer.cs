@@ -527,7 +527,7 @@ namespace Mobius.ClientComponents
 			this.BasicOpBut.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.UltraFlat;
 			this.BasicOpBut.ImageOptions.ImageIndex = 0;
 			this.BasicOpBut.ImageOptions.ImageList = this.TinyBitmaps;
-			this.BasicOpBut.ImageOptions.ImageUri.Uri = "&#9662;";
+			this.BasicOpBut.ImageOptions.ImageUri.Uri = "OpEqDropDownIconMx";
 			this.BasicOpBut.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleRight;
 			this.BasicOpBut.Location = new System.Drawing.Point(32, 64);
 			this.BasicOpBut.Margin = new System.Windows.Forms.Padding(0);

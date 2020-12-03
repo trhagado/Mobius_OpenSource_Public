@@ -33,54 +33,11 @@ namespace Mobius.ComOps
 		{
 			string s;
 
-			string razorTemplate = @"
-@using Mobius.ComOps
-@using WebShell
-
-@using Syncfusion.Blazor.Popups
-@using Syncfusion.Blazor.Layouts
-@using Syncfusion.Blazor.Navigations
-@using Syncfusion.Blazor.Inputs
-@using Syncfusion.Blazor.Buttons
-@using Syncfusion.Blazor.SplitButtons
-@using Syncfusion.Blazor.Lists
-@using Syncfusion.Blazor.Grids;
-
-@using Newtonsoft.Json
-
-@using System.Reflection
-@using Microsoft.AspNetCore.Components
-
-@inject IJSRuntime JsRuntime;
-
-@namespace Mobius.ClientComponents
-@********************************@
-
-
-@********@
-@* HTML *@
-@********@
-
-<html>
-
-@********@
-@*Code *@
-@********@
-
-@code{
-	<code>
-}
-
-@*******@
-@*CSS *@
-@*******@
- ";
-
 			//////////////////////////////////////////////
 			// Build the HTML and plug into the template
 			//////////////////////////////////////////////
 
-			string html = "", code = ""; // strings for global building of html and code sections
+			string html = "", code = "", eventStubs = ""; // strings for global building of html and code sections
 
 			Type t = pc.GetType();
 			string ctlFullName = t.FullName;
@@ -116,7 +73,7 @@ namespace Mobius.ComOps
 					<Content>
 				 ";
 
-				// Define variables and event stubs for code section
+				// Define variables for code section
 
 				code = $@"
 
@@ -134,102 +91,11 @@ namespace Mobius.ComOps
 		public SfContextMenu<MenuItem> ContextMenu; // the context menu to show
 		public List<MenuItem> MenuItems = // MenuItems data source for ContextMenu
 						new List<MenuItem> { new MenuItem { Text = ""Loading..."" } };
+	}" + "\r\n\r\n";
 
-/*************************************************/
-/*** Basic SfDialog overrides and Click events ***/
-/*************************************************/
+				eventStubs = EventStubs;
 
-		protected override void OnInitialized()
-    {
-			Instance = this;
-			base.OnInitialized();
-			return;
-		}
-
-		protected override async Task OnInitializedAsync()
-		{
-			await base.OnInitializedAsync();
-			return;
-		}
-
-		protected override async Task OnAfterRenderAsync(bool firstRender)
-		{
-			await base.OnAfterRenderAsync(firstRender);
-			return;
-		}
-
-		protected override void OnAfterRender(bool firstRender)
-		{
-			base.OnAfterRender(firstRender);
-		}
-
-		private void OK_Click()
-    {
-			DialogResult = DialogResult.OK;
-      SfDialog.Hide();
-    }
-
-    private void Cancel_Click()
-    {
-			DialogResult = DialogResult.Cancel;
-      SfDialog.Hide();
-    }
-
-    private async Task DialogOpened(Syncfusion.Blazor.Popups.OpenEventArgs args)
-    {
-			args.PreventFocus = true;
-			await OK.Button.FocusIn();
-      return;
-    }
-
-    private void DialogClosed(CloseEventArgs args)
-    {
-      if (Lex.Ne(args?.ClosedBy, ""User Action""))
-        DialogResult = DialogResult.Cancel;
-
-      return;
-    }
-
-/****************************/
-/*** SfContextMenu events ***/
-/****************************/
-
-		public void BeforeMenuOpen(BeforeOpenCloseMenuEventArgs<MenuItem> args) // called once for menu with children
-		{
-			//DebugLog.Message(args.ParentItem != null ? args.ParentItem?.Text : ""null"");
-			return;
-		}
-
-		public void MenuOpened(OpenCloseMenuEventArgs<MenuItem> args) // called once for menu with children
-		{
-			//DebugLog.Message(args.ParentItem != null ? args.ParentItem?.Text : ""null"");
-			return;
-		}
-
-		public void BeforeMenuClosed(BeforeOpenCloseMenuEventArgs<MenuItem> args) // called once for menu with children
-		{
-			//DebugLog.Message(args.ParentItem?.Text);
-			return;
-		}
-
-		public void MenuClosed(OpenCloseMenuEventArgs<MenuItem> args) // called once for menu with children
-		{
-			//DebugLog.Message(args.ParentItem?.Text);
-			return;
-		}
-
-		public void MenuItemRender(MenuEventArgs<MenuItem> args) // called once per item
-		{
-			return;
-		}
-
-		public void MenuItemSelected(MenuEventArgs<MenuItem> args)
-		{
-			//DebugLog.Message(args?.Item?.Text != null ? args.Item.Text : ""null"");
-			return;
-		}" + "\r\n\r\n";
-
-				ConvertContainedControls(pc, 0, ref html, ref code);
+				ConvertContainedControls(pc, 0, ref html, ref code, ref eventStubs);
 
 				html += // Finish up the SfDialog component
 					$@"</Content>
@@ -268,7 +134,7 @@ namespace Mobius.ComOps
 
 			else throw new Exception("Can't convert control of type: " + pc?.GetType()?.Name);
 
-			string razor = Lex.Replace(razorTemplate, "<html>", html);
+			string razor = Lex.Replace(RazorTemplate, "<html>", html);
 
 			razor = Lex.Replace(razor, "<code>", code);
 
@@ -297,7 +163,8 @@ namespace Mobius.ComOps
 			Control pc,
 			int dy,
 			ref string html,
-			ref string code)
+			ref string code,
+			ref string eventStubs)
 		{
 			Type pcType = pc.GetType();
 
@@ -537,9 +404,11 @@ namespace Mobius.ComOps
 				if (style == CheckBoxStyle.CheckBox)
 				{ // CheckBox
 					htmlFrag += $@"<SfCheckBox CssClass='font-mx defaults-mx' Label='{cText}' Name='{c.Name}'   
-						@ref ='{c.Name}.Button' @bind-Checked='{c.Name}.Checked' />" + "\r\n";
+						@ref ='{c.Name}.Button' @bind-Checked='{c.Name}.Checked' @onchange = '{c.Name}_CheckedChanged' />" + "\r\n";
 
 					codeFrag += $"CheckBoxMx {c.Name} = new CheckBoxMx();\r\n";
+
+					stub
 				}
 
 				else // assume RadioButton
@@ -547,7 +416,7 @@ namespace Mobius.ComOps
 
 					groupName = "RadioGroupValue" + ce.Properties.RadioGroupIndex;
 					htmlFrag += $@"<SfRadioButton CssClass='font-mx defaults-mx' Label='{cText}' Name='{groupName}' Value='{ce.Name}'
-						@ref ='{c.Name}.Button' @bind-Checked='{groupName}.CheckedValue' />" + "\r\n";
+						@ref ='{c.Name}.Button' @bind-Checked='{groupName}.CheckedValue' @onchange = '{c.Name}_CheckedChanged' />" + "\r\n";
 
 					if (!RadioGroups.Contains(groupName)) // add var to identify the current radio button for the group
 					{
@@ -610,27 +479,41 @@ namespace Mobius.ComOps
 				SimpleButton b = c as SimpleButton;
 
 				string cssClass = "button-mx";
-				if (b.Appearance.BackColor == Color.Transparent)
+
+				string imageName = "";
+				if (Lex.IsDefined(b.ImageOptions.ImageUri))
 				{
-					cssClass = "transparent-button-mx";
-					if (Lex.IsDefined(b.ImageOptions.ImageUri))
+					imageName = b.ImageOptions.ImageUri;
+
+					if (Lex.StartsWith(imageName, "&#")) // unicode character?
 					{
-						string imageName = b.ImageOptions.ImageUri;
-						if (Lex.StartsWith(imageName, "&#")) // unicode character?
-							cText += " " + imageName;
+						cText += " " + imageName;
+						imageName = "";
+					}
+
+					else // button with icon
+					{
+						cssClass = "icon-button-mx";
+
+						if (b.Appearance.BackColor == Color.Transparent)
+							cssClass = "transparent-icon-button-mx";
+
 					}
 				}
 
 				htmlFrag += $"<SfButton CssClass='{cssClass}' Content='@{c.Name}.Text' ";
 
+				if (Lex.IsDefined(imageName))
+						htmlFrag += $" IconCss = '@{c.Name}.ImageName' ";
+
 				if (Lex.Eq(cText, "OK") || Lex.Eq(cText, "Yes"))
-					htmlFrag += " IsPrimary = 'true'";
+				htmlFrag += " IsPrimary = 'true'";
 
 				//string handler = WindowsHelper.GetEventHandlerName(c, "Click"); // doesn't work
 				//if (Lex.IsDefined(handler)) ...
 				htmlFrag += $"@ref='{c.Name}.Button' @onclick = '{c.Name}_Click' />\r\n"; 
 
-				codeFrag += $"ButtonMx {c.Name} = new ButtonMx(\"{cText}\");\r\n";
+				codeFrag += $"ButtonMx {c.Name} = new ButtonMx(\"{cText}\",\"{imageName}\" );\r\n";
 
 				div.Close(ref htmlFrag);
 			}
@@ -653,7 +536,177 @@ namespace Mobius.ComOps
 			return;
 		}
 
+/****************************************/
+/*** Template for building Razor file ***/
+/****************************************/
+
+		static string RazorTemplate = @"
+@using Mobius.ComOps
+@using WebShell
+
+@using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.Layouts
+@using Syncfusion.Blazor.Navigations
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.SplitButtons
+@using Syncfusion.Blazor.Lists
+@using Syncfusion.Blazor.Grids;
+
+@using Newtonsoft.Json
+
+@using System.Reflection
+@using Microsoft.AspNetCore.Components
+
+@inject IJSRuntime JsRuntime;
+
+@namespace Mobius.ClientComponents
+@********************************@
+
+
+@********@
+@* HTML *@
+@********@
+
+<html>
+
+@********@
+@*Code *@
+@********@
+
+@code{
+	<code>
+}
+
+@*******@
+@*CSS *@
+@*******@
+ ";
+
+
+		/**************************/
+		/*** Common event stubs ***/
+		/**************************/
+
+		static string EventStubs = @"
+
+/*************************************************/
+/*** Basic SfDialog overrides and Click events ***/
+/*************************************************/
+
+		protected override void OnInitialized()
+    {
+			Instance = this;
+			base.OnInitialized();
+			return;
+		}
+
+		protected override async Task OnInitializedAsync()
+		{
+			await base.OnInitializedAsync();
+			return;
+		}
+
+		protected override async Task OnAfterRenderAsync(bool firstRender)
+		{
+			await base.OnAfterRenderAsync(firstRender);
+			return;
+		}
+
+		protected override void OnAfterRender(bool firstRender)
+		{
+			base.OnAfterRender(firstRender);
+		}
+
+		/// <summary>
+		/// OK_Click
+		/// </summary>
+		/// <returns></returns>
+
+		private void OK_Click()
+    {
+			DialogResult = DialogResult.OK;
+      SfDialog.Hide();
+    }
+
+		/// <summary>
+		/// Cancel_Click
+		/// </summary>
+
+    private void Cancel_Click()
+    {
+			DialogResult = DialogResult.Cancel;
+      SfDialog.Hide();
+    }
+
+		/// <summary>
+    /// Dialog Opened
+    /// </summary>
+    /// <returns></returns>
+
+		private async Task DialogOpened(Syncfusion.Blazor.Popups.OpenEventArgs args)
+    {
+			args.PreventFocus = true;
+			await OK.Button.FocusIn();
+      return;
+    }
+
+    /// <summary>
+    /// DialogCLosed
+    /// </summary>
+ 
+		private void DialogClosed(CloseEventArgs args)
+    {
+      if (Lex.Ne(args?.ClosedBy, ""User Action""))
+        DialogResult = DialogResult.Cancel;
+
+      return;
+    }
+
+/****************************/
+/*** SfContextMenu events ***/
+/****************************/
+
+		public void BeforeMenuOpen(BeforeOpenCloseMenuEventArgs<MenuItem> args) // called once for menu with children
+		{
+			//DebugLog.Message(args.ParentItem != null ? args.ParentItem?.Text : ""null"");
+			return;
+		}
+
+		public void MenuOpened(OpenCloseMenuEventArgs<MenuItem> args) // called once for menu with children
+		{
+			//DebugLog.Message(args.ParentItem != null ? args.ParentItem?.Text : ""null"");
+			return;
+		}
+
+		public void BeforeMenuClosed(BeforeOpenCloseMenuEventArgs<MenuItem> args) // called once for menu with children
+		{
+			//DebugLog.Message(args.ParentItem?.Text);
+			return;
+		}
+
+		public void MenuClosed(OpenCloseMenuEventArgs<MenuItem> args) // called once for menu with children
+		{
+			//DebugLog.Message(args.ParentItem?.Text);
+			return;
+		}
+
+		public void MenuItemRender(MenuEventArgs<MenuItem> args) // called once per item
+		{
+			return;
+		}
+
+		public void MenuItemSelected(MenuEventArgs<MenuItem> args)
+		{
+			//DebugLog.Message(args?.Item?.Text != null ? args.Item.Text : ""null"");
+			return;
+		}" + "\r\n\r\n";
 	}
+
+
+	/// <summary>
+	/// DivMx Class
+	/// </summary>
 
 	public class DivMx
 	{
