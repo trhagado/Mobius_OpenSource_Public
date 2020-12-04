@@ -68,7 +68,7 @@ namespace Mobius.ComOps
 					@ref ='SfDialog' @bind-Visible='DialogVisible' CssClass='dialogboxmx'>
 				  <DialogTemplates>
 						<Header>
-							<div style='display:flex; align-items:center; width: 100%; height: 20px; font-size: 13px; border: 0px;'>@HeaderText</div>
+							<div class='control-div-mx font-mx defaults-mx' style='width: 100%; height: 20px; font-size: 13px; border: 0px;'>@HeaderText</div>
 						</Header>
 					<Content>
 				 ";
@@ -90,8 +90,7 @@ namespace Mobius.ComOps
 		public DialogResult DialogResult { get; set; } = DialogResult.None;
 		public SfContextMenu<MenuItem> ContextMenu; // the context menu to show
 		public List<MenuItem> MenuItems = // MenuItems data source for ContextMenu
-						new List<MenuItem> { new MenuItem { Text = ""Loading..."" } };
-	}" + "\r\n\r\n";
+						new List<MenuItem> { new MenuItem { Text = ""Loading..."" } };" + "\r\n\r\n";
 
 				eventStubs = EventStubs;
 
@@ -126,7 +125,7 @@ namespace Mobius.ComOps
 
 					<CascadingValue Value='@this'>" + "\r\n";
 
-				ConvertContainedControls(pc, 0, ref html, ref code);
+				ConvertContainedControls(pc, 0, ref html, ref code, ref eventStubs);
 
 				html += "</CascadingValue>"; // finish up the HTML part of the component definition
 
@@ -137,6 +136,8 @@ namespace Mobius.ComOps
 			string razor = Lex.Replace(RazorTemplate, "<html>", html);
 
 			razor = Lex.Replace(razor, "<code>", code);
+
+			razor = Lex.Replace(razor, "<eventStubs>", eventStubs);
 
 			log.Close();
 
@@ -212,7 +213,7 @@ namespace Mobius.ComOps
 					c.Left, c.Top, c.Width, c.Height,
 					c.Anchor, c.Dock, c.Text, t.FullName));
 
-				ConvertControl(pc, c, dy, ref html, ref code); // convert the control and surround with a positioning div
+				ConvertControl(pc, c, dy, ref html, ref code, ref eventStubs); // convert the control and surround with a positioning div
 
 			} // child control list
 
@@ -226,9 +227,10 @@ namespace Mobius.ComOps
 			Control c,
 			int dy,
 			ref string html,
-			ref string code)
+			ref string code,
+			ref string eventStub)
 		{
-			string htmlFrag = "", codeFrag = "", groupName = "";
+			string htmlFrag = "", codeFrag = "", eventStubFrag = "",  groupName = "";
 			int dy2 = 0;
 
 			Type cType = c.GetType();
@@ -275,7 +277,7 @@ namespace Mobius.ComOps
 					 $"<legend class='legend-mx'>{gb.Text}</legend>\r\n";
 
 				dy2 = 4; // move contained controls down a bit
-				ConvertContainedControls(c, dy2, ref htmlFrag, ref codeFrag);
+				ConvertContainedControls(c, dy2, ref htmlFrag, ref codeFrag, ref eventStubFrag);
 
 				htmlFrag += "</fieldset>\r\n";
 
@@ -288,7 +290,7 @@ namespace Mobius.ComOps
 
 				htmlFrag += ""; // todo...
 
-				ConvertContainedControls(c, dy2, ref htmlFrag, ref codeFrag);
+				ConvertContainedControls(c, dy2, ref htmlFrag, ref codeFrag, ref eventStubFrag);
 
 				htmlFrag += ""; // todo...
 
@@ -360,7 +362,6 @@ namespace Mobius.ComOps
 			/////////////////////////////////////////////////////////////////////////////////
 
 			else if (c is DropDownButton)
-			// || (c is SimpleButton && Lex.Eq(c.Name, "BasicOpBut"))) // treat the as dropdown also
 			{
 				SimpleButton db = c as SimpleButton;
 
@@ -408,7 +409,6 @@ namespace Mobius.ComOps
 
 					codeFrag += $"CheckBoxMx {c.Name} = new CheckBoxMx();\r\n";
 
-					stub
 				}
 
 				else // assume RadioButton
@@ -426,6 +426,12 @@ namespace Mobius.ComOps
 
 					codeFrag += $"RadioButtonMx {c.Name} = new RadioButtonMx({groupName});\r\n";
 				}
+
+				eventStubFrag +=
+				$@"		private void {c.Name}_CheckedChanged()
+		{{
+			return;
+		}}" + "\r\n\r\n";
 
 				div.Close(ref htmlFrag);
 			}
@@ -463,6 +469,52 @@ namespace Mobius.ComOps
 
 				codeFrag += $"CheckButtonMx {cb.Name} = new CheckButtonMx({groupName});\r\n";
 
+				if (Lex.Eq(cb.Text, "OK"))
+				{
+					eventStubFrag += @"
+
+				/// <summary>
+				/// OK_Click
+				/// </summary>
+				/// <returns></returns>
+
+					private void OK_Click()
+				{
+					DialogResult = DialogResult.OK;
+					SfDialog.Hide();
+				}" + "\r\n";
+				}
+
+				else if (Lex.Eq(cb.Text, "Cancel"))
+				{
+					eventStubFrag += @"
+
+					/// <summary>
+					/// Cancel_Click
+					/// </summary>
+
+					private void Cancel_Click()
+				{
+					DialogResult = DialogResult.Cancel;
+					SfDialog.Hide();
+				}" + "\r\n";
+				}
+
+				else
+				{
+					eventStubFrag += $@"
+
+
+				/// <summary>
+				/// {cb.Name}_Click
+				/// </summary>
+				/// <returns></returns>
+				/// 
+					private void {c.Name}_Click()
+					{{
+						return;
+					}}" + "\r\n";
+				}
 				div.Close(ref htmlFrag);
 			}
 
@@ -501,6 +553,8 @@ namespace Mobius.ComOps
 					}
 				}
 
+				if (Lex.Eq(c.Name, "BasicOpBut")) cText = ""; // hack to remove this CriteriaDialog button's text
+
 				htmlFrag += $"<SfButton CssClass='{cssClass}' Content='@{c.Name}.Text' ";
 
 				if (Lex.IsDefined(imageName))
@@ -533,12 +587,14 @@ namespace Mobius.ComOps
 
 			html += htmlFrag;
 			code += codeFrag;
+			eventStub += eventStubFrag;
+
 			return;
 		}
 
-/****************************************/
-/*** Template for building Razor file ***/
-/****************************************/
+		/****************************************/
+		/*** Template for building Razor file ***/
+		/****************************************/
 
 		static string RazorTemplate = @"
 @using Mobius.ComOps
@@ -581,18 +637,23 @@ namespace Mobius.ComOps
 @*******@
 @*CSS *@
 @*******@
- ";
 
 
-		/**************************/
-		/*** Common event stubs ***/
-		/**************************/
+@***************@
+@* Event stubs *@
+@***************@
+
+@*
+<eventStubs>
+*@
+";
+
 
 		static string EventStubs = @"
 
-/*************************************************/
-/*** Basic SfDialog overrides and Click events ***/
-/*************************************************/
+		/*************************************************/
+		/*** Basic SfDialog overrides and Click events ***/
+		/*************************************************/
 
 		protected override void OnInitialized()
     {
@@ -617,27 +678,6 @@ namespace Mobius.ComOps
 		{
 			base.OnAfterRender(firstRender);
 		}
-
-		/// <summary>
-		/// OK_Click
-		/// </summary>
-		/// <returns></returns>
-
-		private void OK_Click()
-    {
-			DialogResult = DialogResult.OK;
-      SfDialog.Hide();
-    }
-
-		/// <summary>
-		/// Cancel_Click
-		/// </summary>
-
-    private void Cancel_Click()
-    {
-			DialogResult = DialogResult.Cancel;
-      SfDialog.Hide();
-    }
 
 		/// <summary>
     /// Dialog Opened
@@ -723,7 +763,7 @@ namespace Mobius.ComOps
 		public string Left = "";
 		public string Right = "";
 
-		public string Border = "1px solid yellow";
+		public string Border = ""; // "1px solid yellow";
 
 		/// <summary>
 		/// Build a Div to wrap the specified control
@@ -748,7 +788,7 @@ namespace Mobius.ComOps
 			int cTop = c.Top + dy; // move top and bottom down to correct from WinForms to HTML
 			int cBottom = c.Bottom + dy;
 
-			string div = $"<div @ref='{c.Name}.DivRef' class='font-mx defaults-mx' style='position:absolute; display:flex; align-items:center; ";
+			string div = $"<div @ref='{c.Name}.DivRef' class='control-div-mx font-mx defaults-mx' style='";
 			string code = ""; // nothing yet
 												//<div @ref="myMouseMoveElement"
 
@@ -801,7 +841,7 @@ namespace Mobius.ComOps
 				div += widthHeight; // put width height after location
 			}
 
-			div += "border: 1px solid yellow;'>\r\n"; // finish up style and div tag
+			div += "' >\r\n"; // finish up style and div tag
 
 			if (Lex.IsDefined(styleAttributesToRemove))
 			{
