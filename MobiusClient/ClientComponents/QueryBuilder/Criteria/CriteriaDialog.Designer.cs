@@ -171,7 +171,7 @@ namespace Mobius.ClientComponents
 			// WithinValue
 			// 
 			this.WithinValue.Cursor = System.Windows.Forms.Cursors.IBeam;
-			this.WithinValue.Location = new System.Drawing.Point(116, 169);
+			this.WithinValue.Location = new System.Drawing.Point(119, 169);
 			this.WithinValue.Name = "WithinValue";
 			this.WithinValue.Properties.Appearance.BackColor = System.Drawing.SystemColors.Window;
 			this.WithinValue.Properties.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -270,7 +270,7 @@ namespace Mobius.ClientComponents
 			// Substring
 			// 
 			this.Substring.Cursor = System.Windows.Forms.Cursors.IBeam;
-			this.Substring.Location = new System.Drawing.Point(152, 143);
+			this.Substring.Location = new System.Drawing.Point(159, 143);
 			this.Substring.Name = "Substring";
 			this.Substring.Properties.Appearance.BackColor = System.Drawing.SystemColors.Window;
 			this.Substring.Properties.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -279,7 +279,7 @@ namespace Mobius.ClientComponents
 			this.Substring.Properties.Appearance.Options.UseFont = true;
 			this.Substring.Properties.Appearance.Options.UseForeColor = true;
 			this.Substring.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.Substring.Size = new System.Drawing.Size(282, 20);
+			this.Substring.Size = new System.Drawing.Size(275, 20);
 			this.Substring.TabIndex = 65;
 			// 
 			// Limit1
@@ -550,7 +550,7 @@ namespace Mobius.ClientComponents
 			// 
 			// WithinUnits
 			// 
-			this.WithinUnits.Location = new System.Drawing.Point(174, 168);
+			this.WithinUnits.Location = new System.Drawing.Point(177, 168);
 			this.WithinUnits.Name = "WithinUnits";
 			this.WithinUnits.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});

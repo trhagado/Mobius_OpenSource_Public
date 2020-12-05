@@ -72,11 +72,14 @@ namespace Mobius.ComOps
 					@ref ='SfDialog' @bind-Visible='DialogVisible' CssClass='dialogboxmx'>
 				  <DialogTemplates>
 						<Header>
-							<div class='control-div-mx font-mx defaults-mx' style='width: 100%; height: 20px; font-size: 13px; border: 0px;'>@HeaderText</div>
+							<div class='control-div-mx font-mx defaults-mx' style='display: inline-flex; position: absolute; align-items: center; width: 100%; height: 20px; font-size: 13px; border: 0px;'>@HeaderText</div>
 						</Header>
 					<Content>
 				 ";
 
+			
+			
+				
 				// Define variables for code section
 
 				code = $@"
@@ -890,9 +893,9 @@ namespace Mobius.ComOps
 			int cTop = c.Top + dy; // move top and bottom down to correct from WinForms to HTML
 			int cBottom = c.Bottom + dy;
 
-			string div = $"<div @ref='{c.Name}.DivRef' class='control-div-mx font-mx defaults-mx' style='@{c.Name}.DivStyle'";
+			string div = $"<div @ref='{c.Name}.DivRef' class='control-div-mx font-mx defaults-mx' style='@{c.Name}?.DivStyle?.StyleString'";
 			string code = ""; // nothing yet
-			string style = "";
+			string style = "position: absolute; display: flex; align-items: center; ";
 
 			if (c.Dock == DockStyle.Fill) // if Dock defined than use that (Fill only for now)
 				div += "width: 100%; height: 100%; ";
