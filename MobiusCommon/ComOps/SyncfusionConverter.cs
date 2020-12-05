@@ -24,6 +24,8 @@ namespace Mobius.ComOps
 		HashSet<string> RadioGroups = new HashSet<string>(); // names of each of the radio button groups seen 
 		StreamWriter log;
 
+		public static bool Active = DebugMx.True; // set to true to generate Razor code
+
 		/// <summary>
 		/// Convert a Windows/DevExpress Form or UserControl to a Blazor .razor Component file
 		/// </summary>
@@ -32,6 +34,8 @@ namespace Mobius.ComOps
 		public void ToRazor(Control pc)
 		{
 			string s;
+
+			if (!Active) return;
 
 			//////////////////////////////////////////////
 			// Build the HTML and plug into the template
@@ -47,7 +51,7 @@ namespace Mobius.ComOps
 			log = new StreamWriter(@"c:\downloads\MobiusControlTemplates\" + t.Name + ".txt");
 
 			RadioGroups = new HashSet<string>();
-			
+
 
 			// ======================================================
 			// Process a top level Form or XtraForm (i.e. DialogBox)
@@ -90,7 +94,10 @@ namespace Mobius.ComOps
 		public DialogResult DialogResult { get; set; } = DialogResult.None;
 		public SfContextMenu<MenuItem> ContextMenu; // the context menu to show
 		public List<MenuItem> MenuItems = // MenuItems data source for ContextMenu
-						new List<MenuItem> { new MenuItem { Text = ""Loading..."" } };" + "\r\n\r\n";
+						new List<MenuItem> { new MenuItem { Text = ""Loading..."" } };
+
+		public bool RenderingEnabled = true;
+		protected override bool ShouldRender() { return RenderingEnabled; }" + "\r\n\r\n";
 
 				eventStubs = EventStubs;
 
@@ -230,7 +237,7 @@ namespace Mobius.ComOps
 			ref string code,
 			ref string eventStub)
 		{
-			string htmlFrag = "", codeFrag = "", eventStubFrag = "",  groupName = "";
+			string htmlFrag = "", codeFrag = "", eventStubFrag = "", divStyle = "", groupName = "", initArgs = "";
 			int dy2 = 0;
 
 			Type cType = c.GetType();
@@ -245,10 +252,14 @@ namespace Mobius.ComOps
 
 			if (c is UserControl || c is XtraUserControl)
 			{
-				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag); // build the div
+				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle); // build the div
 				htmlFrag += $"<{cType.Name} @ref = '{cType.Name}'/>\r\n"; // add control with a @ref reference (and parameters) to html
 
 				div.Close(ref htmlFrag);
+
+
+				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
+				codeFrag += $"UserControlMx {c.Name} = new UserControlMx(){initArgs};\r\n";
 
 				codeFrag += $"\r\npublic {cType.Name} {cType.Name}\r\n"; // add a variable to contain a reference to the control instance
 
@@ -267,7 +278,7 @@ namespace Mobius.ComOps
 				gb.Height += 8;
 				gb.Top -= 8;
 
-				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag); // build the div
+				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle); // build the div
 
 				gb.Height -= 8;
 				gb.Top += 8;
@@ -275,6 +286,9 @@ namespace Mobius.ComOps
 				htmlFrag +=
 					"<fieldset class='fieldset-mx'>\r\n" +
 					 $"<legend class='legend-mx'>{gb.Text}</legend>\r\n";
+
+				codeFrag += "GroupBoxMx {c.Name} = new GroupBoxMx({divStyle});\r\n";
+
 
 				dy2 = 4; // move contained controls down a bit
 				ConvertContainedControls(c, dy2, ref htmlFrag, ref codeFrag, ref eventStubFrag);
@@ -286,9 +300,11 @@ namespace Mobius.ComOps
 
 			else if (c is Panel || c is XtraPanel)
 			{
-				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag);
+				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle);
 
 				htmlFrag += ""; // todo...
+
+				codeFrag += "PanelControlMx {c.Name} = new PanelControlMx(){{{divStyle}}};\r\n";
 
 				ConvertContainedControls(c, dy2, ref htmlFrag, ref codeFrag, ref eventStubFrag);
 
@@ -308,7 +324,7 @@ namespace Mobius.ComOps
 
 			else if (c is LabelControl)
 			{
-				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag);
+				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle);
 
 				LabelControl l = c as LabelControl;
 				if (l.LineVisible)
@@ -325,7 +341,8 @@ namespace Mobius.ComOps
 					htmlFrag += $"<span>@{c.Name}.Text</span>\r\n";
 				}
 
-				codeFrag += $"LabelControlMx {c.Name} = new LabelControlMx(\"{l.Text}\");\r\n";
+				initArgs = BuildInitArgs("Text", l.Text, "DivStyle", NewCss(divStyle));
+				codeFrag += $"LabelControlMx {c.Name} = new LabelControlMx(){initArgs};\r\n";
 
 				div.Close(ref htmlFrag);
 			}
@@ -336,7 +353,7 @@ namespace Mobius.ComOps
 
 			else if (c is TextEdit)
 			{
-				div.Build(pc, c, dy - 2, ref htmlFrag, ref codeFrag); // move the textbox up a few pixels to align better with other controls
+				div.Build(pc, c, dy - 2, ref htmlFrag, ref codeFrag, out divStyle); // move the textbox up a few pixels to align better with other controls
 
 				// Example: <SfTextBox @bind-Value="@TextBoxValue" @ref="@SfTextBox" Type="InputType.Text" Placeholder="@InitialText" />
 
@@ -344,7 +361,8 @@ namespace Mobius.ComOps
 
 				htmlFrag += $"<SfTextBox CssClass='e-small sftextbox-mx defaults-mx' @ref='{c.Name}.SfTextBox' @bind-Value='{c.Name}.Text' Type='InputType.Text' />\r\n";
 
-				codeFrag += $"TextBoxMx {c.Name} = new TextBoxMx();\r\n";
+				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
+				codeFrag += $"TextBoxMx {c.Name} = new TextBoxMx(){initArgs};\r\n";
 
 				div.Close(ref htmlFrag);
 			}
@@ -365,7 +383,7 @@ namespace Mobius.ComOps
 			{
 				SimpleButton db = c as SimpleButton;
 
-				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag);
+				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle);
 
 				htmlFrag += $@"<SfDropDownButton CssClass='button-mx' 
 				  @ref='{c.Name}.Button' Content='@{c.Name}.Text 
@@ -376,7 +394,8 @@ namespace Mobius.ComOps
 				//  <DropDownMenuItem Text='Loading...'></DropDownMenuItem>
 				//</DropDownMenuItems>
 
-				codeFrag += $"DropDownButtonMx {c.Name} = new DropDownButtonMx(\"{c.Text}\");\r\n";
+				initArgs = BuildInitArgs("Text", c.Text, "DivStyle", NewCss(divStyle));
+				codeFrag += $"DropDownButtonMx {c.Name} = new DropDownButtonMx(){initArgs};\r\n";
 
 				div.Close(ref htmlFrag);
 			}
@@ -391,7 +410,7 @@ namespace Mobius.ComOps
 				if (dy == 0)
 					dy = -4; // move up a bit
 
-				div.Build(pc, c, dy + 2, ref htmlFrag, ref codeFrag);
+				div.Build(pc, c, dy + 2, ref htmlFrag, ref codeFrag, out divStyle);
 
 				CheckEdit ce = c as CheckEdit;
 				CheckBoxStyle style = ce.Properties.CheckBoxOptions.Style;
@@ -402,20 +421,22 @@ namespace Mobius.ComOps
 					else style = CheckBoxStyle.CheckBox;
 				}
 
+				cText = c.Text.Trim();
+
 				if (style == CheckBoxStyle.CheckBox)
 				{ // CheckBox
-					htmlFrag += $@"<SfCheckBox CssClass='font-mx defaults-mx' Label='{cText}' Name='{c.Name}'   
+					htmlFrag += $@"<SfCheckBox CssClass='font-mx defaults-mx' Label='@{c.Name}.Text' Name='{c.Name}'   
 						@ref ='{c.Name}.Button' @bind-Checked='{c.Name}.Checked' @onchange = '{c.Name}_CheckedChanged' />" + "\r\n";
 
-					codeFrag += $"CheckBoxMx {c.Name} = new CheckBoxMx();\r\n";
-
+					initArgs = BuildInitArgs("Text", cText, "DivStyle", NewCss(divStyle));
+					codeFrag += $"CheckBoxMx {c.Name} = new CheckBoxMx(){initArgs};\r\n";
 				}
 
 				else // assume RadioButton
 				{
 
 					groupName = "RadioGroupValue" + ce.Properties.RadioGroupIndex;
-					htmlFrag += $@"<SfRadioButton CssClass='font-mx defaults-mx' Label='{cText}' Name='{groupName}' Value='{ce.Name}'
+					htmlFrag += $@"<SfRadioButton CssClass='font-mx defaults-mx' Label='@{c.Name}.Text' Name='{groupName}' Value='{ce.Name}'
 						@ref ='{c.Name}.Button' @bind-Checked='{groupName}.CheckedValue' @onchange = '{c.Name}_CheckedChanged' />" + "\r\n";
 
 					if (!RadioGroups.Contains(groupName)) // add var to identify the current radio button for the group
@@ -424,7 +445,8 @@ namespace Mobius.ComOps
 						RadioGroups.Add(groupName);
 					}
 
-					codeFrag += $"RadioButtonMx {c.Name} = new RadioButtonMx({groupName});\r\n";
+					initArgs = BuildInitArgs("Text", cText, "CVC", Nas(groupName), "DivStyle", NewCss(divStyle));
+					codeFrag += $"RadioButtonMx {c.Name} = new RadioButtonMx(){initArgs};\r\n";
 				}
 
 				eventStubFrag +=
@@ -445,7 +467,7 @@ namespace Mobius.ComOps
 				// CheckButtons and their groups are handled in the same way as RadioButtons
 				// with the value for checked comparison being the ID of the SfButton.
 
-				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag);
+				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle);
 
 				CheckButton cb = c as CheckButton;
 
@@ -467,7 +489,8 @@ namespace Mobius.ComOps
 					RadioGroups.Add(groupName);
 				}
 
-				codeFrag += $"CheckButtonMx {cb.Name} = new CheckButtonMx({groupName});\r\n";
+				initArgs = BuildInitArgs("Text", cText, "CVC", Nas(groupName), "DivStyle", NewCss(divStyle));
+				codeFrag += $"CheckButtonMx {cb.Name} = new CheckButtonMx(){initArgs};\r\n";
 
 				if (Lex.Eq(cb.Text, "OK"))
 				{
@@ -524,7 +547,7 @@ namespace Mobius.ComOps
 
 			else if (c is SimpleButton)
 			{
-				div.Build(pc, c, dy - 3, ref htmlFrag, ref codeFrag);
+				div.Build(pc, c, dy - 3, ref htmlFrag, ref codeFrag, out divStyle);
 
 				// Example: <SfButton CssClass="e-flat" IsToggle="true" IsPrimary="true" 
 				//            Content="@Content" IconCss="@IconCss" @ref="ToggleButton" @onclick="OnToggleClick"></SfButton>
@@ -558,16 +581,17 @@ namespace Mobius.ComOps
 				htmlFrag += $"<SfButton CssClass='{cssClass}' Content='@{c.Name}.Text' ";
 
 				if (Lex.IsDefined(imageName))
-						htmlFrag += $" IconCss = '@{c.Name}.ImageName' ";
+					htmlFrag += $" IconCss = '@{c.Name}.ImageName' ";
 
 				if (Lex.Eq(cText, "OK") || Lex.Eq(cText, "Yes"))
-				htmlFrag += " IsPrimary = 'true'";
+					htmlFrag += " IsPrimary = 'true'";
 
 				//string handler = WindowsHelper.GetEventHandlerName(c, "Click"); // doesn't work
 				//if (Lex.IsDefined(handler)) ...
-				htmlFrag += $"@ref='{c.Name}.Button' @onclick = '{c.Name}_Click' />\r\n"; 
+				htmlFrag += $"@ref='{c.Name}.Button' @onclick = '{c.Name}_Click' />\r\n";
 
-				codeFrag += $"ButtonMx {c.Name} = new ButtonMx(\"{cText}\",\"{imageName}\" );\r\n";
+				initArgs = BuildInitArgs("Text", cText, "ImageName", imageName, "DivStyle", NewCss(divStyle));
+				codeFrag += $"ButtonMx {c.Name} = new ButtonMx(){initArgs};\r\n";
 
 				div.Close(ref htmlFrag);
 			}
@@ -591,6 +615,34 @@ namespace Mobius.ComOps
 
 			return;
 		}
+
+		string BuildInitArgs(params object[] pa)
+		{
+			string args = "", propName = "", propVal = "";
+			for (int i1 = 0; i1 < pa.Length; i1 += 2)
+			{
+				propName = pa[i1] as string;
+				if (Lex.IsUndefined(propName)) continue;
+
+				if (Lex.IsDefined(args)) args += ", ";
+
+				object valObj = pa[i1 + 1];
+				if (valObj == null)
+					propVal = "null";
+
+				else if (valObj is string) // quote string constants
+					propVal = Lex.AddDoubleQuotes(valObj as string);
+
+				else propVal = valObj.ToString(); // variable or expression
+
+				args += propName + " = " + propVal;
+			}
+
+			args = "{" + args + "}";
+			return args;
+		}
+
+
 
 		/****************************************/
 		/*** Template for building Razor file ***/
@@ -741,7 +793,56 @@ namespace Mobius.ComOps
 			//DebugLog.Message(args?.Item?.Text != null ? args.Item.Text : ""null"");
 			return;
 		}" + "\r\n\r\n";
+
+
+		NasClass Nas(object v)
+		{
+			return new NasClass(v);
+		}
+
+		/// <summary>
+		/// Create a CssStyleMx constructor expression from a style string
+		/// </summary>
+		/// <param name="cssStyle"></param>
+		/// <returns></returns>
+
+		NasClass NewCss(string cssStyle)
+		{
+			return new NasClass($"new CssStyleMx({Lex.AddDoubleQuotesIfNeeded(cssStyle)})");
+		}
+
+		/// <summary>
+		/// Not a string object
+		/// </summary>
+		class NasClass
+		{
+			object Value;
+
+			public NasClass(object value)
+			{
+				Value = value;
+			}
+
+			public override string ToString()
+			{
+				return (Value != null ? Value.ToString() : null);
+			}
+		}
 	}
+
+	/// <summary>
+	/// "Not a string" object
+	/// </summary>
+
+	internal class Nas
+{
+	object Value;
+
+	public Nas (object value)
+		{
+		Value = value;
+		}
+}
 
 
 	/// <summary>
@@ -778,6 +879,7 @@ namespace Mobius.ComOps
 			int dy,
 			ref string htmlFrag,
 			ref string codeFrag,
+			out string divStyle,
 			string styleAttributesToRemove = null,
 			string styleAttributesToAdd = null)
 		{
@@ -788,9 +890,9 @@ namespace Mobius.ComOps
 			int cTop = c.Top + dy; // move top and bottom down to correct from WinForms to HTML
 			int cBottom = c.Bottom + dy;
 
-			string div = $"<div @ref='{c.Name}.DivRef' class='control-div-mx font-mx defaults-mx' style='";
+			string div = $"<div @ref='{c.Name}.DivRef' class='control-div-mx font-mx defaults-mx' style='@{c.Name}.DivStyle'";
 			string code = ""; // nothing yet
-												//<div @ref="myMouseMoveElement"
+			string style = "";
 
 			if (c.Dock == DockStyle.Fill) // if Dock defined than use that (Fill only for now)
 				div += "width: 100%; height: 100%; ";
@@ -803,7 +905,7 @@ namespace Mobius.ComOps
 
 				if (left)
 				{
-					div += "left: " + c.Left + "px; ";
+					style += "left: " + c.Left + "px; ";
 					if (!right)
 						widthHeight += "width: " + c.Width + "px; ";
 
@@ -813,7 +915,7 @@ namespace Mobius.ComOps
 
 				else if (right) // set right and width
 				{
-					div += "right: " + (pc.Width - c.Right) + "px; ";
+					style += "right: " + (pc.Width - c.Right) + "px; ";
 					widthHeight += "width: " + c.Width + "px; ";
 				}
 
@@ -824,7 +926,7 @@ namespace Mobius.ComOps
 
 				if (anchorTop)
 				{
-					div += "top: " + cTop + "px; ";
+					style += "top: " + cTop + "px; ";
 					if (!anchorBottom)
 						widthHeight += "height: " + c.Height + "px; ";
 
@@ -834,26 +936,28 @@ namespace Mobius.ComOps
 
 				else if (anchorBottom) // set bottom and height
 				{
-					div += "bottom: " + (pc.Height - cBottom) + "px; ";
+					style += "bottom: " + (pc.Height - cBottom) + "px; ";
 					widthHeight += "height: " + c.Height + "px; ";
 				}
 
-				div += widthHeight; // put width height after location
+				style += widthHeight; // put width height after location
 			}
 
-			div += "' >\r\n"; // finish up style and div tag
+			div += " >\r\n"; // finish up div tag
 
 			if (Lex.IsDefined(styleAttributesToRemove))
 			{
-				div = Lex.Replace(div, styleAttributesToRemove, "");
+				style = Lex.Replace(style, styleAttributesToRemove, "");
 			}
 
 			if (Lex.IsDefined(styleAttributesToAdd))
 			{
-				div = Lex.Replace(div, "style='", "style='" + styleAttributesToAdd + " ");
+				style = Lex.Replace(style, "style='", "style='" + styleAttributesToAdd + " ");
 			}
 
 			htmlFrag += div;
+
+			divStyle = style;
 			return;
 		}
 
