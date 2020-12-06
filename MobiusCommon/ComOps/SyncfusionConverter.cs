@@ -495,52 +495,6 @@ namespace Mobius.ComOps
 				initArgs = BuildInitArgs("Text", cText, "CVC", Nas(groupName), "DivStyle", NewCss(divStyle));
 				codeFrag += $"CheckButtonMx {cb.Name} = new CheckButtonMx(){initArgs};\r\n";
 
-				if (Lex.Eq(cb.Text, "OK"))
-				{
-					eventStubFrag += @"
-
-				/// <summary>
-				/// OK_Click
-				/// </summary>
-				/// <returns></returns>
-
-					private void OK_Click()
-				{
-					DialogResult = DialogResult.OK;
-					SfDialog.Hide();
-				}" + "\r\n";
-				}
-
-				else if (Lex.Eq(cb.Text, "Cancel"))
-				{
-					eventStubFrag += @"
-
-					/// <summary>
-					/// Cancel_Click
-					/// </summary>
-
-					private void Cancel_Click()
-				{
-					DialogResult = DialogResult.Cancel;
-					SfDialog.Hide();
-				}" + "\r\n";
-				}
-
-				else
-				{
-					eventStubFrag += $@"
-
-
-				/// <summary>
-				/// {cb.Name}_Click
-				/// </summary>
-				/// <returns></returns>
-				/// 
-					private void {c.Name}_Click()
-					{{
-						return;
-					}}" + "\r\n";
-				}
 				div.Close(ref htmlFrag);
 			}
 
@@ -596,6 +550,54 @@ namespace Mobius.ComOps
 				initArgs = BuildInitArgs("Text", cText, "ImageName", imageName, "DivStyle", NewCss(divStyle));
 				codeFrag += $"ButtonMx {c.Name} = new ButtonMx(){initArgs};\r\n";
 
+				if (Lex.Eq(b.Text, "OK"))
+				{
+					eventStubFrag += @"
+
+				/// <summary>
+				/// OK_Click
+				/// </summary>
+				/// <returns></returns>
+
+				private async Task OK_Click()
+				{
+					DialogResult = DialogResult.OK;
+					await SfDialog.Hide();
+					return;
+				}" + "\r\n";
+				}
+
+				else if (Lex.Eq(b.Text, "Cancel"))
+				{
+					eventStubFrag += @"
+
+					/// <summary>
+					/// Cancel_Click
+					/// </summary>
+
+					private async Task Cancel_Click()
+				{
+					DialogResult = DialogResult.Cancel;
+					await SfDialog.Hide();
+				}" + "\r\n";
+				}
+
+				else
+				{
+					eventStubFrag += $@"
+
+				/// <summary>
+				/// {b.Name}_Click
+				/// </summary>
+				/// <returns></returns>
+				/// 
+					private async Task {c.Name}_Click()
+					{{
+						Task.Yield();
+						return;
+					}}" + "\r\n";
+				}
+
 				div.Close(ref htmlFrag);
 			}
 
@@ -605,11 +607,11 @@ namespace Mobius.ComOps
 
 			else // unrecognized
 			{
-				htmlFrag += "<" + c.Name;
+				htmlFrag += "<div> Unrecognized Control: " + c.GetType().Name + " " + c.Name;
 
 				if (Lex.IsDefined(cText)) // insert the element content
-					htmlFrag += " name=\"" + cText + '"';
-				htmlFrag += " />";
+					htmlFrag += " Text=\"" + cText + '"';
+				htmlFrag += " </div>\r\n";
 			}
 
 			html += htmlFrag;

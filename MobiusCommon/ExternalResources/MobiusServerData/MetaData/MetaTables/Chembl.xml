@@ -30,7 +30,7 @@
 		<c name="molformula" l="Molecular Formula" type="string" display="selectable" width="20" />
 		<c name="molweight" l="Mol. Wt." type="float" displayFormat="decimal" width="10" decimals="2" display="selectable" />
 	<!--	<c Name="molfile" Label="Molfile" DataType="String" Description="MDL Connection table representation of compound" DisplayLevel="Selectable" DisplayWidth="12" ColumnMap="molfile" /> -->
-		<c Name="standard_inchi" Label="Standard Inchi" DataType="String" Description="IUPAC standard InChI for the compound" DisplayLevel="hidden" DisplayWidth="12" ColumnMap="standard_inchi" />
+		<c Name="standard_inchi" Label="Standard Inchi" DataType="String" Description="IUPAC standard InChI for the compound" dictionary="yes_no" DisplayWidth="12" ColumnMap="standard_inchi" />
 		<c Name="standard_inchi_key" Label="Standard Inchi Key" DataType="String" Description="IUPAC standard InChI key for the compound" DisplayLevel="hidden" DisplayWidth="12" ColumnMap="standard_inchi_key" />
 		<c Name="molsmiles" Label="Smiles" DataType="String" Description="Canonical smiles, generated using pipeline pilot" DisplayLevel="Selected" DisplayWidth="12" ColumnMap="molsmiles" />
 		<c name="molsimilarity" l="Similarity Score" type="float" display="selectable" searchable="false" displayFormat="decimal" width="8" decimals="2" map="0" dataTransform="GetMolsim" />
