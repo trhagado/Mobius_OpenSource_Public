@@ -69,12 +69,11 @@ namespace Mobius.ComOps
 				int height = f.Height; // add size of WinForms header to get correct html height
 				int width = f.Width;
 				string headerText = f.Text;
-				string enableResize = (f.FormBorderStyle == FormBorderStyle.Sizable) ? "true" : "false");
+				string enableResize = (f.FormBorderStyle == FormBorderStyle.Sizable) ? "true" : "false";
 
 				// Wrap with SfDialog definition
 
 				html = $@"<SfDialog Target='#target' Height='{height}px' Width='{width}px' IsModal='true' ShowCloseIcon='true' AllowDragging='true' EnableResize='{enableResize}' 
-
 					@ref ='SfDialog' @bind-Visible='DialogVisible' CssClass='dialogboxmx'>
 				  <DialogTemplates>
 						<Header>
@@ -82,9 +81,6 @@ namespace Mobius.ComOps
 						</Header>
 					<Content>
 				 ";
-
-			
-			
 				
 				// Define variables for code section
 
@@ -342,25 +338,54 @@ namespace Mobius.ComOps
 			{
 				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle);
 
-				LabelControl l = c as LabelControl;
-				if (l.LineVisible)
+				LabelControl lc = c as LabelControl;
+				if (lc.LineVisible)
 				{
-					if (Lex.IsUndefined(l.Text))
+					if (Lex.IsUndefined(lc.Text))
 						htmlFrag += "<hr class='hr-mobius'>\r\n";
 
 					else // horizontal rule with text overlaid using utility css
-						htmlFrag += $"<hr data-content='{l.Text}' class=' class='hr-mobius hr-text'>\r\n";
+						htmlFrag += $"<hr data-content='{lc.Text}' class=' class='hr-mobius hr-text'>\r\n";
 				}
 
-				else if (Lex.IsDefined(l.Text))
+				else if (Lex.IsDefined(lc.Text))
 				{
+					if (lc.BorderStyle != BorderStyles.NoBorder && lc.BorderStyle != BorderStyles.Default)
+						divStyle += " border: 1px solid #acacac; background-color: #eeeeee; ";
+
 					htmlFrag += $"<span>@{c.Name}.Text</span>\r\n";
 				}
+
+				initArgs = BuildInitArgs("Text", lc.Text, "DivStyle", NewCss(divStyle));
+				codeFrag += $"LabelControlMx {c.Name} = new LabelControlMx(){initArgs};\r\n";
+
+				div.Close(ref htmlFrag);
+			}
+
+			else if (c is System.Windows.Forms.Label) // Simpler Windows.Forms Label
+			{
+				Label l = c as Label;
+
+				if (Lex.IsUndefined(l.Text)) return; // ignore if no text
+
+				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle);
+
+				if (l.BorderStyle != BorderStyle.None)
+					divStyle += " border: 1px solid #acacac; background-color: #eeeeee; ";
+
+				htmlFrag += $"<span>@{c.Name}.Text</span>\r\n";
 
 				initArgs = BuildInitArgs("Text", l.Text, "DivStyle", NewCss(divStyle));
 				codeFrag += $"LabelControlMx {c.Name} = new LabelControlMx(){initArgs};\r\n";
 
-				div.Close(ref htmlFrag);
+				eventStubFrag +=
+$@"		private void {c.Name}_OnInput(Syncfusion.Blazor.Layouts.ChangeEventArgs args)
+			{{
+				return;
+			}}" + "\r\n\r\n";
+
+
+				div.Close(ref htmlFrag);  
 			}
 
 			/////////////////////////////////////////////////////////////////////////////////
@@ -375,7 +400,8 @@ namespace Mobius.ComOps
 
 				TextEdit te = c as TextEdit;
 
-				htmlFrag += $"<SfTextBox CssClass='e-small sftextbox-mx defaults-mx' @ref='{c.Name}.SfTextBox' @bind-Value='{c.Name}.Text' Type='InputType.Text' />\r\n";
+				htmlFrag += $@"<SfTextBox CssClass='e-small sftextbox-mx defaults-mx'  Type='InputType.Text' 
+					@ref='{c.Name}.SfTextBox' @bind-Value='{c.Name}.Text' onInput='{c.Name}_OnInput'/>\r\n";
 
 				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
 				codeFrag += $"TextBoxMx {c.Name} = new TextBoxMx(){initArgs};\r\n";
@@ -624,7 +650,7 @@ namespace Mobius.ComOps
 
 				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle);
 
-				htmlFrag += $@"<SfListView  CssClass='listview-mx'  ShowCheckBox='true'
+				htmlFrag += $@"<SfListView  CssClass='listview-mx'  ShowCheckBox='true' Width='100%' Height='100%'
 					@ref = '@{c.Name}.SfListView' DataSource='@{c.Name}.Items' @bind-Value='@CheckList.SelectedItems'>
           <ListViewFieldSettings TValue='CheckedListBoxItem' Text='Description' IsChecked='IsChecked'> </ListViewFieldSettings>
         </SfListView>" + "\r\n";
