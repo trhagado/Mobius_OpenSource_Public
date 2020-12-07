@@ -103,20 +103,20 @@ namespace Mobius.ClientComponents
 		/// <param name="title"></param>
 		/// <param name="prompt"></param>
 		/// <param name="dictionaryName"></param>
-		/// <param name="selections"></param>
+		/// <param name="criteria"></param>
 		/// <returns></returns>
 
 		public static string CheckedListBoxDialog(
 			string title,
 			string prompt,
 			string dictionaryName,
-			string selections) // change to criteria
+			string criteria)
 		{
 			if (Instance == null) Instance = new CriteriaDictMultSelect();
 
 			Instance.Text = title;
 			Instance.Prompt.Text = prompt;
-			Instance.SetupCheckedListBoxFromDictionary(dictionaryName, selections);
+			Instance.SetupCheckedListBoxFromDictionary(dictionaryName, criteria);
 
 			DialogResult dr = Instance.ShowDialog(SessionManager.ActiveForm);
 			if (dr == DialogResult.Cancel) return null;

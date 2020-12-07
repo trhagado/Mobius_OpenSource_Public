@@ -24,6 +24,7 @@ namespace Mobius.ComOps
 		HashSet<string> RadioGroups = new HashSet<string>(); // names of each of the radio button groups seen 
 		StreamWriter log;
 
+		bool IncludeMenuStubs = false;
 		public static bool Active = DebugMx.True; // set to true to generate Razor code
 
 		/// <summary>
@@ -31,11 +32,15 @@ namespace Mobius.ComOps
 		/// </summary>
 		/// <param name="pc"></param>
 
-		public void ToRazor(Control pc)
+		public void ToRazor(
+			Control pc,
+			bool includeMenuStubs = false)
 		{
 			string s;
 
 			if (!Active) return;
+
+			IncludeMenuStubs = includeMenuStubs;
 
 			//////////////////////////////////////////////
 			// Build the HTML and plug into the template
@@ -64,10 +69,11 @@ namespace Mobius.ComOps
 				int height = f.Height; // add size of WinForms header to get correct html height
 				int width = f.Width;
 				string headerText = f.Text;
+				string enableResize = (f.FormBorderStyle == FormBorderStyle.Sizable) ? "true" : "false");
 
 				// Wrap with SfDialog definition
 
-				html = $@"<SfDialog Target='#target' Height='{height}px' Width='{width}px' IsModal='true' ShowCloseIcon='true' AllowDragging='true' EnableResize='false' 
+				html = $@"<SfDialog Target='#target' Height='{height}px' Width='{width}px' IsModal='true' ShowCloseIcon='true' AllowDragging='true' EnableResize='{enableResize}' 
 
 					@ref ='SfDialog' @bind-Visible='DialogVisible' CssClass='dialogboxmx'>
 				  <DialogTemplates>
@@ -95,14 +101,18 @@ namespace Mobius.ComOps
 		public static bool IncludeInRenderTree { get; set; } = true; 
 		public bool DialogVisible { get; set; } = false; 
 		public DialogResult DialogResult { get; set; } = DialogResult.None;
-		public SfContextMenu<MenuItem> ContextMenu; // the context menu to show
-		public List<MenuItem> MenuItems = // MenuItems data source for ContextMenu
-						new List<MenuItem> { new MenuItem { Text = ""Loading..."" } };
-
 		public bool RenderingEnabled = true;
 		protected override bool ShouldRender() { return RenderingEnabled; }" + "\r\n\r\n";
 
 				eventStubs = EventStubs;
+
+				if (includeMenuStubs)
+				{
+					code += @"
+		public SfContextMenu<MenuItem> ContextMenu; // the context menu to show
+		public List<MenuItem> MenuItems = // MenuItems data source for ContextMenu
+			new List<MenuItem> { new MenuItem { Text = ""Loading..."" } };";
+				}
 
 				ConvertContainedControls(pc, 0, ref html, ref code, ref eventStubs);
 
@@ -110,18 +120,21 @@ namespace Mobius.ComOps
 					$@"</Content>
 					</DialogTemplates>
 					<DialogEvents Opened='@DialogOpened' Closed='@DialogClosed'></DialogEvents>
-				</SfDialog>
+				</SfDialog>" + "\r\n";
 
+
+				if (includeMenuStubs)
+				{
+					html += @"
 				 <div id='ContextMenuDivId' class='ContextMenuDiv' style='width: 100%;'
 			     oncontextmenu='return false;'>
-
 						<SfContextMenu TValue='@MenuItem' @ref='@ContextMenu' Target='.ContextMenuDiv' Items='@MenuItems'>
 							<MenuEvents TValue='@MenuItem'
 													OnOpen='@BeforeMenuOpen' OnClose='@BeforeMenuClosed' Opened='@MenuOpened' Closed='@MenuClosed'
 													OnItemRender='@MenuItemRender' ItemSelected='@MenuItemSelected' />
 						</SfContextMenu>
 					</div>" + "\r\n";
-
+				}
 			}
 
 			// ======================================================
@@ -602,6 +615,27 @@ namespace Mobius.ComOps
 			}
 
 			/////////////////////////////////////////////////////////////////////////////////
+			// CheckedListBoxControl
+			/////////////////////////////////////////////////////////////////////////////////
+
+			else if (c is CheckedListBoxControl)
+			{
+				CheckedListBoxControl db = c as CheckedListBoxControl;
+
+				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle);
+
+				htmlFrag += $@"<SfListView  CssClass='listview-mx'  ShowCheckBox='true'
+					@ref = '@{c.Name}.SfListView' DataSource='@{c.Name}.Items' @bind-Value='@CheckList.SelectedItems'>
+          <ListViewFieldSettings TValue='CheckedListBoxItem' Text='Description' IsChecked='IsChecked'> </ListViewFieldSettings>
+        </SfListView>" + "\r\n";
+
+				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
+				codeFrag += $"CheckedListMx {c.Name} = new CheckedListMx(){initArgs};\r\n";
+
+				div.Close(ref htmlFrag);
+			}
+
+			/////////////////////////////////////////////////////////////////////////////////
 			// Unrecognized
 			/////////////////////////////////////////////////////////////////////////////////
 
@@ -744,7 +778,7 @@ namespace Mobius.ComOps
 		private async Task DialogOpened(Syncfusion.Blazor.Popups.OpenEventArgs args)
     {
 			args.PreventFocus = true;
-			await OK.Button.FocusIn();
+			// await initialComponentToFocusOn.FocusIn();
       return;
     }
 
