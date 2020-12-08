@@ -15,6 +15,7 @@ using Microsoft.Win32;
 
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.Utils;
 
 namespace Mobius.ComOps
 {
@@ -71,13 +72,14 @@ namespace Mobius.ComOps
 				string headerText = f.Text;
 				string enableResize = (f.FormBorderStyle == FormBorderStyle.Sizable) ? "true" : "false";
 
-				// Wrap with SfDialog definition
+				// Wrap with SfDialog definition 
+				// Note that the width of the header div = calc(100% - 32px) so that the close button will work if present
 
 				html = $@"<SfDialog Target='#target' Height='{height}px' Width='{width}px' IsModal='true' ShowCloseIcon='true' AllowDragging='true' EnableResize='{enableResize}' 
 					@ref ='SfDialog' @bind-Visible='DialogVisible' CssClass='dialogboxmx'>
 				  <DialogTemplates>
 						<Header>
-							<div class='control-div-mx font-mx defaults-mx' style='display: inline-flex; position: absolute; align-items: center; width: 100%; height: 20px; font-size: 13px; border: 0px;'>@HeaderText</div>
+							<div class='control-div-mx font-mx defaults-mx' style='display: inline-flex; position: absolute; align-items: center; width: calc(100% - 32px); height: 20px; font-size: 13px; border: 0px;'>@HeaderText</div>
 						</Header>
 					<Content>
 				 ";
@@ -334,7 +336,7 @@ namespace Mobius.ComOps
 			/////////////////////////////////////////////////////////////////////////////////
 
 
-			else if (c is LabelControl)
+			else if (c is LabelControl) // DX LabelControl
 			{
 				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle);
 
@@ -353,7 +355,12 @@ namespace Mobius.ComOps
 					if (lc.BorderStyle != BorderStyles.NoBorder && lc.BorderStyle != BorderStyles.Default)
 						divStyle += " border: 1px solid #acacac; background-color: #eeeeee; ";
 
-					htmlFrag += $"<span>@{c.Name}.Text</span>\r\n";
+					string spanStyle = "";
+					TextOptions to = lc.Appearance.TextOptions;
+					if (to.WordWrap == WordWrap.Wrap)
+						spanStyle = " style='height: 100%; padding: 0px 2px 0px 2px;'"; // align with top of containing div and provide a bit of side padding
+
+					htmlFrag += $"<span {spanStyle}>@{c.Name}.Text</span>\r\n";
 				}
 
 				initArgs = BuildInitArgs("Text", lc.Text, "DivStyle", NewCss(divStyle));
@@ -378,13 +385,6 @@ namespace Mobius.ComOps
 				initArgs = BuildInitArgs("Text", l.Text, "DivStyle", NewCss(divStyle));
 				codeFrag += $"LabelControlMx {c.Name} = new LabelControlMx(){initArgs};\r\n";
 
-				eventStubFrag +=
-$@"		private void {c.Name}_OnInput(Syncfusion.Blazor.Layouts.ChangeEventArgs args)
-			{{
-				return;
-			}}" + "\r\n\r\n";
-
-
 				div.Close(ref htmlFrag);  
 			}
 
@@ -401,10 +401,30 @@ $@"		private void {c.Name}_OnInput(Syncfusion.Blazor.Layouts.ChangeEventArgs arg
 				TextEdit te = c as TextEdit;
 
 				htmlFrag += $@"<SfTextBox CssClass='e-small sftextbox-mx defaults-mx'  Type='InputType.Text' 
-					@ref='{c.Name}.SfTextBox' @bind-Value='{c.Name}.Text' onInput='{c.Name}_OnInput'/>\r\n";
+					@ref='{c.Name}.SfTextBox' @bind-Value='{c.Name}.Text' Input='{c.Name}_Input' Focus='{c.Name}_Focus' />" + "\r\n";
 
 				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
 				codeFrag += $"TextBoxMx {c.Name} = new TextBoxMx(){initArgs};\r\n";
+
+				eventStubFrag +=$@"
+
+				/// <summary>
+				/// {c.Name}_Focus - Component has received focus event
+				/// </summary>
+				
+				private void {c.Name}_Focus(FocusInEventArgs args)
+				{{
+					return;
+				}}
+
+				/// <summary>
+				/// {c.Name}_Input - Input text has changed event
+				/// </summary>
+
+				private void {c.Name}_Input(InputEventArgs args)
+				{{
+					return;
+				}}" + "\r\n";
 
 				div.Close(ref htmlFrag);
 			}
@@ -491,11 +511,16 @@ $@"		private void {c.Name}_OnInput(Syncfusion.Blazor.Layouts.ChangeEventArgs arg
 					codeFrag += $"RadioButtonMx {c.Name} = new RadioButtonMx(){initArgs};\r\n";
 				}
 
-				eventStubFrag +=
-				$@"		private void {c.Name}_CheckedChanged()
-		{{
-			return;
-		}}" + "\r\n\r\n";
+				eventStubFrag += $@"
+
+				/// <summary>
+				/// {c.Name}_CheckedChanged
+				/// </summary>
+				 
+				private void {c.Name}_CheckedChanged()
+					{{
+						return;
+					}}" + "\r\n";
 
 				div.Close(ref htmlFrag);
 			}
@@ -596,7 +621,6 @@ $@"		private void {c.Name}_OnInput(Syncfusion.Blazor.Layouts.ChangeEventArgs arg
 				/// <summary>
 				/// OK_Click
 				/// </summary>
-				/// <returns></returns>
 
 				private async Task OK_Click()
 				{
@@ -629,7 +653,7 @@ $@"		private void {c.Name}_OnInput(Syncfusion.Blazor.Layouts.ChangeEventArgs arg
 				/// {b.Name}_Click
 				/// </summary>
 				/// <returns></returns>
-				/// 
+				 
 					private async Task {c.Name}_Click()
 					{{
 						Task.Yield();
@@ -650,13 +674,30 @@ $@"		private void {c.Name}_OnInput(Syncfusion.Blazor.Layouts.ChangeEventArgs arg
 
 				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle);
 
-				htmlFrag += $@"<SfListView  CssClass='listview-mx'  ShowCheckBox='true' Width='100%' Height='100%'
-					@ref = '@{c.Name}.SfListView' DataSource='@{c.Name}.Items' @bind-Value='@CheckList.SelectedItems'>
-          <ListViewFieldSettings TValue='CheckedListBoxItem' Text='Description' IsChecked='IsChecked'> </ListViewFieldSettings>
+				htmlFrag += $@"<SfListView CssClass='listview-mx' TValue='CheckedListBoxItem' ShowCheckBox='true' Width='100%' Height='100%'
+            @ref='@{c.Name}.SfListView' DataSource='@{c.Name}.Items'>
+          <ListViewFieldSettings TValue='CheckedListBoxItem' Text='Description' Id='Id' IsChecked='IsChecked'> </ListViewFieldSettings>
+          <ListViewEvents TValue='CheckedListBoxItem' Clicked='{c.Name}_Clicked'>
+          </ListViewEvents>
         </SfListView>" + "\r\n";
 
 				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
 				codeFrag += $"CheckedListMx {c.Name} = new CheckedListMx(){initArgs};\r\n";
+
+				eventStubFrag += $@"
+
+				/// <summary>
+				/// {c.Name}_Clicked
+				/// </summary>
+				/// <returns></returns>
+				
+				private async Task {c.Name}_Clicked(ClickEventArgs<CheckedListBoxItem> args)
+				{{
+						args.ItemData.IsChecked = args.IsChecked;
+						await Task.Yield();
+						return;
+				 
+					}}" + "\r\n";
 
 				div.Close(ref htmlFrag);
 			}

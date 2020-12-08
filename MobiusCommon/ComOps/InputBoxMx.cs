@@ -265,6 +265,8 @@ namespace Mobius.ComOps
 				Instance.Prompt.Text = prompt;
 			}
 
+			new SyncfusionConverter().ToRazor(Instance);
+
 			Instance.Text = title;
 			Instance.Input.Text = defaultText;
 

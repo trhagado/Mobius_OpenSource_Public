@@ -112,22 +112,22 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="SearchPic.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         Qk3CAQAAAAAAADYAAAAoAAAACwAAAAsAAAABABgAAAAAAAAAAADEDgAAxA4AAAAAAAAAAAAA//jw//jw
-        //jw//jw//jw//jw//jwmczMMzMzmczM//jwgJFD//jw//jw//jw//jw//jw//jwmczMM2ZmM2bMMzNm
-        mczMgJFD//jw//jw//jw//jw//jwkKmtM2ZmM5nMM5nMZsz/ZmZmgJFD//jw//jwmWZmX19fX19fX19f
-        M2aZM5nMZsz/ZpmZmczMgJFD//jwd3d3srKywMDAzMyZhoaGVVVVZpnMZpnMmczM//jwgJFDZplmwMDA
-        8fHx8fHx/+zM8MqmhoaGX19fkKmt//jw//jwgJFDhoaG6urq////////8fHx/+zMzMyZVVVV//jw//jw
-        //jwgJFDlpaW6urq////////////8fHx8MqmX19f//jw//jw//jwgJFDmZlmwMDA////////////8fHx
-        pKCgZmYz//jw//jw//jwgJFD//jwpKCgwMDA6urq6urqsrKyd3d3//jw//jw//jw//jwgJFD//jw//jw
-        pKCglpaWhoaGZplm//jw//jw//jw//jw//jwgJFD
+        //jw//jw//jw//jw//jwmczMMzMzmczM//jwAAAA//jw//jw//jw//jw//jw//jwmczMM2ZmM2bMMzNm
+        mczMAAAA//jw//jw//jw//jw//jwkKmtM2ZmM5nMM5nMZsz/ZmZmAAAA//jw//jwmWZmX19fX19fX19f
+        M2aZM5nMZsz/ZpmZmczMAAAA//jwd3d3srKywMDAzMyZhoaGVVVVZpnMZpnMmczM//jwAAAAZplmwMDA
+        8fHx8fHx/+zM8MqmhoaGX19fkKmt//jw//jwAAAAhoaG6urq////////8fHx/+zMzMyZVVVV//jw//jw
+        //jwAAAAlpaW6urq////////////8fHx8MqmX19f//jw//jw//jwAAAAmZlmwMDA////////////8fHx
+        pKCgZmYz//jw//jw//jwAAAA//jwpKCgwMDA6urq6urqsrKyd3d3//jw//jw//jw//jwAAAA//jw//jw
+        pKCglpaWhoaGZplm//jw//jw//jw//jw//jwAAAA
 </value>
   </data>
   <data name="SelectedItemText.Text" xml:space="preserve">
