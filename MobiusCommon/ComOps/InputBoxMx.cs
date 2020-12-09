@@ -241,6 +241,8 @@ namespace Mobius.ComOps
 			Instance.Width = width;
 			Instance.Height = height;
 
+			new SyncfusionConverter().ToRazor(Instance);
+
 			if (prompt.Contains("</") || prompt.Contains("/>") || Lex.Contains(prompt, "<br>"))
 			{ // display HTML prompt
 				Instance.Prompt.Visible = false;
@@ -264,8 +266,6 @@ namespace Mobius.ComOps
 				Instance.Prompt.Visible = true;
 				Instance.Prompt.Text = prompt;
 			}
-
-			new SyncfusionConverter().ToRazor(Instance);
 
 			Instance.Text = title;
 			Instance.Input.Text = defaultText;

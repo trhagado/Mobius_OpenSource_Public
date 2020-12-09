@@ -89,8 +89,7 @@ namespace Mobius.ComOps
 				code = $@"
 
 		/******************************* File links *********************************/
-		public static {f.Name} RazorFile; // used to link to this file
-		{f.Name} csFile => {f.Name}.CsFile;
+		public static {f.Name} RazorFile => {f.Name}.CsFile; // Razor/C# link
 		/****************************************************************************/
 
 		public static {f.Name} Instance {{ get; set; }} 
@@ -656,7 +655,7 @@ namespace Mobius.ComOps
 				 
 					private async Task {c.Name}_Click()
 					{{
-						Task.Yield();
+						await Task.Yield();
 						return;
 					}}" + "\r\n";
 				}
@@ -853,7 +852,7 @@ namespace Mobius.ComOps
     /// DialogCLosed
     /// </summary>
  
-		private void DialogClosed(CloseEventArgs args)
+		private void DialogClosed(Syncfusion.Blazor.Popups.CloseEventArgs args)
     {
       if (Lex.Ne(args?.ClosedBy, ""User Action""))
         DialogResult = DialogResult.Cancel;
