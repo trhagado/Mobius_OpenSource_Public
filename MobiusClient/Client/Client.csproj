@@ -93,6 +93,9 @@
     <Reference Include="DevExpress.XtraTreeList.v20.1, Version=20.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
+    <Reference Include="LumenWorks.Framework.IO">
+      <HintPath>..\..\MobiusCommon\ExternalLibraries\LumenWorks.Framework.IO.dll</HintPath>
+    </Reference>
     <Reference Include="MathNet.Numerics">
       <HintPath>..\..\MobiusCommon\ExternalLibraries\MathNet.Numerics.dll</HintPath>
     </Reference>

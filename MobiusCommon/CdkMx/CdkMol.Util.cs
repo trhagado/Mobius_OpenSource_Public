@@ -67,7 +67,7 @@ namespace Mobius.CdkMx
 			SmilesGeneratorType smiGenFlags)
 		{
 			IAtomContainer mol = SmilesToAtomContainer(smiles);
-			if (mol.Atoms.Count == 0) return "";
+			if (mol?.Atoms == null || mol.Atoms.Count == 0) return "";
 			else
 			{
 				string smiles2 = AtomContainerToSmiles(mol, smiGenFlags);
@@ -87,6 +87,8 @@ namespace Mobius.CdkMx
 			IAtomContainer mol, mol2;
 
 			mol = MolfileToAtomContainer(molfile);
+			if (mol == null) return null;
+
 			mol2 = GetLargestMoleculeFragment(mol);
 			if (mol2 != null)
 			{
@@ -109,6 +111,8 @@ namespace Mobius.CdkMx
 			IAtomContainer mol, mol2;
 
 			mol = SmilesToAtomContainer(smiles);
+			if (mol == null) return null;
+
 			mol2 = GetLargestMoleculeFragment(mol);
 			if (mol2 != null)
 			{
@@ -131,6 +135,8 @@ namespace Mobius.CdkMx
 			bool filterOutCommonCounterIons)
 		{
 			IAtomContainer mol = SmilesToAtomContainer(smiles);
+			if (mol == null) return null;
+
 			List<KeyValuePair<string, IAtomContainer>> frags = FragmentMoleculeAndCanonicalizeSmiles(mol, filterOutCommonCounterIons);
 			return frags;
 		}
@@ -145,6 +151,7 @@ namespace Mobius.CdkMx
 			IAtomContainer mol,
 			bool filterOutCommonCounterIons = true)
 		{
+			if (mol == null) return null;
 			List<KeyValuePair<string, IAtomContainer>> fragSmiList = FragmentMoleculeAndCanonicalizeSmiles(mol, filterOutCommonCounterIons);
 
 			List<IAtomContainer> fragList = new List<IAtomContainer>();
@@ -168,6 +175,8 @@ namespace Mobius.CdkMx
 
 			KeyValuePair<string, IAtomContainer> kvp;
 			List<KeyValuePair<string, IAtomContainer>> frags = new List<KeyValuePair<string, IAtomContainer>>();
+
+			if (mol == null) return frags;
 
 			IReadOnlyList<IAtomContainer> acs = ConnectivityChecker.PartitionIntoMolecules(mol);
 
@@ -540,6 +549,7 @@ namespace Mobius.CdkMx
 		{
 			get
 			{
+				if (NativeMol == null) return 0;
 			IMolecularFormula mfm = MolecularFormulaManipulator.GetMolecularFormula(NativeMol);
 				return MolecularFormulaManipulator.GetMass(mfm);
 			}
@@ -635,6 +645,8 @@ namespace Mobius.CdkMx
 		{
 			int haCnt = 0;
 
+			if (mol == null) return 0;
+
 			for (int ai = 0; ai < mol.Atoms.Count; ai++)
 			{
 				IAtom atom = mol.Atoms[ai];
@@ -661,6 +673,8 @@ namespace Mobius.CdkMx
 		public static int GetHeavyBondCount(IAtomContainer mol)
 		{
 			int hbCnt = 0;
+
+			if (mol == null) return 0;
 
 			for (int bi = 0; bi < mol.Bonds.Count; bi++)
 			{
@@ -704,6 +718,9 @@ namespace Mobius.CdkMx
 		{
 			IAtomContainer mol2, molMain = null;
 
+			acc = 0;
+			if (mol == null) return null;
+
 			if (ConnectivityChecker.IsConnected(mol))
 			{
 				acc = 1;
@@ -739,7 +756,8 @@ namespace Mobius.CdkMx
 			if (Lex.IsUndefined(smiles)) return "";
 
 			IAtomContainer mol = SmilesToAtomContainer(smiles);
-			if (mol.Atoms.Count == 0) return "";
+
+			if (mol?.Atoms == null || mol.Atoms.Count == 0) return "";
 
 			string molfile = AtomContainerToMolfile(mol);
 			return molfile;
@@ -756,7 +774,7 @@ namespace Mobius.CdkMx
 			if (Lex.IsUndefined(molfile)) return "";
 
 			IAtomContainer mol = MolfileToAtomContainer(molfile);
-			if (mol.Atoms.Count == 0) return "";
+			if (mol?.Atoms == null || mol.Atoms.Count == 0) return "";
 
 			string smiles = AtomContainerToSmiles(mol);
 			return smiles;
@@ -776,6 +794,8 @@ namespace Mobius.CdkMx
 				SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
 
 				IAtomContainer mol = sp.ParseSmiles(smiles); // may get "could not parse error" for some CorpIds, e.g.: 111, 222, 333
+
+				if (mol == null) return null;
 
 				ConfigureAtomContainer(mol);
 
