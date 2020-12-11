@@ -28,6 +28,7 @@ namespace Mobius.ClientComponents
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.ImportList = new DevExpress.XtraEditors.SimpleButton();
 			this.EditSaved = new DevExpress.XtraEditors.SimpleButton();
 			this.EditTempList = new DevExpress.XtraEditors.SimpleButton();
@@ -42,7 +43,7 @@ namespace Mobius.ClientComponents
 			this.BrowseSaved = new DevExpress.XtraEditors.SimpleButton();
 			this.Cancel = new DevExpress.XtraEditors.SimpleButton();
 			this.OK = new DevExpress.XtraEditors.SimpleButton();
-			this.ToolTip = new System.Windows.Forms.ToolTip();
+			this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.TempList = new DevExpress.XtraEditors.CheckEdit();
 			this.SavedList = new DevExpress.XtraEditors.CheckEdit();
 			this.Between = new DevExpress.XtraEditors.CheckEdit();
@@ -158,7 +159,7 @@ namespace Mobius.ClientComponents
 			this.InList.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.InList.Properties.RadioGroupIndex = 1;
 			this.InList.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.InList.Size = new System.Drawing.Size(420, 19);
+			this.InList.Size = new System.Drawing.Size(420, 20);
 			this.InList.TabIndex = 62;
 			this.InList.TabStop = false;
 			this.InList.CheckedChanged += new System.EventHandler(this.InList_CheckedChanged);
@@ -178,7 +179,7 @@ namespace Mobius.ClientComponents
 			this.None.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.None.Properties.RadioGroupIndex = 1;
 			this.None.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.None.Size = new System.Drawing.Size(184, 19);
+			this.None.Size = new System.Drawing.Size(184, 20);
 			this.None.TabIndex = 56;
 			this.None.TabStop = false;
 			this.None.CheckedChanged += new System.EventHandler(this.None_CheckedChanged);
@@ -311,7 +312,7 @@ namespace Mobius.ClientComponents
 			this.TempList.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.TempList.Properties.RadioGroupIndex = 1;
 			this.TempList.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.TempList.Size = new System.Drawing.Size(351, 19);
+			this.TempList.Size = new System.Drawing.Size(351, 20);
 			this.TempList.TabIndex = 49;
 			this.TempList.TabStop = false;
 			this.TempList.CheckedChanged += new System.EventHandler(this.TempList_CheckedChanged);
@@ -331,7 +332,7 @@ namespace Mobius.ClientComponents
 			this.SavedList.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.SavedList.Properties.RadioGroupIndex = 1;
 			this.SavedList.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.SavedList.Size = new System.Drawing.Size(424, 19);
+			this.SavedList.Size = new System.Drawing.Size(424, 20);
 			this.SavedList.TabIndex = 50;
 			this.SavedList.TabStop = false;
 			this.SavedList.CheckedChanged += new System.EventHandler(this.SavedList_CheckedChanged);
@@ -351,7 +352,7 @@ namespace Mobius.ClientComponents
 			this.Between.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.Between.Properties.RadioGroupIndex = 1;
 			this.Between.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.Between.Size = new System.Drawing.Size(216, 19);
+			this.Between.Size = new System.Drawing.Size(216, 20);
 			this.Between.TabIndex = 53;
 			this.Between.TabStop = false;
 			this.Between.CheckedChanged += new System.EventHandler(this.Between_CheckedChanged);
@@ -420,7 +421,7 @@ namespace Mobius.ClientComponents
 			this.EQ.Properties.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Radio;
 			this.EQ.Properties.RadioGroupIndex = 1;
 			this.EQ.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.EQ.Size = new System.Drawing.Size(288, 19);
+			this.EQ.Size = new System.Drawing.Size(288, 20);
 			this.EQ.TabIndex = 46;
 			this.EQ.TabStop = false;
 			this.EQ.CheckedChanged += new System.EventHandler(this.EQ_CheckedChanged);
@@ -485,10 +486,10 @@ namespace Mobius.ClientComponents
 			this.Controls.Add(this.EQ);
 			this.Controls.Add(this.labelControl1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.IconOptions.ShowIcon = false;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "CriteriaCompoundId";
-			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "CriteriaCompoundId";

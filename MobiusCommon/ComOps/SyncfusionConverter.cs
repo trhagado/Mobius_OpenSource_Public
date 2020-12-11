@@ -388,42 +388,43 @@ namespace Mobius.ComOps
 			}
 
 			/////////////////////////////////////////////////////////////////////////////////
-			// TextEdit
+			// ComboBoxEdit - Text box with dropdown menu attached
+			// Example:
+			//  <SfComboBox TValue="string" TItem="Countries" @onkeypress="@KeyPressed" DataSource="@Country">
+			//	 <ComboBoxFieldSettings Text = "Name" Value = "Code" ></ ComboBoxFieldSettings >
+			//   <ComboBoxEvents TValue='string' ValueChange='control_ValueChange'></ComboBoxEvents> 
+			//	</ SfComboBox>
 			/////////////////////////////////////////////////////////////////////////////////
 
-			else if (c is TextEdit)
+			else if (c is ComboBoxEdit)
 			{
-				div.Build(pc, c, dy - 2, ref htmlFrag, ref codeFrag, out divStyle); // move the textbox up a few pixels to align better with other controls
+				ComboBoxEdit cb = c as ComboBoxEdit;
 
-				// Example: <SfTextBox @bind-Value="@TextBoxValue" @ref="@SfTextBox" Type="InputType.Text" Placeholder="@InitialText" />
+				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle);
 
-				TextEdit te = c as TextEdit;
-
-				htmlFrag += $@"<SfTextBox CssClass='e-small sftextbox-mx defaults-mx'  Type='InputType.Text' 
-					@ref='{c.Name}.SfTextBox' @bind-Value='{c.Name}.Text' Input='{c.Name}_Input' Focus='{c.Name}_Focus' />" + "\r\n";
+				htmlFrag += $@"<SfComboBox TValue='string' TItem='ListItemMx' 
+					@ref='{c.Name}.ComboBox' Placeholder='@{c.Name}.InitialText' DataSource='@{c.Name}.Items'>
+						<ComboBoxFieldSettings Text='Text' IconCss='IconCss' Value='Value'></ComboBoxFieldSettings>
+						<ComboBoxEvents TValue='string' TItem='ListItemMx' ValueChange='{c.Name}_ValueChange'></ComboBoxEvents> 
+					</SfComboBox> " + "\r\n";
 
 				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
-				codeFrag += $"TextBoxMx {c.Name} = new TextBoxMx(){initArgs};\r\n";
+				codeFrag += $"ComboBoxMx {c.Name} = new ComboBoxMx(){initArgs};\r\n";
 
-				eventStubFrag +=$@"
+				eventStubFrag += $@"
 
 				/// <summary>
-				/// {c.Name}_Focus - Component has received focus event
+				/// {c.Name}_ValueChange
 				/// </summary>
+				/// <returns></returns>
 				
-				private void {c.Name}_Focus(FocusInEventArgs args)
+				private async Task {c.Name}_ValueChange(ChangeEventArgs<string, ListItemMx> args)
 				{{
-					return;
-				}}
-
-				/// <summary>
-				/// {c.Name}_Input - Input text has changed event
-				/// </summary>
-
-				private void {c.Name}_Input(InputEventArgs args)
-				{{
-					return;
-				}}" + "\r\n";
+						// todo...
+						await Task.Yield();
+						return;
+				 
+					}}" + "\r\n";
 
 				div.Close(ref htmlFrag);
 			}
@@ -673,10 +674,10 @@ namespace Mobius.ComOps
 
 				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle);
 
-				htmlFrag += $@"<SfListView CssClass='listview-mx' TValue='CheckedListBoxItem' ShowCheckBox='true' Width='100%' Height='100%'
+				htmlFrag += $@"<SfListView CssClass='listview-mx' TValue='ListItemMx' ShowCheckBox='true' Width='100%' Height='100%'
             @ref='@{c.Name}.SfListView' DataSource='@{c.Name}.Items'>
-          <ListViewFieldSettings TValue='CheckedListBoxItem' Text='Description' Id='Id' IsChecked='IsChecked'> </ListViewFieldSettings>
-          <ListViewEvents TValue='CheckedListBoxItem' Clicked='{c.Name}_Clicked'>
+          <ListViewFieldSettings TValue='ListItemMx' Text='Description' Id='Id' IsChecked='IsChecked'> </ListViewFieldSettings>
+          <ListViewEvents TValue='ListItemMx' Clicked='{c.Name}_Clicked'>
           </ListViewEvents>
         </SfListView>" + "\r\n";
 
@@ -690,13 +691,54 @@ namespace Mobius.ComOps
 				/// </summary>
 				/// <returns></returns>
 				
-				private async Task {c.Name}_Clicked(ClickEventArgs<CheckedListBoxItem> args)
+				private async Task {c.Name}_Clicked(ClickEventArgs<ListItemMx> args)
 				{{
 						args.ItemData.IsChecked = args.IsChecked;
 						await Task.Yield();
 						return;
 				 
 					}}" + "\r\n";
+
+				div.Close(ref htmlFrag);
+			}
+
+			/////////////////////////////////////////////////////////////////////////////////
+			// TextEdit
+			/////////////////////////////////////////////////////////////////////////////////
+
+			else if (c is TextEdit)
+			{
+				div.Build(pc, c, dy - 2, ref htmlFrag, ref codeFrag, out divStyle); // move the textbox up a few pixels to align better with other controls
+
+				// Example: <SfTextBox @bind-Value="@TextBoxValue" @ref="@SfTextBox" Type="InputType.Text" Placeholder="@InitialText" />
+
+				TextEdit te = c as TextEdit;
+
+				htmlFrag += $@"<SfTextBox CssClass='e-small sftextbox-mx defaults-mx'  Type='InputType.Text' 
+					@ref='{c.Name}.SfTextBox' @bind-Value='{c.Name}.Text' Input='{c.Name}_Input' Focus='{c.Name}_Focus' />" + "\r\n";
+
+				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
+				codeFrag += $"TextBoxMx {c.Name} = new TextBoxMx(){initArgs};\r\n";
+
+				eventStubFrag += $@"
+
+				/// <summary>
+				/// {c.Name}_Focus - Component has received focus event
+				/// </summary>
+				
+				private void {c.Name}_Focus(FocusInEventArgs args)
+				{{
+					return;
+				}}
+
+				/// <summary>
+				/// {c.Name}_Input - Input text has changed event
+				/// </summary>
+
+				private void {c.Name}_Input(InputEventArgs args)
+				{{
+					return;
+				}}" + "\r\n";
 
 				div.Close(ref htmlFrag);
 			}
@@ -763,6 +805,7 @@ namespace Mobius.ComOps
 @using Syncfusion.Blazor.Inputs
 @using Syncfusion.Blazor.Buttons
 @using Syncfusion.Blazor.SplitButtons
+@using Syncfusion.Blazor.DropDowns
 @using Syncfusion.Blazor.Lists
 @using Syncfusion.Blazor.Grids;
 
