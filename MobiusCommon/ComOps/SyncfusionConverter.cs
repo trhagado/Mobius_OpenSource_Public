@@ -89,7 +89,7 @@ namespace Mobius.ComOps
 				code = $@"
 
 		/******************************* File links *********************************/
-		public static {f.Name} RazorFile => {f.Name}.CsFile; // Razor/C# link
+		public static {f.Name} RazorFile => {f.Name}.CsFile; 
 		/****************************************************************************/
 
 		public static {f.Name} Instance {{ get; set; }} 

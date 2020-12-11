@@ -140,7 +140,13 @@ namespace Mobius.ComOps
 		public void Navigate(string URL)
 		{
 			ClearCounters();
-			WebBrowser.Navigate(URL);
+			try
+			{
+				WebBrowser.Navigate(URL);
+				return;
+			}
+			catch (Exception ex)
+			{ ex = ex; }
 		}
 
 		/// <summary>
@@ -155,8 +161,14 @@ namespace Mobius.ComOps
 		public void NavigateAndWait(string URL)
 		{
 			ClearCounters();
-			WebBrowser.Navigate(URL);
-			WaitUntilComplete();
+			try
+			{
+				WebBrowser.Navigate(URL);
+				WaitUntilComplete();
+				return;
+			}
+			catch (Exception ex)
+			{ ex = ex; }
 		}
 
 		protected void OnAbsolutelyComplete()

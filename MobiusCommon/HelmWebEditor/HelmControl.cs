@@ -358,7 +358,7 @@ namespace Mobius.Helm
 			return svg;
 		}
 
-#if false
+#if false // (obsolete)
 		/// <summary>
 		/// Get SVG of the specified HELM 
 		/// </summary>
