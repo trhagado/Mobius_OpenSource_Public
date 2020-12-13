@@ -1772,6 +1772,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\MessageBoxErrorIcon32.png" />
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>

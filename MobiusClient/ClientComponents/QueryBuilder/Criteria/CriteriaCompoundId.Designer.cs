@@ -74,7 +74,7 @@ namespace Mobius.ClientComponents
 			this.ImportList.Appearance.Options.UseFont = true;
 			this.ImportList.Appearance.Options.UseForeColor = true;
 			this.ImportList.Cursor = System.Windows.Forms.Cursors.Default;
-			this.ImportList.Location = new System.Drawing.Point(302, 64);
+			this.ImportList.Location = new System.Drawing.Point(305, 64);
 			this.ImportList.Name = "ImportList";
 			this.ImportList.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.ImportList.Size = new System.Drawing.Size(56, 20);
@@ -89,7 +89,7 @@ namespace Mobius.ClientComponents
 			this.EditSaved.Appearance.Options.UseFont = true;
 			this.EditSaved.Appearance.Options.UseForeColor = true;
 			this.EditSaved.Cursor = System.Windows.Forms.Cursors.Default;
-			this.EditSaved.Location = new System.Drawing.Point(364, 89);
+			this.EditSaved.Location = new System.Drawing.Point(367, 90);
 			this.EditSaved.Name = "EditSaved";
 			this.EditSaved.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.EditSaved.Size = new System.Drawing.Size(46, 20);
@@ -104,7 +104,7 @@ namespace Mobius.ClientComponents
 			this.EditTempList.Appearance.Options.UseFont = true;
 			this.EditTempList.Appearance.Options.UseForeColor = true;
 			this.EditTempList.Cursor = System.Windows.Forms.Cursors.Default;
-			this.EditTempList.Location = new System.Drawing.Point(364, 115);
+			this.EditTempList.Location = new System.Drawing.Point(367, 116);
 			this.EditTempList.Name = "EditTempList";
 			this.EditTempList.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.EditTempList.Size = new System.Drawing.Size(46, 20);
@@ -119,7 +119,7 @@ namespace Mobius.ClientComponents
 			this.EditList.Appearance.Options.UseFont = true;
 			this.EditList.Appearance.Options.UseForeColor = true;
 			this.EditList.Cursor = System.Windows.Forms.Cursors.Default;
-			this.EditList.Location = new System.Drawing.Point(364, 64);
+			this.EditList.Location = new System.Drawing.Point(367, 64);
 			this.EditList.Name = "EditList";
 			this.EditList.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.EditList.Size = new System.Drawing.Size(46, 20);
@@ -130,7 +130,7 @@ namespace Mobius.ClientComponents
 			// CidListDisplay
 			// 
 			this.CidListDisplay.Cursor = System.Windows.Forms.Cursors.IBeam;
-			this.CidListDisplay.Location = new System.Drawing.Point(81, 64);
+			this.CidListDisplay.Location = new System.Drawing.Point(84, 64);
 			this.CidListDisplay.Name = "CidListDisplay";
 			this.CidListDisplay.Properties.Appearance.BackColor = System.Drawing.SystemColors.Window;
 			this.CidListDisplay.Properties.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -187,7 +187,7 @@ namespace Mobius.ClientComponents
 			// Cid
 			// 
 			this.Cid.Cursor = System.Windows.Forms.Cursors.IBeam;
-			this.Cid.Location = new System.Drawing.Point(81, 38);
+			this.Cid.Location = new System.Drawing.Point(84, 38);
 			this.Cid.Name = "Cid";
 			this.Cid.Properties.Appearance.BackColor = System.Drawing.SystemColors.Window;
 			this.Cid.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -203,7 +203,7 @@ namespace Mobius.ClientComponents
 			// ListName
 			// 
 			this.ListName.Cursor = System.Windows.Forms.Cursors.IBeam;
-			this.ListName.Location = new System.Drawing.Point(81, 89);
+			this.ListName.Location = new System.Drawing.Point(84, 90);
 			this.ListName.Name = "ListName";
 			this.ListName.Properties.Appearance.BackColor = System.Drawing.SystemColors.Window;
 			this.ListName.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -221,7 +221,7 @@ namespace Mobius.ClientComponents
 			// CidHi
 			// 
 			this.CidHi.Cursor = System.Windows.Forms.Cursors.IBeam;
-			this.CidHi.Location = new System.Drawing.Point(262, 143);
+			this.CidHi.Location = new System.Drawing.Point(265, 142);
 			this.CidHi.Name = "CidHi";
 			this.CidHi.Properties.Appearance.BackColor = System.Drawing.SystemColors.Window;
 			this.CidHi.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -237,7 +237,7 @@ namespace Mobius.ClientComponents
 			// CidLo
 			// 
 			this.CidLo.Cursor = System.Windows.Forms.Cursors.IBeam;
-			this.CidLo.Location = new System.Drawing.Point(81, 143);
+			this.CidLo.Location = new System.Drawing.Point(84, 142);
 			this.CidLo.Name = "CidLo";
 			this.CidLo.Properties.Appearance.BackColor = System.Drawing.SystemColors.Window;
 			this.CidLo.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -257,12 +257,12 @@ namespace Mobius.ClientComponents
 			this.BrowseSaved.Appearance.Options.UseFont = true;
 			this.BrowseSaved.Appearance.Options.UseForeColor = true;
 			this.BrowseSaved.Cursor = System.Windows.Forms.Cursors.Default;
-			this.BrowseSaved.Location = new System.Drawing.Point(302, 89);
+			this.BrowseSaved.Location = new System.Drawing.Point(305, 90);
 			this.BrowseSaved.Name = "BrowseSaved";
 			this.BrowseSaved.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.BrowseSaved.Size = new System.Drawing.Size(56, 20);
 			this.BrowseSaved.TabIndex = 52;
-			this.BrowseSaved.Text = "&Browse...";
+			this.BrowseSaved.Text = "Browse...";
 			this.BrowseSaved.Click += new System.EventHandler(this.BrowseSaved_Click);
 			// 
 			// Cancel
@@ -274,7 +274,7 @@ namespace Mobius.ClientComponents
 			this.Cancel.Appearance.Options.UseForeColor = true;
 			this.Cancel.Cursor = System.Windows.Forms.Cursors.Default;
 			this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.Cancel.Location = new System.Drawing.Point(341, 203);
+			this.Cancel.Location = new System.Drawing.Point(344, 203);
 			this.Cancel.Name = "Cancel";
 			this.Cancel.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.Cancel.Size = new System.Drawing.Size(69, 24);
@@ -289,7 +289,7 @@ namespace Mobius.ClientComponents
 			this.OK.Appearance.Options.UseFont = true;
 			this.OK.Appearance.Options.UseForeColor = true;
 			this.OK.Cursor = System.Windows.Forms.Cursors.Default;
-			this.OK.Location = new System.Drawing.Point(267, 203);
+			this.OK.Location = new System.Drawing.Point(270, 203);
 			this.OK.Name = "OK";
 			this.OK.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.OK.Size = new System.Drawing.Size(68, 24);
@@ -320,7 +320,7 @@ namespace Mobius.ClientComponents
 			// SavedList
 			// 
 			this.SavedList.Cursor = System.Windows.Forms.Cursors.Default;
-			this.SavedList.Location = new System.Drawing.Point(5, 89);
+			this.SavedList.Location = new System.Drawing.Point(5, 90);
 			this.SavedList.Name = "SavedList";
 			this.SavedList.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
 			this.SavedList.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -383,12 +383,12 @@ namespace Mobius.ClientComponents
 			this.BrowseRN.Appearance.Options.UseFont = true;
 			this.BrowseRN.Appearance.Options.UseForeColor = true;
 			this.BrowseRN.Cursor = System.Windows.Forms.Cursors.Default;
-			this.BrowseRN.Location = new System.Drawing.Point(231, 38);
+			this.BrowseRN.Location = new System.Drawing.Point(234, 38);
 			this.BrowseRN.Name = "BrowseRN";
 			this.BrowseRN.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.BrowseRN.Size = new System.Drawing.Size(60, 20);
 			this.BrowseRN.TabIndex = 48;
-			this.BrowseRN.Text = "&Browse...";
+			this.BrowseRN.Text = "Browse...";
 			this.BrowseRN.Click += new System.EventHandler(this.BrowseRN_Click);
 			// 
 			// Label5
@@ -400,7 +400,7 @@ namespace Mobius.ClientComponents
 			this.Label5.Appearance.Options.UseFont = true;
 			this.Label5.Appearance.Options.UseForeColor = true;
 			this.Label5.Cursor = System.Windows.Forms.Cursors.Default;
-			this.Label5.Location = new System.Drawing.Point(235, 146);
+			this.Label5.Location = new System.Drawing.Point(238, 146);
 			this.Label5.Name = "Label5";
 			this.Label5.Size = new System.Drawing.Size(18, 13);
 			this.Label5.TabIndex = 59;
@@ -444,7 +444,7 @@ namespace Mobius.ClientComponents
 			// 
 			// TempListName
 			// 
-			this.TempListName.Location = new System.Drawing.Point(81, 115);
+			this.TempListName.Location = new System.Drawing.Point(84, 116);
 			this.TempListName.Name = "TempListName";
 			this.TempListName.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -461,7 +461,7 @@ namespace Mobius.ClientComponents
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.Cancel;
-			this.ClientSize = new System.Drawing.Size(417, 234);
+			this.ClientSize = new System.Drawing.Size(420, 234);
 			this.Controls.Add(this.TempListName);
 			this.Controls.Add(this.ImportList);
 			this.Controls.Add(this.EditSaved);

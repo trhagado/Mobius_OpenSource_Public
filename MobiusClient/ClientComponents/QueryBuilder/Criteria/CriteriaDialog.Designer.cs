@@ -242,10 +242,10 @@ namespace Mobius.ClientComponents
 			this.OK.Appearance.Options.UseFont = true;
 			this.OK.Appearance.Options.UseForeColor = true;
 			this.OK.Cursor = System.Windows.Forms.Cursors.Default;
-			this.OK.Location = new System.Drawing.Point(327, 300);
+			this.OK.Location = new System.Drawing.Point(327, 301);
 			this.OK.Name = "OK";
 			this.OK.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.OK.Size = new System.Drawing.Size(68, 22);
+			this.OK.Size = new System.Drawing.Size(68, 24);
 			this.OK.TabIndex = 71;
 			this.OK.Text = "OK";
 			this.OK.Click += new System.EventHandler(this.OK_Click);
@@ -259,10 +259,10 @@ namespace Mobius.ClientComponents
 			this.Cancel.Appearance.Options.UseForeColor = true;
 			this.Cancel.Cursor = System.Windows.Forms.Cursors.Default;
 			this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.Cancel.Location = new System.Drawing.Point(407, 300);
+			this.Cancel.Location = new System.Drawing.Point(407, 301);
 			this.Cancel.Name = "Cancel";
 			this.Cancel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.Cancel.Size = new System.Drawing.Size(68, 22);
+			this.Cancel.Size = new System.Drawing.Size(68, 24);
 			this.Cancel.TabIndex = 70;
 			this.Cancel.Text = "Cancel";
 			this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
@@ -364,7 +364,7 @@ namespace Mobius.ClientComponents
 			this.EditList.Location = new System.Drawing.Point(388, 90);
 			this.EditList.Name = "EditList";
 			this.EditList.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.EditList.Size = new System.Drawing.Size(46, 22);
+			this.EditList.Size = new System.Drawing.Size(46, 20);
 			this.EditList.TabIndex = 76;
 			this.EditList.Text = "Edit...";
 			this.EditList.Click += new System.EventHandler(this.EditList_Click);
@@ -379,7 +379,7 @@ namespace Mobius.ClientComponents
 			this.ImportList.Location = new System.Drawing.Point(328, 90);
 			this.ImportList.Name = "ImportList";
 			this.ImportList.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.ImportList.Size = new System.Drawing.Size(54, 22);
+			this.ImportList.Size = new System.Drawing.Size(54, 20);
 			this.ImportList.TabIndex = 75;
 			this.ImportList.Text = "Import...";
 			this.ImportList.Click += new System.EventHandler(this.ImportList_Click);
@@ -387,7 +387,7 @@ namespace Mobius.ClientComponents
 			// ValueList
 			// 
 			this.ValueList.Cursor = System.Windows.Forms.Cursors.IBeam;
-			this.ValueList.Location = new System.Drawing.Point(88, 92);
+			this.ValueList.Location = new System.Drawing.Point(88, 90);
 			this.ValueList.Name = "ValueList";
 			this.ValueList.Properties.Appearance.BackColor = System.Drawing.SystemColors.Window;
 			this.ValueList.Properties.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -539,7 +539,7 @@ namespace Mobius.ClientComponents
 			// 
 			// Value
 			// 
-			this.Value.Location = new System.Drawing.Point(88, 65);
+			this.Value.Location = new System.Drawing.Point(88, 64);
 			this.Value.Name = "Value";
 			this.Value.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -550,7 +550,7 @@ namespace Mobius.ClientComponents
 			// 
 			// WithinUnits
 			// 
-			this.WithinUnits.Location = new System.Drawing.Point(177, 168);
+			this.WithinUnits.Location = new System.Drawing.Point(177, 169);
 			this.WithinUnits.Name = "WithinUnits";
 			this.WithinUnits.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -578,7 +578,7 @@ namespace Mobius.ClientComponents
 			this.LabelControl.LineVisible = true;
 			this.LabelControl.Location = new System.Drawing.Point(-2, 287);
 			this.LabelControl.Name = "LabelControl";
-			this.LabelControl.Size = new System.Drawing.Size(485, 10);
+			this.LabelControl.Size = new System.Drawing.Size(485, 13);
 			this.LabelControl.TabIndex = 87;
 			this.LabelControl.Click += new System.EventHandler(this.LabelControl_Click);
 			// 
@@ -588,7 +588,7 @@ namespace Mobius.ClientComponents
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.Cancel;
-			this.ClientSize = new System.Drawing.Size(481, 327);
+			this.ClientSize = new System.Drawing.Size(481, 332);
 			this.Controls.Add(this.BasicOp);
 			this.Controls.Add(this.WithinUnits);
 			this.Controls.Add(this.Value);

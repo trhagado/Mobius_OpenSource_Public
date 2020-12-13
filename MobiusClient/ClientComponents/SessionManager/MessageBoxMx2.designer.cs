@@ -34,8 +34,8 @@ namespace Mobius.ClientComponents
 			this.NoToAllButton = new DevExpress.XtraEditors.SimpleButton();
 			this.Message = new DevExpress.XtraEditors.LabelControl();
 			this.OK = new DevExpress.XtraEditors.SimpleButton();
-			this.IconImage = new DevExpress.XtraEditors.PanelControl();
-			((System.ComponentModel.ISupportInitialize)(this.IconImage)).BeginInit();
+			this.MessageBoxImage = new System.Windows.Forms.PictureBox();
+			((System.ComponentModel.ISupportInitialize)(this.MessageBoxImage)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// YesButton
@@ -46,7 +46,7 @@ namespace Mobius.ClientComponents
 			this.YesButton.Appearance.Options.UseFont = true;
 			this.YesButton.Appearance.Options.UseForeColor = true;
 			this.YesButton.Cursor = System.Windows.Forms.Cursors.Default;
-			this.YesButton.Location = new System.Drawing.Point(-32, 94);
+			this.YesButton.Location = new System.Drawing.Point(17, 94);
 			this.YesButton.Name = "YesButton";
 			this.YesButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.YesButton.Size = new System.Drawing.Size(76, 23);
@@ -63,7 +63,7 @@ namespace Mobius.ClientComponents
 			this.Cancel.Appearance.Options.UseForeColor = true;
 			this.Cancel.Cursor = System.Windows.Forms.Cursors.Default;
 			this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.Cancel.Location = new System.Drawing.Point(240, 94);
+			this.Cancel.Location = new System.Drawing.Point(263, 94);
 			this.Cancel.Name = "Cancel";
 			this.Cancel.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.Cancel.Size = new System.Drawing.Size(76, 23);
@@ -79,7 +79,7 @@ namespace Mobius.ClientComponents
 			this.NoButton.Appearance.Options.UseFont = true;
 			this.NoButton.Appearance.Options.UseForeColor = true;
 			this.NoButton.Cursor = System.Windows.Forms.Cursors.Default;
-			this.NoButton.Location = new System.Drawing.Point(19, 94);
+			this.NoButton.Location = new System.Drawing.Point(99, 94);
 			this.NoButton.Name = "NoButton";
 			this.NoButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.NoButton.Size = new System.Drawing.Size(76, 23);
@@ -95,7 +95,7 @@ namespace Mobius.ClientComponents
 			this.NoToAllButton.Appearance.Options.UseFont = true;
 			this.NoToAllButton.Appearance.Options.UseForeColor = true;
 			this.NoToAllButton.Cursor = System.Windows.Forms.Cursors.Default;
-			this.NoToAllButton.Location = new System.Drawing.Point(76, 94);
+			this.NoToAllButton.Location = new System.Drawing.Point(99, 94);
 			this.NoToAllButton.Name = "NoToAllButton";
 			this.NoToAllButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.NoToAllButton.Size = new System.Drawing.Size(76, 23);
@@ -116,8 +116,9 @@ namespace Mobius.ClientComponents
 			this.Message.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
 			this.Message.Location = new System.Drawing.Point(56, 2);
 			this.Message.Name = "Message";
-			this.Message.Size = new System.Drawing.Size(260, 86);
+			this.Message.Size = new System.Drawing.Size(283, 86);
 			this.Message.TabIndex = 20;
+			this.Message.Text = "Message...";
 			// 
 			// OK
 			// 
@@ -128,7 +129,7 @@ namespace Mobius.ClientComponents
 			this.OK.Appearance.Options.UseForeColor = true;
 			this.OK.Cursor = System.Windows.Forms.Cursors.Default;
 			this.OK.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.OK.Location = new System.Drawing.Point(158, 94);
+			this.OK.Location = new System.Drawing.Point(181, 94);
 			this.OK.Name = "OK";
 			this.OK.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.OK.Size = new System.Drawing.Size(76, 23);
@@ -136,23 +137,23 @@ namespace Mobius.ClientComponents
 			this.OK.Text = "OK";
 			this.OK.Click += new System.EventHandler(this.OK_Click);
 			// 
-			// IconImage
+			// MessageBoxImage
 			// 
-			this.IconImage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-			this.IconImage.Location = new System.Drawing.Point(12, 2);
-			this.IconImage.Name = "IconImage";
-			this.IconImage.Size = new System.Drawing.Size(32, 86);
-			this.IconImage.TabIndex = 22;
+			this.MessageBoxImage.Image = global::Mobius.ClientComponents.Properties.Resources.MessageBoxErrorIcon32;
+			this.MessageBoxImage.Location = new System.Drawing.Point(12, 28);
+			this.MessageBoxImage.Name = "MessageBoxImage";
+			this.MessageBoxImage.Size = new System.Drawing.Size(32, 32);
+			this.MessageBoxImage.TabIndex = 23;
+			this.MessageBoxImage.TabStop = false;
 			// 
 			// MessageBoxMx2
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(328, 122);
+			this.ClientSize = new System.Drawing.Size(351, 122);
+			this.Controls.Add(this.MessageBoxImage);
 			this.Controls.Add(this.YesButton);
 			this.Controls.Add(this.NoButton);
-			this.Controls.Add(this.IconImage);
 			this.Controls.Add(this.OK);
 			this.Controls.Add(this.Message);
 			this.Controls.Add(this.NoToAllButton);
@@ -165,7 +166,7 @@ namespace Mobius.ClientComponents
 			this.Text = "MessageBoxEx";
 			this.Activated += new System.EventHandler(this.MessageBoxEx_Activated);
 			this.SizeChanged += new System.EventHandler(this.MessageBoxMx2_SizeChanged);
-			((System.ComponentModel.ISupportInitialize)(this.IconImage)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.MessageBoxImage)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -178,6 +179,6 @@ namespace Mobius.ClientComponents
 		public DevExpress.XtraEditors.SimpleButton NoToAllButton;
 		private DevExpress.XtraEditors.LabelControl Message;
 		public DevExpress.XtraEditors.SimpleButton OK;
-		private DevExpress.XtraEditors.PanelControl IconImage;
+		private System.Windows.Forms.PictureBox MessageBoxImage;
 	}
 }

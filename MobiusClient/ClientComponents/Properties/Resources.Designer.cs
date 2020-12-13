@@ -643,6 +643,16 @@ namespace Mobius.ClientComponents.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap MessageBoxErrorIcon32 {
+            get {
+                object obj = ResourceManager.GetObject("MessageBoxErrorIcon32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap MouseRotate {
             get {
                 object obj = ResourceManager.GetObject("MouseRotate", resourceCulture);

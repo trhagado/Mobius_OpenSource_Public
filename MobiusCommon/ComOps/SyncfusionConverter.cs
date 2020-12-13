@@ -254,7 +254,11 @@ namespace Mobius.ComOps
 			int dy2 = 0;
 
 			Type cType = c.GetType();
-			string cText = HttpUtility.HtmlEncode(c.Text);
+			string cText = c.Text;
+			if (Lex.StartsWith(cText, "&")) // remove shortcut indicators within control text (e.g. menu items, buttons, ...)
+				cText = cText.Substring(1);
+
+			cText = HttpUtility.HtmlEncode(c.Text);
 
 			DivMx div = new DivMx(); // the div to surround and position the control
 
@@ -297,11 +301,10 @@ namespace Mobius.ComOps
 				gb.Top += 8;
 
 				htmlFrag +=
-					"<fieldset class='fieldset-mx'>\r\n" +
-					 $"<legend class='legend-mx'>{gb.Text}</legend>\r\n";
+					"<GroupBox class='groupbox-mx'>\r\n";
 
-				codeFrag += "GroupBoxMx {c.Name} = new GroupBoxMx({divStyle});\r\n";
-
+				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
+				codeFrag += $"GroupBoxMx {c.Name} = new GroupBoxMx({initArgs});\r\n";
 
 				dy2 = 4; // move contained controls down a bit
 				ConvertContainedControls(c, dy2, ref htmlFrag, ref codeFrag, ref eventStubFrag);
@@ -317,7 +320,8 @@ namespace Mobius.ComOps
 
 				htmlFrag += ""; // todo...
 
-				codeFrag += "PanelControlMx {c.Name} = new PanelControlMx(){{{divStyle}}};\r\n";
+				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
+				codeFrag += $"PanelControlMx {c.Name} = new PanelControlMx(){initArgs};\r\n";
 
 				ConvertContainedControls(c, dy2, ref htmlFrag, ref codeFrag, ref eventStubFrag);
 
@@ -340,6 +344,8 @@ namespace Mobius.ComOps
 				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle);
 
 				LabelControl lc = c as LabelControl;
+				TextOptions to = lc.Appearance.TextOptions;
+
 				if (lc.LineVisible)
 				{
 					if (Lex.IsUndefined(lc.Text))
@@ -349,15 +355,28 @@ namespace Mobius.ComOps
 						htmlFrag += $"<hr data-content='{lc.Text}' class=' class='hr-mobius hr-text'>\r\n";
 				}
 
-				else if (Lex.IsDefined(lc.Text))
+				else if (Lex.IsDefined(lc.Text) || to.WordWrap == WordWrap.Wrap)
 				{
-					if (lc.BorderStyle != BorderStyles.NoBorder && lc.BorderStyle != BorderStyles.Default)
-						divStyle += " border: 1px solid #acacac; background-color: #eeeeee; ";
+					//if (lc.BorderStyle != BorderStyles.NoBorder && lc.BorderStyle != BorderStyles.Default) // add border?
+					//	divStyle += " border: 1px solid #acacac; background-color: #eeeeee; ";
 
-					string spanStyle = "";
-					TextOptions to = lc.Appearance.TextOptions;
-					if (to.WordWrap == WordWrap.Wrap)
-						spanStyle = " style='height: 100%; padding: 0px 2px 0px 2px;'"; // align with top of containing div and provide a bit of side padding
+					string spanStyle = ""; // default centers vertically 
+																 //if (to.WordWrap == WordWrap.Wrap) 
+																 //	spanStyle = " style='height: 100%; padding: 0px 2px 0px 2px;'"; // align with top of containing div and provide a bit of side padding
+
+					/* 
+					 * For the MessageBoxMx where messages can overflow the div in both x and y:
+					 * <div @ref='Message.DivRef' class='control-div-mx font-mx defaults-mx' style='@Message?.DivStyle?.StyleString'>
+					 *   <span style='padding: 0px 2px 0px 2px;'>@Message.Text</span>
+					 * </div>
+					 * 
+					 * 
+					 *   LabelControlMx Message = new LabelControlMx() { Text = "Message...", DivStyle = new CssStyleMx("position: absolute; display: 
+					 *   flex; align-items: center; overflow-x: scroll; overflow-y: scroll; 
+					 *   left: 56px; top: 34px; width: calc(100% - 74px); height: calc(100% - 68px);  
+					 *   border: 0px solid #acacac; background-color: #eeeeee; ") };
+					 * 
+					 */
 
 					htmlFrag += $"<span {spanStyle}>@{c.Name}.Text</span>\r\n";
 				}
@@ -387,44 +406,19 @@ namespace Mobius.ComOps
 				div.Close(ref htmlFrag);  
 			}
 
-			/////////////////////////////////////////////////////////////////////////////////
-			// ComboBoxEdit - Text box with dropdown menu attached
-			// Example:
-			//  <SfComboBox TValue="string" TItem="Countries" @onkeypress="@KeyPressed" DataSource="@Country">
-			//	 <ComboBoxFieldSettings Text = "Name" Value = "Code" ></ ComboBoxFieldSettings >
-			//   <ComboBoxEvents TValue='string' ValueChange='control_ValueChange'></ComboBoxEvents> 
-			//	</ SfComboBox>
-			/////////////////////////////////////////////////////////////////////////////////
-
-			else if (c is ComboBoxEdit)
+			else if (c is System.Windows.Forms.PictureBox) // Simple image
 			{
-				ComboBoxEdit cb = c as ComboBoxEdit;
+				PictureBox pb = c as PictureBox;
 
 				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle);
 
-				htmlFrag += $@"<SfComboBox TValue='string' TItem='ListItemMx' 
-					@ref='{c.Name}.ComboBox' Placeholder='@{c.Name}.InitialText' DataSource='@{c.Name}.Items'>
-						<ComboBoxFieldSettings Text='Text' IconCss='IconCss' Value='Value'></ComboBoxFieldSettings>
-						<ComboBoxEvents TValue='string' TItem='ListItemMx' ValueChange='{c.Name}_ValueChange'></ComboBoxEvents> 
-					</SfComboBox> " + "\r\n";
+				if (pb.BorderStyle != BorderStyle.None)
+					divStyle += " border: 1px solid #acacac; background-color: #eeeeee; ";
+
+			  htmlFrag += $"<img src='@{c.Name}.ImageName' width='{c.Width}' height='{c.Height}' />\r\n"; 
 
 				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
-				codeFrag += $"ComboBoxMx {c.Name} = new ComboBoxMx(){initArgs};\r\n";
-
-				eventStubFrag += $@"
-
-				/// <summary>
-				/// {c.Name}_ValueChange
-				/// </summary>
-				/// <returns></returns>
-				
-				private async Task {c.Name}_ValueChange(ChangeEventArgs<string, ListItemMx> args)
-				{{
-						// todo...
-						await Task.Yield();
-						return;
-				 
-					}}" + "\r\n";
+				codeFrag += $"PictureBoxMx {c.Name} = new PictureBoxMx(){initArgs};\r\n";
 
 				div.Close(ref htmlFrag);
 			}
@@ -443,7 +437,7 @@ namespace Mobius.ComOps
 
 			else if (c is DropDownButton)
 			{
-				SimpleButton db = c as SimpleButton;
+				DropDownButton db = c as DropDownButton;
 
 				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle);
 
@@ -568,11 +562,18 @@ namespace Mobius.ComOps
 
 			else if (c is SimpleButton)
 			{
-				div.Build(pc, c, dy - 3, ref htmlFrag, ref codeFrag, out divStyle);
-
 				// Example: <SfButton CssClass="e-flat" IsToggle="true" IsPrimary="true" 
 				//            Content="@Content" IconCss="@IconCss" @ref="ToggleButton" @onclick="OnToggleClick"></SfButton>
+
 				SimpleButton b = c as SimpleButton;
+				dy2 = dy;
+				if ((b.Anchor & AnchorStyles.Top) != 0)
+					dy2 -= 3;
+
+				else if ((b.Anchor & AnchorStyles.Bottom) != 0)
+					dy2 += 3;
+
+				div.Build(pc, c, dy2, ref htmlFrag, ref codeFrag, out divStyle);
 
 				string cssClass = "button-mx";
 
@@ -676,7 +677,7 @@ namespace Mobius.ComOps
 
 				htmlFrag += $@"<SfListView CssClass='listview-mx' TValue='ListItemMx' ShowCheckBox='true' Width='100%' Height='100%'
             @ref='@{c.Name}.SfListView' DataSource='@{c.Name}.Items'>
-          <ListViewFieldSettings TValue='ListItemMx' Text='Description' Id='Id' IsChecked='IsChecked'> </ListViewFieldSettings>
+          <ListViewFieldSettings TValue='ListItemMx' Text='Text' Id='Id' IsChecked='IsChecked'> </ListViewFieldSettings>
           <ListViewEvents TValue='ListItemMx' Clicked='{c.Name}_Clicked'>
           </ListViewEvents>
         </SfListView>" + "\r\n";
@@ -702,13 +703,56 @@ namespace Mobius.ComOps
 				div.Close(ref htmlFrag);
 			}
 
+
+			/////////////////////////////////////////////////////////////////////////////////
+			// ComboBoxEdit - Text box with dropdown menu attached
+			// Example:
+			//  <SfComboBox TValue="string" TItem="Countries" @onkeypress="@KeyPressed" DataSource="@Country">
+			//	 <ComboBoxFieldSettings Text = "Name" Value = "Code" ></ ComboBoxFieldSettings >
+			//   <ComboBoxEvents TValue='string' ValueChange='control_ValueChange'></ComboBoxEvents> 
+			//	</ SfComboBox>
+			/////////////////////////////////////////////////////////////////////////////////
+
+			else if (c is ComboBoxEdit)
+			{
+				ComboBoxEdit cb = c as ComboBoxEdit;
+
+				div.Build(pc, c, dy-2, ref htmlFrag, ref codeFrag, out divStyle);
+
+				htmlFrag += $@"<SfComboBox TValue='string' TItem='ListItemMx' Enabled='@{c.Name}.Enabled'
+					@ref='{c.Name}.ComboBox' Placeholder='@{c.Name}.InitialText' DataSource='@{c.Name}.Items'>
+						<ComboBoxFieldSettings Text='Text' IconCss='IconCss' Value='Value'></ComboBoxFieldSettings>
+						<ComboBoxEvents TValue='string' TItem='ListItemMx' ValueChange='{c.Name}_ValueChange'></ComboBoxEvents> 
+					</SfComboBox> " + "\r\n";
+
+				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
+				codeFrag += $"ComboBoxMx {c.Name} = new ComboBoxMx(){initArgs};\r\n";
+
+				eventStubFrag += $@"
+
+				/// <summary>
+				/// {c.Name}_ValueChange
+				/// </summary>
+				/// <returns></returns>
+				
+				private async Task {c.Name}_ValueChange(ChangeEventArgs<string, ListItemMx> args)
+				{{
+						// todo...
+						await Task.Yield();
+						return;
+				 
+					}}" + "\r\n";
+
+				div.Close(ref htmlFrag);
+			}
+
 			/////////////////////////////////////////////////////////////////////////////////
 			// TextEdit
 			/////////////////////////////////////////////////////////////////////////////////
 
 			else if (c is TextEdit)
 			{
-				div.Build(pc, c, dy - 2, ref htmlFrag, ref codeFrag, out divStyle); // move the textbox up a few pixels to align better with other controls
+				div.Build(pc, c, dy-2, ref htmlFrag, ref codeFrag, out divStyle); // move the textbox up a few pixels to align better with other controls
 
 				// Example: <SfTextBox @bind-Value="@TextBoxValue" @ref="@SfTextBox" Type="InputType.Text" Placeholder="@InitialText" />
 
@@ -792,10 +836,10 @@ namespace Mobius.ComOps
 
 
 		/****************************************/
-		/*** Template for building Razor file ***/
-		/****************************************/
+					/*** Template for building Razor file ***/
+					/****************************************/
 
-		static string RazorTemplate = @"
+					static string RazorTemplate = @"
 @using Mobius.ComOps
 @using WebShell
 
@@ -1072,11 +1116,13 @@ namespace Mobius.ComOps
 
 				// Note: for buttons it looks like they could move up one px & be 2px taller
 
+				int cHeight = c.Height + 2; // make a bit taller
+
 				if (anchorTop)
 				{
 					style += "top: " + cTop + "px; ";
 					if (!anchorBottom)
-						widthHeight += "height: " + c.Height + "px; ";
+						widthHeight += "height: " + cHeight + "px; ";
 
 					else // if top & bottom defined then set height as a calc()
 						widthHeight += "height: calc(100% - " + (cTop + (pc.Height - cBottom)) + "px); ";
@@ -1085,7 +1131,7 @@ namespace Mobius.ComOps
 				else if (anchorBottom) // set bottom and height
 				{
 					style += "bottom: " + (pc.Height - cBottom) + "px; ";
-					widthHeight += "height: " + c.Height + "px; ";
+					widthHeight += "height: " + cHeight + "px; ";
 				}
 
 				style += widthHeight; // put width height after location
