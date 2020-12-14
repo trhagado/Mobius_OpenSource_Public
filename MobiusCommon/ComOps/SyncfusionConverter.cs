@@ -15,6 +15,7 @@ using Microsoft.Win32;
 
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraTab;
 using DevExpress.Utils;
 
 namespace Mobius.ComOps
@@ -108,7 +109,7 @@ namespace Mobius.ComOps
 					code += @"
 		public SfContextMenu<MenuItem> ContextMenu; // the context menu to show
 		public List<MenuItem> MenuItems = // MenuItems data source for ContextMenu
-			new List<MenuItem> { new MenuItem { Text = ""Loading..."" } };";
+			new List<MenuItem> { new MenuItem { Text = ""Loading..."" } };" + "\r\n";
 				}
 
 				ConvertContainedControls(pc, 0, ref html, ref code, ref eventStubs);
@@ -269,24 +270,26 @@ namespace Mobius.ComOps
 
 			if (c is UserControl || c is XtraUserControl)
 			{
+				string ctlClassName = cType.Name;
 				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle); // build the div
-				htmlFrag += $"<{cType.Name} @ref = '{cType.Name}'/>\r\n"; // add control with a @ref reference (and parameters) to html
-
-				div.Close(ref htmlFrag);
-
+				htmlFrag += $"<{ctlClassName} @ref='{c.Name}' />\r\n"; // add control with a @ref reference (and parameters) to html
 
 				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
-				codeFrag += $"UserControlMx {c.Name} = new UserControlMx(){initArgs};\r\n";
+				codeFrag += $"{ctlClassName} {c.Name} = new {ctlClassName}(){initArgs};\r\n";
 
-				codeFrag += $"\r\npublic {cType.Name} {cType.Name}\r\n"; // add a variable to contain a reference to the control instance
+				//htmlFrag += $"</ {ctlClassName}>\r\n"; // not needed yet, closed above
 
-				new SyncfusionConverter().ToRazor(c); // write the definition to separate Razor file if not done yet
+				div.Close(ref htmlFrag);
 			}
 
 			////////////////////////////////////////////////////////////////////////////////
 			// For WinForms/DX container controls write reference the control and subcontrols
 			// to this file.
 			////////////////////////////////////////////////////////////////////////////////
+
+			/****************/
+			/*** GroupBox ***/
+			/****************/
 
 			else if (c is GroupBox)
 			{
@@ -314,6 +317,10 @@ namespace Mobius.ComOps
 				div.Close(ref htmlFrag);
 			}
 
+			/*************************/
+			/*** Panel / XtraPanel ***/
+			/*************************/
+
 			else if (c is Panel || c is XtraPanel)
 			{
 				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle);
@@ -330,8 +337,129 @@ namespace Mobius.ComOps
 				div.Close(ref htmlFrag);
 			}
 
+			/***********************/
+			/*** XtraTab Control ***/
+			/***********************/
+
+			else if (c is XtraTabControl)
+			{
+
+				/* Example:
+					 <SfTab ID="QueriesControlTab" Height="32px" Width="100%"
+									 CssClass="tab-workaround"
+									 ShowCloseButton="true"
+									 LoadOn="ContentLoad.Demand"
+									 @ref="Tabs"
+									 SelectedItemChanged="Tab_SelectedItemChanged">
+
+							<TabEvents Created="Tab_Created"
+												 Adding="Tab_Adding"
+												 Added="Tab_Added"
+												 Removing="Tab_Removing"
+												 Removed="Tab_Removed"
+												 Selecting="Tab_Selecting"
+												 Selected="Tab_Selected"
+												 Destroyed="Tab_Destroyed">
+							</TabEvents>
+
+							<TabItems>
+								<TabItem>
+									<ChildContent>
+										<TabHeader Text="Query 1" IconCss="QueryIconMx"></TabHeader>
+									</ChildContent>
+							</TabItem>
+						</TabItems>
+
+					</SfTab>
+
+				 */
+
+
+				XtraTabControl tab = c as XtraTabControl;
+
+				//tab.Height += 8;
+				//tab.Top -= 8;
+
+				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle); // build the div
+
+				//tab.Height -= 8;
+				//tab.Top += 8;
+
+				htmlFrag +=
+					@"<SfTab class='tab-control-mx' Height='100%' Width='100%'>
+							<TabItems>" + "\r\n";
+
+				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
+				codeFrag += $"TabMx {c.Name} = new TabMx(){initArgs};\r\n";
+
+				dy2 = 0; // adjust position of contained controls
+				ConvertContainedControls(c, dy2, ref htmlFrag, ref codeFrag, ref eventStubFrag);
+
+				htmlFrag +=
+					@"</TabItems>
+			</SfTab>\r\n";
+
+				div.Close(ref htmlFrag);
+			}
+
+			/*******************/
+			/*** XtraTabPage ***/
+			/*******************/
+
+			else if (c is XtraTabPage)
+			{
+
+				/* Example:
+				 * 
+					 <TabItem>
+              <ChildContent>
+                  <TabHeader Text='Rome'></TabHeader>
+              </ChildContent>
+              <ContentTemplate>
+                  <div id='div1' ...>
+                  </div>
+									...	                       																			
+                  <div id='divN' ...>
+                  </div>
+              </ContentTemplate>
+          </TabItem>
+
+				 */
+
+				XtraTabPage tp = c as XtraTabPage;
+
+				//tab.Height += 8;
+				//tab.Top -= 8;
+
+				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle); // build the div
+
+				//tab.Height -= 8;
+				//tab.Top += 8;
+
+				htmlFrag +=
+					$@"
+					 <TabItem>
+              <ChildContent>
+                  <TabHeader Text='{tp.Text}'></TabHeader>
+              </ChildContent>
+              <ContentTemplate>
+						";
+
+				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
+				codeFrag += $"TabPageMx {c.Name} = new TabPageMx({initArgs});\r\n";
+
+				dy2 = 0; // adjust position of contained controls
+				ConvertContainedControls(c, dy2, ref htmlFrag, ref codeFrag, ref eventStubFrag);
+
+				htmlFrag +=
+					@"</ContentTemplate>
+						</TabItem>\r\n";
+
+				div.Close(ref htmlFrag);
+			}
+
 			////////////////////////////////////////////////////////////////////////////////
-			// Winforms/DX builtin controls
+			// WinForms/DX builtin controls (non-grouping)
 			////////////////////////////////////////////////////////////////////////////////
 
 			/////////////////////////////////////////////////////////////////////////////////
@@ -372,7 +500,8 @@ namespace Mobius.ComOps
 					 * 
 					 * 
 					 *   LabelControlMx Message = new LabelControlMx() { Text = "Message...", DivStyle = new CssStyleMx("position: absolute; display: 
-					 *   flex; align-items: center; overflow-x: scroll; overflow-y: scroll; 
+					 *   flex; align-items: center; 
+					 *   overflow: hidden; text-overflow: ellipsis; [OR] overflow-x: scroll; overflow-y: scroll; 
 					 *   left: 56px; top: 34px; width: calc(100% - 74px); height: calc(100% - 68px);  
 					 *   border: 0px solid #acacac; background-color: #eeeeee; ") };
 					 * 
@@ -403,7 +532,7 @@ namespace Mobius.ComOps
 				initArgs = BuildInitArgs("Text", l.Text, "DivStyle", NewCss(divStyle));
 				codeFrag += $"LabelControlMx {c.Name} = new LabelControlMx(){initArgs};\r\n";
 
-				div.Close(ref htmlFrag);  
+				div.Close(ref htmlFrag);
 			}
 
 			else if (c is System.Windows.Forms.PictureBox) // Simple image
@@ -415,7 +544,7 @@ namespace Mobius.ComOps
 				if (pb.BorderStyle != BorderStyle.None)
 					divStyle += " border: 1px solid #acacac; background-color: #eeeeee; ";
 
-			  htmlFrag += $"<img src='@{c.Name}.ImageName' width='{c.Width}' height='{c.Height}' />\r\n"; 
+				htmlFrag += $"<img src='@{c.Name}.ImageName' width='{c.Width}' height='{c.Height}' />\r\n";
 
 				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
 				codeFrag += $"PictureBoxMx {c.Name} = new PictureBoxMx(){initArgs};\r\n";
@@ -717,18 +846,27 @@ namespace Mobius.ComOps
 			{
 				ComboBoxEdit cb = c as ComboBoxEdit;
 
-				div.Build(pc, c, dy-2, ref htmlFrag, ref codeFrag, out divStyle);
+				div.Build(pc, c, dy - 2, ref htmlFrag, ref codeFrag, out divStyle);
 
 				htmlFrag += $@"<SfComboBox TValue='string' TItem='ListItemMx' Enabled='@{c.Name}.Enabled'
 					@ref='{c.Name}.ComboBox' Placeholder='@{c.Name}.InitialText' DataSource='@{c.Name}.Items'>
 						<ComboBoxFieldSettings Text='Text' IconCss='IconCss' Value='Value'></ComboBoxFieldSettings>
-						<ComboBoxEvents TValue='string' TItem='ListItemMx' ValueChange='{c.Name}_ValueChange'></ComboBoxEvents> 
+						<ComboBoxEvents TValue='string' TItem='ListItemMx' Focus='{c.Name}_Focus' ValueChange='{c.Name}_ValueChange'></ComboBoxEvents> 
 					</SfComboBox> " + "\r\n";
 
 				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
 				codeFrag += $"ComboBoxMx {c.Name} = new ComboBoxMx(){initArgs};\r\n";
 
 				eventStubFrag += $@"
+
+				/// <summary>
+				/// {c.Name}_Focus - Component has received focus event
+				/// </summary>
+				
+				private void {c.Name}_Focus(object args)
+				{{
+					return;
+				}}
 
 				/// <summary>
 				/// {c.Name}_ValueChange
@@ -752,37 +890,48 @@ namespace Mobius.ComOps
 
 			else if (c is TextEdit)
 			{
-				div.Build(pc, c, dy-2, ref htmlFrag, ref codeFrag, out divStyle); // move the textbox up a few pixels to align better with other controls
+				div.Build(pc, c, dy - 2, ref htmlFrag, ref codeFrag, out divStyle); // move the textbox up a few pixels to align better with other controls
 
 				// Example: <SfTextBox @bind-Value="@TextBoxValue" @ref="@SfTextBox" Type="InputType.Text" Placeholder="@InitialText" />
 
 				TextEdit te = c as TextEdit;
+				bool editable = !te.Properties.ReadOnly;
+
 
 				htmlFrag += $@"<SfTextBox CssClass='e-small sftextbox-mx defaults-mx'  Type='InputType.Text' 
-					@ref='{c.Name}.SfTextBox' @bind-Value='{c.Name}.Text' Input='{c.Name}_Input' Focus='{c.Name}_Focus' />" + "\r\n";
+					@ref='{c.Name}.SfTextBox' @bind-Value='{c.Name}.Text'";
+
+				if (editable)
+					htmlFrag += $" Input='{c.Name}_Input' Focus='{c.Name}_Focus' ";
+					
+				htmlFrag += "/>\r\n";
 
 				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
 				codeFrag += $"TextBoxMx {c.Name} = new TextBoxMx(){initArgs};\r\n";
 
-				eventStubFrag += $@"
 
-				/// <summary>
-				/// {c.Name}_Focus - Component has received focus event
-				/// </summary>
+				if (editable)
+				{
+					eventStubFrag += $@"
+
+					/// <summary>
+					/// {c.Name}_Focus - Component has received focus event
+					/// </summary>
 				
-				private void {c.Name}_Focus(FocusInEventArgs args)
-				{{
-					return;
-				}}
+					private void {c.Name}_Focus(FocusInEventArgs args)
+					{{
+						return;
+					}}
 
-				/// <summary>
-				/// {c.Name}_Input - Input text has changed event
-				/// </summary>
+					/// <summary>
+					/// {c.Name}_Input - Input text has changed event
+					/// </summary>
 
-				private void {c.Name}_Input(InputEventArgs args)
-				{{
-					return;
-				}}" + "\r\n";
+					private void {c.Name}_Input(InputEventArgs args)
+					{{
+						return;
+					}}" + "\r\n";
+				}
 
 				div.Close(ref htmlFrag);
 			}
@@ -984,7 +1133,13 @@ namespace Mobius.ComOps
 		{
 			//DebugLog.Message(args?.Item?.Text != null ? args.Item.Text : ""null"");
 			return;
-		}" + "\r\n\r\n";
+		}
+
+/*********************************/
+/*** Component-specific events ***/
+/*********************************/" + 
+			
+			"\r\n\r\n";
 
 
 		NasClass Nas(object v)

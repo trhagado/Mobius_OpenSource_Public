@@ -63,6 +63,7 @@ namespace Mobius.ClientComponents
 		public static MoleculeMx EditMolecule(MoleculeMx originalMol)
 		{
 			MoleculeViewer mv = new MoleculeViewer();
+
 			MoleculeMx copy = originalMol.Clone();
 			mv.SetupForm(copy);
 
@@ -88,6 +89,8 @@ namespace Mobius.ClientComponents
 
 			if (Lex.IsUndefined(title)) title = "MoleculeViewer";
 			mv.Text = title;
+
+			new SyncfusionConverter().ToRazor(mv, true);
 
 			MoleculeMx copy = mol.Clone();
 			mv.SetupForm(copy);
