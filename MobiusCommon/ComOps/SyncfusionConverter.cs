@@ -291,7 +291,7 @@ namespace Mobius.ComOps
 			/*** GroupBox ***/
 			/****************/
 
-			else if (c is GroupBox)
+			else if (cType == typeof(GroupBox))
 			{
 				GroupBox gb = c as GroupBox;
 
@@ -321,7 +321,7 @@ namespace Mobius.ComOps
 			/*** Panel / XtraPanel ***/
 			/*************************/
 
-			else if (c is Panel || c is XtraPanel)
+			else if (cType == typeof(Panel) || cType == typeof(PanelControl) || cType == typeof(XtraPanel))
 			{
 				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle);
 
@@ -341,7 +341,7 @@ namespace Mobius.ComOps
 			/*** XtraTab Control ***/
 			/***********************/
 
-			else if (c is XtraTabControl)
+			else if (cType == typeof(XtraTabControl))
 			{
 
 				/* Example:
@@ -406,7 +406,7 @@ namespace Mobius.ComOps
 			/*** XtraTabPage ***/
 			/*******************/
 
-			else if (c is XtraTabPage)
+			else if (cType == typeof(XtraTabPage))
 			{
 
 				/* Example:
@@ -446,7 +446,7 @@ namespace Mobius.ComOps
 						";
 
 				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
-				codeFrag += $"TabPageMx {c.Name} = new TabPageMx({initArgs});\r\n";
+				codeFrag += $"TabPageMx {c.Name} = new TabPageMx(){initArgs};\r\n";
 
 				dy2 = 0; // adjust position of contained controls
 				ConvertContainedControls(c, dy2, ref htmlFrag, ref codeFrag, ref eventStubFrag);
@@ -467,7 +467,7 @@ namespace Mobius.ComOps
 			/////////////////////////////////////////////////////////////////////////////////
 
 
-			else if (c is LabelControl) // DX LabelControl
+			else if (cType == typeof(LabelControl)) // DX LabelControl
 			{
 				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle);
 
@@ -516,7 +516,7 @@ namespace Mobius.ComOps
 				div.Close(ref htmlFrag);
 			}
 
-			else if (c is System.Windows.Forms.Label) // Simpler Windows.Forms Label
+			else if (cType == typeof(System.Windows.Forms.Label)) // Simpler Windows.Forms Label
 			{
 				Label l = c as Label;
 
@@ -535,7 +535,7 @@ namespace Mobius.ComOps
 				div.Close(ref htmlFrag);
 			}
 
-			else if (c is System.Windows.Forms.PictureBox) // Simple image
+			else if (cType == typeof(System.Windows.Forms.PictureBox)) // Simple image
 			{
 				PictureBox pb = c as PictureBox;
 
@@ -564,7 +564,7 @@ namespace Mobius.ComOps
 			//
 			/////////////////////////////////////////////////////////////////////////////////
 
-			else if (c is DropDownButton)
+			else if (cType == typeof(DropDownButton))
 			{
 				DropDownButton db = c as DropDownButton;
 
@@ -590,7 +590,7 @@ namespace Mobius.ComOps
 			/////////////////////////////////////////////////////////////////////////////////
 
 
-			else if (c is CheckEdit)
+			else if (cType == typeof(CheckEdit))
 			{
 				if (dy == 0)
 					dy = -4; // move up a bit
@@ -652,7 +652,7 @@ namespace Mobius.ComOps
 			// CheckButton - Like a RadioButton but with an image et al in place of a checkmark
 			/////////////////////////////////////////////////////////////////////////////////
 
-			else if (c is CheckButton)
+			else if (cType == typeof(CheckButton))
 			{
 				// CheckButtons and their groups are handled in the same way as RadioButtons
 				// with the value for checked comparison being the ID of the SfButton.
@@ -689,7 +689,7 @@ namespace Mobius.ComOps
 			// SimpleButton
 			/////////////////////////////////////////////////////////////////////////////////
 
-			else if (c is SimpleButton)
+			else if (cType == typeof(SimpleButton))
 			{
 				// Example: <SfButton CssClass="e-flat" IsToggle="true" IsPrimary="true" 
 				//            Content="@Content" IconCss="@IconCss" @ref="ToggleButton" @onclick="OnToggleClick"></SfButton>
@@ -798,7 +798,7 @@ namespace Mobius.ComOps
 			// CheckedListBoxControl
 			/////////////////////////////////////////////////////////////////////////////////
 
-			else if (c is CheckedListBoxControl)
+			else if (cType == typeof(CheckedListBoxControl))
 			{
 				CheckedListBoxControl db = c as CheckedListBoxControl;
 
@@ -842,7 +842,7 @@ namespace Mobius.ComOps
 			//	</ SfComboBox>
 			/////////////////////////////////////////////////////////////////////////////////
 
-			else if (c is ComboBoxEdit)
+			else if (cType == typeof(ComboBoxEdit))
 			{
 				ComboBoxEdit cb = c as ComboBoxEdit;
 
@@ -885,21 +885,26 @@ namespace Mobius.ComOps
 			}
 
 			/////////////////////////////////////////////////////////////////////////////////
-			// TextEdit
+			// TextEdit / MemoEdit
 			/////////////////////////////////////////////////////////////////////////////////
 
-			else if (c is TextEdit)
+			else if (cType == typeof(TextEdit) || cType == typeof(MemoEdit))
 			{
 				div.Build(pc, c, dy - 2, ref htmlFrag, ref codeFrag, out divStyle); // move the textbox up a few pixels to align better with other controls
 
 				// Example: <SfTextBox @bind-Value="@TextBoxValue" @ref="@SfTextBox" Type="InputType.Text" Placeholder="@InitialText" />
 
-				TextEdit te = c as TextEdit;
+				TextEdit te = c as TextEdit; 
 				bool editable = !te.Properties.ReadOnly;
+				string readOnly = editable ? "true" : "false";
 
+				MemoEdit me = c as MemoEdit; // MemoEdit is a subclass of textedit
+				string multiline = me != null ? "true" : "false"; 
+
+				string enabled = te.Enabled ? "true" : "false";
 
 				htmlFrag += $@"<SfTextBox CssClass='e-small sftextbox-mx defaults-mx'  Type='InputType.Text' 
-					@ref='{c.Name}.SfTextBox' @bind-Value='{c.Name}.Text'";
+					@ref='{c.Name}.SfTextBox' @bind-Value='{c.Name}.Text' Readonly='{readOnly}' Multiline='{multiline}' Enabled ='{enabled}'";
 
 				if (editable)
 					htmlFrag += $" Input='{c.Name}_Input' Focus='{c.Name}_Focus' ";
@@ -1230,8 +1235,8 @@ namespace Mobius.ComOps
 			string styleAttributesToRemove = null,
 			string styleAttributesToAdd = null)
 		{
-
-			if (typeof(Form).IsAssignableFrom(pc.GetType())) // Form or XtraForm?
+			Type pcType = pc.GetType();
+			if (pcType == typeof(Form) || pcType == typeof(XtraForm)) // Form or XtraForm?
 				dy += 32; // add pixel height of WinForms window header to div top/bottom to adjust for move to HTML
 
 			int cTop = c.Top + dy; // move top and bottom down to correct from WinForms to HTML
