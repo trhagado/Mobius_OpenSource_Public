@@ -146,9 +146,16 @@ namespace Mobius.ComOps
 
 					<CascadingValue Value='@this'>" + "\r\n";
 
+				code = $@"
+
+		/******************************* File links *********************************/
+		public static {pc.Name} RazorFile => {pc.Name}.CsFile; 
+		/****************************************************************************/" + "\r\n\r\n";
+
+
 				ConvertContainedControls(pc, 0, ref html, ref code, ref eventStubs);
 
-				html += "</CascadingValue>"; // finish up the HTML part of the component definition
+				html += " </CascadingValue>"; // finish up the HTML part of the component definition
 
 			}
 
@@ -222,6 +229,16 @@ namespace Mobius.ComOps
 				cl.Insert(ci, c);
 			}
 
+			if (cl.Count == 0) // create a "null" control and add to the list so the div for the container gets created
+			{
+				DivMx c = new DivMx();
+				c.Location = new Point(0, 0);
+				c.Size = new Size(1, 1);
+				c.Dock = DockStyle.Fill;
+				c.Name = pc.GetType().Name;
+				cl.Add(c);
+			}
+
 			foreach (Control c in cl)
 			{
 				//if (!cc.Visible) continue;
@@ -270,9 +287,15 @@ namespace Mobius.ComOps
 
 			if (c is UserControl || c is XtraUserControl)
 			{
+				
+				UserControl uc = c as UserControl;
+
 				string ctlClassName = cType.Name;
-				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle); // build the div
-				htmlFrag += $"<{ctlClassName} @ref='{c.Name}' />\r\n"; // add control with a @ref reference (and parameters) to html
+
+				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle, ""); // build the div
+
+				if (uc.BorderStyle != BorderStyle.None)
+					divStyle += " border: 1px solid #acacac; background-color: #ffffff; ";
 
 				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
 				codeFrag += $"{ctlClassName} {c.Name} = new {ctlClassName}(){initArgs};\r\n";
@@ -699,8 +722,8 @@ namespace Mobius.ComOps
 				if ((b.Anchor & AnchorStyles.Top) != 0)
 					dy2 -= 3;
 
-				else if ((b.Anchor & AnchorStyles.Bottom) != 0)
-					dy2 += 3;
+				//else if ((b.Anchor & AnchorStyles.Bottom) != 0)
+				//	dy2 += 3;
 
 				div.Build(pc, c, dy2, ref htmlFrag, ref codeFrag, out divStyle);
 
@@ -896,7 +919,7 @@ namespace Mobius.ComOps
 
 				TextEdit te = c as TextEdit; 
 				bool editable = !te.Properties.ReadOnly;
-				string readOnly = editable ? "true" : "false";
+				string readOnly = editable ? "false" : "true";
 
 				MemoEdit me = c as MemoEdit; // MemoEdit is a subclass of textedit
 				string multiline = me != null ? "true" : "false"; 
@@ -937,6 +960,20 @@ namespace Mobius.ComOps
 						return;
 					}}" + "\r\n";
 				}
+
+				div.Close(ref htmlFrag);
+			}
+
+			/////////////////////////////////////////////////////////////////////////////////
+			// Artificial DivMx control so the div for an empty container control gets created
+			/////////////////////////////////////////////////////////////////////////////////
+
+			else if (cType == typeof(DivMx)) // "null" control
+			{
+				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle);
+
+				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
+				codeFrag += $"DivMx {c.Name} = new DivMx(){initArgs};\r\n";
 
 				div.Close(ref htmlFrag);
 			}
@@ -1201,20 +1238,20 @@ namespace Mobius.ComOps
 	/// DivMx Class
 	/// </summary>
 
-	public class DivMx
+	public class DivMx : Control
 	{
 		public string Class = "font-mx defaults-mx";
 		public string Position = "absolute";
 		public string Display = "flex";
 		public string AlignItems = "center";
 
-		public string Width = "";
-		public string Height = "";
+		//public string Width = "";
+		//public string Height = "";
 
-		public string Top = "";
-		public string Bottom = "";
-		public string Left = "";
-		public string Right = "";
+		//public string Top = "";
+		//public string Bottom = "";
+		//public string Left = "";
+		//public string Right = "";
 
 		public string Border = ""; // "1px solid yellow";
 
@@ -1236,7 +1273,7 @@ namespace Mobius.ComOps
 			string styleAttributesToAdd = null)
 		{
 			Type pcType = pc.GetType();
-			if (pcType == typeof(Form) || pcType == typeof(XtraForm)) // Form or XtraForm?
+			if (pc is Form || pc is XtraForm) // Form or XtraForm?
 				dy += 32; // add pixel height of WinForms window header to div top/bottom to adjust for move to HTML
 
 			int cTop = c.Top + dy; // move top and bottom down to correct from WinForms to HTML
@@ -1246,8 +1283,8 @@ namespace Mobius.ComOps
 			string code = ""; // nothing yet
 			string style = "position: absolute; display: flex; align-items: center; ";
 
-			if (c.Dock == DockStyle.Fill) // if Dock defined than use that (Fill only for now)
-				div += "width: 100%; height: 100%; ";
+			if (c.Dock == DockStyle.Fill) // if Dock defined the set width/height to 100% (i.e. Fill only for now)
+				style += "width: 100%; height: 100%; ";
 
 			else // use Anchor settings
 			{
@@ -1296,6 +1333,7 @@ namespace Mobius.ComOps
 
 				style += widthHeight; // put width height after location
 			}
+
 
 			div += " >\r\n"; // finish up div tag
 

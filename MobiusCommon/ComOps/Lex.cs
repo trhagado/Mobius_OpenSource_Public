@@ -1403,6 +1403,20 @@ namespace Mobius.ComOps
 		}
 
 		/// <summary>
+		/// Trim a string
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
+
+		public static string Trim(
+			string s,
+			char trimChar = ' ')
+		{
+			if (s != null) return s.Trim(trimChar);
+			else return null;
+		}
+
+		/// <summary>
 		/// Truncate a string to specified max length as needed
 		/// </summary>
 		/// <param name="s"></param>
