@@ -565,6 +565,7 @@ namespace Mobius.CdkMx
 
 		public static string GetMolecularFormula(IAtomContainer mol)
 		{
+			if (mol == null) return "";
 			IMolecularFormula moleculeFormula = MolecularFormulaManipulator.GetMolecularFormula(mol);
 			String formula = MolecularFormulaManipulator.GetString(moleculeFormula);
 			return formula;
