@@ -38,7 +38,7 @@ namespace Mobius.ClientComponents
 
 			// Setup
 
-			new SyncfusionConverter().ToRazor(Instance);
+			new PlotlyDashConverter().ToDash(Instance);
 
 			ColumnFormatEnum df = qc.DisplayFormat;
 			if (df != ColumnFormatEnum.HtmlText)

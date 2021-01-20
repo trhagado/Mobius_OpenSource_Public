@@ -41,7 +41,7 @@ namespace Mobius.ClientComponents
 
 			if (Instance == null) Instance = new CriteriaCompoundId();
 
-			new SyncfusionConverter().ToRazor(Instance);
+			new PlotlyDashConverter().ToDash(Instance);
 
 			if (qc.IsKey) // if key col be sure qc is in sync with Query.KeyCriteria 
 				qc.CopyCriteriaFromQueryKeyCriteria();

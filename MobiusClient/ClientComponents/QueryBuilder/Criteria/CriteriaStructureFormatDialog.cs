@@ -43,7 +43,7 @@ namespace Mobius.ClientComponents
 
 			// Setup
 
-			new SyncfusionConverter().ToRazor(Instance);
+			new PlotlyDashConverter().ToDash(Instance);
 
 			if (pssc.SearchType == StructureSearchType.SmallWorld)
 			{

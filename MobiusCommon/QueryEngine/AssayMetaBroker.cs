@@ -561,7 +561,7 @@ namespace Mobius.QueryEngineLibrary
 				}
 				else
 				{
-					Lex.AppendItemToString(ref criteria, " and ", "assay_id in (" + assayList + ") "); // restrict to list of assays
+					Lex.AppendItemToStringList(ref criteria, " and ", "assay_id in (" + assayList + ") "); // restrict to list of assays
 				 //Lex.AppendToList(ref criteria, " and ", "assay_id in (" + assayIdList + ") "); // restrict to list of assay assay_ids (surprisingly this is slower than using assay ids)
 				}
 
@@ -569,9 +569,9 @@ namespace Mobius.QueryEngineLibrary
 			}
 
 			if (!Lex.IsNullOrEmpty(resultTypeList))
-				Lex.AppendItemToString(ref criteria, " and ", "rslt_typ_id in (" + resultTypeList + ") ");
+				Lex.AppendItemToStringList(ref criteria, " and ", "rslt_typ_id in (" + resultTypeList + ") ");
 
-			Lex.AppendItemToString(ref criteria, " and ", "<cid> in (<list>)"); // add list placeholder that is filled in at run time 
+			Lex.AppendItemToStringList(ref criteria, " and ", "<cid> in (<list>)"); // add list placeholder that is filled in at run time 
 
 			sql = ActivateInnerKeyListCriteria(sql, "<list>"); // put list in inner sql also for performance enhancement
 

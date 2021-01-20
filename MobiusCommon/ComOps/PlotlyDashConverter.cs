@@ -20,7 +20,7 @@ using DevExpress.Utils;
 
 namespace Mobius.ComOps
 {
-	public class SyncfusionConverter
+	public class PlotlyDashConverter
 	{
 		static HashSet<string> ControlsLogged = new HashSet<string>();
 		HashSet<string> RadioGroups = new HashSet<string>(); // names of each of the radio button groups seen 
@@ -34,7 +34,7 @@ namespace Mobius.ComOps
 		/// </summary>
 		/// <param name="pc"></param>
 
-		public void ToRazor(
+		public void ToDash(
 			Control pc,
 			bool includeMenuStubs = false)
 		{
@@ -55,16 +55,17 @@ namespace Mobius.ComOps
 			//if (ControlsLogged.Contains(ctlFullName)) return;
 			ControlsLogged.Add(ctlFullName);
 
-			log = new StreamWriter(@"c:\downloads\MobiusControlTemplates\" + t.Name + ".txt");
+			log = new StreamWriter(@"c:\downloads\MobiusDashTemplates\" + t.Name + ".txt");
 
 			RadioGroups = new HashSet<string>();
 
+			html = $"def {t.Name} ():\r\n"; // class name
 
 			// ======================================================
 			// Process a top level Form or XtraForm (i.e. DialogBox)
 			// ======================================================
 
-			if (typeof(Form).IsAssignableFrom(pc.GetType())) // Form or XtraForm?
+			if (typeof(Form).IsAssignableFrom(t)) // Form or XtraForm?
 			{
 				Form f = pc as Form;
 
@@ -73,34 +74,14 @@ namespace Mobius.ComOps
 				string headerText = f.Text;
 				string enableResize = (f.FormBorderStyle == FormBorderStyle.Sizable) ? "true" : "false";
 
-				// Wrap with SfDialog definition 
+				// Wrap with Dialog definition 
 				// Note that the width of the header div = calc(100% - 32px) so that the close button will work if present
 
-				html = $@"<SfDialog Target='#target' Height='{height}px' Width='{width}px' IsModal='true' ShowCloseIcon='true' AllowDragging='true' EnableResize='{enableResize}' 
-					@ref ='SfDialog' @bind-Visible='DialogVisible' CssClass='dialogboxmx'>
-				  <DialogTemplates>
-						<Header>
-							<div class='control-div-mx font-mx defaults-mx' style='display: inline-flex; position: absolute; align-items: center; width: calc(100% - 32px); height: 20px; font-size: 13px; border: 0px;'>@HeaderText</div>
-						</Header>
-					<Content>
-				 ";
-				
+				html = "";
+
 				// Define variables for code section
 
-				code = $@"
-
-		/******************************* File links *********************************/
-		public static {f.Name} RazorFile => {f.Name}.CsFile; 
-		/****************************************************************************/
-
-		public static {f.Name} Instance {{ get; set; }} 
-		public SfDialog SfDialog {{ get; set; }} 
-		public string HeaderText = ""{headerText}"";" + @"
-		public static bool IncludeInRenderTree { get; set; } = true; 
-		public bool DialogVisible { get; set; } = false; 
-		public DialogResult DialogResult { get; set; } = DialogResult.None;
-		public bool RenderingEnabled = true;
-		protected override bool ShouldRender() { return RenderingEnabled; }" + "\r\n\r\n";
+				code = $@"";
 
 				eventStubs = EventStubs;
 
@@ -114,11 +95,8 @@ namespace Mobius.ComOps
 
 				ConvertContainedControls(pc, 0, ref html, ref code, ref eventStubs);
 
-				html += // Finish up the SfDialog component
-					$@"</Content>
-					</DialogTemplates>
-					<DialogEvents Opened='@DialogOpened' Closed='@DialogClosed'></DialogEvents>
-				</SfDialog>" + "\r\n";
+				html += // Finish up the Dialog component
+					$@"";
 
 
 				if (includeMenuStubs)
@@ -141,36 +119,23 @@ namespace Mobius.ComOps
 
 			else if (pc is UserControl || pc is XtraUserControl)
 			{
-				html =
-				 @"<!-- Cascade this instance of the component down to all lower components -->
+				html = "";
 
-					<CascadingValue Value='@this'>" + "\r\n";
-
-				code = $@"
-
-		/******************************* File links *********************************/
-		public static {pc.Name} RazorFile => {pc.Name}.CsFile; 
-		/****************************************************************************/" + "\r\n\r\n";
-
-
-				ConvertContainedControls(pc, 0, ref html, ref code, ref eventStubs);
-
-				html += " </CascadingValue>"; // finish up the HTML part of the component definition
-
+				code = "";
 			}
 
 			else throw new Exception("Can't convert control of type: " + pc?.GetType()?.Name);
 
-			string razor = Lex.Replace(RazorTemplate, "<html>", html);
+			string python = Lex.Replace(ClassTemplate, "<className>", t.Name); // get template with proper class name
 
-			razor = Lex.Replace(razor, "<code>", code);
+			python = Lex.Replace(python, "<layout>", code);
 
-			razor = Lex.Replace(razor, "<eventStubs>", eventStubs);
+			python = Lex.Replace(python, "<eventStubs>", eventStubs);
 
 			log.Close();
 
-			StreamWriter sw = new StreamWriter(@"c:\downloads\MobiusControlTemplates\" + t.Name + ".razor");
-			sw.Write(razor);
+			StreamWriter sw = new StreamWriter(@"c:\downloads\MobiusDashTemplates\" + t.Name + ".py");
+			sw.Write(python);
 			sw.Close();
 			return;
 
@@ -231,7 +196,7 @@ namespace Mobius.ComOps
 
 			if (cl.Count == 0) // create a "null" control and add to the list so the div for the container gets created
 			{
-				DivSfMx c = new DivSfMx();
+				DivMx c = new DivMx();
 				c.Location = new Point(0, 0);
 				c.Size = new Size(1, 1);
 				c.Dock = DockStyle.Fill;
@@ -278,7 +243,7 @@ namespace Mobius.ComOps
 
 			cText = HttpUtility.HtmlEncode(c.Text);
 
-			DivSfMx div = new DivSfMx(); // the div to surround and position the control
+			DivMx div = new DivMx(); // the div to surround and position the control
 
 			////////////////////////////////////////////////////////////////////////////////
 			// For user controls write reference to this file and then the control and 
@@ -965,15 +930,15 @@ namespace Mobius.ComOps
 			}
 
 			/////////////////////////////////////////////////////////////////////////////////
-			// Artificial DivSfMx control so the div for an empty container control gets created
+			// Artificial DivMx control so the div for an empty container control gets created
 			/////////////////////////////////////////////////////////////////////////////////
 
-			else if (cType == typeof(DivSfMx)) // "null" control
+			else if (cType == typeof(DivMx)) // "null" control
 			{
 				div.Build(pc, c, dy, ref htmlFrag, ref codeFrag, out divStyle);
 
 				initArgs = BuildInitArgs("DivStyle", NewCss(divStyle));
-				codeFrag += $"DivSfMx {c.Name} = new DivSfMx(){initArgs};\r\n";
+				codeFrag += $"DivMx {c.Name} = new DivMx(){initArgs};\r\n";
 
 				div.Close(ref htmlFrag);
 			}
@@ -1027,161 +992,48 @@ namespace Mobius.ComOps
 
 
 		/****************************************/
-					/*** Template for building Razor file ***/
-					/****************************************/
+		/*** Template for building class file ***/
+		/****************************************/
 
-					static string RazorTemplate = @"
-@using Mobius.ComOps
-@using WebShell
+					static string ClassTemplate = @"
+import sys
+import pathlib
 
-@using Syncfusion.Blazor.Popups
-@using Syncfusion.Blazor.Layouts
-@using Syncfusion.Blazor.Navigations
-@using Syncfusion.Blazor.Inputs
-@using Syncfusion.Blazor.Buttons
-@using Syncfusion.Blazor.SplitButtons
-@using Syncfusion.Blazor.DropDowns
-@using Syncfusion.Blazor.Lists
-@using Syncfusion.Blazor.Grids;
+import dash
+import dash_html_components as html
+import dash_core_components as dcc
+from dash.exceptions import PreventUpdate
+from dash.dependencies import Input, Output
 
-@using Newtonsoft.Json
+import pandas as pd
+import clr  # Python.Net
 
-@using System.Reflection
-@using Microsoft.AspNetCore.Components
+from System import String
+from System import Environment
+from System.Diagnostics import Process
 
-@inject IJSRuntime JsRuntime;
+# ********************************
+# Class <classname>
+# ********************************
 
-@namespace Mobius.ClientComponents
-@********************************@
+def <classname> ():
 
+# ********************************
+# Layout
+# ********************************
 
-@********@
-@* HTML *@
-@********@
+<layout>
 
-<html>
+# ********************************
+# Event callback stubs
+# ********************************
 
-@********@
-@*Code *@
-@********@
-
-@code{
-	<code>
-}
-
-@*******@
-@*CSS *@
-@*******@
-
-
-@***************@
-@* Event stubs *@
-@***************@
-
-@*
 <eventStubs>
-*@
+
 ";
 
 
-		static string EventStubs = @"
-
-		/*************************************************/
-		/*** Basic SfDialog overrides and Click events ***/
-		/*************************************************/
-
-		protected override void OnInitialized()
-    {
-			Instance = this;
-			base.OnInitialized();
-			return;
-		}
-
-		protected override async Task OnInitializedAsync()
-		{
-			await base.OnInitializedAsync();
-			return;
-		}
-
-		protected override async Task OnAfterRenderAsync(bool firstRender)
-		{
-			await base.OnAfterRenderAsync(firstRender);
-			return;
-		}
-
-		protected override void OnAfterRender(bool firstRender)
-		{
-			base.OnAfterRender(firstRender);
-		}
-
-		/// <summary>
-    /// Dialog Opened
-    /// </summary>
-    /// <returns></returns>
-
-		private async Task DialogOpened(Syncfusion.Blazor.Popups.OpenEventArgs args)
-    {
-			args.PreventFocus = true;
-			// await initialComponentToFocusOn.FocusIn();
-      return;
-    }
-
-    /// <summary>
-    /// DialogCLosed
-    /// </summary>
- 
-		private void DialogClosed(Syncfusion.Blazor.Popups.CloseEventArgs args)
-    {
-      if (Lex.Ne(args?.ClosedBy, ""User Action""))
-        DialogResult = DialogResult.Cancel;
-
-      return;
-    }
-
-/****************************/
-/*** SfContextMenu events ***/
-/****************************/
-
-		public void BeforeMenuOpen(BeforeOpenCloseMenuEventArgs<MenuItem> args) // called once for menu with children
-		{
-			//DebugLog.Message(args.ParentItem != null ? args.ParentItem?.Text : ""null"");
-			return;
-		}
-
-		public void MenuOpened(OpenCloseMenuEventArgs<MenuItem> args) // called once for menu with children
-		{
-			//DebugLog.Message(args.ParentItem != null ? args.ParentItem?.Text : ""null"");
-			return;
-		}
-
-		public void BeforeMenuClosed(BeforeOpenCloseMenuEventArgs<MenuItem> args) // called once for menu with children
-		{
-			//DebugLog.Message(args.ParentItem?.Text);
-			return;
-		}
-
-		public void MenuClosed(OpenCloseMenuEventArgs<MenuItem> args) // called once for menu with children
-		{
-			//DebugLog.Message(args.ParentItem?.Text);
-			return;
-		}
-
-		public void MenuItemRender(MenuEventArgs<MenuItem> args) // called once per item
-		{
-			return;
-		}
-
-		public void MenuItemSelected(MenuEventArgs<MenuItem> args)
-		{
-			//DebugLog.Message(args?.Item?.Text != null ? args.Item.Text : ""null"");
-			return;
-		}
-
-/*********************************/
-/*** Component-specific events ***/
-/*********************************/" + 
-			
-			"\r\n\r\n";
+		static string EventStubs = @"";
 
 
 		NasClass Nas(object v)
@@ -1220,25 +1072,10 @@ namespace Mobius.ComOps
 	}
 
 	/// <summary>
-	/// "Not a string" object
+	/// DivMx Class
 	/// </summary>
 
-	internal class Nas
-{
-	object Value;
-
-	public Nas (object value)
-		{
-		Value = value;
-		}
-}
-
-
-	/// <summary>
-	/// DivSfMx Class
-	/// </summary>
-
-	internal class DivSfMx : Control
+	internal class DivMx : Control
 	{
 		public string Class = "font-mx defaults-mx";
 		public string Position = "absolute";
@@ -1279,12 +1116,12 @@ namespace Mobius.ComOps
 			int cTop = c.Top + dy; // move top and bottom down to correct from WinForms to HTML
 			int cBottom = c.Bottom + dy;
 
-			string div = $"<div @ref='{c.Name}.DivRef' class='control-div-mx font-mx defaults-mx' style='@{c.Name}?.DivStyle?.StyleString'";
+			string div = $"html.Div(className = 'control-div-mx font-mx defaults-mx' style='{c.Name}?.DivStyle?.StyleString'";
 			string code = ""; // nothing yet
-			string style = "position: absolute; display: flex; align-items: center; ";
+			string style = "'position': 'absolute', 'display': 'flex', 'align-items': 'center' ";
 
 			if (c.Dock == DockStyle.Fill) // if Dock defined the set width/height to 100% (i.e. Fill only for now)
-				style += "width: 100%; height: 100%; ";
+				Lex.AppendItemToStringList(ref style, "'width: 100%', height: 100%'");
 
 			else // use Anchor settings
 			{
@@ -1294,18 +1131,18 @@ namespace Mobius.ComOps
 
 				if (left)
 				{
-					style += "left: " + c.Left + "px; ";
+					Lex.AppendItemToStringList(ref style, "'left': '" + c.Left + "px'");
 					if (!right)
-						widthHeight += "width: " + c.Width + "px; ";
+						Lex.AppendItemToStringList(ref widthHeight, "'width': '" + c.Width + "px'");
 
 					else // if left & right defined then set width as a calc()
-						widthHeight += "width: calc(100% - " + (c.Left + (pc.Width - c.Right)) + "px); ";
+						Lex.AppendItemToStringList(ref widthHeight, "'width': 'calc(100% - " + (c.Left + (pc.Width - c.Right)) + "px)'");
 				}
 
 				else if (right) // set right and width
 				{
-					style += "right: " + (pc.Width - c.Right) + "px; ";
-					widthHeight += "width: " + c.Width + "px; ";
+					Lex.AppendItemToStringList(ref style, "'right': '" + (pc.Width - c.Right) + "px'");
+					Lex.AppendItemToStringList(ref widthHeight, "'width': '" + c.Width + "px'");
 				}
 
 				bool anchorTop = ((c.Anchor & AnchorStyles.Top) != 0);
@@ -1317,21 +1154,21 @@ namespace Mobius.ComOps
 
 				if (anchorTop)
 				{
-					style += "top: " + cTop + "px; ";
+					Lex.AppendItemToStringList(ref style, "'top': '" + cTop + "px'");
 					if (!anchorBottom)
-						widthHeight += "height: " + cHeight + "px; ";
+						Lex.AppendItemToStringList(ref widthHeight, "'height': '" + cHeight + "px'");
 
 					else // if top & bottom defined then set height as a calc()
-						widthHeight += "height: calc(100% - " + (cTop + (pc.Height - cBottom)) + "px); ";
+						Lex.AppendItemToStringList(ref widthHeight, "'height': 'calc(100% - " + (cTop + (pc.Height - cBottom)) + "px)'");
 				}
 
 				else if (anchorBottom) // set bottom and height
 				{
-					style += "bottom: " + (pc.Height - cBottom) + "px; ";
-					widthHeight += "height: " + cHeight + "px; ";
+					Lex.AppendItemToStringList(ref style, ",bottom,: ," + (pc.Height - cBottom) + "px,");
+					Lex.AppendItemToStringList(ref widthHeight, "'height': '" + cHeight + "px'");
 				}
 
-				style += widthHeight; // put width height after location
+				Lex.AppendItemToStringList(ref style, widthHeight); // put width height after location
 			}
 
 

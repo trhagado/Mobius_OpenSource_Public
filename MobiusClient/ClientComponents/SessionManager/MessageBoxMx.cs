@@ -203,7 +203,7 @@ namespace Mobius.ClientComponents
       if (SyncfusionConverter.Active)
       {
         MessageBoxMx2 mb2 = new MessageBoxMx2();
-        new SyncfusionConverter().ToRazor(mb2);
+        new PlotlyDashConverter().ToDash(mb2);
       }
 
       int rc = mb.ShowInstance(message, caption, button1, button2, button3, button4, icon, width, height);

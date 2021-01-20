@@ -90,7 +90,7 @@ namespace Mobius.ClientComponents
 			if (Lex.IsUndefined(title)) title = "MoleculeViewer";
 			mv.Text = title;
 
-			new SyncfusionConverter().ToRazor(mv, true);
+			new PlotlyDashConverter().ToDash(mv, true);
 
 			MoleculeMx copy = mol.Clone();
 			mv.SetupForm(copy);

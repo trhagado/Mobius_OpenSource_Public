@@ -36,7 +36,7 @@ namespace Mobius.ClientComponents
 			//if (Instance == null) 
 			Instance = new InputCompoundId(); // always allocate a new class
 
-			new SyncfusionConverter().ToRazor(Instance);
+			new PlotlyDashConverter().ToDash(Instance);
 
 			Instance.Text = title;
 			Instance.Prompt.Text = prompt;

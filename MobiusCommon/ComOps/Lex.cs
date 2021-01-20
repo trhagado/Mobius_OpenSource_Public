@@ -1110,13 +1110,29 @@ namespace Mobius.ComOps
 		}
 
 		/// <summary>
+		/// Append an item to a list inserting comma separator if list not empty
+		/// </summary>
+		/// <param name="dest"></param>
+		/// <param name="item"></param>
+
+		public static void AppendItemToStringList(
+		ref string dest,
+		string item)
+		{
+			string separator = ",";
+			AppendSeparatorToStringIfNotBlank(ref dest, separator);
+			dest += item;
+			return;
+		}
+
+		/// <summary>
 		/// Append an item to a list inserting separator if list not empty
 		/// </summary>
 		/// <param name="dest"></param>
 		/// <param name="separator"></param>
 		/// <param name="item"></param>
 
-		public static void AppendItemToString(
+		public static void AppendItemToStringList(
 				ref string dest,
 				string separator,
 				string item)

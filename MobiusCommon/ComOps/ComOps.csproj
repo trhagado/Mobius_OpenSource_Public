@@ -321,6 +321,7 @@
     <Compile Include="SpotfireTemplateParms.cs" />
     <Compile Include="StreamConverter.cs" />
     <Compile Include="SvgUtil.cs" />
+    <Compile Include="PlotlyDashConverter.cs" />
     <Compile Include="SyncfusionConverter.cs" />
     <Compile Include="SystemUtil.cs" />
     <Compile Include="TempFile.cs" />

@@ -37,7 +37,7 @@ namespace Mobius.ClientComponents
 
 			if (Instance == null) Instance = new CriteriaYesNo();
 
-			new SyncfusionConverter().ToRazor(Instance);
+			new PlotlyDashConverter().ToDash(Instance);
 
 			Instance.Text = "Search criteria for " + qc.ActiveLabel;
 			Instance.Prompt.Text = "Select a search option for " + qc.ActiveLabel + " from the list below.";

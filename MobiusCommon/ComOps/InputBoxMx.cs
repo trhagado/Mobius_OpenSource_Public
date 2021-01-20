@@ -241,7 +241,7 @@ namespace Mobius.ComOps
 			Instance.Width = width;
 			Instance.Height = height;
 
-			new SyncfusionConverter().ToRazor(Instance);
+			new PlotlyDashConverter().ToDash(Instance);
 
 			if (prompt.Contains("</") || prompt.Contains("/>") || Lex.Contains(prompt, "<br>"))
 			{ // display HTML prompt

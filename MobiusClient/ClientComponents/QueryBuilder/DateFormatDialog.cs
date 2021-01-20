@@ -38,7 +38,7 @@ namespace Mobius.ClientComponents
 
 			// Setup
 
-			new SyncfusionConverter().ToRazor(Instance);
+			new PlotlyDashConverter().ToDash(Instance);
 
 			string fmt = qc.DisplayFormatString;
 			if (Lex.IsNullOrEmpty(fmt)) fmt = "d-MMM-yyyy"; // default format

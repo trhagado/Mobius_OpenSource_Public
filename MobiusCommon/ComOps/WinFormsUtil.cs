@@ -33,7 +33,7 @@ namespace Mobius.ComOps
 
 			if (DebugMx.True)
 			{
-				new SyncfusionConverter().ToRazor(pc);
+				new PlotlyDashConverter().ToDash(pc);
 				return;
 			}
 

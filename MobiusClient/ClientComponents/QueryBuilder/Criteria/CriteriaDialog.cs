@@ -51,7 +51,7 @@ namespace Mobius.ClientComponents
 			if (Instance == null) Instance = new CriteriaDialog();
 			if (Instance.Visible) return false; // catch 2nd of two quick single-clicks & ignore
 
-			new SyncfusionConverter().ToRazor(Instance, true);
+			new PlotlyDashConverter().ToDash(Instance, true);
 
 			Instance.Setup(qc);
 			Instance.Qc = qc;

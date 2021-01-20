@@ -108,7 +108,7 @@ namespace Mobius.ClientComponents
 			string tok = decimals.ToString();
 			nfd.DecimalPlaces.Text = tok;
 
-			new SyncfusionConverter().ToRazor(Instance);
+			new PlotlyDashConverter().ToDash(Instance);
 
 			DialogResult dr = nfd.ShowDialog(SessionManager.ActiveForm);
 			if (dr == DialogResult.OK)
