@@ -36,7 +36,7 @@ namespace Mobius.ClientComponents
 			//if (Instance == null) 
 			Instance = new InputCompoundId(); // always allocate a new class
 
-			new PlotlyDashConverter().ToDash(Instance);
+			new ControlMxConverter().Convert(Instance);
 
 			Instance.Text = title;
 			Instance.Prompt.Text = prompt;

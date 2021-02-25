@@ -1,0 +1,62 @@
+=======================================================================
+ipywidgets install directory
+  C:\ProgramData\Miniconda3\Lib\site-packages\ipywidgets\widgets
+=======================================================================
+In to examine notebook output in VSCode use: CTRL+Shift+P -> Open Webview Developer Tools
+
+
+=======================================================================
+Install python with conda
+=======================================================================
+conda install python=3.8.0
+
+c:\ProgramData\Miniconda3\Scripts\activate base
+
+conda install -c rdkit rdkit
+
+Trying: Miniconda3-py37_4.9.2-Windows-x86_64.exe
+
+To launch test prog in VSCode:
+ c:; cd 'c:\RDKitPythonTest'; & 'C:\programdata\miniconda3\python.exe' 'c:\Users\TRH\.vscode\extensions\ms-python.python-2021.1.502429796\pythonFiles\lib\python\debugpy\launcher' '50178' '--' 'c:\RDKitPythonTest\TestProgram.py'
+
+=====================================================================
+
+Downgrade python from 3.8.5 to 3.8.0 to allow install of rdkit
+Installed at: C:\ProgramData\Miniconda3
+
+===============================
+conda install python=3.8.0 
+===============================
+
+(base) C:\Windows\system32>conda install python=3.8.0
+Collecting package metadata (current_repodata.json): done
+Solving environment: failed with initial frozen solve. Retrying with flexible solve.
+Collecting package metadata (repodata.json): done
+Solving environment: done
+
+## Package Plan ##
+
+  environment location: C:\ProgramData\Miniconda3
+
+  added / updated specs:
+    - python=3.8.0
+
+
+The following packages will be UPDATED:
+
+  ca-certificates                              2020.10.14-0 --> 2021.1.19-haa95532_0
+  certifi            pkgs/main/noarch::certifi-2020.6.20-p~ --> pkgs/main/win-64::certifi-2020.12.5-py38haa95532_0
+  openssl                                 1.1.1h-he774522_0 --> 1.1.1i-h2bbff1b_0
+
+The following packages will be DOWNGRADED:
+
+  python                                   3.8.5-h5fd99cc_1 --> 3.8.0-hff0d562_2
+
+
+Proceed ([y]/n)? y
+
+Preparing transaction: done
+Verifying transaction: done
+Executing transaction: done
+
+(base) C:\Windows\system32>

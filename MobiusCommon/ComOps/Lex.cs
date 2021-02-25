@@ -1119,7 +1119,8 @@ namespace Mobius.ComOps
 		ref string dest,
 		string item)
 		{
-			string separator = ",";
+			if (Lex.IsUndefined(item)) return;
+			string separator = ", ";
 			AppendSeparatorToStringIfNotBlank(ref dest, separator);
 			dest += item;
 			return;

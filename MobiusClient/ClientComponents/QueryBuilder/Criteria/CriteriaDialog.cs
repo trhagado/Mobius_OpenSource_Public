@@ -51,7 +51,7 @@ namespace Mobius.ClientComponents
 			if (Instance == null) Instance = new CriteriaDialog();
 			if (Instance.Visible) return false; // catch 2nd of two quick single-clicks & ignore
 
-			new PlotlyDashConverter().ToDash(Instance, true);
+			new ControlMxConverter().Convert(Instance, true);
 
 			Instance.Setup(qc);
 			Instance.Qc = qc;
@@ -271,7 +271,7 @@ namespace Mobius.ClientComponents
 			WithinValue.Text = "";
 			WithinUnits.SelectedIndex = 0;
 
-			if (SyncfusionConverter.Active) // if converting include all controls
+			if (ControlMxConverter.Active) // if converting include all controls
 				includeList = includeBetween = includeLike = includeWithin = true;
 
 			InList.Visible = ValueList.Visible = ImportList.Visible = EditList.Visible = includeList;

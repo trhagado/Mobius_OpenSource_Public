@@ -38,7 +38,7 @@ namespace Mobius.ClientComponents
 
 			// Setup
 
-			new PlotlyDashConverter().ToDash(Instance);
+			new ControlMxConverter().Convert(Instance);
 
 			ColumnFormatEnum df = qc.DisplayFormat;
 			if (df != ColumnFormatEnum.HtmlText)

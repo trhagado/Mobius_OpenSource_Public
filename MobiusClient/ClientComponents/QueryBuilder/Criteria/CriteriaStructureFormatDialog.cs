@@ -43,7 +43,7 @@ namespace Mobius.ClientComponents
 
 			// Setup
 
-			new PlotlyDashConverter().ToDash(Instance);
+			new ControlMxConverter().Convert(Instance);
 
 			if (pssc.SearchType == StructureSearchType.SmallWorld)
 			{

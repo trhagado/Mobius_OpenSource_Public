@@ -263,12 +263,14 @@
     <Compile Include="AssertMx.cs" />
     <Compile Include="BitmapUtil.cs" />
     <Compile Include="CacheMx.cs" />
+    <Compile Include="CellStyleMx.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ClientDirs.cs" />
     <Compile Include="ClientState.cs" />
     <Compile Include="CommonConfigInfo.cs" />
     <Compile Include="ConsoleWindow.cs" />
     <Compile Include="ConvertMx.cs" />
-    <Compile Include="CssStyleMx.cs" />
     <Compile Include="DebugLog.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -321,7 +323,6 @@
     <Compile Include="SpotfireTemplateParms.cs" />
     <Compile Include="StreamConverter.cs" />
     <Compile Include="SvgUtil.cs" />
-    <Compile Include="PlotlyDashConverter.cs" />
     <Compile Include="SyncfusionConverter.cs" />
     <Compile Include="SystemUtil.cs" />
     <Compile Include="TempFile.cs" />
@@ -335,9 +336,6 @@
     <Compile Include="WcfUtil.cs" />
     <Compile Include="WebBrowserWrapper.cs" />
     <Compile Include="WindowsHelper.cs">
-    </Compile>
-    <Compile Include="CellStyleMx.cs">
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="EncryptMx.cs">
       <SubType>Code</SubType>

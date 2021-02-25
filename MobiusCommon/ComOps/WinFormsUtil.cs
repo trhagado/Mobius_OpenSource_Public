@@ -17,10 +17,16 @@ using DevExpress.XtraEditors.Controls;
 
 namespace Mobius.ComOps
 {
+	public delegate void ControlMxConverterDelegate(
+			Control pc,
+			bool includeMenuStubs);
+
 	public class WinFormsUtil
 	{
 
 		static HashSet<string> ControlsLogged = new HashSet<string>();
+
+		public static ControlMxConverterDelegate ControlMxConverter;
 
 		/// <summary>
 		/// Log the child controls of the current control
@@ -31,9 +37,9 @@ namespace Mobius.ComOps
 		{
 			string s;
 
-			if (DebugMx.True)
+			if (DebugMx.True && ControlMxConverter != null)
 			{
-				new PlotlyDashConverter().ToDash(pc);
+				ControlMxConverter(pc, true);
 				return;
 			}
 

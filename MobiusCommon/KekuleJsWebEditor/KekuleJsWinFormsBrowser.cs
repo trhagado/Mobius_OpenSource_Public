@@ -620,7 +620,7 @@ namespace Mobius.KekuleJs
 
 		public JavaScriptManager(KekuleJsWinFormsBrowserMsft KekuleJsBrowser) // create a script manager and reference it back to us
 		{
-			KekuleJsBrowser = KekuleJsBrowser;
+			return; // KekuleJsBrowser = KekuleJsBrowser;
 		}
 		public static bool Debug = true;
 

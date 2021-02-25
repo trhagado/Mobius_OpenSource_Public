@@ -241,7 +241,9 @@ namespace Mobius.ComOps
 			Instance.Width = width;
 			Instance.Height = height;
 
-			new PlotlyDashConverter().ToDash(Instance);
+			if (WinFormsUtil.ControlMxConverter != null)
+				WinFormsUtil.ControlMxConverter(Instance, false);
+
 
 			if (prompt.Contains("</") || prompt.Contains("/>") || Lex.Contains(prompt, "<br>"))
 			{ // display HTML prompt

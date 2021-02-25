@@ -32,7 +32,7 @@ namespace Mobius.ClientComponents
 
 		DialogResult ShowInstance(QueryColumn qc)
 		{
-			new PlotlyDashConverter().ToDash(Instance);
+			new ControlMxConverter().Convert(Instance);
 
 			MetaColumn mc = qc.MetaColumn;
 

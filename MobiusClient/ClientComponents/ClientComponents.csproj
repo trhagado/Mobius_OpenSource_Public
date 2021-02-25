@@ -229,6 +229,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonControls\ControlMxConverter.cs" />
+    <Compile Include="CommonControls\DialogBoxContainer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommonControls\DialogBoxContainer.Designer.cs">
+      <DependentUpon>DialogBoxContainer.cs</DependentUpon>
+    </Compile>
     <Compile Include="CommonControls\MoleculeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -1257,6 +1264,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CommonControls\DialogBoxContainer.resx">
+      <DependentUpon>DialogBoxContainer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CommonControls\MoleculeControl.resx">
       <DependentUpon>MoleculeControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -1779,6 +1789,10 @@
     <Content Include="Mobius.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\MobiusJupyter\MobiusJupyterDotNet\src\MobiusCommon\BaseControls\BaseControls.csproj">
+      <Project>{976be133-c98f-41d5-bdec-b3c93ca3f676}</Project>
+      <Name>BaseControls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\MobiusCommon\CdkMx\CdkMx.csproj">
       <Project>{203d17b0-f97c-4c9b-b406-cae30dad3241}</Project>
       <Name>CdkMx</Name>

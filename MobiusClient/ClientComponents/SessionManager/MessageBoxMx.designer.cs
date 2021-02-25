@@ -36,9 +36,9 @@ namespace Mobius.ClientComponents
 			this.Button3 = new DevExpress.XtraEditors.SimpleButton();
 			this.ImageList = new System.Windows.Forms.ImageList(this.components);
 			this.label1 = new DevExpress.XtraEditors.LabelControl();
-			this.IconImage = new System.Windows.Forms.Label();
 			this.HtmlMessage = new System.Windows.Forms.WebBrowser();
 			this.Message = new DevExpress.XtraEditors.MemoEdit();
+			this.IconImage = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.Message.Properties)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -129,21 +129,6 @@ namespace Mobius.ClientComponents
 			this.label1.Size = new System.Drawing.Size(0, 13);
 			this.label1.TabIndex = 21;
 			// 
-			// IconImage
-			// 
-			this.IconImage.BackColor = System.Drawing.Color.Transparent;
-			this.IconImage.Cursor = System.Windows.Forms.Cursors.Default;
-			this.IconImage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.IconImage.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.IconImage.ImageIndex = 0;
-			this.IconImage.ImageList = this.ImageList;
-			this.IconImage.Location = new System.Drawing.Point(9, 10);
-			this.IconImage.Name = "IconImage";
-			this.IconImage.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.IconImage.Size = new System.Drawing.Size(38, 38);
-			this.IconImage.TabIndex = 22;
-			this.IconImage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
 			// HtmlMessage
 			// 
 			this.HtmlMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -168,6 +153,21 @@ namespace Mobius.ClientComponents
 			this.Message.Properties.ReadOnly = true;
 			this.Message.Size = new System.Drawing.Size(285, 53);
 			this.Message.TabIndex = 24;
+			// 
+			// IconImage
+			// 
+			this.IconImage.BackColor = System.Drawing.Color.Transparent;
+			this.IconImage.Cursor = System.Windows.Forms.Cursors.Default;
+			this.IconImage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.IconImage.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.IconImage.ImageIndex = 0;
+			this.IconImage.ImageList = this.ImageList;
+			this.IconImage.Location = new System.Drawing.Point(9, 10);
+			this.IconImage.Name = "IconImage";
+			this.IconImage.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.IconImage.Size = new System.Drawing.Size(38, 38);
+			this.IconImage.TabIndex = 22;
+			this.IconImage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// MessageBoxMx
 			// 
