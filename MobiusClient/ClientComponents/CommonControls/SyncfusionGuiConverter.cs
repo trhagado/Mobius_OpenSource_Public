@@ -20,7 +20,7 @@ using DevExpress.Utils;
 
 namespace Mobius.ComOps
 {
-	public class SyncfusionConverter
+	public class SyncfusionGuiConverter
 	{
 		static HashSet<string> ControlsLogged = new HashSet<string>();
 		HashSet<string> RadioGroups = new HashSet<string>(); // names of each of the radio button groups seen 
@@ -55,7 +55,7 @@ namespace Mobius.ComOps
 			//if (ControlsLogged.Contains(ctlFullName)) return;
 			ControlsLogged.Add(ctlFullName);
 
-			log = new StreamWriter(@"c:\downloads\MobiusControlTemplates\" + t.Name + ".txt");
+			log = new StreamWriter(@"C:\MobiusWebClient\GeneratedGuiComponents\" + t.Name + ".txt");
 
 			RadioGroups = new HashSet<string>();
 
@@ -169,7 +169,7 @@ namespace Mobius.ComOps
 
 			log.Close();
 
-			StreamWriter sw = new StreamWriter(@"c:\downloads\MobiusControlTemplates\" + t.Name + ".razor");
+			StreamWriter sw = new StreamWriter(@"C:\MobiusWebClient\GeneratedGuiComponents\" + t.Name + ".razor");
 			sw.Write(razor);
 			sw.Close();
 			return;

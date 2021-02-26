@@ -200,13 +200,10 @@ namespace Mobius.ClientComponents
 
       MessageBoxMx mb = new MessageBoxMx();
 
-      if (ControlMxConverter.Active)
+      if (JupyterGuiConverter.Active)
       {
         MessageBoxMx2 mb2 = new MessageBoxMx2();
-        new ControlMxConverter().Convert(mb2);
-
-        DialogBoxContainer dbc = new DialogBoxContainer();
-        new ControlMxConverter().Convert(dbc);
+        new JupyterGuiConverter().ConvertFormOrUserControl(mb2);
       }
 
       int rc = mb.ShowInstance(message, caption, button1, button2, button3, button4, icon, width, height);

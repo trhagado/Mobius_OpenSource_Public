@@ -32,11 +32,11 @@
 			this.ContentPanel = new System.Windows.Forms.Panel();
 			this.HeaderPanel = new System.Windows.Forms.Panel();
 			this.WindowTitle = new System.Windows.Forms.Label();
-			this.MaximizeWindowButton = new System.Windows.Forms.Button();
-			this.MinimizeWindowButton = new System.Windows.Forms.Button();
-			this.CloseWindowButton = new System.Windows.Forms.Button();
 			this.WindowIcon = new System.Windows.Forms.PictureBox();
-			this.RestoreWindowButton = new System.Windows.Forms.Button();
+			this.MinimizeWindowButton = new DevExpress.XtraEditors.SimpleButton();
+			this.MaximizeWindowButton = new DevExpress.XtraEditors.SimpleButton();
+			this.RestoreWindowButton = new DevExpress.XtraEditors.SimpleButton();
+			this.CloseWindowButton = new DevExpress.XtraEditors.SimpleButton();
 			this.HeaderPanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.WindowIcon)).BeginInit();
 			this.SuspendLayout();
@@ -57,10 +57,10 @@
 			this.HeaderPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.HeaderPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.HeaderPanel.Controls.Add(this.WindowTitle);
-			this.HeaderPanel.Controls.Add(this.MaximizeWindowButton);
-			this.HeaderPanel.Controls.Add(this.MinimizeWindowButton);
 			this.HeaderPanel.Controls.Add(this.CloseWindowButton);
+			this.HeaderPanel.Controls.Add(this.MaximizeWindowButton);
+			this.HeaderPanel.Controls.Add(this.WindowTitle);
+			this.HeaderPanel.Controls.Add(this.MinimizeWindowButton);
 			this.HeaderPanel.Controls.Add(this.WindowIcon);
 			this.HeaderPanel.Controls.Add(this.RestoreWindowButton);
 			this.HeaderPanel.Location = new System.Drawing.Point(0, 0);
@@ -74,48 +74,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.WindowTitle.Location = new System.Drawing.Point(29, 8);
 			this.WindowTitle.Name = "WindowTitle";
-			this.WindowTitle.Size = new System.Drawing.Size(327, 18);
+			this.WindowTitle.Size = new System.Drawing.Size(302, 18);
 			this.WindowTitle.TabIndex = 4;
 			this.WindowTitle.Text = "Mobius Window Title";
-			// 
-			// MaximizeWindowButton
-			// 
-			this.MaximizeWindowButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.MaximizeWindowButton.BackColor = System.Drawing.Color.Transparent;
-			this.MaximizeWindowButton.FlatAppearance.BorderSize = 0;
-			this.MaximizeWindowButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.MaximizeWindowButton.Image = ((System.Drawing.Image)(resources.GetObject("MaximizeWindowButton.Image")));
-			this.MaximizeWindowButton.Location = new System.Drawing.Point(382, 4);
-			this.MaximizeWindowButton.Name = "MaximizeWindowButton";
-			this.MaximizeWindowButton.Size = new System.Drawing.Size(20, 20);
-			this.MaximizeWindowButton.TabIndex = 1;
-			this.MaximizeWindowButton.UseVisualStyleBackColor = false;
-			// 
-			// MinimizeWindowButton
-			// 
-			this.MinimizeWindowButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.MinimizeWindowButton.BackColor = System.Drawing.Color.Transparent;
-			this.MinimizeWindowButton.FlatAppearance.BorderSize = 0;
-			this.MinimizeWindowButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.MinimizeWindowButton.Image = ((System.Drawing.Image)(resources.GetObject("MinimizeWindowButton.Image")));
-			this.MinimizeWindowButton.Location = new System.Drawing.Point(347, 5);
-			this.MinimizeWindowButton.Name = "MinimizeWindowButton";
-			this.MinimizeWindowButton.Size = new System.Drawing.Size(20, 20);
-			this.MinimizeWindowButton.TabIndex = 0;
-			this.MinimizeWindowButton.UseVisualStyleBackColor = false;
-			// 
-			// CloseWindowButton
-			// 
-			this.CloseWindowButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.CloseWindowButton.BackColor = System.Drawing.Color.Transparent;
-			this.CloseWindowButton.FlatAppearance.BorderSize = 0;
-			this.CloseWindowButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.CloseWindowButton.Image = ((System.Drawing.Image)(resources.GetObject("CloseWindowButton.Image")));
-			this.CloseWindowButton.Location = new System.Drawing.Point(417, 4);
-			this.CloseWindowButton.Name = "CloseWindowButton";
-			this.CloseWindowButton.Size = new System.Drawing.Size(20, 20);
-			this.CloseWindowButton.TabIndex = 3;
-			this.CloseWindowButton.UseVisualStyleBackColor = false;
 			// 
 			// WindowIcon
 			// 
@@ -126,19 +87,89 @@
 			this.WindowIcon.TabIndex = 0;
 			this.WindowIcon.TabStop = false;
 			// 
+			// MinimizeWindowButton
+			// 
+			this.MinimizeWindowButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.MinimizeWindowButton.Appearance.BackColor = System.Drawing.Color.Transparent;
+			this.MinimizeWindowButton.Appearance.BorderColor = System.Drawing.Color.Transparent;
+			this.MinimizeWindowButton.Appearance.ForeColor = System.Drawing.Color.Transparent;
+			this.MinimizeWindowButton.Appearance.Options.UseBackColor = true;
+			this.MinimizeWindowButton.Appearance.Options.UseBorderColor = true;
+			this.MinimizeWindowButton.Appearance.Options.UseForeColor = true;
+			this.MinimizeWindowButton.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("MinimizeWindowButton2.ImageOptions.Image")));
+			this.MinimizeWindowButton.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+			this.MinimizeWindowButton.Location = new System.Drawing.Point(347, 5);
+			this.MinimizeWindowButton.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.UltraFlat;
+			this.MinimizeWindowButton.LookAndFeel.UseDefaultLookAndFeel = false;
+			this.MinimizeWindowButton.Name = "MinimizeWindowButton";
+			this.MinimizeWindowButton.Size = new System.Drawing.Size(20, 20);
+			this.MinimizeWindowButton.TabIndex = 0;
+			this.MinimizeWindowButton.TabStop = false;
+			this.MinimizeWindowButton.Tag = "MinimizeWindow";
+			this.MinimizeWindowButton.ToolTip = "Minimize";
+			// 
+			// MaximizeWindowButton
+			// 
+			this.MaximizeWindowButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.MaximizeWindowButton.Appearance.BackColor = System.Drawing.Color.Transparent;
+			this.MaximizeWindowButton.Appearance.BorderColor = System.Drawing.Color.Transparent;
+			this.MaximizeWindowButton.Appearance.ForeColor = System.Drawing.Color.Transparent;
+			this.MaximizeWindowButton.Appearance.Options.UseBackColor = true;
+			this.MaximizeWindowButton.Appearance.Options.UseBorderColor = true;
+			this.MaximizeWindowButton.Appearance.Options.UseForeColor = true;
+			this.MaximizeWindowButton.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton1.ImageOptions.Image")));
+			this.MaximizeWindowButton.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+			this.MaximizeWindowButton.Location = new System.Drawing.Point(382, 4);
+			this.MaximizeWindowButton.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.UltraFlat;
+			this.MaximizeWindowButton.LookAndFeel.UseDefaultLookAndFeel = false;
+			this.MaximizeWindowButton.Name = "MaximizeWindowButton";
+			this.MaximizeWindowButton.Size = new System.Drawing.Size(20, 20);
+			this.MaximizeWindowButton.TabIndex = 1;
+			this.MaximizeWindowButton.TabStop = false;
+			this.MaximizeWindowButton.Tag = "MaximizeWindow";
+			this.MaximizeWindowButton.ToolTip = "Maximize";
+			// 
 			// RestoreWindowButton
 			// 
 			this.RestoreWindowButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.RestoreWindowButton.BackColor = System.Drawing.Color.Transparent;
-			this.RestoreWindowButton.FlatAppearance.BorderSize = 0;
-			this.RestoreWindowButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.RestoreWindowButton.Image = ((System.Drawing.Image)(resources.GetObject("RestoreWindowButton.Image")));
+			this.RestoreWindowButton.Appearance.BackColor = System.Drawing.Color.Transparent;
+			this.RestoreWindowButton.Appearance.BorderColor = System.Drawing.Color.Transparent;
+			this.RestoreWindowButton.Appearance.ForeColor = System.Drawing.Color.Transparent;
+			this.RestoreWindowButton.Appearance.Options.UseBackColor = true;
+			this.RestoreWindowButton.Appearance.Options.UseBorderColor = true;
+			this.RestoreWindowButton.Appearance.Options.UseForeColor = true;
+			this.RestoreWindowButton.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton2.ImageOptions.Image")));
+			this.RestoreWindowButton.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
 			this.RestoreWindowButton.Location = new System.Drawing.Point(382, 4);
+			this.RestoreWindowButton.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.UltraFlat;
+			this.RestoreWindowButton.LookAndFeel.UseDefaultLookAndFeel = false;
 			this.RestoreWindowButton.Name = "RestoreWindowButton";
 			this.RestoreWindowButton.Size = new System.Drawing.Size(20, 20);
 			this.RestoreWindowButton.TabIndex = 2;
-			this.RestoreWindowButton.UseVisualStyleBackColor = false;
-			this.RestoreWindowButton.Visible = false;
+			this.RestoreWindowButton.TabStop = false;
+			this.RestoreWindowButton.Tag = "RestoreWindow";
+			this.RestoreWindowButton.ToolTip = "Restore";
+			// 
+			// CloseWindowButton
+			// 
+			this.CloseWindowButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.CloseWindowButton.Appearance.BackColor = System.Drawing.Color.Transparent;
+			this.CloseWindowButton.Appearance.BorderColor = System.Drawing.Color.Transparent;
+			this.CloseWindowButton.Appearance.ForeColor = System.Drawing.Color.Transparent;
+			this.CloseWindowButton.Appearance.Options.UseBackColor = true;
+			this.CloseWindowButton.Appearance.Options.UseBorderColor = true;
+			this.CloseWindowButton.Appearance.Options.UseForeColor = true;
+			this.CloseWindowButton.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton3.ImageOptions.Image")));
+			this.CloseWindowButton.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+			this.CloseWindowButton.Location = new System.Drawing.Point(417, 4);
+			this.CloseWindowButton.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.UltraFlat;
+			this.CloseWindowButton.LookAndFeel.UseDefaultLookAndFeel = false;
+			this.CloseWindowButton.Name = "CloseWindowButton";
+			this.CloseWindowButton.Size = new System.Drawing.Size(20, 20);
+			this.CloseWindowButton.TabIndex = 3;
+			this.CloseWindowButton.TabStop = false;
+			this.CloseWindowButton.Tag = "CloseWindow";
+			this.CloseWindowButton.ToolTip = "Close";
 			// 
 			// DialogBoxContainer
 			// 
@@ -160,10 +191,10 @@
 		public System.Windows.Forms.Panel ContentPanel;
 		public System.Windows.Forms.Panel HeaderPanel;
 		public System.Windows.Forms.Label WindowTitle;
-		public System.Windows.Forms.Button MaximizeWindowButton;
-		public System.Windows.Forms.Button MinimizeWindowButton;
-		public System.Windows.Forms.Button CloseWindowButton;
 		public System.Windows.Forms.PictureBox WindowIcon;
-		public System.Windows.Forms.Button RestoreWindowButton;
+		public DevExpress.XtraEditors.SimpleButton MinimizeWindowButton;
+		public DevExpress.XtraEditors.SimpleButton CloseWindowButton;
+		public DevExpress.XtraEditors.SimpleButton RestoreWindowButton;
+		public DevExpress.XtraEditors.SimpleButton MaximizeWindowButton;
 	}
 }

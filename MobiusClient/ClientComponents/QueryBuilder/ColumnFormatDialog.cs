@@ -108,7 +108,7 @@ namespace Mobius.ClientComponents
 			string tok = decimals.ToString();
 			nfd.DecimalPlaces.Text = tok;
 
-			new ControlMxConverter().Convert(Instance);
+			new JupyterGuiConverter().ConvertFormOrUserControl(Instance);
 
 			DialogResult dr = nfd.ShowDialog(SessionManager.ActiveForm);
 			if (dr == DialogResult.OK)

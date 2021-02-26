@@ -38,7 +38,7 @@ namespace Mobius.ClientComponents
 
 			// Setup
 
-			new ControlMxConverter().Convert(Instance);
+			new JupyterGuiConverter().ConvertFormOrUserControl(Instance);
 
 			ColumnFormatEnum df = qc.DisplayFormat;
 			if (df != ColumnFormatEnum.HtmlText)

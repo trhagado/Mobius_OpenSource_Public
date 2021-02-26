@@ -32,7 +32,7 @@ namespace Mobius.ClientComponents
 
 		DialogResult ShowInstance(QueryColumn qc)
 		{
-			new ControlMxConverter().Convert(Instance);
+			new JupyterGuiConverter().ConvertFormOrUserControl(Instance);
 
 			MetaColumn mc = qc.MetaColumn;
 

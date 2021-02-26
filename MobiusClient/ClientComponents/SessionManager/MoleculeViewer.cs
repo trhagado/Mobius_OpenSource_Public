@@ -90,7 +90,7 @@ namespace Mobius.ClientComponents
 			if (Lex.IsUndefined(title)) title = "MoleculeViewer";
 			mv.Text = title;
 
-			new ControlMxConverter().Convert(mv, true);
+			new JupyterGuiConverter().ConvertFormOrUserControl(mv, true);
 
 			MoleculeMx copy = mol.Clone();
 			mv.SetupForm(copy);

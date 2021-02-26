@@ -24,7 +24,7 @@ using DevExpress.Utils;
 
 namespace Mobius.ClientComponents
 {
-	public class ControlMxConverter
+	public class JupyterGuiConverter
 	{
 		string AddControlsCode = "";
 
@@ -41,13 +41,13 @@ namespace Mobius.ClientComponents
 		/// </summary>
 		/// <param name="pc"></param>
 
-		public void Convert(
+		public void ConvertFormOrUserControl(
 			Control pc,
 			bool includeMenuStubs = false)
 		{
 			string eventCode = ""; // temp accumulator
-			string cssClasses = "", varDefStmt = "", boundingBoxStmt = "", eventStubFrag = "";
-			string inlineStyleProps = "", groupName = "", initArgs = "";
+			string cssClasses = "", varDefStmt = "", varInitStmt = "", eventStubFrag = "";
+			string inlineStyleProps = "", groupName = "", varInitClause = "";
 			string template = "", s;
 
 			int dy = 0;
@@ -57,13 +57,13 @@ namespace Mobius.ClientComponents
 			IncludeMenuStubs = includeMenuStubs;
 
 			if (WinFormsUtil.ControlMxConverter == null) // allow calls to converter from ComOps
-				WinFormsUtil.ControlMxConverter = new ControlMxConverterDelegate(Convert);
+				WinFormsUtil.ControlMxConverter = new ControlMxConverterDelegate(ConvertFormOrUserControl);
 
 			/////////////////////////////////////////////////////////////////////////////
 			// Build the HTML and plug into the template
 			/////////////////////////////////////////////////////////////////////////////
 
-			string html = "", varDefCode = "", initCode = ""; // strings for global building of html and code sections
+			string html = "", varDefCode = "", varInitCode = ""; // strings for global building of html and code sections
 			AddControlsCode = "";
 
 			Type t = pc.GetType();
@@ -71,7 +71,7 @@ namespace Mobius.ClientComponents
 			//if (ControlsLogged.Contains(ctlFullName)) return;
 			ControlsLogged.Add(ctlFullName);
 
-			log = new StreamWriter(@"c:\downloads\MobiusJupyterTemplates\" + t.Name + ".txt");
+			log = new StreamWriter(@"C:\MobiusJupyter\GeneratedGuiComponents\" + t.Name + ".txt");
 
 			RadioGroups = new HashSet<string>();
 
@@ -86,55 +86,50 @@ namespace Mobius.ClientComponents
 				Form f = pc as Form;
 				DialogBoxMx dbMx = new DialogBoxMx();
 
-// Insert this form into a DialogBoxContainer and then convert that container
-// so that the window header controls are included in the conversion as well
 
-				DialogBoxContainer f2 = new DialogBoxContainer();
-				f2.ShowIcon = f.ShowIcon;
-				f2.FormBorderStyle = f.FormBorderStyle;
-				f2.Text = f.Text;
-				f2.MinimizeBox = f.MinimizeBox;
-				f2.MaximizeBox = f.MaximizeBox;
-				f2.Width = f.Width; // needs adjusting for delta in header size
-				f2.Height = f.Height; // ditto
+				// Constructor initialization code for this class 
 
-				if (f2.ShowIcon)
-					f2.WindowIcon.Name = "Mobius16x16.png";
+				varInitCode = $@"
+		TitleText = '{f.Text}';
+		ShowIcon = {f.ShowIcon};
+		ImageName = ''; 
+		FormBorderStyle = FormBorderStyle.{f.FormBorderStyle};
+		MinimizeBox = {f.MinimizeBox};
+		MaximizeBox = {f.MaximizeBox};
+		Width = {f.Width};
+		Height = {f.Height};
 
-				foreach (Control c in f.Controls)
-				{
-					f2.ContentPanel.Controls.Add(c);
-				}
+		";
 
-				int height = f.Height; // add size of WinForms header to get correct html height
-				int width = f.Width;
-				string headerText = f.Text;
-				string enableResize = (f.FormBorderStyle == WinForms.FormBorderStyle.Sizable) ? "true" : "false";
-
-				initArgs = BuildInitArgs(f2,
-					"TitleTextText", f2.Text, dbMx.TitleText,
-					"ImageName", f2.WindowIcon.Name, dbMx.ImageName,
-					"FormBorderStyle", f2.FormBorderStyle, dbMx.FormBorderStyle,
-					"MinimizeBox", f2.MinimizeBox, dbMx.MinimizeBox,
-					"MaximizeBox", f2.MaximizeBox, dbMx.MaximizeBox);
-
-				varDefStmt += $"\tpublic DialogBoxMx {f.Name} = new DialogBoxMx(){initArgs};\r\n"; // declare and set basic props
-
-				// Define variables for code section
-
-				varDefCode = varDefStmt;
-
-				initCode = "";
+				varInitCode = varInitCode.Replace('\'', '"'); // fix syntax details
+				varInitCode = varInitCode.Replace("True", "true");
+				varInitCode = varInitCode.Replace("False", "false");
 
 				template = DialogBoxClassTemplate;
 
-				boundingBoxStmt = BuildBoundingBoxStmt(null, f2, dy);
+				// Insert this forms controls into a DialogBoxContainer Form ContentPanel and then convert 
+				// that dialog so that the window header controls are included in the conversion as well
 
-				ConvertContainedControls(pc, 0, ref html, ref varDefCode, ref initCode);
+				DialogBoxContainer f2 = new DialogBoxContainer();
 
-				html += // Finish up the Dialog component
-					$@"";
+				f2.Width = f.Width; // needs adjusting for delta in header size?
+				f2.Height = f.Height; // ditto
 
+				List<Control> cl = new List<Control>(); // copy ctls to list
+				foreach (Control c in f.Controls) 
+					cl.Add(c);
+
+				f.Controls.Clear(); // remove from original form
+
+				foreach (Control c in cl) // copy from list to new form
+					f2.ContentPanel.Controls.Add(c);
+				
+				ConvertContainedControls(f2, 0, ref html, ref varDefCode, ref varInitCode);
+
+				f2.ContentPanel.Controls.Clear(); // remove from new form
+
+				foreach (Control c in cl) // put back in original form
+					f.Controls.Add(c);
 
 				if (includeMenuStubs)
 				{
@@ -160,7 +155,7 @@ namespace Mobius.ClientComponents
 
 				varDefCode = "";
 
-				ConvertContainedControls(pc, 0, ref html, ref varDefCode, ref initCode);
+				ConvertContainedControls(pc, 0, ref html, ref varDefCode, ref varInitCode);
 
 				template = UserControlClassTemplate;
 			}
@@ -173,13 +168,13 @@ namespace Mobius.ClientComponents
 
 			csCode = Lex.Replace(csCode, "<componentDeclarations>", varDefCode);
 
-			csCode = Lex.Replace(csCode, "<componentInitialization>", initCode);
+			csCode = Lex.Replace(csCode, "<componentInitialization>", varInitCode);
 
 			csCode = Lex.Replace(csCode, "<addControls>", AddControlsCode);
 
 			log.Close();
 
-			StreamWriter sw = new StreamWriter(@"c:\downloads\MobiusJupyterTemplates\" + t.Name + ".design.cs");
+			StreamWriter sw = new StreamWriter(@"C:\MobiusJupyter\GeneratedGuiComponents\" + t.Name + ".design.cs");
 			sw.Write(csCode);
 			sw.Close();
 			return;
@@ -202,7 +197,7 @@ namespace Mobius.ClientComponents
 			int dy,
 			ref string html,
 			ref string varDefCode,
-			ref string initCode)
+			ref string varInitCode)
 		{
 			Type pcType = pc.GetType();
 
@@ -262,7 +257,7 @@ namespace Mobius.ClientComponents
 					c.Left, c.Top, c.Width, c.Height,
 					c.Anchor, c.Dock, c.Text, t.FullName));
 
-				ConvertControl(pc, c, dy, ref html, ref varDefCode, ref initCode); // convert the control and surround with a positioning div
+				ConvertControl(pc, c, dy, ref html, ref varDefCode, ref varInitCode); // convert the control and surround with a positioning div
 
 			} // child control list
 
@@ -277,11 +272,11 @@ namespace Mobius.ClientComponents
 			int dy,
 			ref string html,
 			ref string varDefCode,
-			ref string initCode)
+			ref string varInitCode)
 		{
 			string eventCode = ""; // temp accumulator
-			string cssClasses = "", varDefStmt = "", boundingBoxStmt = "", eventStubFrag = "";
-			string inlineStyleProps = "", groupName = "", initArgs = "";
+			string cssClasses = "", varDefStmt = "", varInitStmt = "", eventStubFrag = "";
+			string inlineStyleProps = "", groupName = "", varInitClause = "";
 			int dy2 = 0;
 
 			Type cType = c.GetType();
@@ -309,15 +304,15 @@ namespace Mobius.ClientComponents
 
 				UserControlMx bmx = new UserControlMx() { };
 
-				initArgs = BuildInitArgs(c);
-				varDefStmt += $"\tpublic {typeName} {c.Name} = new {typeName}(){initArgs};\r\n"; // declare and set basic props
+				varInitClause = BuildVarInitClause(c);
+				varDefStmt += $"\tpublic {typeName} {c.Name} = new {typeName}(){varInitClause};\r\n"; // declare and set basic props
 
 				inlineStyleProps = BuildBoundingBoxStyleProps(pc, c, dy);
 
 				if (uc.BorderStyle != BorderStyle.None)
 					inlineStyleProps += " border: 1px solid #acacac; background-color: #ffffff; ";
 
-				boundingBoxStmt = $"\t{c.Name}.StyleProps = new CssStyleMx(\"{inlineStyleProps}\");\r\n"; // set bounding box in initialize method
+				varInitStmt = $"\t{c.Name}.StyleProps = new CssStyleMx(\"{inlineStyleProps}\");\r\n"; // set bounding box in initialize method
 			}
 
 			////////////////////////////////////////////////////////////////////////////////
@@ -337,21 +332,21 @@ namespace Mobius.ClientComponents
 				gb.Height += 8;
 				gb.Top -= 8;
 
-				boundingBoxStmt = BuildBoundingBoxStmt(pc, c, dy);
+				varInitStmt = BuildvarInitStmt(pc, c, dy);
 
 				gb.Height -= 8;
 				gb.Top += 8;
 
-				initArgs = BuildInitArgs(c,
+				varInitClause = BuildVarInitClause(c,
 					"Text", gb.Text, bmx.Text);
 
-				varDefStmt += $"\tpublic GroupBoxMx {c.Name} = new GroupBoxMx(){initArgs};\r\n"; // declare and set basic props
+				varDefStmt += $"\tpublic GroupBoxMx {c.Name} = new GroupBoxMx(){varInitClause};\r\n"; // declare and set basic props
 
 				cssClasses +=
 					"<GroupBox class='groupbox-mx'>\r\n";
 
 				dy2 = 4; // move contained controls down a bit
-				ConvertContainedControls(c, dy2, ref cssClasses, ref varDefStmt, ref eventStubFrag);
+				ConvertContainedControls(c, dy2, ref cssClasses, ref varDefStmt, ref varInitStmt);
 
 				cssClasses += "</fieldset>\r\n";
 
@@ -364,14 +359,14 @@ namespace Mobius.ClientComponents
 
 			else if (cType == typeof(Panel) || cType == typeof(PanelControl) || cType == typeof(XtraPanel))
 			{
-				boundingBoxStmt = BuildBoundingBoxStmt(pc, c, dy);
+				varInitStmt = BuildvarInitStmt(pc, c, dy);
 
 				cssClasses += ""; // todo...
 
-				initArgs = BuildInitArgs(c);
-				varDefStmt += $"\tpublic PanelControlMx {c.Name} = new PanelControlMx(){initArgs};\r\n";
+				varInitClause = BuildVarInitClause(c);
+				varDefStmt += $"\tpublic PanelControlMx {c.Name} = new PanelControlMx(){varInitClause};\r\n";
 
-				ConvertContainedControls(c, dy2, ref cssClasses, ref varDefStmt, ref eventStubFrag);
+				ConvertContainedControls(c, dy2, ref cssClasses, ref varDefStmt, ref varInitStmt);
 
 				cssClasses += ""; // todo...
 
@@ -421,7 +416,7 @@ namespace Mobius.ClientComponents
 				//tab.Height += 8;
 				//tab.Top -= 8;
 
-				boundingBoxStmt = BuildBoundingBoxStmt(pc, c, dy);
+				varInitStmt = BuildvarInitStmt(pc, c, dy);
 
 				//tab.Height -= 8;
 				//tab.Top += 8;
@@ -430,11 +425,11 @@ namespace Mobius.ClientComponents
 					@"<SfTab class='tab-control-mx' Height='100%' Width='100%'>
 							<TabItems>" + "\r\n";
 
-				initArgs = BuildInitArgs(c);
-				varDefStmt += $"\tpublic TabMx {c.Name} = new TabMx(){initArgs};\r\n";
+				varInitClause = BuildVarInitClause(c);
+				varDefStmt += $"\tpublic TabMx {c.Name} = new TabMx(){varInitClause};\r\n";
 
 				dy2 = 0; // adjust position of contained controls
-				ConvertContainedControls(c, dy2, ref cssClasses, ref varDefStmt, ref eventStubFrag);
+				ConvertContainedControls(c, dy2, ref cssClasses, ref varDefStmt, ref varInitStmt);
 
 				cssClasses +=
 					@"</TabItems>
@@ -472,7 +467,7 @@ namespace Mobius.ClientComponents
 				//tab.Height += 8;
 				//tab.Top -= 8;
 
-				boundingBoxStmt = BuildBoundingBoxStmt(pc, c, dy);
+				varInitStmt = BuildvarInitStmt(pc, c, dy);
 				//tab.Height -= 8;
 				//tab.Top += 8;
 
@@ -485,11 +480,11 @@ namespace Mobius.ClientComponents
               <ContentTemplate>
 						";
 
-				initArgs = BuildInitArgs(c);
-				varDefStmt += $"\tpublic TabPageMx {c.Name} = new TabPageMx(){initArgs};\r\n";
+				varInitClause = BuildVarInitClause(c);
+				varDefStmt += $"\tpublic TabPageMx {c.Name} = new TabPageMx(){varInitClause};\r\n";
 
 				dy2 = 0; // adjust position of contained controls
-				ConvertContainedControls(c, dy2, ref cssClasses, ref varDefStmt, ref eventStubFrag);
+				ConvertContainedControls(c, dy2, ref cssClasses, ref varDefStmt, ref varInitStmt);
 
 				cssClasses +=
 					@"</ContentTemplate>
@@ -509,7 +504,7 @@ namespace Mobius.ClientComponents
 
 			else if (cType == typeof(LabelControl)) // DX LabelControl
 			{
-				boundingBoxStmt = BuildBoundingBoxStmt(pc, c, dy);
+				varInitStmt = BuildvarInitStmt(pc, c, dy);
 
 				LabelControl lc = c as LabelControl;
 				TextOptions to = lc.Appearance.TextOptions;
@@ -550,10 +545,10 @@ namespace Mobius.ClientComponents
 					cssClasses += $"<span {spanStyle}>@{c.Name}.Text</span>\r\n";
 				}
 
-				initArgs = BuildInitArgs(c, "Text", lc.Text, "");
-				varDefStmt += $"\tpublic LabelControlMx {c.Name} = new LabelControlMx(){initArgs};\r\n";
+				varInitClause = BuildVarInitClause(c, "Text", lc.Text, "");
+				varDefStmt += $"\tpublic LabelControlMx {c.Name} = new LabelControlMx(){varInitClause};\r\n";
 
-				boundingBoxStmt = BuildBoundingBoxStmt(pc, c, dy);
+				varInitStmt += varInitStmt = BuildvarInitStmt(pc, c, dy);
 
 				//div.Close(ref htmlFrag);
 			}
@@ -569,12 +564,12 @@ namespace Mobius.ClientComponents
 				if (l.BorderStyle != BorderStyle.None)
 					inlineStyleProps += " border: 1px solid #acacac; background-color: #eeeeee; ";
 
-				boundingBoxStmt = $"\t{c.Name}.StyleProps = new CssStyleMx(\"{inlineStyleProps}\");\r\n"; // set bounding box in initialize method
+				varInitStmt = $"\t{c.Name}.StyleProps = new CssStyleMx(\"{inlineStyleProps}\");\r\n"; // set bounding box in initialize method
 
 				cssClasses += $"<span>@{c.Name}.Text</span>\r\n";
 
-				initArgs = BuildInitArgs(c, "Text", l.Text, "");
-				varDefStmt += $"\tpublic LabelControlMx {c.Name} = new LabelControlMx(){initArgs};\r\n";
+				varInitClause = BuildVarInitClause(c, "Text", l.Text, "");
+				varDefStmt += $"\tpublic LabelControlMx {c.Name} = new LabelControlMx(){varInitClause};\r\n";
 
 				//div.Close(ref htmlFrag);
 			}
@@ -588,12 +583,12 @@ namespace Mobius.ClientComponents
 				if (pb.BorderStyle != BorderStyle.None)
 					inlineStyleProps += " border: 1px solid #acacac; background-color: #eeeeee; ";
 
-				boundingBoxStmt = $"\t{c.Name}.StyleProps = new CssStyleMx(\"{inlineStyleProps}\");\r\n"; // set bounding box in initialize method
+				varInitStmt = $"\t{c.Name}.StyleProps = new CssStyleMx(\"{inlineStyleProps}\");\r\n"; // set bounding box in initialize method
 
 				cssClasses += $"<img src='@{c.Name}.ImageName' width='{c.Width}' height='{c.Height}' />\r\n";
 
-				initArgs = BuildInitArgs(c);
-				varDefStmt += $"\tpublic PictureBoxMx {c.Name} = new PictureBoxMx(){initArgs};\r\n";
+				varInitClause = BuildVarInitClause(c);
+				varDefStmt += $"\tpublic PictureBoxMx {c.Name} = new PictureBoxMx(){varInitClause};\r\n";
 
 			}
 
@@ -613,7 +608,7 @@ namespace Mobius.ClientComponents
 			{
 				DropDownButton db = c as DropDownButton;
 
-				boundingBoxStmt = BuildBoundingBoxStmt(pc, c, dy);
+				varInitStmt = BuildvarInitStmt(pc, c, dy);
 
 				cssClasses += $@"<SfDropDownButton CssClass='button-mx' 
 				  @ref='{c.Name}.Button' Content='@{c.Name}.Text 
@@ -624,8 +619,8 @@ namespace Mobius.ClientComponents
 				//  <DropDownMenuItem Text='Loading...'></DropDownMenuItem>
 				//</DropDownMenuItems>
 
-				initArgs = BuildInitArgs(c, "Text", c.Text, "");
-				varDefStmt += $"\tpublic DropDownButtonMx {c.Name} = new DropDownButtonMx(){initArgs};\r\n";
+				varInitClause = BuildVarInitClause(c, "Text", c.Text, "");
+				varDefStmt += $"\tpublic DropDownButtonMx {c.Name} = new DropDownButtonMx(){varInitClause};\r\n";
 
 				//div.Close(ref htmlFrag);
 			}
@@ -640,7 +635,7 @@ namespace Mobius.ClientComponents
 				if (dy == 0)
 					dy = -4; // move up a bit
 
-				boundingBoxStmt = BuildBoundingBoxStmt(pc, c, dy);
+				varInitStmt = BuildvarInitStmt(pc, c, dy);
 
 				CheckEdit ce = c as CheckEdit;
 				CheckBoxStyle style = ce.Properties.CheckBoxOptions.Style;
@@ -658,8 +653,8 @@ namespace Mobius.ClientComponents
 					cssClasses += $@"<SfCheckBox CssClass='font-mx defaults-mx' Label='@{c.Name}.Text' Name='{c.Name}'   
 						@ref ='{c.Name}.Button' @bind-Checked='{c.Name}.Checked' @onchange = '{c.Name}_CheckedChanged' />" + "\r\n";
 
-					initArgs = BuildInitArgs(c, "Text", cText, "");
-					varDefStmt += $"\tpublic CheckBoxMx {c.Name} = new CheckBoxMx(){initArgs};\r\n";
+					varInitClause = BuildVarInitClause(c, "Text", cText, "");
+					varDefStmt += $"\tpublic CheckBoxMx {c.Name} = new CheckBoxMx(){varInitClause};\r\n";
 				}
 
 				else // assume RadioButton
@@ -675,10 +670,10 @@ namespace Mobius.ClientComponents
 						RadioGroups.Add(groupName);
 					}
 
-					initArgs = BuildInitArgs(c, 
+					varInitClause = BuildVarInitClause(c, 
 						"Text", cText, "",
 						"CVC", Nas(groupName), "");
-					varDefStmt += $"\tpublic RadioButtonMx {c.Name} = new RadioButtonMx(){initArgs};\r\n";
+					varDefStmt += $"\tpublic RadioButtonMx {c.Name} = new RadioButtonMx(){varInitClause};\r\n";
 				}
 
 				eventStubFrag += $@"
@@ -704,7 +699,7 @@ namespace Mobius.ClientComponents
 				// CheckButtons and their groups are handled in the same way as RadioButtons
 				// with the value for checked comparison being the ID of the SfButton.
 
-				boundingBoxStmt = BuildBoundingBoxStmt(pc, c, dy);
+				varInitStmt = BuildvarInitStmt(pc, c, dy);
 
 				CheckButton cb = c as CheckButton;
 
@@ -726,10 +721,10 @@ namespace Mobius.ClientComponents
 					RadioGroups.Add(groupName);
 				}
 
-				initArgs = BuildInitArgs(c, 
+				varInitClause = BuildVarInitClause(c, 
 					"Text", cText, "",
 					"CVC", Nas(groupName), "");
-				varDefStmt += $"\tpublic CheckButtonMx {cb.Name} = new CheckButtonMx(){initArgs};\r\n";
+				varDefStmt += $"\tpublic CheckButtonMx {cb.Name} = new CheckButtonMx(){varInitClause};\r\n";
 
 				//div.Close(ref htmlFrag);
 			}
@@ -803,14 +798,14 @@ namespace Mobius.ClientComponents
 
 				ButtonMx bmx = new ButtonMx() {};
 
-				initArgs = BuildInitArgs(c,
+				varInitClause = BuildVarInitClause(c,
 					"Text", cText, bmx.Text,
 					"ImageName", imageName, bmx.ImageName,
 					"IsPrimary", isPrimary, bmx.IsPrimary);
 	
-				varDefStmt += $"\tpublic ButtonMx {c.Name} = new ButtonMx(){initArgs};\r\n"; // declare and set basic props
+				varDefStmt += $"\tpublic ButtonMx {c.Name} = new ButtonMx(){varInitClause};\r\n"; // declare and set basic props
 
-				boundingBoxStmt = BuildBoundingBoxStmt(pc, c, dy);
+				varInitStmt = BuildvarInitStmt(pc, c, dy);
 
 				if (Lex.Eq(b.Text, "OK"))
 				{
@@ -870,7 +865,7 @@ namespace Mobius.ClientComponents
 			{
 				CheckedListBoxControl db = c as CheckedListBoxControl;
 
-				boundingBoxStmt = BuildBoundingBoxStmt(pc, c, dy);
+				varInitStmt = BuildvarInitStmt(pc, c, dy);
 
 				cssClasses += $@"<SfListView CssClass='listview-mx' TValue='ListItemMx' ShowCheckBox='true' Width='100%' Height='100%'
             @ref='@{c.Name}.SfListView' DataSource='@{c.Name}.Items'>
@@ -879,8 +874,8 @@ namespace Mobius.ClientComponents
           </ListViewEvents>
         </SfListView>" + "\r\n";
 
-				initArgs = BuildInitArgs(c);
-				varDefStmt += $"\tpublic CheckedListMx {c.Name} = new CheckedListMx(){initArgs};\r\n";
+				varInitClause = BuildVarInitClause(c);
+				varDefStmt += $"\tpublic CheckedListMx {c.Name} = new CheckedListMx(){varInitClause};\r\n";
 
 				eventStubFrag += $@"
 
@@ -914,7 +909,7 @@ namespace Mobius.ClientComponents
 			{
 				ComboBoxEdit cb = c as ComboBoxEdit;
 
-				boundingBoxStmt = BuildBoundingBoxStmt(pc, c, dy);
+				varInitStmt = BuildvarInitStmt(pc, c, dy);
 
 				cssClasses += $@"<SfComboBox TValue='string' TItem='ListItemMx' Enabled='@{c.Name}.Enabled'
 					@ref='{c.Name}.ComboBox' Placeholder='@{c.Name}.InitialText' DataSource='@{c.Name}.Items'>
@@ -922,8 +917,8 @@ namespace Mobius.ClientComponents
 						<ComboBoxEvents TValue='string' TItem='ListItemMx' Focus='{c.Name}_Focus' ValueChange='{c.Name}_ValueChange'></ComboBoxEvents> 
 					</SfComboBox> " + "\r\n";
 
-				initArgs = BuildInitArgs(c);
-				varDefStmt += $"\tpublic ComboBoxMx {c.Name} = new ComboBoxMx(){initArgs};\r\n";
+				varInitClause = BuildVarInitClause(c);
+				varDefStmt += $"\tpublic ComboBoxMx {c.Name} = new ComboBoxMx(){varInitClause};\r\n";
 
 				eventStubFrag += $@"
 
@@ -958,7 +953,7 @@ namespace Mobius.ClientComponents
 
 			else if (cType == typeof(TextEdit) || cType == typeof(MemoEdit))
 			{
-				boundingBoxStmt = BuildBoundingBoxStmt(pc, c, dy);
+				varInitStmt = BuildvarInitStmt(pc, c, dy);
 
 				// Example: <SfTextBox @bind-Value="@TextBoxValue" @ref="@SfTextBox" Type="InputType.Text" Placeholder="@InitialText" />
 
@@ -979,8 +974,8 @@ namespace Mobius.ClientComponents
 
 				cssClasses += "/>\r\n";
 
-				initArgs = BuildInitArgs(c, "DivStyle", NewCss(inlineStyleProps));
-				varDefStmt += $"\tpublic TextBoxMx {c.Name} = new TextBoxMx(){initArgs};\r\n";
+				varInitClause = BuildVarInitClause(c, "DivStyle", NewCss(inlineStyleProps));
+				varDefStmt += $"\tpublic TextBoxMx {c.Name} = new TextBoxMx(){varInitClause};\r\n";
 
 
 				if (editable)
@@ -1015,10 +1010,10 @@ namespace Mobius.ClientComponents
 
 			else if (cType == null) //typeof(DivMx)) // "null" control
 			{
-				boundingBoxStmt = BuildBoundingBoxStmt(pc, c, dy);
+				varInitStmt = BuildvarInitStmt(pc, c, dy);
 
-				initArgs = BuildInitArgs(c);
-				varDefStmt += $"\tpublic DivMx {c.Name} = new DivMx(){initArgs};\r\n";
+				varInitClause = BuildVarInitClause(c);
+				varDefStmt += $"\tpublic DivMx {c.Name} = new DivMx(){varInitClause};\r\n";
 
 				//div.Close(ref htmlFrag);
 			}
@@ -1040,7 +1035,7 @@ namespace Mobius.ClientComponents
 
 			html += cssClasses;
 			varDefCode += varDefStmt;
-			initCode += boundingBoxStmt;
+			varInitCode += varInitStmt;
 			eventCode += eventStubFrag;
 
 			BuildAddChildControlStmt(pc, c);
@@ -1054,7 +1049,7 @@ namespace Mobius.ClientComponents
 /// <param name="c"></param>
 /// <param name="pa">An array of of triples (var-name, desired-value, default-value) </param>
 /// <returns></returns>
-		string BuildInitArgs(Control c, params object[] pa)
+		string BuildVarInitClause(Control c, params object[] pa)
 		{
 			AssertMx.IsTrue(pa.Length % 3 == 0, $"Invalid number of parameters: {pa.Length}"); 
 			string args = "", propName = "", propVal = "", defaultVal = "";
@@ -1273,14 +1268,14 @@ namespace Mobius.ClientComponents
 /// <param name="dy"></param>
 /// <returns></returns>
 
-		public string BuildBoundingBoxStmt(
+		public string BuildvarInitStmt(
 			Control pc,
 			Control c,
 			int dy)
 		{
 			string inlineStyleProps = BuildBoundingBoxStyleProps(pc, c, dy);
-			string boundingBoxStmt = $"\t{c.Name}.StyleProps = new CssStyleMx(\"{inlineStyleProps}\");\r\n";
-			return boundingBoxStmt;
+			string varInitStmt = $"\t{c.Name}.StyleProps = new CssStyleMx(\"{inlineStyleProps}\");\r\n";
+			return varInitStmt;
 		}
 
 		/// <summary>

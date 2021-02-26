@@ -229,7 +229,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonControls\ControlMxConverter.cs" />
+    <Compile Include="CommonControls\JupyterGuiConverter.cs" />
     <Compile Include="CommonControls\DialogBoxContainer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -248,6 +248,7 @@
     <Compile Include="CommonControls\MoleculeSelectorControl.Designer.cs">
       <DependentUpon>MoleculeSelectorControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="CommonControls\SyncfusionGuiConverter.cs" />
     <Compile Include="QueryBuilder\MoleculeEditor.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -38,7 +38,7 @@ namespace Mobius.ClientComponents
 
 			// Setup
 
-			new ControlMxConverter().Convert(Instance);
+			new JupyterGuiConverter().ConvertFormOrUserControl(Instance);
 
 			string fmt = qc.DisplayFormatString;
 			if (Lex.IsNullOrEmpty(fmt)) fmt = "d-MMM-yyyy"; // default format

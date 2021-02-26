@@ -43,7 +43,7 @@ namespace Mobius.ClientComponents
 
 			// Setup
 
-			new ControlMxConverter().Convert(Instance);
+			new JupyterGuiConverter().ConvertFormOrUserControl(Instance);
 
 			if (pssc.SearchType == StructureSearchType.SmallWorld)
 			{

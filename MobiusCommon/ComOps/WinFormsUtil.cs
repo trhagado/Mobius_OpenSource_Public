@@ -48,7 +48,7 @@ namespace Mobius.ComOps
 			if (ControlsLogged.Contains(ctlFullName)) return;
 			ControlsLogged.Add(ctlFullName);
 
-			StreamWriter sw = new StreamWriter(@"c:\downloads\MobiusControlTemplates\" + ctlFullName + ".txt");
+			StreamWriter sw = new StreamWriter(@"C:\MobiusJupyter\GeneratedGuiComponents\" + ctlFullName + ".txt");
 
 			sw.WriteLine("Parent Type:\t" + t.Name + "\t, Parent Name:\t" + pc.Name + "\t, Full Type Name:\t" + t.FullName);
 			sw.WriteLine("");
