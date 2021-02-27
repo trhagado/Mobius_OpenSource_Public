@@ -86,6 +86,8 @@ namespace Mobius.ClientComponents
 			if (typeof(Form).IsAssignableFrom(containerType)) // Form or XtraForm?
 			{
 				Form f = cc as Form;
+				FormMetricsInfo fmi = WindowsHelper.GetFormMetrics(f);
+
 				DialogBoxMx dbMx = new DialogBoxMx();
 
 				inlineStyleProps = BuildBoundingBoxStyleProps(null, f, 0);
@@ -114,9 +116,9 @@ namespace Mobius.ClientComponents
 				// that dialog so that the window header controls are included in the conversion as well
 
 				DialogBoxContainer f2 = new DialogBoxContainer();
-
-				f2.Width = f.Width; // needs adjusting for delta in header size?
-				f2.Height = f.Height; // ditto
+				f2.Width = f.Width;
+				f2.Height = f.Height + f2.HeaderPanel.Height;
+				FormMetricsInfo fmi2 = WindowsHelper.GetFormMetrics(f2);
 
 				List<Control> cl = new List<Control>(); // copy ctls to list
 				foreach (Control c in f.Controls) 
@@ -550,8 +552,6 @@ namespace Mobius.ClientComponents
 
 				varInitClause = BuildVarInitClause(c, "Text", lc.Text, "");
 				varDefStmt += $"\tpublic LabelControlMx {c.Name} = new LabelControlMx(){varInitClause};\r\n";
-
-				varStylePropsStmt += varStylePropsStmt = BuildVarStylePropsStmt(pc, c, dy);
 
 				//div.Close(ref htmlFrag);
 			}
@@ -1298,6 +1298,9 @@ namespace Mobius.ClientComponents
 			//if (pc is Form || pc is XtraForm) // Form or XtraForm?
 			//	dy += 32; // add pixel height of WinForms window header to div top/bottom to adjust for move to HTML
 
+			bool isTopLevelDialogBoxContainer = (c.Controls.Count > 0 && // in control a container directly under a Form or XtraForm parent?
+				pc != null && typeof(Form).IsAssignableFrom(pc.GetType())); 
+
 			int cTop = c.Top + dy; // move top and bottom down to correct from WinForms to HTML
 			int cBottom = c.Bottom + dy;
 
@@ -1321,7 +1324,12 @@ namespace Mobius.ClientComponents
 						Lex.AppendItemToStringList(ref widthHeight, "width = '" + c.Width + "px'");
 
 					else // if left & right defined then set width as a calc()
-						Lex.AppendItemToStringList(ref widthHeight, "width = 'calc(100% - " + (c.Left + (pc.Width - c.Right)) + "px)'");
+					{
+						if (isTopLevelDialogBoxContainer)
+							Lex.AppendItemToStringList(ref widthHeight, "width = '100%'");
+						else 
+							Lex.AppendItemToStringList(ref widthHeight, $"width = 'calc(100% - {c.Left + (pc.Width - c.Right)}px)'");
+					}
 				}
 
 				else if (anchoredRight) // set right and width
@@ -1344,7 +1352,12 @@ namespace Mobius.ClientComponents
 						Lex.AppendItemToStringList(ref widthHeight, "height = '" + cHeight + "px'");
 
 					else // if top & bottom defined then set height as a calc()
-						Lex.AppendItemToStringList(ref widthHeight, "height = 'calc(100% - " + (cTop + (pc.Height - cBottom)) + "px)'");
+					{
+						if (isTopLevelDialogBoxContainer) // adjustment to DialogBoxContainer.ContentPanel height to account for "artificial" addition of HeaderPanel 
+							Lex.AppendItemToStringList(ref widthHeight, $"height = 'calc(100% - {cTop}px)'");
+						else
+							Lex.AppendItemToStringList(ref widthHeight, $"height = 'calc(100% - {cTop + (pc.Height - cBottom)}px)'");
+					}
 				}
 
 				else if (anchorBottom) // set bottom and height
