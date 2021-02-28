@@ -1112,12 +1112,28 @@ namespace Mobius.ComOps
 		/// <summary>
 		/// Append an item to a list inserting comma separator if list not empty
 		/// </summary>
-		/// <param name="dest"></param>
+		/// <param name="source"></param>
+		/// <param name="item"></param>
+		/// <returns></returns>
+
+		public static string AppendToList(
+			string source,
+			string item)
+		{
+			string result = source;
+			AppendToList(ref result, item);
+			return result;
+		}
+
+		/// <summary>
+		/// Append an item to a list inserting comma separator if list not empty
+		/// </summary>
+		/// <param name="dest">Source and dest</param>
 		/// <param name="item"></param>
 
-		public static void AppendItemToStringList(
-		ref string dest,
-		string item)
+		public static void AppendToList(
+			ref string dest,
+			string item)
 		{
 			if (Lex.IsUndefined(item)) return;
 			string separator = ", ";
@@ -1133,7 +1149,7 @@ namespace Mobius.ComOps
 		/// <param name="separator"></param>
 		/// <param name="item"></param>
 
-		public static void AppendItemToStringList(
+		public static void AppendToList(
 				ref string dest,
 				string separator,
 				string item)
@@ -1150,7 +1166,7 @@ namespace Mobius.ComOps
 		/// <param name="source"></param>
 		/// <param name="separator"></param>
 
-		public static void AppendItemToStringIfNew(
+		public static void AppendToListIfNew(
 			ref string dest,
 			string source,
 			string separator)

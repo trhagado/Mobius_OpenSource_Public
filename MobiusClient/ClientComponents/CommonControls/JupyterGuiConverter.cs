@@ -281,7 +281,7 @@ namespace Mobius.ClientComponents
 		{
 			string eventCode = ""; // temp accumulator
 			string cssClasses = "", varDefStmt = "", varStylePropsStmt = "", eventStubFrag = "";
-			string inlineStyleProps = "", groupName = "", varInitClause = "";
+			string inlineStyleProps = "", groupName = "", varInitClause = "", imageName = "";
 			int dy2 = 0;
 
 			Type cType = c.GetType();
@@ -580,6 +580,7 @@ namespace Mobius.ClientComponents
 			else if (cType == typeof(WinForms.PictureBox)) // Simple image
 			{
 				PictureBox pb = c as PictureBox;
+				PictureBoxMx pbMx = new PictureBoxMx();
 
 				inlineStyleProps = BuildBoundingBoxStyleProps(pc, c, dy);
 
@@ -588,11 +589,11 @@ namespace Mobius.ClientComponents
 
 				varStylePropsStmt = $"\t{c.Name}.StyleProps = new CssStyleMx(\"{inlineStyleProps}\");\r\n"; // set bounding box in initialize method
 
-				cssClasses += $"<img src='@{c.Name}.ImageName' width='{c.Width}' height='{c.Height}' />\r\n";
+				//cssClasses += $"<img src='@{c.Name}.ImageName' width='{c.Width}' height='{c.Height}' />\r\n";
 
-				varInitClause = BuildVarInitClause(c);
+				imageName = pb?.Tag as string;
+				varInitClause = BuildVarInitClause(c, "ImageName", imageName, "");
 				varDefStmt += $"\tpublic PictureBoxMx {c.Name} = new PictureBoxMx(){varInitClause};\r\n";
-
 			}
 
 			/////////////////////////////////////////////////////////////////////////////////
@@ -763,11 +764,14 @@ namespace Mobius.ClientComponents
 
 				string cssClass = "button-mx";
 
-				string imageName = "";
-				if (Lex.IsDefined(b.ImageOptions.ImageUri))
-				{
+				imageName = "";
+				if (Lex.IsDefined(b.ImageOptions.ImageUri)) // check url first
 					imageName = b.ImageOptions.ImageUri;
 
+				else imageName = (b.Tag as string); // check tag 2nd
+
+				if (Lex.IsDefined(imageName))
+				{
 					if (Lex.StartsWith(imageName, "&#")) // unicode character?
 					{
 						cText += " " + imageName;
@@ -1055,31 +1059,30 @@ namespace Mobius.ClientComponents
 			AssertMx.IsTrue(pa.Length % 3 == 0, $"Invalid number of parameters: {pa.Length}"); 
 			string args = "", propName = "", propVal = "", defaultVal = "";
 
-			Lex.AppendItemToStringList(ref args, $"Name = \"{c.Name}\"");
+			Lex.AppendToList(ref args, $"Name = \"{c.Name}\"");
 
 			if (!c.Enabled)
-				Lex.AppendItemToStringList(ref args, "Enabled = false");
+				Lex.AppendToList(ref args, "Enabled = false");
 
 			//if (!c.Visible) // may not be correct at this point
 			//	Lex.AppendItemToStringList(ref args, "Visible = false");
 
-			if (c.Tag != null)
-				Lex.AppendItemToStringList(ref args, $"Tag = \"{c.Tag.ToString()}\"");
+			//if (c.Tag != null)
+			//	Lex.AppendToList(ref args, $"Tag = \"{c.Tag.ToString()}\"");
 
 			for (int i1 = 0; i1 < pa.Length; i1 += 3)
 			{
+				propVal = defaultVal = "";
 				propName = pa[i1] as string;
 				if (Lex.IsUndefined(propName)) continue;
 
 				object propValObj = pa[i1 + 1];
-				if (propValObj == null)
-					propVal = "null";
-				else propVal = propValObj.ToString();
+				if (propValObj != null)
+					propVal = propValObj.ToString();
 
 				object defaultValObj = pa[i1 + 2];
-				if (defaultValObj == null)
-					defaultVal = "null";
-				else defaultVal = defaultValObj.ToString();
+				if (defaultValObj != null)
+					defaultVal = defaultValObj.ToString();
 
 				if (propVal == defaultVal) continue; // don't need to set if same as default
 
@@ -1089,7 +1092,7 @@ namespace Mobius.ClientComponents
 				else if (propValObj is bool)
 					propVal = propVal.ToLower();
 
-				Lex.AppendItemToStringList(ref args, propName + " = " + propVal);
+				Lex.AppendToList(ref args, propName + " = " + propVal);
 			}
 
 			//if (Lex.IsDefined(args)) // allow empty braces
@@ -1309,7 +1312,7 @@ namespace Mobius.ClientComponents
 			string code = ""; // nothing yet
 
 			if (c.Dock == WinForms.DockStyle.Fill) // if Dock defined the set width/height to 100% (i.e. Fill only for now)
-				Lex.AppendItemToStringList(ref styleProps, "width = '100%', height = '100%'");
+				Lex.AppendToList(ref styleProps, "width = '100%', height = '100%'");
 
 			else // use Anchor settings
 			{
@@ -1319,23 +1322,23 @@ namespace Mobius.ClientComponents
 
 				if (anchoredLeft)
 				{
-					Lex.AppendItemToStringList(ref styleProps, "left = '" + c.Left + "px'");
+					Lex.AppendToList(ref styleProps, "left = '" + c.Left + "px'");
 					if (!anchoredRight)
-						Lex.AppendItemToStringList(ref widthHeight, "width = '" + c.Width + "px'");
+						Lex.AppendToList(ref widthHeight, "width = '" + c.Width + "px'");
 
 					else // if left & right defined then set width as a calc()
 					{
 						if (isTopLevelDialogBoxContainer)
-							Lex.AppendItemToStringList(ref widthHeight, "width = '100%'");
+							Lex.AppendToList(ref widthHeight, "width = '100%'");
 						else 
-							Lex.AppendItemToStringList(ref widthHeight, $"width = 'calc(100% - {c.Left + (pc.Width - c.Right)}px)'");
+							Lex.AppendToList(ref widthHeight, $"width = 'calc(100% - {c.Left + (pc.Width - c.Right)}px)'");
 					}
 				}
 
 				else if (anchoredRight) // set right and width
 				{
-					Lex.AppendItemToStringList(ref styleProps, "right = '" + (pc.Width - c.Right) + "px'");
-					Lex.AppendItemToStringList(ref widthHeight, "width = '" + c.Width + "px'");
+					Lex.AppendToList(ref styleProps, "right = '" + (pc.Width - c.Right) + "px'");
+					Lex.AppendToList(ref widthHeight, "width = '" + c.Width + "px'");
 				}
 
 				bool anchorTop = ((c.Anchor & WinForms.AnchorStyles.Top) != 0);
@@ -1343,30 +1346,30 @@ namespace Mobius.ClientComponents
 
 				// Note: for buttons it looks like they could move up one px & be 2px taller
 
-				int cHeight = c.Height + 2; // make a bit taller
+				int cHeight = c.Height; // + 2; // make a bit taller?
 
 				if (anchorTop)
 				{
-					Lex.AppendItemToStringList(ref styleProps, "top = '" + cTop + "px'");
+					Lex.AppendToList(ref styleProps, "top = '" + cTop + "px'");
 					if (!anchorBottom)
-						Lex.AppendItemToStringList(ref widthHeight, "height = '" + cHeight + "px'");
+						Lex.AppendToList(ref widthHeight, "height = '" + cHeight + "px'");
 
 					else // if top & bottom defined then set height as a calc()
 					{
 						if (isTopLevelDialogBoxContainer) // adjustment to DialogBoxContainer.ContentPanel height to account for "artificial" addition of HeaderPanel 
-							Lex.AppendItemToStringList(ref widthHeight, $"height = 'calc(100% - {cTop}px)'");
+							Lex.AppendToList(ref widthHeight, $"height = 'calc(100% - {cTop}px)'");
 						else
-							Lex.AppendItemToStringList(ref widthHeight, $"height = 'calc(100% - {cTop + (pc.Height - cBottom)}px)'");
+							Lex.AppendToList(ref widthHeight, $"height = 'calc(100% - {cTop + (pc.Height - cBottom)}px)'");
 					}
 				}
 
 				else if (anchorBottom) // set bottom and height
 				{
-					Lex.AppendItemToStringList(ref styleProps, "bottom = '" + (pc.Height - cBottom) + "px'");
-					Lex.AppendItemToStringList(ref widthHeight, "height = '" + cHeight + "px'");
+					Lex.AppendToList(ref styleProps, "bottom = '" + (pc.Height - cBottom) + "px'");
+					Lex.AppendToList(ref widthHeight, "height = '" + cHeight + "px'");
 				}
 
-				Lex.AppendItemToStringList(ref styleProps, widthHeight); // put width height after location
+				Lex.AppendToList(ref styleProps, widthHeight); // put width height after location
 			}
 
 

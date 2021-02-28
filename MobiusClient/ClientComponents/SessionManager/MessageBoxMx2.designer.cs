@@ -145,6 +145,7 @@ namespace Mobius.ClientComponents
 			this.MessageBoxImage.Size = new System.Drawing.Size(32, 32);
 			this.MessageBoxImage.TabIndex = 23;
 			this.MessageBoxImage.TabStop = false;
+			this.MessageBoxImage.Tag = "MessageBoxErrorIcon32.png";
 			// 
 			// MessageBoxMx2
 			// 

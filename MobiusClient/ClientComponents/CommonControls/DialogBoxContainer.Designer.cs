@@ -150,6 +150,7 @@
 			this.WindowIcon.Size = new System.Drawing.Size(16, 16);
 			this.WindowIcon.TabIndex = 0;
 			this.WindowIcon.TabStop = false;
+			this.WindowIcon.Tag = "Mobius16x16.png";
 			// 
 			// RestoreWindowButton
 			// 

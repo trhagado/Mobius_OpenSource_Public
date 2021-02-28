@@ -498,14 +498,14 @@ namespace Mobius.QueryEngineLibrary
 					GetColumnNameTypesToReturn(qc, out returnNormalName, out returnValSuffixedName);
 
 					if (qc.IsKey)
-						Lex.AppendItemToStringList(ref exprs2, ", ", kt + ".column_value " + qc.MetaColumnName);
+						Lex.AppendToList(ref exprs2, ", ", kt + ".column_value " + qc.MetaColumnName);
 					else
 					{
 						if (returnNormalName)
-							Lex.AppendItemToStringList(ref exprs2, ", ", bt + "." + qc.MetaColumnName);
+							Lex.AppendToList(ref exprs2, ", ", bt + "." + qc.MetaColumnName);
 
 						if (returnValSuffixedName)
-							Lex.AppendItemToStringList(ref exprs2, ", ", bt + "." + qc.MetaColumnName + "_val");
+							Lex.AppendToList(ref exprs2, ", ", bt + "." + qc.MetaColumnName + "_val");
 					}
 				}
 			}
@@ -964,7 +964,7 @@ namespace Mobius.QueryEngineLibrary
 			string criteria = "";
 			string[] items = list.Split(',');
 
-			Lex.AppendItemToStringList(ref criteria, " and ", "(" + dbColumnName + " in (");
+			Lex.AppendToList(ref criteria, " and ", "(" + dbColumnName + " in (");
 			var chunks = from index in Enumerable.Range(0, items.Length)
 									 group items[index] by index / DbCommandMx.MaxOracleInListItemCount;
 			int chunksRead = 0;

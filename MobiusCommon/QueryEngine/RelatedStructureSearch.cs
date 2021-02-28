@@ -1274,8 +1274,8 @@ namespace Mobius.QueryEngineLibrary
 				swp.Smiles = smilesQuery;
 
 				swp.Database = "";
-				if (SearchSmallWorld && RSSConfig.SearchCorpDbSmallWorldEnabled) Lex.AppendItemToStringList(ref swp.Database, ",", "Corp");
-				if (SearchChembl && RSSConfig.SearchChemblSmallWorldEnabled) Lex.AppendItemToStringList(ref swp.Database, ",", "ChEMBL");
+				if (SearchSmallWorld && RSSConfig.SearchCorpDbSmallWorldEnabled) Lex.AppendToList(ref swp.Database, ",", "Corp");
+				if (SearchChembl && RSSConfig.SearchChemblSmallWorldEnabled) Lex.AppendToList(ref swp.Database, ",", "ChEMBL");
 
 				SmallWorldDao swDao = new SmallWorldDao();
 				swDao.KeysToExclude = KeysToExclude;

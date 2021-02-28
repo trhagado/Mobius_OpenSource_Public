@@ -502,7 +502,7 @@ namespace Mobius.QueryEngineLibrary
 
 						string code = qc2.MetaColumn.ResultCode;
 						if (!Lex.IsNullOrEmpty(code))
-							Lex.AppendItemToStringIfNew(ref resultTypeList, code, ", ");
+							Lex.AppendToListIfNew(ref resultTypeList, code, ", ");
 					}
 
 					if (mbList == null) break; // single broker
@@ -561,7 +561,7 @@ namespace Mobius.QueryEngineLibrary
 				}
 				else
 				{
-					Lex.AppendItemToStringList(ref criteria, " and ", "assay_id in (" + assayList + ") "); // restrict to list of assays
+					Lex.AppendToList(ref criteria, " and ", "assay_id in (" + assayList + ") "); // restrict to list of assays
 				 //Lex.AppendToList(ref criteria, " and ", "assay_id in (" + assayIdList + ") "); // restrict to list of assay assay_ids (surprisingly this is slower than using assay ids)
 				}
 
@@ -569,9 +569,9 @@ namespace Mobius.QueryEngineLibrary
 			}
 
 			if (!Lex.IsNullOrEmpty(resultTypeList))
-				Lex.AppendItemToStringList(ref criteria, " and ", "rslt_typ_id in (" + resultTypeList + ") ");
+				Lex.AppendToList(ref criteria, " and ", "rslt_typ_id in (" + resultTypeList + ") ");
 
-			Lex.AppendItemToStringList(ref criteria, " and ", "<cid> in (<list>)"); // add list placeholder that is filled in at run time 
+			Lex.AppendToList(ref criteria, " and ", "<cid> in (<list>)"); // add list placeholder that is filled in at run time 
 
 			sql = ActivateInnerKeyListCriteria(sql, "<list>"); // put list in inner sql also for performance enhancement
 
@@ -2941,7 +2941,7 @@ where aprvl_sts_cd = 'Y' and dtld_rslt_id = :0";
 
 				if (!ExprsColnames.Contains(colName)) // check for duplicate group col name
 				{
-					Lex.AppendItemToStringIfNew(ref Exprs, e2, ", ");
+					Lex.AppendToListIfNew(ref Exprs, e2, ", ");
 					ExprsColnames.Add(colName);
 				}
 
@@ -2949,7 +2949,7 @@ where aprvl_sts_cd = 'Y' and dtld_rslt_id = :0";
 
 				e2 = GroupName + "." + brokerColName; // column name qualified by group name
 				if (!Lex.IsNullOrEmpty(brokerColName))
-					Lex.AppendItemToStringIfNew(ref Broker.InnerExprs, e2, ", ");
+					Lex.AppendToListIfNew(ref Broker.InnerExprs, e2, ", ");
 
 				return;
 			}

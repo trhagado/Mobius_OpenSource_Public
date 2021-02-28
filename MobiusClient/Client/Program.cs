@@ -49,7 +49,7 @@ namespace Mobius.Client
 			{
 				string arg = args[ai];
 
-				Lex.AppendItemToStringList(ref argString, " ", arg); // append arg separating by a space
+				Lex.AppendToList(ref argString, " ", arg); // append arg separating by a space
 
 				if (Lex.Eq(arg, "username") && ai + 2 < args.Length)
 					username = args[ai + 2].ToUpper();
