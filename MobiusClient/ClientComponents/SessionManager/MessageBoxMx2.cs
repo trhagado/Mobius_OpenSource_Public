@@ -27,6 +27,7 @@ namespace Mobius.ClientComponents
 			try
 			{
 				InitializeComponent();
+				Message.BorderStyle = BorderStyles.NoBorder;
 			}
 			catch (Exception ex) // seems to sometimes occur when exiting WIN 10
 			{

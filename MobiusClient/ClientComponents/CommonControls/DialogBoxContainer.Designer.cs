@@ -33,7 +33,7 @@
 			this.DialogBoxHeaderPanel = new System.Windows.Forms.Panel();
 			this.CloseWindowButton = new DevExpress.XtraEditors.SimpleButton();
 			this.MaximizeWindowButton = new DevExpress.XtraEditors.SimpleButton();
-			this.WindowTitle = new System.Windows.Forms.Label();
+			this.WindowTitleLabel = new System.Windows.Forms.Label();
 			this.MinimizeWindowButton = new DevExpress.XtraEditors.SimpleButton();
 			this.WindowIcon = new System.Windows.Forms.PictureBox();
 			this.RestoreWindowButton = new DevExpress.XtraEditors.SimpleButton();
@@ -59,7 +59,7 @@
 			this.DialogBoxHeaderPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.DialogBoxHeaderPanel.Controls.Add(this.CloseWindowButton);
 			this.DialogBoxHeaderPanel.Controls.Add(this.MaximizeWindowButton);
-			this.DialogBoxHeaderPanel.Controls.Add(this.WindowTitle);
+			this.DialogBoxHeaderPanel.Controls.Add(this.WindowTitleLabel);
 			this.DialogBoxHeaderPanel.Controls.Add(this.MinimizeWindowButton);
 			this.DialogBoxHeaderPanel.Controls.Add(this.WindowIcon);
 			this.DialogBoxHeaderPanel.Controls.Add(this.RestoreWindowButton);
@@ -107,16 +107,16 @@
 			this.MaximizeWindowButton.Tag = "MaximizeWindow";
 			this.MaximizeWindowButton.ToolTip = "Maximize";
 			// 
-			// WindowTitle
+			// WindowTitleLabel
 			// 
-			this.WindowTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.WindowTitleLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.WindowTitle.Location = new System.Drawing.Point(29, 5);
-			this.WindowTitle.Name = "WindowTitle";
-			this.WindowTitle.Size = new System.Drawing.Size(302, 18);
-			this.WindowTitle.TabIndex = 4;
-			this.WindowTitle.Text = "Mobius Window Title";
-			this.WindowTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.WindowTitleLabel.Location = new System.Drawing.Point(29, 5);
+			this.WindowTitleLabel.Name = "WindowTitleLabel";
+			this.WindowTitleLabel.Size = new System.Drawing.Size(302, 18);
+			this.WindowTitleLabel.TabIndex = 4;
+			this.WindowTitleLabel.Text = "Mobius Window Title";
+			this.WindowTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// MinimizeWindowButton
 			// 
@@ -142,7 +142,7 @@
 			// WindowIcon
 			// 
 			this.WindowIcon.Image = ((System.Drawing.Image)(resources.GetObject("WindowIcon.Image")));
-			this.WindowIcon.Location = new System.Drawing.Point(7, 7);
+			this.WindowIcon.Location = new System.Drawing.Point(7, 5);
 			this.WindowIcon.Name = "WindowIcon";
 			this.WindowIcon.Size = new System.Drawing.Size(16, 16);
 			this.WindowIcon.TabIndex = 0;
@@ -189,7 +189,7 @@
 
 		public System.Windows.Forms.Panel ContentPanel;
 		public System.Windows.Forms.Panel DialogBoxHeaderPanel;
-		public System.Windows.Forms.Label WindowTitle;
+		public System.Windows.Forms.Label WindowTitleLabel;
 		public System.Windows.Forms.PictureBox WindowIcon;
 		public DevExpress.XtraEditors.SimpleButton MinimizeWindowButton;
 		public DevExpress.XtraEditors.SimpleButton CloseWindowButton;
