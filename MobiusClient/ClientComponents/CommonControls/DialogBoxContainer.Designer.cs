@@ -30,14 +30,14 @@
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DialogBoxContainer));
 			this.ContentPanel = new System.Windows.Forms.Panel();
-			this.HeaderPanel = new System.Windows.Forms.Panel();
+			this.DialogBoxHeaderPanel = new System.Windows.Forms.Panel();
 			this.CloseWindowButton = new DevExpress.XtraEditors.SimpleButton();
 			this.MaximizeWindowButton = new DevExpress.XtraEditors.SimpleButton();
 			this.WindowTitle = new System.Windows.Forms.Label();
 			this.MinimizeWindowButton = new DevExpress.XtraEditors.SimpleButton();
 			this.WindowIcon = new System.Windows.Forms.PictureBox();
 			this.RestoreWindowButton = new DevExpress.XtraEditors.SimpleButton();
-			this.HeaderPanel.SuspendLayout();
+			this.DialogBoxHeaderPanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.WindowIcon)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -52,31 +52,28 @@
 			this.ContentPanel.Size = new System.Drawing.Size(446, 240);
 			this.ContentPanel.TabIndex = 3;
 			// 
-			// HeaderPanel
+			// DialogBoxHeaderPanel
 			// 
-			this.HeaderPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.DialogBoxHeaderPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.HeaderPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.HeaderPanel.Controls.Add(this.CloseWindowButton);
-			this.HeaderPanel.Controls.Add(this.MaximizeWindowButton);
-			this.HeaderPanel.Controls.Add(this.WindowTitle);
-			this.HeaderPanel.Controls.Add(this.MinimizeWindowButton);
-			this.HeaderPanel.Controls.Add(this.WindowIcon);
-			this.HeaderPanel.Controls.Add(this.RestoreWindowButton);
-			this.HeaderPanel.Location = new System.Drawing.Point(0, 0);
-			this.HeaderPanel.Name = "HeaderPanel";
-			this.HeaderPanel.Size = new System.Drawing.Size(446, 30);
-			this.HeaderPanel.TabIndex = 2;
+			this.DialogBoxHeaderPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.DialogBoxHeaderPanel.Controls.Add(this.CloseWindowButton);
+			this.DialogBoxHeaderPanel.Controls.Add(this.MaximizeWindowButton);
+			this.DialogBoxHeaderPanel.Controls.Add(this.WindowTitle);
+			this.DialogBoxHeaderPanel.Controls.Add(this.MinimizeWindowButton);
+			this.DialogBoxHeaderPanel.Controls.Add(this.WindowIcon);
+			this.DialogBoxHeaderPanel.Controls.Add(this.RestoreWindowButton);
+			this.DialogBoxHeaderPanel.Location = new System.Drawing.Point(0, 0);
+			this.DialogBoxHeaderPanel.Name = "DialogBoxHeaderPanel";
+			this.DialogBoxHeaderPanel.Size = new System.Drawing.Size(446, 30);
+			this.DialogBoxHeaderPanel.TabIndex = 2;
+			this.DialogBoxHeaderPanel.Tag = "class=\"dialog-box-header-panel-mx\"";
 			// 
 			// CloseWindowButton
 			// 
 			this.CloseWindowButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.CloseWindowButton.Appearance.BackColor = System.Drawing.Color.Transparent;
-			this.CloseWindowButton.Appearance.BorderColor = System.Drawing.Color.Transparent;
-			this.CloseWindowButton.Appearance.ForeColor = System.Drawing.Color.Transparent;
 			this.CloseWindowButton.Appearance.Options.UseBackColor = true;
-			this.CloseWindowButton.Appearance.Options.UseBorderColor = true;
-			this.CloseWindowButton.Appearance.Options.UseForeColor = true;
 			this.CloseWindowButton.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("CloseWindowButton.ImageOptions.Image")));
 			this.CloseWindowButton.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
 			this.CloseWindowButton.Location = new System.Drawing.Point(417, 4);
@@ -179,10 +176,10 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(446, 270);
 			this.Controls.Add(this.ContentPanel);
-			this.Controls.Add(this.HeaderPanel);
+			this.Controls.Add(this.DialogBoxHeaderPanel);
 			this.Name = "DialogBoxContainer";
 			this.Text = "DialogBoxContainer";
-			this.HeaderPanel.ResumeLayout(false);
+			this.DialogBoxHeaderPanel.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.WindowIcon)).EndInit();
 			this.ResumeLayout(false);
 
@@ -191,7 +188,7 @@
 		#endregion
 
 		public System.Windows.Forms.Panel ContentPanel;
-		public System.Windows.Forms.Panel HeaderPanel;
+		public System.Windows.Forms.Panel DialogBoxHeaderPanel;
 		public System.Windows.Forms.Label WindowTitle;
 		public System.Windows.Forms.PictureBox WindowIcon;
 		public DevExpress.XtraEditors.SimpleButton MinimizeWindowButton;
