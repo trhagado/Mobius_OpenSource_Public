@@ -1,12 +1,9 @@
 # Mobius_OpenSource
 
-This repository contains the source code for the Mobius drug discovery chemistry database system. The primary goal of Mobius is to support multiple drug-discovery projects by  integrating and providing a set of tools for searching, analyzing and reporting on a broad range of public and proprietary chemistry-centered drug discovery data. The sorts of data commonly integrated in Mobius databases include chemical structure collections, in-vitro, in-vivo and in-silico compound data
+This repository contains the source code for the Mobius drug discovery chemistry database system. The primary goal of Mobius is to support multiple drug-discovery projects by  providing a set of tools for integrating, searching, analyzing and reporting on a broad range of public and proprietary chemistry-centered drug discovery data. The folling types of drug discovery chemistry data are commonly integrated into Mobius databases: 2D/3D chemical structure collections, chemical physical, in-vitro, in-vivo, in-silico, structural biology data, miscellaneous ad hoc user-defined data.
 
-Mobius and its previous incarnations (Cousin, ChemLink) which have all been based on a common set of design concepts, have been used internally at multiple commercial drug discovery organizations since the late 1970s. 
+Mobius and its previous incarnations (Cousin, ChemLink) which have all been based on a common set of design concepts, have been used internally at multiple commercial drug discovery organizations since the late 1970s. Several articles have been published on Mobius et al, many of which can be found via Google Scholar searches for "tr hagadone" and "ms lajiness"
 
-References: 
+Further development of this repository is currently paused while new potential data science applications of the software are being explored. 
 
-Capturing Chemical Structure Information in a Relational Database System: TheCapturing Chemical Structure Information in a Relational Database System: The Chemical Software Component Approach
-T. R. Hagadone and M. W. Schulz
-Journal of Chemical Information and Computer Sciences 1995 35 (5), 879-884
-DOI: 10.1021/ci00027a014 (https://pubs.acs.org/doi/pdf/10.1021/ci00027a014)
+
