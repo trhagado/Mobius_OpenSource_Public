@@ -35,7 +35,7 @@ namespace Mobius.ClientComponents
 		StreamWriter log;
 
 		bool IncludeMenuStubs = false;
-		public static bool Active = DebugMx.True; // set to true to generate Razor code
+		public static bool ConversionsEnabled = DebugMx.False; // set to true to generate UI migration code
 
 		/// <summary>
 		/// Convert a Windows/DevExpress Form or UserControl to a set of ControlMx-based controls
@@ -54,7 +54,7 @@ namespace Mobius.ClientComponents
 
 			int dy = 0;
 
-			if (!Active) return;
+			if (!ConversionsEnabled) return;
 
 			IncludeMenuStubs = includeMenuStubs;
 
@@ -97,7 +97,7 @@ namespace Mobius.ClientComponents
 				// Constructor initialization code for this class 
 
 				varConstructorCode = $@"
-		TitleText = '{f.Text}';
+		WindowTitle = '{f.Text}';
 		ShowIcon = {f.ShowIcon};
 		ImageName = ''; 
 		FormBorderStyle = FormBorderStyle.{f.FormBorderStyle};
@@ -282,7 +282,7 @@ namespace Mobius.ClientComponents
 			ref string varConstructorCode)
 		{
 			string eventCode = ""; // temp accumulator
-			string ctlDefStmt = "", ctlStyleStmts = "", eventStubFrag = "", oldSyncfusionStmt = "";
+			string ctlDeclAndInitStmt = "", ctlStyleStmts = "", eventStubFrag = "", oldSyncfusionStmt = "";
 			string inlineStyleProps = "", groupName = "", ctlInitClause = "", imageName = "";
 			int dy2 = 0;
 
@@ -321,7 +321,7 @@ namespace Mobius.ClientComponents
 				UserControlMx bmx = new UserControlMx() { };
 
 				ctlInitClause = BuildCtlInitClause(c);
-				ctlDefStmt += $"\tpublic {typeName} {c.Name} = new {typeName}(){ctlInitClause};\r\n"; // declare and set basic props
+				ctlDeclAndInitStmt += $"\tpublic {typeName} {c.Name} = new {typeName}(){ctlInitClause};\r\n"; // declare and set basic props
 
 				inlineStyleProps = BuildBoundingBoxStyleProps(pc, c, dy);
 
@@ -356,13 +356,13 @@ namespace Mobius.ClientComponents
 				ctlInitClause = BuildCtlInitClause(c,
 					"Text", gb.Text, bmx.Text);
 
-				ctlDefStmt += $"\tpublic GroupBoxMx {c.Name} = new GroupBoxMx(){ctlInitClause};\r\n"; // declare and set basic props
+				ctlDeclAndInitStmt += $"\tpublic GroupBoxMx {c.Name} = new GroupBoxMx(){ctlInitClause};\r\n"; // declare and set basic props
 
 				oldSyncfusionStmt +=
 					"<GroupBox class='groupbox-mx'>\r\n";
 
 				dy2 = 4; // move contained controls down a bit
-				ConvertContainedControls(c, dy2, ref oldSyncfusionStmt, ref ctlDefStmt, ref ctlStyleStmts);
+				ConvertContainedControls(c, dy2, ref oldSyncfusionStmt, ref ctlDeclAndInitStmt, ref ctlStyleStmts);
 
 				oldSyncfusionStmt += "</fieldset>\r\n";
 
@@ -376,12 +376,12 @@ namespace Mobius.ClientComponents
 			else if (cType == typeof(Panel) || cType == typeof(PanelControl) || cType == typeof(XtraPanel))
 			{
 				PanelControlMx cMx = new PanelControlMx();
-				ctlDefStmt = BuildCtlDefStmt(c, cMx);
+				ctlDeclAndInitStmt = BuildDeclAndInitStmt(c, cMx);
 
 				ctlStyleStmts += BuildInlineStylePropsStmt(pc, c, dy); // inline CSS
-				ctlStyleStmts += BuildCtlClassesStmt(c, cssClasses); // CSS class assignments
+				ctlStyleStmts += BuildClassesStmt(c, cssClasses); // CSS class assignments
 
-				ConvertContainedControls(c, dy2, ref oldSyncfusionStmt, ref ctlDefStmt, ref ctlStyleStmts);
+				ConvertContainedControls(c, dy2, ref oldSyncfusionStmt, ref ctlDeclAndInitStmt, ref ctlStyleStmts);
 			}
 
 			/***********************/
@@ -437,10 +437,10 @@ namespace Mobius.ClientComponents
 							<TabItems>" + "\r\n";
 
 				ctlInitClause = BuildCtlInitClause(c);
-				ctlDefStmt += $"\tpublic TabMx {c.Name} = new TabMx(){ctlInitClause};\r\n";
+				ctlDeclAndInitStmt += $"\tpublic TabMx {c.Name} = new TabMx(){ctlInitClause};\r\n";
 
 				dy2 = 0; // adjust position of contained controls
-				ConvertContainedControls(c, dy2, ref oldSyncfusionStmt, ref ctlDefStmt, ref ctlStyleStmts);
+				ConvertContainedControls(c, dy2, ref oldSyncfusionStmt, ref ctlDeclAndInitStmt, ref ctlStyleStmts);
 
 				oldSyncfusionStmt +=
 					@"</TabItems>
@@ -492,10 +492,10 @@ namespace Mobius.ClientComponents
 						";
 
 				ctlInitClause = BuildCtlInitClause(c);
-				ctlDefStmt += $"\tpublic TabPageMx {c.Name} = new TabPageMx(){ctlInitClause};\r\n";
+				ctlDeclAndInitStmt += $"\tpublic TabPageMx {c.Name} = new TabPageMx(){ctlInitClause};\r\n";
 
 				dy2 = 0; // adjust position of contained controls
-				ConvertContainedControls(c, dy2, ref oldSyncfusionStmt, ref ctlDefStmt, ref ctlStyleStmts);
+				ConvertContainedControls(c, dy2, ref oldSyncfusionStmt, ref ctlDeclAndInitStmt, ref ctlStyleStmts);
 
 				oldSyncfusionStmt +=
 					@"</ContentTemplate>
@@ -520,7 +520,7 @@ namespace Mobius.ClientComponents
 
 				LabelControlMx lcMx = new LabelControlMx();
 
-				ctlDefStmt = BuildCtlDefStmt(c, lcMx, "Text", lc.Text, "", "LineVisible", lc.LineVisible, lcMx.LineVisible);
+				ctlDeclAndInitStmt = BuildDeclAndInitStmt(c, lcMx, "Text", lc.Text, "", "LineVisible", lc.LineVisible, lcMx.LineVisible);
 
 				if (!lc.LineVisible) // it not a line, check to see if a border is desired
 				{
@@ -532,7 +532,7 @@ namespace Mobius.ClientComponents
 
 				ctlStyleStmts += BuildInlineStylePropsStmt(pc, c, dy, inlineStyleProps);
 
-				ctlStyleStmts += BuildCtlClassesStmt(c, cssClasses);
+				ctlStyleStmts += BuildClassesStmt(c, cssClasses);
 
 #if false // oldish, but works
 				ctlStyleStmts = BuildInlineStylePropsStmt(pc, c, dy);
@@ -594,14 +594,14 @@ namespace Mobius.ClientComponents
 
 				if (Lex.IsUndefined(l.Text)) return; // ignore if no text
 
-				ctlDefStmt = BuildCtlDefStmt(c, lcMx, "Text", l.Text, "");
+				ctlDeclAndInitStmt = BuildDeclAndInitStmt(c, lcMx, "Text", l.Text, "");
 
 				if (l.BorderStyle != BorderStyle.None)
 					inlineStyleProps += " border: 1px solid #acacac; background-color: #eeeeee; ";
 
 				ctlStyleStmts += BuildInlineStylePropsStmt(pc, c, dy, inlineStyleProps); // inline CSS
 
-				ctlStyleStmts += BuildCtlClassesStmt(c, cssClasses); // CSS class assignments
+				ctlStyleStmts += BuildClassesStmt(c, cssClasses); // CSS class assignments
 			}
 
 			////////////////////////////////////////////////////////////////////////////////
@@ -614,14 +614,14 @@ namespace Mobius.ClientComponents
 				PictureBoxMx pbMx = new PictureBoxMx();
 
 				imageName = pb?.Tag as string;
-				ctlDefStmt = BuildCtlDefStmt(c, pbMx, "ImageName", imageName, "");
+				ctlDeclAndInitStmt = BuildDeclAndInitStmt(c, pbMx, "ImageName", imageName, "");
 
 				if (pb.BorderStyle != BorderStyle.None)
 					inlineStyleProps += " border: 1px solid #acacac; background-color: #eeeeee; ";
 
 				ctlStyleStmts += BuildInlineStylePropsStmt(pc, c, dy, inlineStyleProps); // inline CSS
 
-				ctlStyleStmts += BuildCtlClassesStmt(c, cssClasses); // CSS class assignments
+				ctlStyleStmts += BuildClassesStmt(c, cssClasses); // CSS class assignments
 			}
 
 			/////////////////////////////////////////////////////////////////////////////////
@@ -652,7 +652,7 @@ namespace Mobius.ClientComponents
 				//</DropDownMenuItems>
 
 				ctlInitClause = BuildCtlInitClause(c, "Text", c.Text, "");
-				ctlDefStmt += $"\tpublic DropDownButtonMx {c.Name} = new DropDownButtonMx(){ctlInitClause};\r\n";
+				ctlDeclAndInitStmt += $"\tpublic DropDownButtonMx {c.Name} = new DropDownButtonMx(){ctlInitClause};\r\n";
 
 				//div.Close(ref htmlFrag);
 			}
@@ -685,39 +685,41 @@ namespace Mobius.ClientComponents
 				/////////////////////////////////////////////////////////////////////////////////
 
 				if (style == CheckBoxStyle.CheckBox)
-				{ // CheckBox
+				{ 
 					CheckBoxMx cbMx = new CheckBoxMx();
 
+					ctlDeclAndInitStmt = BuildDeclAndInitStmt(c, cbMx,
+						"Text", cText, cbMx.Text,
+						"Checked", ce.Checked, cbMx.Checked);
 
-					oldSyncfusionStmt += $@"<SfCheckBox CssClass='font-mx defaults-mx' Label='@{c.Name}.Text' Name='{c.Name}'   
-						@ref ='{c.Name}.Button' @bind-Checked='{c.Name}.Checked' @onchange = '{c.Name}_CheckedChanged' />" + "\r\n";
+					ctlStyleStmts += BuildInlineStylePropsStmt(pc, c, dy); // inline CSS
 
-					ctlInitClause = BuildCtlInitClause(c, "Text", cText, "");
-					ctlDefStmt += $"\tpublic CheckBoxMx {c.Name} = new CheckBoxMx(){ctlInitClause};\r\n";
+					ctlStyleStmts += BuildClassesStmt(c, cssClasses); // CSS class assignments
 				}
 
 				/////////////////////////////////////////////////////////////////////////////////
 				// CheckEdit (CheckBox and RadioButton)
 				/////////////////////////////////////////////////////////////////////////////////
-				///
+				
 				else // assume RadioButton
 				{
 					RadioButtonMx rbMx = new RadioButtonMx();
 
-					groupName = "RadioGroupValue" + ce.Properties.RadioGroupIndex;
-					oldSyncfusionStmt += $@"<SfRadioButton CssClass='font-mx defaults-mx' Label='@{c.Name}.Text' Name='{groupName}' Value='{ce.Name}'
-						@ref ='{c.Name}.Button' @bind-Checked='{groupName}.CheckedValue' @onchange = '{c.Name}_CheckedChanged' />" + "\r\n";
+					groupName = "RadioGroup" + ce.Properties.RadioGroupIndex;
 
 					if (!RadioGroups.Contains(groupName)) // add var to identify the current radio button for the group
 					{
-						ctlDefStmt += $"static CheckedValueContainer {groupName} = new CheckedValueContainer();\r\n";
 						RadioGroups.Add(groupName);
 					}
 
-					ctlInitClause = BuildCtlInitClause(c,
-						"Text", cText, "",
-						"CVC", Nas(groupName), "");
-					ctlDefStmt += $"\tpublic RadioButtonMx {c.Name} = new RadioButtonMx(){ctlInitClause};\r\n";
+					ctlDeclAndInitStmt = BuildDeclAndInitStmt(c, rbMx,
+						"Text", cText, rbMx.Text,
+						"Checked", ce.Checked, rbMx.Checked,
+						"GroupName", groupName, rbMx.GroupName);
+
+					ctlStyleStmts += BuildInlineStylePropsStmt(pc, c, dy); // inline CSS
+
+					ctlStyleStmts += BuildClassesStmt(c, cssClasses); // CSS class assignments
 				}
 
 				eventStubFrag += $@"
@@ -761,14 +763,14 @@ namespace Mobius.ClientComponents
 				groupName = "CheckButtonGroupValue" + (cb.GroupIndex);
 				if (!RadioGroups.Contains(groupName)) // add var to identify the current radio button for the group
 				{
-					ctlDefStmt += $"static CheckedValueContainer {groupName} = new CheckedValueContainer();\r\n";
+					ctlDeclAndInitStmt += $"static CheckedValueContainer {groupName} = new CheckedValueContainer();\r\n";
 					RadioGroups.Add(groupName);
 				}
 
 				ctlInitClause = BuildCtlInitClause(c,
 					"Text", cText, "",
 					"CVC", Nas(groupName), "");
-				ctlDefStmt += $"\tpublic CheckButtonMx {cb.Name} = new CheckButtonMx(){ctlInitClause};\r\n";
+				ctlDeclAndInitStmt += $"\tpublic CheckButtonMx {cb.Name} = new CheckButtonMx(){ctlInitClause};\r\n";
 
 				//div.Close(ref htmlFrag);
 			}
@@ -838,12 +840,12 @@ namespace Mobius.ClientComponents
 
 				if (Lex.Eq(cText, "OK") || Lex.Eq(cText, "Yes")) isPrimary = true;
 
-				ctlDefStmt = BuildCtlDefStmt(c, bmx,
+				ctlDeclAndInitStmt = BuildDeclAndInitStmt(c, bmx,
 					"Text", cText, bmx.Text,
 					"ImageName", imageName, bmx.ImageName, // need this along the adding the image name to the classes list
 					"IsPrimary", isPrimary, bmx.IsPrimary);
 
-				ctlStyleStmts += BuildCtlClassesStmt(c, cssClasses);
+				ctlStyleStmts += BuildClassesStmt(c, cssClasses);
 				ctlStyleStmts += BuildInlineStylePropsStmt(pc, c, dy);
 
 				//ctlStylePropsStmt = $"\t{c.Name}.StyleProps = new CssPropsMx(\"{inlineStyleProps}\");\r\n"; // set bounding box in initialize method
@@ -917,7 +919,7 @@ namespace Mobius.ClientComponents
         </SfListView>" + "\r\n";
 
 				ctlInitClause = BuildCtlInitClause(c);
-				ctlDefStmt += $"\tpublic CheckedListMx {c.Name} = new CheckedListMx(){ctlInitClause};\r\n";
+				ctlDeclAndInitStmt += $"\tpublic CheckedListMx {c.Name} = new CheckedListMx(){ctlInitClause};\r\n";
 
 				eventStubFrag += $@"
 
@@ -960,7 +962,7 @@ namespace Mobius.ClientComponents
 					</SfComboBox> " + "\r\n";
 
 				ctlInitClause = BuildCtlInitClause(c);
-				ctlDefStmt += $"\tpublic ComboBoxMx {c.Name} = new ComboBoxMx(){ctlInitClause};\r\n";
+				ctlDeclAndInitStmt += $"\tpublic ComboBoxMx {c.Name} = new ComboBoxMx(){ctlInitClause};\r\n";
 
 				eventStubFrag += $@"
 
@@ -999,14 +1001,14 @@ namespace Mobius.ClientComponents
 				TextBoxMx tbMx = new TextBoxMx();
 
 				bool editable = !te.Properties.ReadOnly;
-				string readOnly = editable ? "false" : "true";
+				bool readOnly = editable ? false : true;
 
 				MemoEdit me = c as MemoEdit; // MemoEdit is a subclass of textedit
-				string multiline = me != null ? "true" : "false";
+				bool multiline = me != null ? true : false;
 
-				string enabled = te.Enabled ? "true" : "false";
+				bool enabled = te.Enabled ? true : false;
 
-				ctlDefStmt = BuildCtlDefStmt(c, tbMx,
+				ctlDeclAndInitStmt = BuildDeclAndInitStmt(c, tbMx,
 					"Text", te.Text, tbMx.Text,
 					"PlaceHolder", "", tbMx.PlaceHolder,
 					//"FloatLabelType", "", tbMx.FloatLabelType,
@@ -1020,7 +1022,7 @@ namespace Mobius.ClientComponents
 
 				ctlStyleStmts = BuildInlineStylePropsStmt(pc, c, dy);
 
-				ctlStyleStmts += BuildCtlClassesStmt(c, cssClasses);
+				ctlStyleStmts += BuildClassesStmt(c, cssClasses);
 
 #if false
 
@@ -1059,7 +1061,7 @@ namespace Mobius.ClientComponents
 			else if (cType == null) //typeof(DivMx)) // "null" control
 			{
 				ctlInitClause = BuildCtlInitClause(c);
-				ctlDefStmt += $"\tpublic DivMx {c.Name} = new DivMx(){ctlInitClause};\r\n";
+				ctlDeclAndInitStmt += $"\tpublic DivMx {c.Name} = new DivMx(){ctlInitClause};\r\n";
 
 				ctlStyleStmts = BuildInlineStylePropsStmt(pc, c, dy);
 			}
@@ -1079,7 +1081,7 @@ namespace Mobius.ClientComponents
 
 			// Integrate the control code into the code passed by the caller
 
-			varDefCode += ctlDefStmt;
+			varDefCode += ctlDeclAndInitStmt;
 
 			varConstructorCode += ctlStyleStmts;
 
@@ -1099,7 +1101,7 @@ namespace Mobius.ClientComponents
 		/// <param name="pa"></param>
 		/// <returns></returns>
 
-		string BuildCtlDefStmt(
+		string BuildDeclAndInitStmt(
 			Control c,
 			ControlMx cmx,
 			params object[] pa)
@@ -1335,7 +1337,7 @@ namespace Mobius.ClientComponents
 		/// <param name="classes"></param>
 		/// <returns></returns>
 
-		public string BuildCtlClassesStmt(
+		public string BuildClassesStmt(
 			Control c,
 			CssClassesMx classes)
 		{

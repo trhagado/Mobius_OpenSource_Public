@@ -335,7 +335,7 @@ where b.cpd_id=c.cpd_id and c.cpd_source='CHEMBL' ">
 	</metatable> 
 	
 	<!-- **************************************************** -->
-	<!--  Assay detail (Lilly / ChEMBL) -->
+	<!--  Assay detail (ChEMBL) -->
 	<!-- **************************************************** -->
 	<metatable tablename="chembl_STB_NONSUM" l="ChEMBL Assay Data (Unpivoted)" metabroker="TargetAssay" parent="stb_structure"
 	 TableMap="
@@ -378,13 +378,13 @@ where b.cpd_id=c.cpd_id and c.cpd_source='CHEMBL' ">
 		<c Name="MOST_POTENT_VAL" Label="Most Potent Result Value Number" DataType="Number" DisplayLevel="Hidden" DisplayFormat="SigDigits" DisplayWidth="12" Decimals="3" />
 		<c name="ACTIVITY_BIN_MOST_POTENT" l="Activity Bin (Most Potent)" type="integer" dataTypeImage="condFormatSmall" condFormat="Activity Bin Conditional Formatting" display="selected" width="5" />
 		<c Name="SUM_RESULT_ID" Label="Sum Result Id" DataType="Integer" DisplayLevel="Hidden" DisplayFormat="SigDigits" DisplayWidth="12" />
-		<c Name="LILLY_SUM_RESULT_ID" Label="Sum Result Id" DataType="Integer" DisplayLevel="Hidden" DisplayFormat="SigDigits" DisplayWidth="12" />
+		<c Name="CORPDB_SUM_RESULT_ID" Label="Sum Result Id" DataType="Integer" DisplayLevel="Hidden" DisplayFormat="SigDigits" DisplayWidth="12" />
 		<c name="TARGET_MAP_X" l="Target Map X" type="integer" width="7" display="hidden" searchable="false" columnMap="null"/>
 		<c name="TARGET_MAP_Y" l="Target Map Y" type="integer" width="7" display="hidden" searchable="false" columnMap="null"/> 
 	</metatable>
 
 	<!-- **************************************************** -->
-	<!--  Assay detail (Lilly / ChEMBL) -->
+	<!--  Assay detail (CorpDb / ChEMBL) -->
 	<!-- **************************************************** -->
 	<metatable tablename="chembl_STB_STR_NONSUM" l="ChEMBL Assay Data (Unpivoted)" metabroker="TargetAssay" parent="chembl_structures"
 	 TableMap="
@@ -426,7 +426,7 @@ where b.cpd_id=c.cpd_id and c.cpd_source='CHEMBL' ">
 		<c Name="MOST_POTENT_VAL" Label="Most Potent Result Value Number" DataType="Number" DisplayLevel="Hidden" DisplayFormat="SigDigits" DisplayWidth="12" Decimals="3" />
 		<c name="ACTIVITY_BIN_MOST_POTENT" l="Activity Bin (Most Potent)" type="integer" dataTypeImage="condFormatSmall" condFormat="Activity Bin Conditional Formatting" display="selectable" width="5" />
 		<c Name="SUM_RESULT_ID" Label="Sum Result Id" DataType="Integer" DisplayLevel="Hidden" DisplayFormat="SigDigits" DisplayWidth="12" />
-		<c Name="LILLY_SUM_RESULT_ID" Label="Sum Result Id" DataType="Integer" DisplayLevel="Hidden" DisplayFormat="SigDigits" DisplayWidth="12" />
+		<c Name="CORPDB_SUM_RESULT_ID" Label="Sum Result Id" DataType="Integer" DisplayLevel="Hidden" DisplayFormat="SigDigits" DisplayWidth="12" />
 		<c name="TARGET_MAP_X" l="Target Map X" type="integer" width="7" display="hidden" searchable="false" columnMap="null"/>
 		<c name="TARGET_MAP_Y" l="Target Map Y" type="integer" width="7" display="hidden" searchable="false" columnMap="null"/>
 	</metatable>	

@@ -271,7 +271,7 @@ namespace Mobius.ClientComponents
 			WithinValue.Text = "";
 			WithinUnits.SelectedIndex = 0;
 
-			if (JupyterGuiConverter.Active) // if converting include all controls
+			if (JupyterGuiConverter.ConversionsEnabled) // if converting include all controls
 				includeList = includeBetween = includeLike = includeWithin = true;
 
 			InList.Visible = ValueList.Visible = ImportList.Visible = EditList.Visible = includeList;

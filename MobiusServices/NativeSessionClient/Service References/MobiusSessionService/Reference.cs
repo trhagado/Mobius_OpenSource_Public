@@ -171,71 +171,71 @@ namespace Mobius.NativeSessionClient.MobiusSessionService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="http://mobius.am.lilly.com/MobiusServices/v1.0", ConfigurationName="MobiusSessionService.IMobiusSessionService")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://<server_address>/MobiusServices/v1.0", ConfigurationName="MobiusSessionService.IMobiusSessionService")]
     public interface IMobiusSessionService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/GetCurrentVe" +
-            "rsionNumber", ReplyAction="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/GetCurrentVe" +
+        [System.ServiceModel.OperationContractAttribute(Action="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/GetCurrentVe" +
+            "rsionNumber", ReplyAction="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/GetCurrentVe" +
             "rsionNumberResponse")]
         string GetCurrentVersionNumber();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/GetCurrentUs" +
-            "erId", ReplyAction="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/GetCurrentUs" +
+        [System.ServiceModel.OperationContractAttribute(Action="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/GetCurrentUs" +
+            "erId", ReplyAction="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/GetCurrentUs" +
             "erIdResponse")]
         string GetCurrentUserId();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/GetCurrentSe" +
-            "ssionUserId", ReplyAction="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/GetCurrentSe" +
+        [System.ServiceModel.OperationContractAttribute(Action="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/GetCurrentSe" +
+            "ssionUserId", ReplyAction="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/GetCurrentSe" +
             "ssionUserIdResponse")]
         string GetCurrentSessionUserId(Mobius.Services.Types.Session session);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/CreateSessio" +
-            "n", ReplyAction="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/CreateSessio" +
+        [System.ServiceModel.OperationContractAttribute(Action="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/CreateSessio" +
+            "n", ReplyAction="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/CreateSessio" +
             "nResponse")]
         Mobius.Services.Types.Session CreateSession();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/CreateNative" +
-            "Session", ReplyAction="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/CreateNative" +
+        [System.ServiceModel.OperationContractAttribute(Action="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/CreateNative" +
+            "Session", ReplyAction="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/CreateNative" +
             "SessionResponse")]
         Mobius.Services.Types.Session CreateNativeSession();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/FreshenSessi" +
-            "on", ReplyAction="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/FreshenSessi" +
+        [System.ServiceModel.OperationContractAttribute(Action="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/FreshenSessi" +
+            "on", ReplyAction="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/FreshenSessi" +
             "onResponse")]
         Mobius.Services.Types.Session FreshenSession(Mobius.Services.Types.Session session);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/IsSessionVal" +
-            "id", ReplyAction="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/IsSessionVal" +
+        [System.ServiceModel.OperationContractAttribute(Action="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/IsSessionVal" +
+            "id", ReplyAction="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/IsSessionVal" +
             "idResponse")]
         bool IsSessionValid(Mobius.Services.Types.Session session);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/GetSessionIn" +
-            "fo", ReplyAction="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/GetSessionIn" +
+        [System.ServiceModel.OperationContractAttribute(Action="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/GetSessionIn" +
+            "fo", ReplyAction="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/GetSessionIn" +
             "foResponse")]
         Mobius.Services.Types.SessionInfo[] GetSessionInfo(Mobius.Services.Types.Session session);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/GetCurrentSe" +
-            "ssionCount", ReplyAction="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/GetCurrentSe" +
+        [System.ServiceModel.OperationContractAttribute(Action="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/GetCurrentSe" +
+            "ssionCount", ReplyAction="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/GetCurrentSe" +
             "ssionCountResponse")]
         int GetCurrentSessionCount(Mobius.Services.Types.Session session);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/GetSessionIn" +
-            "foForAllSessions", ReplyAction="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/GetSessionIn" +
+        [System.ServiceModel.OperationContractAttribute(Action="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/GetSessionIn" +
+            "foForAllSessions", ReplyAction="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/GetSessionIn" +
             "foForAllSessionsResponse")]
         System.Collections.Generic.Dictionary<Mobius.Services.Types.Session, Mobius.Services.Types.SessionInfo[]> GetSessionInfoForAllSessions(Mobius.Services.Types.Session session);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/SetSessionPa" +
-            "rameter", ReplyAction="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/SetSessionPa" +
+        [System.ServiceModel.OperationContractAttribute(Action="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/SetSessionPa" +
+            "rameter", ReplyAction="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/SetSessionPa" +
             "rameterResponse")]
         bool SetSessionParameter(Mobius.Services.Types.Session session, Mobius.Services.Types.SessionParameterName parmName, string value);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/DisposeSessi" +
-            "on", ReplyAction="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/DisposeSessi" +
+        [System.ServiceModel.OperationContractAttribute(Action="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/DisposeSessi" +
+            "on", ReplyAction="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/DisposeSessi" +
             "onResponse")]
         void DisposeSession(Mobius.Services.Types.Session session);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/DisposeSessi" +
-            "onById", ReplyAction="http://mobius.am.lilly.com/MobiusServices/v1.0/IMobiusSessionService/DisposeSessi" +
+        [System.ServiceModel.OperationContractAttribute(Action="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/DisposeSessi" +
+            "onById", ReplyAction="http://<server_address>/MobiusServices/v1.0/IMobiusSessionService/DisposeSessi" +
             "onByIdResponse")]
         void DisposeSessionById(Mobius.Services.Types.Session session, int sessionIdToDispose);
     }

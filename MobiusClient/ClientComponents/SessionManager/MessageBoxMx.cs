@@ -200,7 +200,7 @@ namespace Mobius.ClientComponents
 
       MessageBoxMx mb = new MessageBoxMx();
 
-      if (JupyterGuiConverter.Active)
+      if (JupyterGuiConverter.ConversionsEnabled)
       {
         MessageBoxMx2 mb2 = new MessageBoxMx2();
         new JupyterGuiConverter().ConvertFormOrUserControl(mb2);

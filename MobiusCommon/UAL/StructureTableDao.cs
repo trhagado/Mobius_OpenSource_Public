@@ -69,7 +69,7 @@ namespace Mobius.UAL
 
 				while (cmd.Read())
 				{
-					corpId = cmd.GetInt(0); // lilly_nbr
+					corpId = cmd.GetInt(0); 
 
 					if (!cmd.IsNull(1)) // molstructure
 					{

@@ -6,7 +6,7 @@
   id = "Mobius.Tools.RgroupMatrix"
   name="Rgroup Matrix"
   version="1.0"
-  provider-name =" Tom Hagadone"
+  provider-name ="MobiusDevTeam"
   class = "Mobius.Tools.RgroupMatrix" >
   
   <runtime>

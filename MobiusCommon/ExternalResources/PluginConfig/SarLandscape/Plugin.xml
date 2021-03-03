@@ -6,7 +6,7 @@
   id = "Mobius.Tools.SarLandscape"
   name="SAR Landscape Analysis"
   version="1.0"
-  provider-name =" Tom Hagadone"
+  provider-name ="MobiusDevTeam"
   class = "Mobius.Tools.SarLandscape" >
   
   <runtime>

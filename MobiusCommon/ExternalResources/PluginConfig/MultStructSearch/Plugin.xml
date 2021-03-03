@@ -6,7 +6,7 @@
   id = "Mobius.Tools.MultStructSearch"
   name="Multiple Structure Search"
   version="1.0"
-  provider-name =" Tom Hagadone"
+  provider-name ="MobiusDevTeam"
   class = "Mobius.Tools.MultStructSearch" >
   
   <runtime>

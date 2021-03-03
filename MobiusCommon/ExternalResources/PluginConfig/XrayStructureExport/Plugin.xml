@@ -6,7 +6,7 @@
   id = "Mobius.Tools.XrayStructureExport"
   name="Xray Structure Export"
   version="1.0"
-  provider-name =" Tom Hagadone"
+  provider-name ="MobiusDevTeam"
   class = "Mobius.Tools.XrayStructureExport" >
   
   <runtime>
