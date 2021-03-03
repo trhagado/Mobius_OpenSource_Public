@@ -380,6 +380,6 @@ on commit preserve rows
 truncate table tempkeylist1
 
 insert into tempkeylist1 (intkey) 
- select lilly_nbr
- from LILLY_OWNER.lilly_moltable@prd867_link
- where lilly_nbr between 1 and 10000
+ select CORP_ID
+ from CORPDB_OWNER.CORP_MOLTABLE@prd867_link
+ where CORP_ID between 1 and 10000

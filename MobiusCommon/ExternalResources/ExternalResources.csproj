@@ -79,13 +79,6 @@
     <Content Include="MobiusServerData\MetaData\MetaTrees\CachedTreeDev.txt" />
     <Content Include="MobiusServerData\MetaData\MetaTrees\Root.xml" />
     <Content Include="MobiusServerData\MetaData\RootTables.xml" />
-    <Content Include="MobiusServerData\SqlScripts\ChEMBL.sql" />
-    <Content Include="MobiusServerData\SqlScripts\Mobius.sql" />
-    <Content Include="MobiusServerData\SqlScripts\MobiusAnnotationDDL.sql" />
-    <Content Include="MobiusServerData\SqlScripts\MobiusAnnotationTable.sql" />
-    <Content Include="MobiusServerData\SqlScripts\MobiusDDL.sql" />
-    <Content Include="MobiusServerData\SqlScripts\MobiusInChI2.sql" />
-    <Content Include="MobiusServerData\SqlScripts\MobiusUniChem.sql" />
     <Content Include="MobiusServerData\WebPages\iisstart.png" />
     <Content Include="MobiusServerData\WebPages\Kekule.js-master\demos\items\algorithm\reactionExercise.html" />
     <Content Include="MobiusServerData\WebPages\Kekule.js-master\demos\items\algorithm\ringSearch.html" />
@@ -2964,6 +2957,7 @@
     <Folder Include="MobiusServerData\Doc\" />
     <Folder Include="MobiusServerData\MetaData\RestrictedDatabaseViews\" />
     <Folder Include="MobiusServerData\Script\" />
+    <Folder Include="MobiusServerData\SqlScripts\" />
     <Folder Include="MobiusServerData\TargetMaps\" />
   </ItemGroup>
   <ItemGroup>

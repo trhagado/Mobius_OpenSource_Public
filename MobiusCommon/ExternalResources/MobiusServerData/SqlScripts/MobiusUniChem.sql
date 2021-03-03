@@ -243,13 +243,13 @@ where
 
 /* Check for missing LSNs in Unichem */
 
-select lilly_nbr
+select CORP_ID
 from sam_owner.sam_substance@prd867_link s
 where 
  status_code is null or status_code = 'A'
  and not exists 
    (select * from mbs_owner.lilly_uc_xref x
-    where x.src_id = 0 and x.src_compound_id_nbr = s.lilly_nbr)
+    where x.src_id = 0 and x.src_compound_id_nbr = s.CORP_ID)
     
 /* Find LSNs in Unichem that aren't in the Lilly substance table */
 
@@ -261,7 +261,7 @@ select x.src_compound_id_nbr
 from mbs_owner.lilly_uc_xref x
 where x.src_id = 0
 minus  
-select s.lilly_nbr
+select s.CORP_ID
 from sam_owner.sam_substance@prd867_link s
 where 
  (s.status_code is null or s.status_code = 'A')
@@ -272,7 +272,7 @@ where
 
 select * from
 (
-select s.lilly_nbr
+select s.CORP_ID
 from sam_owner.sam_substance@prd867_link s
 where (s.status_code is null or s.status_code = 'A')
 minus
@@ -410,8 +410,8 @@ SELECT LSII.lsn,
                    || s.isomer_number
                    || ','
                    || s.other_stereo_txt)
-          FROM lilly_owner.lilly_moltable m, sam_owner.sam_substance s
-         WHERE m.lilly_nbr = LSII.lsn2 AND m.lilly_nbr = s.lilly_nbr)
+          FROM CORPDB_OWNER.CORP_MOLTABLE m, sam_owner.sam_substance s
+         WHERE m.CORP_ID = LSII.lsn2 AND m.CORP_ID = s.CORP_ID)
           AS STRUCTURE
   FROM mbs_owner.lsn_salt_isomer_info LSII
  WHERE lsn IS NOT NULL AND lsn ^= lsn2
